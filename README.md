@@ -31,7 +31,8 @@ Install ansible and requirements through `scripts/setup.sh`.
 * `avahi.yml`: Avahi service installation and setup for broadcast repeating between subnets.
 * `docker.yml`: Installs docker, all docker containers and their respective networks and fileshares.
 * `k8s.yml`: Installs kubernetes (using k3s) onto my Raspberry Pi cluster and mounts a drive used for storing backups.
-* `k8s_wipe.yml`: Destroys the k3s cluster.  It does not touch the mounted backup drive.
+
+`k8s_wipe.yml`: Destroys the k3s cluster.  It does not touch the mounted backup drive.
 
 ## Segregation of Functions
 
