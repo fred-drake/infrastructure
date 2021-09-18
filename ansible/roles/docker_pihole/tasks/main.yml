@@ -1,0 +1,68 @@
+---
+- name: create pihole container
+  community.docker.docker_container:
+    name: "{{ item.hostname }}"
+    # image: "jacklul/pihole"
+    image: "pihole/pihole"
+    pull: "{{ container_pull }}"
+    hostname: "{{ item.hostname }}"
+    env:
+      TZ: "{{ default_timezone }}"
+      WEBPASSWORD: ""
+      DNS1: "8.8.8.8"
+    volumes:
+      - "{{ appdata_dir }}/{{ item.hostname }}/etc/pihole:/etc/pihole"
+      - "{{ appdata_dir }}/{{ item.hostname }}/etc/pihole-updatelists:/etc/pihole-updatelists"
+      - "{{ appdata_dir }}/{{ item.hostname }}/dnsmasq:/etc/dnsmasq.d"
+    container_default_behavior: "{{ container_default_behavior }}"
+    network_mode: "{{ item.network }}"
+    restart_policy: "{{ container_restart_policy }}"
+    networks:
+      - name: "{{ item.network }}"
+        ipv4_address: "{{ item.address }}"
+    networks_cli_compatible: "{{ container_networks_cli_compatible }}"
+    state: "{{ container_state }}"
+    dns_servers:
+      - "1.1.1.1"
+    capabilities:
+      - "NET_ADMIN"
+  loop: "{{ pihole_machines }}"
+  notify:
+    - deep prune docker
+  tags:
+    - pihole
+    - docker_critical_update
+
+- name: generate pihole hosts from netbox
+  connection: local
+  become: false
+  export_netbox_hostlist:
+    netbox_api_prefix: "{{ netbox_api_prefix }}"
+    netbox_token: "{{ netbox_token }}"
+  register: hostlist_results
+  tags:
+    - pihole
+    - pihole_update
+
+- name: transfer pihole hosts
+  template:
+    src: hostlist.j2
+    dest: "{{ appdata_dir }}/{{ item.hostname }}/etc/pihole/custom.list"
+    mode: "0644"
+  loop: "{{ pihole_machines }}"
+  notify:
+    - restart DNS
+  tags:
+    - pihole
+    - pihole_update
+
+- name: copy pihole-updatelists configuration
+  copy:
+    src: "pihole-updatelists.conf"
+    dest: "{{ appdata_dir }}/{{ item.hostname }}/etc/pihole-updatelists/pihole-updatelists.conf"
+    mode: "0644"
+  loop: "{{ pihole_machines }}"
+  notify: execute pihole-updatelists
+  tags:
+    - pihole
+    - pihole_update

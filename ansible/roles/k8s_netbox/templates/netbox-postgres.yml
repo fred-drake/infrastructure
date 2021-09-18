@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+  namespace: "{{ services.netbox.namespace }}"
+type: Opaque
+stringData:
+  superUserPassword: "{{ services.netbox_db_postgres.superuser_password }}"
+  replicationUserPassword: "{{ services.netbox_db_postgres.replication_password }}"
+---
+apiVersion: kubegres.reactive-tech.io/v1
+kind: Kubegres
+metadata:
+  name: postgres
+  namespace: "{{ services.netbox.namespace }}"
+spec:
+  replicas: 1
+  image: postgres:12
+  imagePullPolicy: Always
+  database:
+    size: 20Gi
+  env:
+    - name: POSTGRES_DB
+      value: "{{ services.netbox_db_postgres.postgres_db }}"
+    - name: POSTGRES_USER
+      value: "{{ services.netbox_db_postgres.postgres_user }}"
+    - name: POSTGRES_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: postgres-secret
+          key: superUserPassword
+    - name: POSTGRES_REPLICATION_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: postgres-secret
+          key: replicationUserPassword
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: "{{ services.netbox.namespace }}"
+spec:
+  selector:
+    app: postgres
+  type: NodePort
+  ports:
+    - port: 5432
+      targetPort: 5432

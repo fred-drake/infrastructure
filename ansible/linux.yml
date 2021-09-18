@@ -1,0 +1,6 @@
+---
+- hosts: linux
+  gather_facts: false
+  become: true
+  roles:
+    - linux

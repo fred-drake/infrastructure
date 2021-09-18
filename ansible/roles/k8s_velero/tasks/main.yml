@@ -1,0 +1,26 @@
+---
+- name: create velero namespace
+  k8s:
+    name: velero
+    api_version: v1
+    kind: Namespace
+    state: present
+  notify: 
+    - create temp dir for velero
+    - pull velero release from github
+    - unpack velero release package
+    - create temp file
+    - set credentials in temp file
+    - install velero
+    - set automatic backup
+  tags: velero
+
+- name: delete velero namespace
+  k8s:
+    name: velero
+    api_version: v1
+    kind: Namespace
+    state: absent
+  tags:
+    - never
+    - delete_velero

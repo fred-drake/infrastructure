@@ -1,0 +1,7 @@
+---
+- name: set backup mount point
+  ansible.posix.mount:
+    path: /mnt/backup
+    src: /dev/sda1
+    fstype: ext4
+    state: mounted

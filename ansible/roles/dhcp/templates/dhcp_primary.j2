@@ -1,0 +1,19 @@
+#
+# Primary DHCP Server Configuration
+#
+authoritative;
+ddns-update-style none;
+failover peer "dhcp-failover" {
+    primary;
+    address {{ item.address }};
+    port 647;
+    peer address {{ item.peer_address }};
+    peer port 647;
+    max-response-delay 30;
+    max-unacked-updates 10;
+    load balance max seconds 3;
+    mclt 1800;
+    split 128;
+}
+
+{% include 'dhcp_subnet.j2' %}

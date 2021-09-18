@@ -1,0 +1,21 @@
+- name: pihole test
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'pihole.yml') | from_yaml_all }}"
+  tags:
+    - k8s_pihole
+
+- name: pihole test
+  k8s:
+    state: absent
+    definition: "{{ lookup('template', 'pihole.yml') | from_yaml_all }}"
+  tags:
+    - never
+    - delete_k8s_pihole
+
+- name: rollout restart cyberchef server
+  become: true
+  command: kubectl rollout restart deployment cyberchef -n cyberchef
+  tags:
+    - never
+    - restart_cyberchef

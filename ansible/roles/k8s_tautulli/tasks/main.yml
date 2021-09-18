@@ -1,0 +1,14 @@
+- name: apply tautulli server
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'tautulli.yml') | from_yaml_all }}"
+  tags:
+    - tautulli
+
+- name: delete tautulli server
+  k8s:
+    state: absent
+    definition: "{{ lookup('template', 'tautulli.yml') | from_yaml_all }}"
+  tags:
+    - never
+    - delete_tautulli

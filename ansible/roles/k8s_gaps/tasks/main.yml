@@ -1,0 +1,14 @@
+- name: apply gaps server
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'gaps.yml') | from_yaml_all }}"
+  tags:
+    - gaps
+
+- name: delete gaps server
+  k8s:
+    state: absent
+    definition: "{{ lookup('template', 'gaps.yml') | from_yaml_all }}"
+  tags:
+    - never
+    - delete_gaps

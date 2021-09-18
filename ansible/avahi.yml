@@ -1,0 +1,5 @@
+- hosts: avahi
+  gather_facts: false
+  become: true
+  roles:
+    - avahi

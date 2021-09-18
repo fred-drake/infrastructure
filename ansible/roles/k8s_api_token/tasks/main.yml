@@ -1,0 +1,4 @@
+---
+- name: get api token
+  k8s_api_token:
+  register: k8s_api_token

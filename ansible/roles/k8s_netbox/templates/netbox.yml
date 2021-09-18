@@ -1,0 +1,114 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ services.netbox.name }}"
+  namespace: "{{ services.netbox.name }}"
+spec:
+  selector:
+    matchLabels:
+      app: "{{ services.netbox.name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ services.netbox.name }}"
+    spec:
+      containers:
+        - name: "{{ services.netbox.name }}"
+          image: linuxserver/netbox:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "{{ default_timezone }}"
+            - name: PUID
+              value: "99"
+            - name: PGID
+              value: "100"
+            - name: SUPERUSER_EMAIL
+              value: "{{ services.netbox.superuser_email }}"
+            - name: SUPERUSER_PASSWORD
+              value: "{{ services.netbox.superuser_password }}"
+            - name: ALLOWED_HOST
+              value: "{{ services.netbox.allowed_host }}"
+            - name: DB_NAME
+              value: "{{ services.netbox_db_postgres.postgres_db }}"
+            - name: DB_USER
+              value: "{{ services.netbox_db_postgres.postgres_user }}"
+            - name: DB_PASSWORD
+              value: "{{ services.netbox_db_postgres.superuser_password }}"
+            - name: DB_HOST
+              value: "{{ services.netbox_db_postgres.name }}"
+            - name: DB_PORT
+              value: "{{ services.netbox.db_port }}"
+            - name: REDIS_HOST
+              value: "{{ services.netbox_db_redis.name }}"
+            - name: REDIS_PORT
+              value: "{{ services.netbox.redis_port }}"
+    #       volumeMounts:
+    #         - name: config
+    #           mountPath: /config
+    #   volumes:
+    #     - name: config
+    #       persistentVolumeClaim:
+    #         claimName: netbox-config-claim
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: "{{ services.netbox.name }}"
+  namespace: "{{ services.netbox.name }}"
+spec:
+  type: NodePort
+  selector:
+    app: "{{ services.netbox.name }}"
+  ports:
+    - port: 80
+      targetPort: 8000
+      name: ui-port
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ services.netbox.name }}"
+  namespace: "{{ services.netbox.name }}"
+spec:
+  rules:
+  - host: "{{ services.netbox.name }}.{{ domain_name }}"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: "{{ services.netbox.name }}"
+            port:
+              number: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-no-domain
+  namespace: "{{ services.netbox.name }}"
+spec:
+  redirectRegex:
+    regex: "^http://{{ services.netbox.name }}/.*"
+    replacement: "https://{{ services.netbox.name }}.{{ domain_name }}/"
+    permanent: true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: "{{ services.netbox.name }}"
+  namespace: "{{ services.netbox.name }}"
+entryPoints:
+    - web
+    - websecure
+spec:
+  routes:
+    - match: Host(`{{ services.netbox.name }}`)
+      kind: Rule
+      services:
+        - name: api@internal
+          kind: TraefikService
+      middlewares:
+      - name: redirect-no-domain

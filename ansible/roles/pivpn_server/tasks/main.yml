@@ -1,0 +1,53 @@
+---
+- name: create pivpn directory
+  file:
+    path: /etc/pivpn/wireguard
+    state: directory
+    mode: "0775"
+
+- name: set pivpn configuration
+  ansible.builtin.template:
+    src: setupVars.j2
+    dest: /etc/pivpn/wireguard/setupVars.conf
+    mode: "0644"
+
+- name: Check for binary
+  stat:
+    path: /usr/local/bin/pivpn
+  register: pivpn_binary
+
+- name: download install script
+  get_url:
+    url: https://install.pivpn.io
+    dest: ~/pivpn-install.sh
+    mode: u+rwx
+  when: not pivpn_binary.stat.exists
+
+- name: run install script
+  ansible.builtin.command: ~/pivpn-install.sh --unattended /etc/pivpn/wireguard/setupVars.conf
+  when: not pivpn_binary.stat.exists
+
+- name: copy configuration files
+  copy:
+    src: "{{ playbook_dir }}/roles/pivpn/files/configuration/etc/wireguard"
+    dest: "/etc/"
+    mode: "0600"
+    directory_mode: "0700"
+  notify:
+    - restart service
+  tags:
+    - update
+
+- name: execute service restart if necessary
+  meta: flush_handlers
+  tags:
+    - update
+
+- name: check if service is started
+  service:
+    name: wg-quick@wg0
+    state: started
+  notify:
+    - fail because service is stopped
+  tags:
+    - update

@@ -1,0 +1,7 @@
+---
+# Running this on restart because it takes a long time to restart
+# and can cause failures for docker containers stored that need
+# to be updated through it.
+- name: temporarily pause
+  pause:
+    minutes: 2

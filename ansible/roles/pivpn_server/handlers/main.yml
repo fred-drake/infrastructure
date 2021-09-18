@@ -1,0 +1,9 @@
+---
+- name: restart service
+  service:
+    name: wg-quick@wg0
+    state: restarted
+
+- name: fail because service is stopped
+  fail:
+    msg: Wireguard service not started.  There was probably an error in the configuration.

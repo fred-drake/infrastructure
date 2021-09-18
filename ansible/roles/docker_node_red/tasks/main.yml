@@ -1,0 +1,25 @@
+---
+- name: create application container
+  community.docker.docker_container:
+    name: "{{ role_name }}"
+    image: "nodered/node-red"
+    pull: "{{ container_pull }}"
+    hostname: "{{ role_name }}"
+    env:
+      TZ: "{{ default_timezone }}"
+      NODE_RED_ENABLE_SAFE_MODE: "false"
+    volumes:
+      - "{{ appdata_dir }}/nodered:/data"
+    container_default_behavior: "{{ container_default_behavior }}"
+    network_mode: "{{ container_network }}"
+    restart_policy: unless-stopped
+    networks:
+      - name: "{{ container_network }}"
+        ipv4_address: "{{ services.node_red.ip }}"
+    networks_cli_compatible: "{{ container_networks_cli_compatible }}"
+    state: "{{ container_state }}"
+  notify:
+    - deep prune docker
+  tags:
+    - node_red
+    - docker_update

@@ -1,0 +1,8 @@
+---
+- hosts: k8s_rpi_cluster
+  gather_facts: false
+  become: true
+  tasks:
+    - name: uninstall k3s
+      k3s:
+        state: absent

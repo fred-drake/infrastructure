@@ -1,0 +1,104 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "{{ services.tautulli.name }}"
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: "{{ services.tautulli.name }}"
+  namespace: "{{ services.tautulli.name }}"
+spec:
+  serviceName: "{{ services.tautulli.name }}"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "{{ services.tautulli.name }}"
+  volumeClaimTemplates:
+  - metadata:
+      name: conf
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 20Gi
+  template:
+    metadata:
+      labels:
+        app: "{{ services.tautulli.name }}"
+    spec:
+      containers:
+      - name: "{{ services.tautulli.name }}"
+        image: tautulli/tautulli:latest
+        env:
+        - name: TZ
+          value: "{{ default_timezone }}"
+        - name: PUID
+          value: "99"
+        - name: PGID
+          value: "100"
+        volumeMounts:
+        - name: conf
+          mountPath: /config
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: "{{ services.tautulli.name }}"
+  namespace: "{{ services.tautulli.name }}"
+spec:
+  type: ClusterIP
+  selector:
+    app: "{{ services.tautulli.name }}"
+  ports:
+    - port: 80
+      targetPort: 8181
+      name: ui-port
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ services.tautulli.name }}"
+  namespace: "{{ services.tautulli.name }}"
+spec:
+  rules:
+  - host: "{{ services.tautulli.name }}.{{ domain_name }}"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: "{{ services.tautulli.name }}"
+            port:
+              number: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-no-domain
+  namespace: "{{ services.tautulli.name }}"
+spec:
+  redirectRegex:
+    regex: "^http://{{ services.tautulli.name }}/.*"
+    replacement: "https://{{ services.tautulli.name }}.{{ domain_name }}/"
+    permanent: true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: "{{ services.tautulli.name }}"
+  namespace: "{{ services.tautulli.name }}"
+entryPoints:
+    - web
+    - websecure
+spec:
+  routes:
+    - match: Host(`{{ services.tautulli.name }}`)
+      kind: Rule
+      services:
+        - name: api@internal
+          kind: TraefikService
+      middlewares:
+      - name: redirect-no-domain

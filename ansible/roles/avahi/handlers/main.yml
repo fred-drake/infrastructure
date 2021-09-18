@@ -1,0 +1,9 @@
+---
+- name: restart avahi
+  service:
+    name: avahi-daemon
+    state: restarted
+
+- name: fail because service is stopped
+  fail:
+    msg: Avahi service not started.  There was probably an error in the configuration.

@@ -1,0 +1,3 @@
+{% for h in hostlist_results.hosts %}
+{{ h.address }} {{ h.hostname }}.{{ domain_name }}
+{% endfor %}

@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloudflare-api-token-secret
+  namespace: cert-manager
+type: Opaque
+stringData:
+  api-token: "{{ services.cert_manager.api_token }}"
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+spec:
+  acme:
+    server: "{{ services.cert_manager.lets_encrypt_server }}"
+    email: "{{ services.cert_manager.email }}"
+    privateKeySecretRef:
+      name: letsencrypt
+    solvers:
+      - dns01:
+          cloudflare:
+            email: "{{ services.cert_manager.email }}"
+            apiTokenSecretRef:
+              name: cloudflare-api-token-secret
+              key: api-token
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-https
+  namespace: default
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: internal-certificate
+  namespace: cert-manager
+spec:
+  dnsNames: 
+  - "*.{{ domain_name }}"
+  secretName: internal-certificate-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-tls-route
+  namespace: cert-manager
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`*.{{ domain_name }}`)
+      kind: Rule
+      services:
+        - name: api@internal
+          kind: TraefikService
+      middlewares:
+        - name: auth
+        - name: redirect-https
+  tls:
+    secretName: internal-certificate-tls

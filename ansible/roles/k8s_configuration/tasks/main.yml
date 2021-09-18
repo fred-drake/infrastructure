@@ -1,0 +1,9 @@
+---
+- name: set backup drive label to node
+  become: true
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_location }}"
+    validate_certs: false
+    state: present
+    definition: "{{ lookup('template', 'backup_label.yml') | from_yaml_all }}"
+  loop: "{{ backup_nodes }}"

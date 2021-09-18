@@ -1,0 +1,57 @@
+---
+- name: create storage container
+  community.docker.docker_container:
+    name: "notea-db"
+    image: "minio/minio:RELEASE.2021-06-17T00-10-46Z"
+    pull: "{{ container_pull }}"
+    hostname: "notea-db"
+    env:
+      TZ: "{{ default_timezone }}"
+      MINIO_ROOT_USER: "{{ services.notea_db.minio_root_user }}"
+      MINIO_ROOT_PASSWORD: "{{ services.notea_db.minio_root_password }}"
+    volumes:
+      - "{{ appdata_dir }}/notea-db/data:/data"
+      - "{{ appdata_dir }}/notea-db/config:/root/.minio"
+    # command: server /data --console-address ":443"
+    command: server /data --address ":443"
+    container_default_behavior: "{{ container_default_behavior }}"
+    network_mode: "{{ container_network }}"
+    restart_policy: "{{ container_restart_policy }}"
+    networks:
+      - name: "{{ container_network }}"
+        ipv4_address: "{{ services.notea_db.ip }}"
+    networks_cli_compatible: "{{ container_networks_cli_compatible }}"
+    state: "{{ container_state }}"
+  notify:
+    - deep prune docker
+  tags:
+    - notea-db
+    - docker_update
+
+- name: create application container
+  community.docker.docker_container:
+    name: "{{ role_name }}"
+    image: "cinwell/notea:latest"
+    pull: "{{ container_pull }}"
+    hostname: "{{ role_name }}"
+    env:
+      TZ: "{{ default_timezone }}"
+      STORE_ACCESS_KEY: "{{ services.notea_db.minio_root_user }}"
+      STORE_SECRET_KEY: "{{ services.notea_db.minio_root_password }}"
+      STORE_BUCKET: "{{ services.notea.store_bucket }}"
+      STORE_END_POINT: "{{ services.notea.store_end_point }}"
+      STORE_FORCE_PATH_STYLE: "true"
+      PASSWORD: "{{ services.notea.password }}"
+    container_default_behavior: "{{ container_default_behavior }}"
+    network_mode: "{{ container_network }}"
+    restart_policy: "{{ container_restart_policy }}"
+    networks:
+      - name: "{{ container_network }}"
+        ipv4_address: "{{ services.notea.ip }}"
+    networks_cli_compatible: "{{ container_networks_cli_compatible }}"
+    state: "{{ container_state }}"
+  notify:
+    - deep prune docker
+  tags:
+    - notea
+    - docker_update

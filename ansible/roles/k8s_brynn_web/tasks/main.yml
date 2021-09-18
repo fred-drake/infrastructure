@@ -1,0 +1,14 @@
+- name: apply brynn web server
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'brynn-web.yml') | from_yaml_all }}"
+  tags:
+    - brynn_web
+
+- name: delete brynn web server
+  k8s:
+    state: absent
+    definition: "{{ lookup('template', 'brynn-web.yml') | from_yaml_all }}"
+  tags:
+    - never
+    - delete_brynn_web

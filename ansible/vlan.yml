@@ -1,0 +1,7 @@
+---
+- hosts: vlan
+  gather_facts: true
+  become: true
+  roles:
+    - vlan
+

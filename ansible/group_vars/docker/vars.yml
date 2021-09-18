@@ -1,0 +1,18 @@
+---
+# Docker network names and paths
+appdata_dir: "{{ vault_appdata_dir }}"
+admin_network: "{{ vault_admin_network }}"
+container_network: "{{ vault_container_network }}"
+iot_network: "{{ vault_iot_network }}"
+workstation_network: "{{ vault_workstation_network }}"
+
+# Container settings
+container_pull: true
+container_state: started
+container_networks_cli_compatible: true
+container_default_behavior: compatibility
+container_restart_policy: unless-stopped
+
+# CIFS options when setting up supporting shares for containers
+cifs_docker_mount_options: "{{ vault_cifs_docker_mount_options }}"
+cifs_server: "{{ vault_cifs_server }}"

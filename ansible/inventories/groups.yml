@@ -1,0 +1,26 @@
+---
+# The hosts.yml file contains all of my specific hostnames, their host-specific variables, and groups for each of these
+# hosts.  The groups are defined as:
+#
+# critical: hosts that are considered critical towards keeping my network afloat (e.g. DNS, DHCP)
+# services_docker1: docker host that runs a variety of services
+# services_docker2: docker host that runs a variety of services
+# critical_services_docker1: docker host that runs critical services
+
+# These groups defined above are used below when building groups of groups
+
+all:
+  children:
+    docker: # All docker servers
+      children:
+        services_docker1:
+        services_docker2:
+        critical_services_docker1:
+        critical_services_docker2:
+    linux: # All linux servers
+      children:
+        docker:
+        k8s_rpi_cluster:
+    avahi: # Group for managing the avahi software
+      children:
+        critical_services_docker1:

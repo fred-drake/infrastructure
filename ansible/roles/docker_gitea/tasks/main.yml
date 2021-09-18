@@ -1,0 +1,59 @@
+---
+- name: create database container
+  community.docker.docker_container:
+    name: gitea-db
+    image: "linuxserver/mariadb"
+    pull: "{{ container_pull }}"
+    hostname: gitea-db
+    env:
+      TZ: "{{ default_timezone }}"
+      PUID: "99"
+      PGID: "100"
+      MYSQL_ROOT_PASSWORD: "{{ services.gitea_db.mysql_root_password }}"
+      MYSQL_USER: "{{ services.gitea_db.mysql_user }}"
+      MYSQL_PASSWORD: "{{ services.gitea_db.mysql_password }}"
+      MYSQL_DATABASE: "{{ services.gitea_db.mysql_database }}"
+    volumes:
+      - "{{ appdata_dir }}/gitea-db:/config"
+    container_default_behavior: "{{ container_default_behavior }}"
+    network_mode: "{{ container_network }}"
+    restart_policy: unless-stopped
+    networks:
+      - name: "{{ container_network }}"
+        ipv4_address: "{{ services.gitea_db.ip }}"
+    networks_cli_compatible: "{{ container_networks_cli_compatible }}"
+    state: "{{ container_state }}"
+  notify:
+    - deep prune docker
+  tags:
+    - gitea-db
+    - docker_update
+
+- name: create application container
+  community.docker.docker_container:
+    name: "{{ role_name }}"
+    image: "gitea/gitea"
+    pull: "{{ container_pull }}"
+    hostname: "{{ role_name }}"
+    env:
+      TZ: "{{ default_timezone }}"
+      GITEA__database__DB_TYPE: mysql
+      GITEA__database__HOST: "{{ services.gitea.db_host }}"
+      GITEA__database__NAME: "{{ services.gitea_db.mysql_database }}"
+      GITEA__database__USER: "{{ services.gitea_db.mysql_password }}"
+      GITEA__database__PASSWD: "{{ services.gitea_db.mysql_user }}"
+    volumes:
+      - "{{ appdata_dir }}/gitea:/data"
+    container_default_behavior: "{{ container_default_behavior }}"
+    network_mode: "{{ container_network }}"
+    restart_policy: unless-stopped
+    networks:
+      - name: "{{ container_network }}"
+        ipv4_address: "{{ services.gitea.ip }}"
+    networks_cli_compatible: "{{ container_networks_cli_compatible }}"
+    state: "{{ container_state }}"
+  notify:
+    - deep prune docker
+  tags:
+    - gitea
+    - docker_update

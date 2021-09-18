@@ -1,0 +1,33 @@
+- name: notea database server
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'notea-db.yml') | from_yaml_all }}"
+  tags:
+    - notea_db
+    - notea_all
+
+- name: delete notea server
+  k8s:
+    state: absent
+    definition: "{{ lookup('template', 'notea-db.yml') | from_yaml_all }}"
+  tags:
+    - never
+    - delete_notea_db
+    - delete_notea_all
+
+- name: notea server
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'notea.yml') | from_yaml_all }}"
+  tags:
+    - notea
+    - notea_all
+
+- name: delete notea server
+  k8s:
+    state: absent
+    definition: "{{ lookup('template', 'notea.yml') | from_yaml_all }}"
+  tags:
+    - never
+    - delete_notea
+    - delete_notea_all

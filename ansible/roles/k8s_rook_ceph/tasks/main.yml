@@ -1,0 +1,115 @@
+---
+- name: create temporary directory to store rook
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp
+  register: tempdir
+  changed_when: False
+  tags:
+    - rook_ceph
+
+- name: check out latest rook from git
+  ansible.builtin.git:
+    repo: https://github.com/rook/rook.git
+    dest: "{{ tempdir.path }}"
+    single_branch: true
+    version: master
+  changed_when: False
+  tags:
+    - rook_ceph
+
+- name: apply crds
+  k8s:
+    state: present
+    src: "{{ tempdir.path }}/cluster/examples/kubernetes/ceph/crds.yaml"
+  tags:
+    - rook_ceph
+
+- name: apply common
+  k8s:
+    state: present
+    src: "{{ tempdir.path }}/cluster/examples/kubernetes/ceph/common.yaml"
+  tags:
+    - rook_ceph
+
+- name: apply operator
+  k8s:
+    state: present
+    src: "{{ tempdir.path }}/cluster/examples/kubernetes/ceph/operator.yaml"
+  tags:
+    - rook_ceph
+
+- name: disable dashboard ssl at the service level
+  replace:
+    path: "{{ tempdir.path }}/cluster/examples/kubernetes/ceph/cluster.yaml"
+    regexp: "ssl: true"
+    replace: "ssl: false"
+  changed_when: False
+  tags:
+    - rook_ceph
+
+- name: apply cluster
+  k8s:
+    state: present
+    src: "{{ tempdir.path }}/cluster/examples/kubernetes/ceph/cluster.yaml"
+  tags:
+    - rook_ceph
+
+- name: apply rbd storage class
+  k8s:
+    state: present
+    src: "{{ tempdir.path }}/cluster/examples/kubernetes/ceph/csi/rbd/storageclass.yaml"
+  tags:
+    - rook_ceph
+
+- name: apply toolbox
+  k8s:
+    state: present
+    src: "{{ tempdir.path }}/cluster/examples/kubernetes/ceph/toolbox.yaml"
+  tags:
+    - rook_ceph
+
+- name: apply ingress
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'rook-ceph-ingress.yml') | from_yaml_all }}"
+  tags:
+    - rook_ceph
+
+# - name: adjust dashboard password
+#   kubernetes.core.k8s_exec:
+#     namespace: rook-ceph
+#     pod: rook-ceph-tools
+#     command: ceph dashboard ac-user-set-password admin foo
+#   tags:
+#     - testing
+
+- name: remove default from local-path
+  k8s:
+    definition:
+      apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        annotations:
+          storageclass.kubernetes.io/is-default-class: "false" 
+        name: local-path
+
+- name: add default to rook-ceph-block
+  k8s:
+    definition:
+      apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        annotations:
+          storageclass.kubernetes.io/is-default-class: "true" 
+        name: rook-ceph-block
+
+
+- name: remove rook-ceph
+  k8s:
+    name: rook-ceph
+    kind: Namespace
+    state: absent
+  tags:
+    - never
+    - delete_rook_ceph

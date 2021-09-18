@@ -1,0 +1,35 @@
+---
+- name: install avahi daemon
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  loop:
+    - avahi-daemon
+    - avahi-utils
+  tags:
+    - avahi_update
+
+- name: copy configuration file
+  copy:
+    src: avahi-daemon.conf
+    dest: /etc/avahi/avahi-daemon.conf
+    mode: '0644'
+  notify:
+    - restart avahi
+  tags:
+    - avahi_update
+
+- name: execute service restart if necessary
+  meta: flush_handlers
+  tags:
+    - avaihi_update
+
+- name: check if service is started
+  service:
+    name: avahi-daemon
+    state: started
+  notify:
+    - fail because service is stopped
+  tags:
+    - avahi_update

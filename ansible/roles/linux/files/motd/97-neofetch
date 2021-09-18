@@ -1,0 +1,5 @@
+#!/bin/sh
+
+hostname | figlet -f big
+echo ""
+neofetch

@@ -1,0 +1,4 @@
+---
+exclude_paths:
+  - ./ansible/galaxy_roles/
+  - ./ansible/galaxy_collections/
