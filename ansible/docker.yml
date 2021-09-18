@@ -57,5 +57,5 @@
   become: true
   roles:
     - base
-    - pihole
-    - dhcp
+    - docker_pihole
+    - docker_dhcp
