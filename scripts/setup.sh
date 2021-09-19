@@ -10,4 +10,4 @@ set -x
 
 pip3 install -r ansible/dev-requirements.txt
 
-cd ansible/ && ansible-galaxy install -r galaxy-requirements.yml
+cd ansible/ && ansible-galaxy install -r galaxy-requirements.yml --upgrade
