@@ -28,4 +28,5 @@ spec:
   tls:
     - hosts:
       - "rook.${SECRET_DOMAIN}"
+      - "*.${SECRET_DOMAIN}"
       secretName: "rook-tls"

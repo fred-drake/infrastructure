@@ -38,6 +38,7 @@ spec:
         tls:
           - hosts:
             - "whoogle.${SECRET_DOMAIN}"
+            - "*.${SECRET_DOMAIN}"
             secretName: "whoogle-tls"
     monitoring:
       enabled: false
