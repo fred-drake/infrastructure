@@ -114,4 +114,4 @@ services: "{{ vault_services }}"
 
 k8s:
   k3s_version: v1.21.5+k3s1
-  
+  flux_fingerprint: BF521FA92D478E4759FC81FA5C8A60849BE61D56

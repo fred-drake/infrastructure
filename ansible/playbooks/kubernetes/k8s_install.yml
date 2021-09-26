@@ -18,7 +18,7 @@
   tasks:
     - name: check if cluster is installed
       ansible.builtin.stat:
-        path: "/etc/rancher/k3s/k3s.yaml"
+        path: "/usr/local/bin/k3s"
       register: k3s_check_installed
       check_mode: false
 
@@ -26,7 +26,7 @@
       delegate_to: localhost
       become: false
       command:
-        chdir: "~"
+        chdir: "{{ playbook_dir }}/../../../"
         cmd: >
           k3sup install --host={{ server_hostname }} 
           --user={{ ansible_user }} 
@@ -41,7 +41,7 @@
   tasks:
     - name: check if cluster is installed
       ansible.builtin.stat:
-        path: "/etc/rancher/node/password"
+        path: "/usr/local/bin/k3s"
       register: k3s_check_installed
       check_mode: false
 
