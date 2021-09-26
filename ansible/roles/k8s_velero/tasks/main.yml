@@ -13,7 +13,9 @@
     - set credentials in temp file
     - install velero
     - set automatic backup
-  tags: velero
+  tags: 
+    - velero
+    - k8s_setup
 
 - name: delete velero namespace
   k8s:

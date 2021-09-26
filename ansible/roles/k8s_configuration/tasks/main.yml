@@ -7,3 +7,4 @@
     state: present
     definition: "{{ lookup('template', 'backup_label.yml') | from_yaml_all }}"
   loop: "{{ backup_nodes }}"
+  tags: k8s_setup

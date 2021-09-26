@@ -48,6 +48,7 @@ def handle_feature(module):
     # install k3s, but as master or worker?
     url = ''
     token = ''
+    executable = 'sh -s - --disable servicelb'
     for param in [ 'server_url', 'token' ]:
         if module.params['role'] == 'worker' and not module.params[param]:
             module.fail_json('if role is set to worker, {0} must be defined!'.format(param))
@@ -56,12 +57,13 @@ def handle_feature(module):
     if module.params['role'] == 'worker':
         url = ' K3S_URL={0}'.format(module.params['server_url'])
         token = ' K3S_TOKEN={0}'.format(module.params['token'])
+        executable = 'sh -'
     
     if module.check_mode:
         module.exit_json(changed=True)
         return
 
-    execute_process(['curl -sfL https://get.k3s.io |{0}{1} sh -'.format(url, token)], shell=True)        
+    execute_process(['curl -sfL https://get.k3s.io |{0}{1} {2}'.format(url, token, executable)], shell=True)
     module.exit_json(changed=True)
 
 def main():

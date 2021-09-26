@@ -1,0 +1,10 @@
+---
+- import_playbook: linux.yml
+
+- import_playbook: raspberry_pi.yml
+
+# - import_playbook: k8s.yml
+
+- import_playbook: avahi.yml
+
+- import_playbook: docker.yml

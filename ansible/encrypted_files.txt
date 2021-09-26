@@ -1,4 +1,4 @@
 roles/pivpn_server/templates/setupVars.j2
-roles/swag_internal/files
+roles/docker_swag_internal/files
 roles/linux/files/public_keys
 inventories/hosts.yml

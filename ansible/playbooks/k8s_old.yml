@@ -1,0 +1,89 @@
+---
+- hosts: k8s_rpi_backup
+  gather_facts: false
+  become: true
+  tasks:
+    - name: mount backup volume
+      ansible.posix.mount:
+        path: /mnt/backup
+        src: /dev/sda1
+        fstype: ext4
+        state: mounted
+  tags:
+    - k8s_setup
+
+- hosts: k8s_rpi_master
+  gather_facts: false
+  become: true
+  tasks:
+    - name: enable k3s on master
+      k3s:
+        state: present
+        role: master
+  tags: k8s_setup
+
+- hosts: k8s_rpi_cluster:!k8s_rpi_master
+  gather_facts: false
+  become: true
+  serial: 1
+  tasks:
+    - name: get token from master
+      slurp:
+        src: /var/lib/rancher/k3s/server/node-token
+      delegate_to: "{{ groups['k8s_rpi_master'][0] }}"
+      register: token
+    - name: enable k3s on workers and join with master
+      k3s:
+        state: present
+        role: worker
+        server_url: "https://{{ cluster_master_host }}:6443"
+        token: "{{ token.content | b64decode | trim }}"
+  tags: k8s_setup
+
+- hosts: k8s_rpi_master
+  gather_facts: false
+  become: true
+  tasks:
+    - name: copy kubeconfig to local user
+      copy:
+        remote_src: true
+        src: "{{ kubeconfig_location }}"
+        dest: "/home/{{ ansible_user }}/.kube/config"
+        mode: '0600'
+        owner: "{{ ansible_user }}"
+    - name: change localhost servername to master host
+      ansible.builtin.lineinfile:
+        path: "/home/{{ ansible_user }}/.kube/config"
+        regexp: '^\s+server:'
+        line: "    server: https://{{ ansible_host }}:6443"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0600'
+  tags: k8s_setup
+
+- hosts: k8s_rpi_cluster
+  gather_facts: false
+  become: true
+  roles:
+    - k8s_cifs
+
+- hosts: k8s_rpi_master
+  gather_facts: false
+  become: false
+  roles:
+    # Initial setup roles
+    - k8s_configuration
+    - k8s_rook_ceph
+    - k8s_velero
+    - k8s_cert_manager
+    - k8s_minio_backup
+    - k8s_metallb
+    # Service roles
+    - k8s_kubegres
+    - k8s_cyberchef
+    - k8s_netbox
+    - k8s_whoogle
+    - k8s_tautulli
+    - k8s_gaps
+    - k8s_notea
+    - k8s_gitea

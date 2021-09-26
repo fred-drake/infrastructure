@@ -1,0 +1,29 @@
+---
+- hosts: k8s_rpi_cluster
+  gather_facts: false
+  become: true
+  tasks:
+    - name: uninstall k3s
+      k3s:
+        state: absent
+
+# - hosts: k8s_rpi_ssd
+#   gather_facts: false
+#   become: true
+#   tasks:
+#     - name: remove primary partition
+#       community.general.parted:
+#         device: /dev/sda
+#         number: 1
+#         state: absent
+#     - name: create primary partition
+#       community.general.parted:
+#         device: /dev/sda
+#         number: 1
+#         state: present
+#         fs_type: ext4
+#     - name: Create a ext4 filesystem on primary partition
+#       community.general.filesystem:
+#         fstype: ext4
+#         dev: /dev/sda1
+#         force: true

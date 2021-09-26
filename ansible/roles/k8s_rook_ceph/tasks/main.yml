@@ -7,6 +7,7 @@
   changed_when: False
   tags:
     - rook_ceph
+    - k8s_setup
 
 - name: check out latest rook from git
   ansible.builtin.git:
@@ -17,6 +18,7 @@
   changed_when: False
   tags:
     - rook_ceph
+    - k8s_setup
 
 - name: apply crds
   k8s:
@@ -24,6 +26,7 @@
     src: "{{ tempdir.path }}/cluster/examples/kubernetes/ceph/crds.yaml"
   tags:
     - rook_ceph
+    - k8s_setup
 
 - name: apply common
   k8s:
@@ -31,6 +34,7 @@
     src: "{{ tempdir.path }}/cluster/examples/kubernetes/ceph/common.yaml"
   tags:
     - rook_ceph
+    - k8s_setup
 
 - name: apply operator
   k8s:
@@ -38,6 +42,7 @@
     src: "{{ tempdir.path }}/cluster/examples/kubernetes/ceph/operator.yaml"
   tags:
     - rook_ceph
+    - k8s_setup
 
 - name: disable dashboard ssl at the service level
   replace:
@@ -47,6 +52,7 @@
   changed_when: False
   tags:
     - rook_ceph
+    - k8s_setup
 
 - name: apply cluster
   k8s:
@@ -54,6 +60,7 @@
     src: "{{ tempdir.path }}/cluster/examples/kubernetes/ceph/cluster.yaml"
   tags:
     - rook_ceph
+    - k8s_setup
 
 - name: apply rbd storage class
   k8s:
@@ -61,6 +68,7 @@
     src: "{{ tempdir.path }}/cluster/examples/kubernetes/ceph/csi/rbd/storageclass.yaml"
   tags:
     - rook_ceph
+    - k8s_setup
 
 - name: apply toolbox
   k8s:
@@ -68,6 +76,7 @@
     src: "{{ tempdir.path }}/cluster/examples/kubernetes/ceph/toolbox.yaml"
   tags:
     - rook_ceph
+    - k8s_setup
 
 - name: apply ingress
   k8s:
@@ -75,6 +84,7 @@
     definition: "{{ lookup('template', 'rook-ceph-ingress.yml') | from_yaml_all }}"
   tags:
     - rook_ceph
+    - k8s_setup
 
 # - name: adjust dashboard password
 #   kubernetes.core.k8s_exec:
@@ -93,6 +103,8 @@
         annotations:
           storageclass.kubernetes.io/is-default-class: "false" 
         name: local-path
+  tags:
+    - k8s_setup
 
 - name: add default to rook-ceph-block
   k8s:
@@ -103,6 +115,8 @@
         annotations:
           storageclass.kubernetes.io/is-default-class: "true" 
         name: rook-ceph-block
+  tags:
+    - k8s_setup
 
 
 - name: remove rook-ceph
@@ -113,3 +127,4 @@
   tags:
     - never
     - delete_rook_ceph
+

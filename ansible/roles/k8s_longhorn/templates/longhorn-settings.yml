@@ -1,0 +1,13 @@
+apiVersion: longhorn.io/v1beta1
+kind: Setting
+metadata:
+  name: backup-target
+  namespace: longhorn-system
+value: {{ longhorn_backup_s3.target }}
+---
+apiVersion: longhorn.io/v1beta1
+kind: Setting
+metadata:
+  name: backup-target-credential-secret
+  namespace: longhorn-system
+value: minio-secret

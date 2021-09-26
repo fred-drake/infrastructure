@@ -1,0 +1,8 @@
+apiVersion: longhorn.io/v1beta1
+kind: Node
+metadata:
+  name: {{ item.key }}
+  namespace: longhorn-system
+spec:
+  allowScheduling: {{ item.value }}
+  name: {{ item.key }}

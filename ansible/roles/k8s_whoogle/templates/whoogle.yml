@@ -30,34 +30,68 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: "{{ services.whoogle.name }}"
+  name: "{{ services.whoogle.name }}-service"
   namespace: "{{ services.whoogle.name }}"
 spec:
-  type: NodePort
   selector:
     app: "{{ services.whoogle.name }}"
   ports:
     - port: 80
       targetPort: 5000
-      name: ui-port
+      name: http
+# ---
+# kind: Service
+# apiVersion: v1
+# metadata:
+#   name: "{{ services.whoogle.name }}-lb"
+#   namespace: "{{ services.whoogle.name }}"
+# spec:
+#   loadBalancerIP: "192.168.50.242"
+#   type: LoadBalancer
+#   selector:
+#     app: "{{ services.whoogle.name }}-ingress"
+#   ports:
+#     - port: 80
+#       targetPort: 80
+    # - port: 443
+    #   targetPort: 443
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: "{{ services.whoogle.name }}"
+#   namespace: "{{ services.whoogle.name }}"
+# spec:
+#   rules:
+#   - host: "{{ services.whoogle.name }}.{{ domain_name }}"
+#     http:
+#       paths:
+#       - pathType: Prefix
+#         path: "/"
+#         backend:
+#           service:
+#             name: "{{ services.whoogle.name }}"
+#             port:
+#               number: 5001
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: "{{ services.whoogle.name }}"
+  name: "{{ services.whoogle.name }}-ingress"
   namespace: "{{ services.whoogle.name }}"
 spec:
+  # loadBalancerIP: "192.168.50.243"
   rules:
   - host: "{{ services.whoogle.name }}.{{ domain_name }}"
     http:
       paths:
       - pathType: Prefix
-        path: "/"
         backend:
           service:
-            name: "{{ services.whoogle.name }}"
+            name: "{{ services.whoogle.name }}-service"
             port:
               number: 80
+        path: /
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware

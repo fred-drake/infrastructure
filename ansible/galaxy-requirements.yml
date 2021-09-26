@@ -5,5 +5,6 @@ collections:
   - community.docker
   - ansible.netcommon
   - community.kubernetes
+  - kubernetes.core
 
 roles: []
