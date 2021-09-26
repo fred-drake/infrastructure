@@ -26,7 +26,7 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          cert-manager.io/cluster-issuer: "${CERT_CLUSTER_ISSUER}"
+          # cert-manager.io/cluster-issuer: "${CERT_CLUSTER_ISSUER}"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           hajimari.io/enable: "true"
           hajimari.io/icon: "test-tube"
@@ -35,9 +35,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-        tls:
-          - hosts:
-            - "whoogle.${SECRET_DOMAIN}"
-            secretName: "whoogle-tls"
+        # tls:
+        #   - hosts:
+        #     - "whoogle.${SECRET_DOMAIN}"
+        #     secretName: "whoogle-tls"
     monitoring:
       enabled: false
