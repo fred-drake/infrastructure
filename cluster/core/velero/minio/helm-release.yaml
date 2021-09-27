@@ -6,14 +6,15 @@ metadata:
   namespace: velero
 spec:
   interval: 5m
+  nodeSelector:
+    backup_storage: "true"
   chart:
     spec:
-      # renovate: registryUrl=https://charts.bitnami.com/bitnami
+      # renovate: registryUrl=https://operator.min.io/
       chart: minio
-      version: 8.1.4
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: minio-charts
         namespace: flux-system
       interval: 5m
   values:
