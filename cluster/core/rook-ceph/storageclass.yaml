@@ -18,6 +18,8 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: rook-ceph-block
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
 # Change "rook-ceph" provisioner prefix to match the operator namespace if needed
 provisioner: rook-ceph.rbd.csi.ceph.com
 parameters:
@@ -71,4 +73,4 @@ parameters:
 # Its still in Alpha support. Therefore, this option is not recommended for production use.
 #mounter: rbd-nbd
 allowVolumeExpansion: true
-reclaimPolicy: Delete
+reclaimPolicy: Retain

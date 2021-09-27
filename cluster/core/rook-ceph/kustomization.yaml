@@ -6,6 +6,6 @@ resources:
   - helm-release.yaml
   - cluster.yaml
   - toolbox.yaml
+  - remove-default-storage.yaml
   - storageclass.yaml
   - dashboard-ingress.yaml
-  - default-storage.yaml
