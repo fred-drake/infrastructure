@@ -235,13 +235,13 @@ spec:
     nodes:
     - name: "k8srpiw02"
       devices:
-        - name: "/dev/sda1"
+        - name: "sda1"
     - name: "k8srpiw03"
       devices:
-        - name: "/dev/sda1"
+        - name: "sda1"
     - name: "k8srpiw04"
       devices:
-        - name: "/dev/sda1"
+        - name: "sda1"
   # The section for configuring management of daemon disruptions during upgrade or fencing.
   disruptionManagement:
     # If true, the operator will create and manage PodDisruptionBudgets for OSD, Mon, RGW, and MDS daemons. OSD PDBs are managed dynamically
