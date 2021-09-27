@@ -8,3 +8,4 @@ resources:
   - toolbox.yaml
   - storageclass.yaml
   - dashboard-ingress.yaml
+  - default-storage.yaml
