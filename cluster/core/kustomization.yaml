@@ -6,3 +6,4 @@ resources:
   - cert-manager
   - system-upgrade
   - rook-ceph
+  - velero
