@@ -7,7 +7,7 @@ metadata:
 data:
   METALLB_LB_RANGE: 192.168.50.225-192.168.50.250
   SVC_TRAEFIK_ADDR: 192.168.50.240
-  # CERT_CLUSTER_ISSUER: letsencrypt-production
+  CERT_CLUSTER_ISSUER: letsencrypt-production
   # CERT_CLUSTER_ISSUER: letsencrypt-staging
-  CERT_CLUSTER_ISSUER: zerossl-production
+  # CERT_CLUSTER_ISSUER: zerossl-production
   TIMEZONE: America/New_York
