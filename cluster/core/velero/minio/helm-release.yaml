@@ -6,8 +6,6 @@ metadata:
   namespace: velero
 spec:
   interval: 5m
-  nodeSelector:
-    backup_storage: "true"
   chart:
     spec:
       # renovate: registryUrl=https://operator.min.io/
@@ -18,6 +16,7 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    nodeSelector:
+      backup_storage: "true"
     env:
       TZ: "${TIMEZONE}"
-
