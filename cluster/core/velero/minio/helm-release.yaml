@@ -18,5 +18,5 @@ spec:
   values:
     nodeSelector:
       backup_storage: "true"
-    env:
-      TZ: "${TIMEZONE}"
+    # env:
+    #   TZ: "${TIMEZONE}"
