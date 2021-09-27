@@ -207,8 +207,8 @@ spec:
 #    osd: rook-ceph-osd-priority-class
 #    mgr: rook-ceph-mgr-priority-class
   storage: # cluster level storage configuration and selection
-    useAllNodes: true
-    useAllDevices: true
+    useAllNodes: false
+    useAllDevices: false
     #deviceFilter:
     config:
       # crushRoot: "custom-root" # specify a non-default root label for the CRUSH map
@@ -232,6 +232,16 @@ spec:
     #     deviceFilter: "^sd."
     # when onlyApplyOSDPlacement is false, will merge both placement.All() and placement.osd
     onlyApplyOSDPlacement: false
+    nodes:
+    - name: "k8srpiw02"
+      devices:
+        - name: "/dev/sda1"
+    - name: "k8srpiw03"
+      devices:
+        - name: "/dev/sda1"
+    - name: "k8srpiw04"
+      devices:
+        - name: "/dev/sda1"
   # The section for configuring management of daemon disruptions during upgrade or fencing.
   disruptionManagement:
     # If true, the operator will create and manage PodDisruptionBudgets for OSD, Mon, RGW, and MDS daemons. OSD PDBs are managed dynamically
