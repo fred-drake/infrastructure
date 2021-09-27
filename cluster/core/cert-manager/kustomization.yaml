@@ -4,5 +4,6 @@ resources:
   - helm-release.yaml
   - letsencrypt-production.yaml
   - letsencrypt-staging.yaml
+  - zerossl.yaml
   - secret.sops.yaml
   - domain-certificate.yaml
