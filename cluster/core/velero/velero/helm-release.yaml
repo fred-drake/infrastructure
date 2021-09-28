@@ -14,8 +14,6 @@ spec:
         kind: HelmRepository
         name: vmware-tanzu-charts
         namespace: flux-system
-        spec:
-          url: https://vmware-tanzu.github.io/helm-charts
       interval: 5m
   values:
     ## EnableCSI uses the new kubernetes CSI snapshot beta feature
