@@ -76,17 +76,17 @@ metadata:
 spec:
   ingressClassName: "traefik"
   rules:
-  # - host: "minio.${SECRET_DOMAIN}"
-  #   http:
-  #     paths:
-  #     - pathType: Prefix
-  #       path: "/"
-  #       backend:
-  #         service:
-  #           name: minio
-  #           port:
-  #             number: 9000
   - host: "minio-backup.${SECRET_DOMAIN}"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: minio
+            port:
+              number: 9000
+  - host: "minio-backup-ui.${SECRET_DOMAIN}"
     http:
       paths:
       - pathType: Prefix
@@ -98,5 +98,6 @@ spec:
               number: 9001
   tls:
     - hosts:
+      - "minio-backup-ui.${SECRET_DOMAIN}"
       - "minio-backup.${SECRET_DOMAIN}"
       secretName: "minio-backup-tls"
