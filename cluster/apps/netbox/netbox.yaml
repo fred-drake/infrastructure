@@ -91,5 +91,5 @@ spec:
               number: 80
   tls:
     - hosts:
-      - "notea.${SECRET_DOMAIN}"
+      - "netbox.${SECRET_DOMAIN}"
       secretName: "netbox-tls"
