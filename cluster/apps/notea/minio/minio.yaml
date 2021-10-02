@@ -14,8 +14,6 @@ spec:
       labels:
         app: minio
     spec:
-      nodeSelector:
-        backup_storage: "true"
       volumes:
         - name: config-vol
           persistentVolumeClaim:
