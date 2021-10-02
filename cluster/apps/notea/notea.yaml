@@ -25,7 +25,7 @@ spec:
             - name: STORE_SECRET_KEY
               value: "${SECRET_NOTEA_MINIO_ROOT_PASSWORD}"
             - name: STORE_BUCKET
-              value: ${NOTEA_STORE_BUCKET}
+              value: notea
             - name: STORE_END_POINT
               value: "http://minio.notea.svc.cluster.local:9000"
             - name: STORE_FORCE_PATH_STYLE
