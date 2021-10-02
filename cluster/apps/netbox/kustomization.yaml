@@ -4,4 +4,4 @@ resources:
   - namespace.yaml
   - postgres
   - redis
-
+  - netbox.yaml
