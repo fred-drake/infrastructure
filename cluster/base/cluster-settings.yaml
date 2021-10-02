@@ -12,4 +12,4 @@ data:
   # CERT_CLUSTER_ISSUER: zerossl-production
   TIMEZONE: America/New_York
 
-  NOTEA_STORE_BUCKET: notea2
+  NOTEA_STORE_BUCKET: notea

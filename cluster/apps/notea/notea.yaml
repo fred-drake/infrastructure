@@ -27,7 +27,7 @@ spec:
             - name: STORE_BUCKET
               value: ${NOTEA_STORE_BUCKET}
             - name: STORE_END_POINT
-              value: "https://notea-db.${SECRET_DOMAIN}"
+              value: "http://minio.notea.svc.cluster.local:9000"
             - name: STORE_FORCE_PATH_STYLE
               value: "true"
             - name: PASSWORD
