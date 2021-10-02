@@ -10,27 +10,44 @@ stringData:
   superUserPassword: "${SECRET_NETBOX_POSTGRES_SUPERUSER_PASSWORD}"
   # replicationUserPassword: "{{ services.netbox_db_postgres.replication_password }}"
 ---
-apiVersion: kubegres.reactive-tech.io/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres
   namespace: netbox
 spec:
   replicas: 1
-  image: postgres:12
-  imagePullPolicy: Always
-  database:
-    size: 20Gi
-  env:
-    - name: POSTGRES_DB
-      value: "${SECRET_NETBOX_POSTGRES_DB}"
-    - name: POSTGRES_USER
-      value: "${SECRET_NETBOX_POSTGRES_USER}"
-    - name: POSTGRES_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: postgres-secret
-          key: userPassword
+  selector:
+    matchLabels:
+      app: netbox
+  template:
+    metadata:
+      labels:
+        app: netbox
+    spec:
+      volumes:
+        - name: data-vol
+          persistentVolumeClaim:
+            claimName: netbox-postgres-pvc
+      containers:
+        - name: postgres
+          image: postgres:12
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "${TIMEZONE}"
+            - name: POSTGRES_DB
+              value: "${SECRET_NETBOX_POSTGRES_DB}"
+            - name: POSTGRES_USER
+              value: "${SECRET_NETBOX_POSTGRES_USER}"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: userPassword
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: data-vol
 ---
 apiVersion: v1
 kind: Service
