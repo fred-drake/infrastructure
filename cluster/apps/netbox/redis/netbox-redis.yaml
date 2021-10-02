@@ -31,21 +31,21 @@ spec:
   selector:
     matchLabels:
       app: redis
-  volumeClaimTemplates:
-  - metadata:
-        name: data
-    spec:
-        accessModes: ["ReadWriteOnce"]
-        resources:
-            requests:
-                storage: 20Gi
-  - metadata:
-        name: conf
-    spec:
-        accessModes: ["ReadWriteOnce"]
-        resources:
-            requests:
-                storage: 20Gi
+  # volumeClaimTemplates:
+  # - metadata:
+  #       name: data
+  #   spec:
+  #       accessModes: ["ReadWriteOnce"]
+  #       resources:
+  #           requests:
+  #               storage: 20Gi
+  # - metadata:
+  #       name: conf
+  #   spec:
+  #       accessModes: ["ReadWriteOnce"]
+  #       resources:
+  #           requests:
+  #               storage: 20Gi
   template:
     metadata:
       labels:
@@ -55,6 +55,9 @@ spec:
         - name: config-map
           configMap:
             name: redis
+        - name: data
+          persistentVolumeClaim:
+            claimName: netbox-redis-pvc
       containers:
       - name: redis
         image: redis
