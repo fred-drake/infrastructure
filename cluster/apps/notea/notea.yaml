@@ -79,3 +79,4 @@ spec:
     - hosts:
       - "notea.${SECRET_DOMAIN}"
       secretName: "notea-app-tls"
+
