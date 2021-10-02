@@ -93,3 +93,4 @@ spec:
     - hosts:
       - "netbox.${SECRET_DOMAIN}"
       secretName: "netbox-tls"
+
