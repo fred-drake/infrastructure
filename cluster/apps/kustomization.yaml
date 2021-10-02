@@ -6,5 +6,6 @@ resources:
   - networking
   - system-upgrade
   - whoogle
+  - netbox
   - cyberchef
   # - notea
