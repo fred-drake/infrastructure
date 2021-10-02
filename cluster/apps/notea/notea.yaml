@@ -25,7 +25,7 @@ spec:
             - name: STORE_SECRET_KEY
               value: "${SECRET_NOTEA_MINIO_ROOT_PASSWORD}"
             - name: STORE_BUCKET
-              value: notea
+              value: ${NOTEA_STORE_BUCKET}
             - name: STORE_END_POINT
               value: "https://notea-db.${SECRET_DOMAIN}"
             - name: STORE_FORCE_PATH_STYLE
