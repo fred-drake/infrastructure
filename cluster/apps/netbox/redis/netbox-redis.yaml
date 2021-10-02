@@ -21,7 +21,7 @@ data:
     slaveof redis-0.redis 6379
 ---
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: redis
   namespace: netbox
