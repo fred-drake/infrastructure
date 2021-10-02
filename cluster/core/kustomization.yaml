@@ -8,3 +8,4 @@ resources:
   - rook-ceph
   - velero
   - ../apps/notea
+  - ../apps/netbox
