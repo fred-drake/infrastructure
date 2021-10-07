@@ -1,5 +1,0 @@
----
-- name: wait for package
-  wait_for:
-    timeout: 30
-  delegate_to: localhost
