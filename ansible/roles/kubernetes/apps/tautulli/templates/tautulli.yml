@@ -1,0 +1,88 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tautulli
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: tautulli
+  namespace: tautulli
+spec:
+  serviceName: tautulli
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tautulli
+  volumeClaimTemplates:
+  - metadata:
+      name: config
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 20Gi
+  template:
+    metadata:
+      labels:
+        app: tautulli
+    spec:
+      containers:
+      - name: tautulli
+        image: tautulli/tautulli
+        env:
+        - name: TZ
+          value: "{{ default_timezone }}"
+        - name: PUID
+          value: "99"
+        - name: PGID
+          value: "100"
+        volumeMounts:
+        - name: config
+          mountPath: /config
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: tautulli
+  namespace: tautulli
+spec:
+  type: NodePort
+  selector:
+    app: tautulli
+  ports:
+    - port: 80
+      targetPort: 8181
+      name: web
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tautulli
+  namespace: tautulli
+  annotations:
+    cert-manager.io/cluster-issuer: "{{ cert_manager.cluster_issuer }}"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "test-tube"
+  labels:
+    app.kubernetes.io/instance: tautulli
+    app.kubernetes.io/name: tautulli
+spec:
+  ingressClassName: "traefik"
+  rules:
+  - host: "tautulli.{{ secret.domain }}"
+    http: 
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: tautulli
+            port:
+              number: 80
+  tls:
+    - hosts:
+      - "tautulli.{{ secret.domain }}"
+      secretName: "tautulli-tls"

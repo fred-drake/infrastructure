@@ -33,7 +33,6 @@
     - docker_syncthing
     - docker_teslamate
     - docker_torrent
-    - docker_mqtt
     - docker_readarr
     - docker_calibre
     - docker_calibre_web

@@ -17,6 +17,7 @@
     - kubernetes/apps/netbox
     - kubernetes/apps/gitea
     - kubernetes/apps/mqtt
+    - kubernetes/apps/tautulli
 
   # tasks:
   # - name: test
