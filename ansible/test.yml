@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  gather_facts: true
+  become: false
+  roles:
+    - kubernetes/base/secrets
+    - kubernetes/core/metallb
+    - kubernetes/core/traefik
+    - kubernetes/apps/whoogle
+    - kubernetes/apps/notea
+    - kubernetes/core/cert-manager
+    - kubernetes/core/velero
+    - kubernetes/core/rook-ceph
+    - kubernetes/core/reloader
+    - kubernetes/core/kubegres
+    - kubernetes/apps/cyberchef
+    - kubernetes/apps/netbox
+    - kubernetes/apps/gitea
+
+  # tasks:
+  # - name: test
+  #   debug:
+  #     var: cert_manager.cluster_issuer

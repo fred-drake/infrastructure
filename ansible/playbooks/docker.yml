@@ -51,6 +51,7 @@
   become: true
   roles:
     - base
+    - docker_dhcp
 
 - hosts: critical_services_docker2
   gather_facts: false
@@ -58,4 +59,3 @@
   roles:
     - base
     - docker_pihole
-    - docker_dhcp

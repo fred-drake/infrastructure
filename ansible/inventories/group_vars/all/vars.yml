@@ -2,8 +2,27 @@
 # Force to use this specific interpretor
 ansible_python_interpreter: /usr/bin/python3
 
+cert_manager:
+  cluster_issuer: letsencrypt-production
+
+metallb:
+  range: 192.168.50.225-192.168.50.250
+
+traefik:
+  address: "192.168.50.240"
+
 # Domain name for your network (e.g. internal.mydomain.com)
 domain_name: "{{ vault_domain_name }}"
+
+kubegres:
+    version: 1.9
+
+notea_db:
+  name: notea-db
+  host: notea-db
+  ui_host: notea-db-ui
+notea:
+  password: notea
 
 # Hosts that are stored in the inventory
 #

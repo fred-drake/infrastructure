@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: Node
-metadata:
-  name: "${SECRET_BACKUP_MINIO_STORAGE_NODE}"
-  labels:
-    backup_storage: 'true'

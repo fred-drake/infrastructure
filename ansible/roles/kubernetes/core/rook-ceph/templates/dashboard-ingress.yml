@@ -1,0 +1,31 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rook-ceph-mgr-dashboard
+  namespace: rook-ceph
+  annotations:
+    cert-manager.io/cluster-issuer: "{{ cert_manager.cluster_issuer }}"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "test-tube"
+  labels:
+    app.kubernetes.io/instance: rook-ceph-mgr-dashboard
+    app.kubernetes.io/name: rook-ceph-mgr-dashboard
+spec:
+  ingressClassName: "traefik"
+  rules:
+    - host: "rook.{{ secret.domain }}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: rook-ceph-mgr-dashboard
+                port:
+                  name: http-dashboard
+  tls:
+    - hosts:
+      - "rook.{{ secret.domain }}"
+      secretName: "rook-tls"

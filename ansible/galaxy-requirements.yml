@@ -6,5 +6,6 @@ collections:
   - ansible.netcommon
   - community.kubernetes
   - kubernetes.core
+  - community.sops
 
 roles: []

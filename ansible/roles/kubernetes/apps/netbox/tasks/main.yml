@@ -1,0 +1,73 @@
+- name: namespace
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'namespace.yml') | from_yaml_all }}"
+  tags: netbox
+
+# - name: postgres-pvc
+#   k8s:
+#     state: present
+#     definition: "{{ lookup('template', 'postgres/postgres-pvc.yml') | from_yaml_all }}"
+#   tags: netbox
+
+- name: postgres
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'postgres/netbox-postgres.yml') | from_yaml_all }}"
+  tags: netbox
+
+# - name: redis-pvc
+#   k8s:
+#     state: present
+#     definition: "{{ lookup('template', 'redis/redis-pvc.yml') | from_yaml_all }}"
+#   tags: netbox
+
+- name: redis
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'redis/netbox-redis.yml') | from_yaml_all }}"
+  tags: netbox
+
+- name: netbox
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'netbox.yml') | from_yaml_all }}"
+  tags: netbox
+
+# - name: bootc helm repo
+#   kubernetes.core.helm_repository:
+#     name: bootc
+#     repo_url: https://charts.boo.tc
+#   tags: netbox
+
+# - name: netbox helm
+#   kubernetes.core.helm:
+#     name: netbox
+#     chart_ref: bootc/netbox
+#     release_namespace: netbox
+#     create_namespace: true
+#     values:
+#       postgresql:
+#         postgresqlPostgresPassword: "{{ secret.netbox.postgres.password }}"
+#         postgresqlPassword: "{{ secret.netbox.postgres.password }}"
+#       ingress:
+#         main:
+#           enabled: true
+#           ingressClassName: "traefik"
+#           annotations:
+#             cert-manager.io/cluster-issuer: "{{ cert_manager.cluster_issuer }}"
+#             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+#             hajimari.io/enable: "true"
+#             hajimari.io/icon: "test-tube"
+#           hosts:
+#             - host: "netbox.{{ secret.domain }}"
+#               paths:
+#                 - path: /
+#                   pathType: Prefix
+#           tls:
+#             - hosts:
+#               - "netbox.{{ secret.domain }}"
+#               secretName: "netbox-tls"
+#       monitoring:
+#         enabled: false
+#   tags: netbox

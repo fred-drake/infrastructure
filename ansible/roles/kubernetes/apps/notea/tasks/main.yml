@@ -1,0 +1,23 @@
+- name: namespace
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'namespace.yml') | from_yaml_all }}"
+  tags: notea
+
+- name: minio pvc
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'minio/minio-pvc.yml') | from_yaml_all }}"
+  tags: notea
+
+- name: minio
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'minio/minio.yml') | from_yaml_all }}"
+  tags: notea
+
+- name: notea
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'notea.yml') | from_yaml_all }}"
+  tags: notea

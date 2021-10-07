@@ -1,0 +1,117 @@
+- name: namespace
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'namespace.yml') | from_yaml_all }}"
+  tags: velero
+
+- name: minio node backup label
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'minio/node-backup-label.yml') | from_yaml_all }}"
+  tags: velero
+
+- name: minio
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'minio/minio.yml') | from_yaml_all }}"
+  tags: velero
+
+- name: velero helm repo
+  kubernetes.core.helm_repository:
+    name: vmware-tanzu-charts
+    repo_url: https://vmware-tanzu.github.io/helm-charts
+  tags: velero
+
+- name: velero helm
+  kubernetes.core.helm:
+    name: velero
+    chart_ref: vmware-tanzu-charts/velero
+    release_namespace: velero
+    create_namespace: true
+    values:
+      ## EnableCSI uses the new kubernetes CSI snapshot beta feature
+      # features: "EnableCSI"
+      configuration:
+        provider: aws
+        backupStorageLocation:
+          name: default
+          bucket: velero
+          config:
+            region: default
+            s3ForcePathStyle: true
+            s3Url: "http://minio.velero.svc.cluster.local:9000"
+            publicUrl: "http://minio.velero.svc.cluster.local:9000"
+        volumeSnapshotLocation:
+          name: aws
+          config:
+            region: default
+        resticTimeout: 7h
+        defaultVolumesToRestic: true
+      credentials:
+        secretContents:
+          cloud: |
+            [default]
+            aws_access_key_id = "{{ secret.velero.minio.root_user }}"
+            aws_secret_access_key = "{{ secret.velero.minio.root_password }}"
+      initContainers:
+      - name: velero-plugin-for-aws
+        image: velero/velero-plugin-for-aws:v1.2.1
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - mountPath: /target
+          name: plugins
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: false
+      upgradeCRDs: false
+      cleanUpCRDs: false
+      snapshotsEnabled: true
+      kubectl:
+        image:
+          repository: ghcr.io/k8s-at-home/kubectl
+          tag: v1.22.2
+      deployRestic: true
+      restic:
+        podVolumePath: /var/lib/kubelet/pods
+        privileged: false
+        tolerations:
+          - key: "node-role.kubernetes.io/master"
+            operator: "Exists"
+      #   resources:
+      #     requests:
+      #       memory: 200Mi
+      #       cpu: 15m
+      #     limits:
+      #       memory: 3000Mi
+      # resources:
+      #   requests:
+      #     memory: 300Mi
+      #     cpu: 25m
+      #   limits:
+      #     memory: 1500Mi
+      schedules:
+        daily-backup:
+          schedule: "0 2 * * *"
+          template:
+            ttl: "720h"
+        weekly-backup:
+          schedule: "0 3 * * 2"
+          template:
+            ttl: "2160h"
+        # monthly-backup:
+        #   schedule: "0 3 * * 2"
+        #   template:
+        #     ttl: "720h"
+  tags: velero
+
+- name: exclude velero namespace from velero backup
+  k8s:
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: velero
+        annotations:
+          velero.io/exclude-from-backup: "true"
+  tags: velero

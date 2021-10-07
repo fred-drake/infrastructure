@@ -1,0 +1,39 @@
+- name: k8s-at-home helm repo
+  kubernetes.core.helm_repository:
+    name: k8s-at-home
+    repo_url: https://k8s-at-home.com/charts/
+  tags: whoogle
+
+- name: whoogle helm
+  kubernetes.core.helm:
+    name: whoogle
+    chart_ref: k8s-at-home/whoogle
+    release_namespace: whoogle
+    create_namespace: true
+    values:
+      image:
+        repository: benbusby/whoogle-search
+        tag: latest
+      env:
+        TZ: "{{ default_timezone }}"
+      ingress:
+        main:
+          enabled: true
+          ingressClassName: "traefik"
+          annotations:
+            cert-manager.io/cluster-issuer: "{{ cert_manager.cluster_issuer }}"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+            hajimari.io/enable: "true"
+            hajimari.io/icon: "test-tube"
+          hosts:
+            - host: "whoogle.{{ secret.domain }}"
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - hosts:
+              - "whoogle.{{ secret.domain }}"
+              secretName: "whoogle-tls"
+      monitoring:
+        enabled: false
+  tags: whoogle

@@ -1,0 +1,103 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio
+  namespace: velero
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      nodeSelector:
+        backup_storage: "true"
+      volumes:
+        - name: config-vol
+          hostPath:
+            path: /mnt/backup/minio/config
+            type: DirectoryOrCreate
+        - name: data-vol
+          hostPath:
+            path: /mnt/backup/minio/data
+            type: DirectoryOrCreate
+      containers:
+        - name: minio
+          image: minio/minio
+          imagePullPolicy: Always
+          args: ['server', '/data', '--console-address', ':9001']
+          env:
+            - name: TZ
+              value: "{{ default_timezone }}"
+            - name: MINIO_ROOT_USER
+              value: "{{ secret.velero.minio.root_user }}"
+            - name: MINIO_ROOT_PASSWORD
+              value: "{{ secret.velero.minio.root_password }}"
+          volumeMounts:
+            - mountPath: /root/.minio
+              name: config-vol
+            - mountPath: /data
+              name: data-vol
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: minio
+  namespace: velero
+spec:
+  type: ClusterIP
+  selector:
+    app: minio
+  ports:
+    - port: 9000
+      targetPort: 9000
+      name: service-port
+    - port: 9001
+      targetPort: 9001
+      name: ui-port
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio
+  namespace: velero
+  annotations:
+    cert-manager.io/cluster-issuer: "{{ cert_manager.cluster_issuer }}"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "test-tube"
+  labels:
+    app.kubernetes.io/instance: minio-dashboard
+    app.kubernetes.io/name: minio-dashboard
+spec:
+  ingressClassName: "traefik"
+  rules:
+  - host: "minio-backup.{{ secret.domain }}"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: minio
+            port:
+              number: 9000
+  - host: "minio-backup-ui.{{ secret.domain }}"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: minio
+            port:
+              number: 9001
+  tls:
+    - hosts:
+      - "minio-backup-ui.{{ secret.domain }}"
+      - "minio-backup.{{ secret.domain }}"
+      secretName: "minio-backup-tls"

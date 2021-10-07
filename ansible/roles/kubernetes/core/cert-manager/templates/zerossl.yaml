@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: cert-manager
+  name: zero-ssl-eabsecret
+data:
+  secret: "{{ secret.cert_manager.zerossl.eab_hmac_key }}"
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: zerossl-production
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme.zerossl.com/v2/DV90
+    externalAccountBinding:
+      keyID: "{{ secret.cert_manager.zerossl.eab_kid }}"
+      keySecretRef:
+        name: zero-ssl-eabsecret
+        key: secret
+      keyAlgorithm: HS256
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: zerossl-prod
+       # Enable the HTTP-01 challenge provider
+    solvers:
+      - dns01:
+          cloudflare:
+            email: "{{ secret.cert_manager.email }}"
+            apiTokenSecretRef:
+              name: cloudflare-token-secret
+              key: cloudflare-token
+        selector:
+          dnsZones:
+            - "{{ secret.domain }}"

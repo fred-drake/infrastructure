@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cyberchef
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cyberchef
+  namespace: cyberchef
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cyberchef
+  template:
+    metadata:
+      labels:
+        app: cyberchef
+    spec:
+      containers:
+        - name: cyberchef
+          image: mpepping/cyberchef
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "{{ default_timezone }}"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: cyberchef
+  namespace: cyberchef
+spec:
+  type: ClusterIP
+  selector:
+    app: cyberchef
+  ports:
+    - port: 80
+      targetPort: 8000
+      name: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cyberchef
+  namespace: cyberchef
+  annotations:
+    cert-manager.io/cluster-issuer: "{{ cert_manager.cluster_issuer }}"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "test-tube"
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: "cyberchef.{{ secret.domain }}"
+    http: 
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: "cyberchef"
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - "cyberchef.{{ secret.domain }}"
+    secretName: cyberchef-tls
+

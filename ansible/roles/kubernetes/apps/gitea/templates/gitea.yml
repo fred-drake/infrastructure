@@ -1,0 +1,157 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gitea
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: gitea
+  namespace: gitea
+spec:
+  serviceName: gitea
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitea
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 20Gi
+  template:
+    metadata:
+      labels:
+        app: gitea
+    spec:
+      containers:
+      - name: gitea
+        image: gitea/gitea
+        env:
+        - name: TZ
+          value: "{{ default_timezone }}"
+        - name: GITEA__database__DB_TYPE 
+          value: mysql
+        - name: GITEA__database__HOST 
+          value: mariadb.gitea.svc.cluster.local
+        - name: GITEA__database__NAME 
+          value: gitea
+        - name: GITEA__database__USER
+          value: "{{ secret.gitea.mariadb.mysql_user }}"
+        - name: GITEA__database__PASSWD
+          value: "{{ secret.gitea.mariadb.mysql_password }}"
+        volumeMounts:
+        - name: data
+          mountPath: /data
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: "{{ services.gitea.name }}"
+#   namespace: "{{ services.gitea.name }}"
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: "{{ services.gitea.name }}"
+#   volumeClaimTemplates:
+#   - metadata:
+#       name: data
+#     spec:
+#       accessModes: ["ReadWriteOnce"]
+#       resources:
+#         requests:
+#           storage: 20Gi
+#   template:
+#     metadata:
+#       labels:
+#         app: "{{ services.gitea.name }}"
+#     spec:
+#       containers:
+#         - name: "{{ services.gitea.name }}"
+#           image: gitea/gitea
+#           imagePullPolicy: Always
+#           env:
+#             - name: TZ
+#               value: "{{ default_timezone }}"
+#             - name: GITEA__database__DB_TYPE 
+#               value: mysql
+#             - name: GITEA__database__HOST 
+#               value: "{{ services.gitea.db_host }}"
+#             - name: GITEA__database__NAME 
+#               value: "{{ services.gitea_db.mysql_database }}"
+#             - name: GITEA__database__USER
+#               value: "{{ services.gitea_db.mysql_password }}"
+#             - name: GITEA__database__PASSWD
+#               value: "{{ services.gitea_db.mysql_user }}"
+#           volumeMounts:
+#           - name: data
+#             mountPath: /data
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: gitea
+  namespace: gitea
+spec:
+  type: NodePort
+  selector:
+    app: gitea
+  ports:
+    - port: 80
+      targetPort: 3000
+      name: ui-port
+    # - port: 22
+    #   targetPort: 22
+    #   nodePort: 31000
+    #   name: ssh-port
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: gitea-ssh
+  namespace: gitea
+spec:
+  type: LoadBalancer
+  loadBalancerIP: "192.168.50.225"
+  selector:
+    app: gitea
+  ports:
+    - port: 22
+      targetPort: 22
+      name: ssh-port  
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gitea
+  namespace: gitea
+  annotations:
+    cert-manager.io/cluster-issuer: "{{ cert_manager.cluster_issuer }}"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "test-tube"
+  labels:
+    app.kubernetes.io/instance: gitea
+    app.kubernetes.io/name: gitea
+spec:
+  ingressClassName: "traefik"
+  rules:
+  - host: "gitea.{{ secret.domain }}"
+    http: 
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: gitea
+            port:
+              number: 80
+  tls:
+    - hosts:
+      - "gitea.{{ secret.domain }}"
+      secretName: "gitea-tls"

@@ -1,0 +1,96 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: netbox
+  namespace: netbox
+spec:
+  selector:
+    matchLabels:
+      app: netbox
+  template:
+    metadata:
+      labels:
+        app: netbox
+    spec:
+      containers:
+        - name: netbox
+          image: linuxserver/netbox:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "{{ default_timezone }}"
+            - name: PUID
+              value: "99"
+            - name: PGID
+              value: "100"
+            - name: SUPERUSER_EMAIL
+              value: "{{ secret.netbox.email }}"
+            - name: SUPERUSER_PASSWORD
+              value: "{{ secret.netbox.password }}"
+            - name: ALLOWED_HOST
+              value: "netbox.{{ secret.domain }}"
+            - name: DB_NAME
+              value: netbox
+            - name: DB_USER
+              value: "{{ secret.netbox.postgres.user }}"
+            - name: DB_PASSWORD
+              value: "{{ secret.netbox.postgres.superuser_password }}"
+            - name: DB_HOST
+              value: "postgres.netbox.svc.cluster.local"
+            - name: DB_PORT
+              value: "5432"
+            - name: REDIS_HOST
+              value: "redis.netbox.svc.cluster.local"
+            - name: REDIS_PORT
+              value: "6379"
+    #       volumeMounts:
+    #         - name: config
+    #           mountPath: /config
+    #   volumes:
+    #     - name: config
+    #       persistentVolumeClaim:
+    #         claimName: netbox-config-claim
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: netbox
+  namespace: netbox
+spec:
+  type: NodePort
+  selector:
+    app: netbox
+  ports:
+    - port: 80
+      targetPort: 8000
+      name: ui-port
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: netbox
+  namespace: netbox
+  annotations:
+    cert-manager.io/cluster-issuer: "{{ cert_manager.cluster_issuer }}"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "test-tube"
+spec:
+  ingressClassName: "traefik"
+  rules:
+  - host: "netbox.{{ secret.domain }}"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: netbox
+            port:
+              number: 80
+  tls:
+    - hosts:
+      - "netbox.{{ secret.domain }}"
+      secretName: "netbox-tls"
+
