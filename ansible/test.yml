@@ -16,6 +16,7 @@
     - kubernetes/apps/cyberchef
     - kubernetes/apps/netbox
     - kubernetes/apps/gitea
+    - kubernetes/apps/mqtt
 
   # tasks:
   # - name: test
