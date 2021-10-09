@@ -6,18 +6,20 @@
     - kubernetes/base/secrets
     - kubernetes/core/metallb
     - kubernetes/core/traefik
-    - kubernetes/apps/whoogle
-    - kubernetes/apps/notea
     - kubernetes/core/cert-manager
     - kubernetes/core/velero
     - kubernetes/core/rook-ceph
     - kubernetes/core/reloader
     - kubernetes/core/kubegres
+    - kubernetes/core/prometheus
+    - kubernetes/apps/whoogle
+    - kubernetes/apps/notea
     - kubernetes/apps/cyberchef
     - kubernetes/apps/netbox
     - kubernetes/apps/gitea
     - kubernetes/apps/mqtt
     - kubernetes/apps/tautulli
+    - kubernetes/apps/homeassistant
 
   # tasks:
   # - name: test

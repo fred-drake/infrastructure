@@ -1,0 +1,51 @@
+- name: prometheus helm repo
+  kubernetes.core.helm_repository:
+    name: prometheus-community
+    repo_url: https://prometheus-community.github.io/helm-charts
+  tags: prometheus
+
+- name: kube-state-metrics helm
+  kubernetes.core.helm:
+    name: prometheus
+    chart_ref: prometheus-community/kube-state-metrics
+    release_namespace: prometheus
+    create_namespace: true
+    values:
+      env:
+        TZ: "{{ default_timezone }}"
+  tags: prometheus
+
+- name: prometheus helm
+  kubernetes.core.helm:
+    name: prometheus
+    chart_ref: prometheus-community/prometheus
+    release_namespace: prometheus
+    create_namespace: true
+    values:
+      env:
+        TZ: "{{ default_timezone }}"
+      # ingress:
+      #   main:
+      #     enabled: true
+      #     ingressClassName: "traefik"
+      #     annotations:
+      #       cert-manager.io/cluster-issuer: "{{ cert_manager.cluster_issuer }}"
+      #       traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      #     hosts:
+      #       - host: "prometheus-k8s.{{ secret.domain }}"
+      #         paths:
+      #           - path: /
+      #             pathType: Prefix
+      #     tls:
+      #       - hosts:
+      #         - "prometheus-k8s.{{ secret.domain }}"
+      #         secretName: "prometheus-tls"
+      monitoring:
+        enabled: false
+  tags: prometheus
+
+- name: prometheus ingress
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'prometheus.yml') | from_yaml_all }}"
+  tags: prometheus
