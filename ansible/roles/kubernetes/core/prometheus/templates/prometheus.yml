@@ -14,7 +14,7 @@ metadata:
 spec:
   ingressClassName: "traefik"
   rules:
-  - host: "prometheus-k8s.{{ secret.domain }}"
+  - host: "prometheus.{{ secret.domain }}"
     http: 
       paths:
       - pathType: Prefix
@@ -26,5 +26,5 @@ spec:
               number: 80
   tls:
     - hosts:
-      - "prometheus-k8s.{{ secret.domain }}"
+      - "prometheus.{{ secret.domain }}"
       secretName: "prometheus-tls"
