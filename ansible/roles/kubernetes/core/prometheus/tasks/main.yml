@@ -39,6 +39,14 @@
               target_label: instance
             - target_label: __address__
               replacement: snmp-exporter.prometheus.svc.cluster.local:9116
+      server:
+        statefulSet:
+          enabled: true
+      nodeExporter:
+          tolerations:
+            - key: node-role.kubernetes.io/master
+              value: "true"
+              effect: "NoSchedule"
       monitoring:
         enabled: false
   tags: prometheus
