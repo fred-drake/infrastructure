@@ -24,22 +24,21 @@
     values:
       env:
         TZ: "{{ default_timezone }}"
-      # ingress:
-      #   main:
-      #     enabled: true
-      #     ingressClassName: "traefik"
-      #     annotations:
-      #       cert-manager.io/cluster-issuer: "{{ cert_manager.cluster_issuer }}"
-      #       traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-      #     hosts:
-      #       - host: "prometheus-k8s.{{ secret.domain }}"
-      #         paths:
-      #           - path: /
-      #             pathType: Prefix
-      #     tls:
-      #       - hosts:
-      #         - "prometheus-k8s.{{ secret.domain }}"
-      #         secretName: "prometheus-tls"
+      extraScrapeConfigs: |
+        - job_name: 'gateway-snmp'
+          static_configs:
+            - targets:
+              - "gateway-50.{{ secret.domain }}"
+          metrics_path: /snmp
+          params:
+            module: [pfsense]
+          relabel_configs:
+            - source_labels: [__address__]
+              target_label: __param_target
+            - source_labels: [__param_target]
+              target_label: instance
+            - target_label: __address__
+              replacement: snmp-exporter.prometheus.svc.cluster.local:9116
       monitoring:
         enabled: false
   tags: prometheus
@@ -49,3 +48,9 @@
     state: present
     definition: "{{ lookup('template', 'prometheus.yml') | from_yaml_all }}"
   tags: prometheus
+
+- name: prometheus snmp-exporter
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'snmp-exporter.yml') | from_yaml_all }}"
+  tags: prometheus-exporter
