@@ -29,6 +29,10 @@ spec:
         - name: minio
           image: minio/minio
           imagePullPolicy: Always
+          resources:
+            requests:
+                cpu: "{{ cpu.request.default }}"
+                memory: "{{ memory.request.default }}"
           args: ['server', '/data', '--console-address', ':9001']
           env:
             - name: TZ

@@ -18,6 +18,10 @@ spec:
   replicas: 1
   image: postgres:12
   imagePullPolicy: Always
+  resources:
+    requests:
+      cpu: "{{ cpu.request.default }}"
+      memory: "{{ memory.request.default }}"
   database:
     size: 20Gi
   env:

@@ -23,6 +23,10 @@ spec:
         - name: cyberchef
           image: mpepping/cyberchef
           imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "{{ cpu.request.default }}"
+              memory: "{{ memory.request.default }}"
           env:
             - name: TZ
               value: "{{ default_timezone }}"

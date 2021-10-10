@@ -60,6 +60,11 @@ spec:
         image: redis
         command: ["redis-server"]
         args: ["/etc/redis/redis.conf"]
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "{{ cpu.request.default }}"
+            memory: "{{ memory.request.default }}"
         env:
         - name: ALLOW_EMPTY_PASSWORD
           value: "yes"

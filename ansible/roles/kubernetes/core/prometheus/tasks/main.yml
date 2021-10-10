@@ -24,6 +24,12 @@
     values:
       env:
         TZ: "{{ default_timezone }}"
+      image:
+        imagePullPolicy: Always
+      resources:
+        requests:
+          cpu: "{{ cpu.request.default }}"
+          memory: "{{ memory.request.default }}"
       extraScrapeConfigs: |
         - job_name: 'gateway-snmp'
           static_configs:

@@ -18,4 +18,10 @@
             protocol: layer2
             addresses:
               - "{{ metallb.range }}"
+      image:
+        imagePullPolicy: Always
+      resources:
+        requests:
+          cpu: "{{ cpu.request.default }}"
+          memory: "{{ memory.request.default }}"
   tags: metallb

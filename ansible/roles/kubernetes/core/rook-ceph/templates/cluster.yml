@@ -179,6 +179,19 @@ spec:
 # These labels can be passed as LabelSelector to Prometheus
 #    monitoring:
   resources:
+    mgr:
+      requests:
+          cpu: "{{ cpu.request.default }}"
+          memory: "{{ memory.request.default }}"
+    mon:
+      requests:
+          cpu: "{{ cpu.request.default }}"
+          memory: "{{ memory.request.default }}"
+    osd:
+      requests:
+          cpu: "{{ cpu.request.default }}"
+          memory: "{{ memory.request.default }}"
+
 # The requests and limits set here, allow the mgr pod to use half of one CPU core and 1 gigabyte of memory
 #    mgr:
 #      limits:

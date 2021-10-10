@@ -24,6 +24,13 @@
         nameservers:
           - "1.1.1.1"
           - "9.9.9.9"
+      image:
+        imagePullPolicy: Always
+      resources:
+        requests:
+          cpu: "{{ cpu.request.default }}"
+          memory: "{{ memory.request.default }}"
+
   tags: cert-manager
 
 - name: Create temporary file

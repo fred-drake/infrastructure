@@ -78,16 +78,16 @@
         tolerations:
           - key: "node-role.kubernetes.io/master"
             operator: "Exists"
-      #   resources:
-      #     requests:
-      #       memory: 200Mi
-      #       cpu: 15m
+        resources:
+          requests:
+            cpu: "{{ cpu.request.default }}"
+            memory: "{{ memory.request.default }}"
       #     limits:
       #       memory: 3000Mi
-      # resources:
-      #   requests:
-      #     memory: 300Mi
-      #     cpu: 25m
+      resources:
+        requests:
+          cpu: "{{ cpu.request.default }}"
+          memory: "{{ memory.request.default }}"
       #   limits:
       #     memory: 1500Mi
       schedules:

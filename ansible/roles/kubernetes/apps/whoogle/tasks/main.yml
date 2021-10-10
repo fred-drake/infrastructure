@@ -14,6 +14,11 @@
       image:
         repository: benbusby/whoogle-search
         tag: latest
+        imagePullPolicy: Always
+      resources:
+        requests:
+          cpu: "{{ cpu.request.default }}"
+          memory: "{{ memory.request.default }}"
       env:
         TZ: "{{ default_timezone }}"
       ingress:

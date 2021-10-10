@@ -17,6 +17,11 @@ spec:
         - name: netbox
           image: linuxserver/netbox:latest
           imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "{{ cpu.request.default }}"
+              memory: "{{ memory.request.default }}"
+          imagePullPolicy: Always
           env:
             - name: TZ
               value: "{{ default_timezone }}"

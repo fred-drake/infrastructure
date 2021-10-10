@@ -13,6 +13,7 @@
     values:
       image:
         name: ghcr.io/k8s-at-home/traefik
+        imagePullPolicy: Always
       deployment:
         kind: Deployment
         replicas: 1
@@ -71,10 +72,8 @@
           enabled: false
       resources:
         requests:
-          memory: 100Mi
-          cpu: 500m
-        limits:
-          memory: 500Mi
+            cpu: "{{ cpu.request.default }}"
+            memory: "{{ memory.request.default }}"
   tags: traefik
 
 - name: traefik dashboard

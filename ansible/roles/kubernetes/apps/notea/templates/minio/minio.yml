@@ -1,43 +1,55 @@
----
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: minio
   namespace: notea
 spec:
+  serviceName: minio
   replicas: 1
   selector:
     matchLabels:
       app: minio
+  volumeClaimTemplates:
+  - metadata:
+      name: config-vol
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 20Gi
+  - metadata:
+      name: data-vol
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 20Gi
   template:
     metadata:
       labels:
         app: minio
     spec:
-      volumes:
-        - name: config-vol
-          persistentVolumeClaim:
-            claimName: minio-config-pvc
-        - name: data-vol
-          persistentVolumeClaim:
-            claimName: minio-data-pvc
       containers:
-        - name: minio
-          image: minio/minio
-          imagePullPolicy: Always
-          args: ['server', '/data', '--console-address', ':9001']
-          env:
-            - name: TZ
-              value: "{{ default_timezone }}"
-            - name: MINIO_ROOT_USER
-              value: "{{ secret.notea_db.minio_root_user }}"
-            - name: MINIO_ROOT_PASSWORD
-              value: "{{ secret.notea_db.minio_root_password }}"
-          volumeMounts:
-            - mountPath: /root/.minio
-              name: config-vol
-            - mountPath: /data
-              name: data-vol
+      - name: minio
+        image: minio/minio
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "{{ cpu.request.default }}"
+            memory: "{{ memory.request.default }}"
+        args: ['server', '/data', '--console-address', ':9001']
+        env:
+          - name: TZ
+            value: "{{ default_timezone }}"
+          - name: MINIO_ROOT_USER
+            value: "{{ secret.notea_db.minio_root_user }}"
+          - name: MINIO_ROOT_PASSWORD
+            value: "{{ secret.notea_db.minio_root_password }}"
+        volumeMounts:
+          - mountPath: /root/.minio
+            name: config-vol
+          - mountPath: /data
+            name: data-vol
 ---
 kind: Service
 apiVersion: v1

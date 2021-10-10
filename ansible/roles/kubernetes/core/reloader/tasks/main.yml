@@ -10,4 +10,11 @@
     chart_ref: stakater/reloader
     release_namespace: reloader
     create_namespace: true
+    values:
+      image:
+        imagePullPolicy: Always
+      resources:
+        requests:
+          cpu: "{{ cpu.request.default }}"
+          memory: "{{ memory.request.default }}"
   tags: reloader
