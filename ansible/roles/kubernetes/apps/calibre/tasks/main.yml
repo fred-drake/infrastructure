@@ -1,0 +1,99 @@
+- name: calibre books cifs pv
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'storage.yml') | from_yaml_all }}"
+  tags:
+    - calibre
+
+- name: k8s-at-home helm repo
+  kubernetes.core.helm_repository:
+    name: k8s-at-home
+    repo_url: https://k8s-at-home.com/charts/
+  tags: calibre
+
+# - name: calibre helm
+#   kubernetes.core.helm:
+#     name: calibre
+#     chart_ref: k8s-at-home/calibre
+#     release_namespace: calibre
+#     create_namespace: true
+#     values:
+#       image:
+#         pullPolicy: Always
+#         tag: latest
+#       resources:
+#         requests:
+#           cpu: "{{ k8s.resources.cpu.request.default }}"
+#           memory: "{{ k8s.resources.memory.request.default }}"
+#       env:
+#         TZ: "{{ default_timezone }}"
+#       ingress:
+#         main:
+#           enabled: true
+#           ingressClassName: "traefik"
+#           annotations:
+#             cert-manager.io/cluster-issuer: "{{ k8s.cert_manager.cluster_issuer }}"
+#             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+#             hajimari.io/enable: "true"
+#             hajimari.io/icon: "test-tube"
+#           hosts:
+#             - host: "calibre-server.{{ secret.domain }}"
+#               paths:
+#                 - path: /
+#                   pathType: Prefix
+#           tls:
+#             - hosts:
+#               - "calibre-server.{{ secret.domain }}"
+#               secretName: "calibre-tls"
+#       persistence:
+#         config:
+#           enabled: true
+#       monitoring:
+#         enabled: false
+#   tags: calibre
+
+- name: calibre web helm
+  kubernetes.core.helm:
+    name: calibre-web
+    chart_ref: k8s-at-home/calibre-web
+    release_namespace: calibre
+    create_namespace: true
+    values:
+      image:
+        pullPolicy: Always
+        tag: latest
+      resources:
+        requests:
+          cpu: "{{ k8s.resources.cpu.request.default }}"
+          memory: "{{ k8s.resources.memory.request.default }}"
+      persistence:
+        books:
+          enabled: true
+          size: 100Gi
+          existingClaim: calibre-web-books
+          storageClass: ""
+          accessMode: ReadWriteMany
+          skipuninstall: true
+      env:
+        TZ: "{{ default_timezone }}"
+      ingress:
+        main:
+          enabled: true
+          ingressClassName: "traefik"
+          annotations:
+            cert-manager.io/cluster-issuer: "{{ k8s.cert_manager.cluster_issuer }}"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+            hajimari.io/enable: "true"
+            hajimari.io/icon: "test-tube"
+          hosts:
+            - host: "calibre.{{ secret.domain }}"
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - hosts:
+              - "calibre.{{ secret.domain }}"
+              secretName: "calibre-web-tls"
+      monitoring:
+        enabled: false
+  tags: calibre

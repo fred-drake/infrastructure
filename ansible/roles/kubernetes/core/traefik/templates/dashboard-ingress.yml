@@ -5,7 +5,7 @@ metadata:
   name: traefik-dashboard
   namespace: networking
   annotations:
-    cert-manager.io/cluster-issuer: "{{ cert_manager.cluster_issuer }}"
+    cert-manager.io/cluster-issuer: "{{ k8s.cert_manager.cluster_issuer }}"
     hajimari.io/appName: "traefik"
     hajimari.io/enable: "true"
     hajimari.io/icon: "web"

@@ -1,0 +1,15 @@
+- name: no overclock
+  copy:
+    src: pi3-none.txt
+    dest: /boot/config.txt
+    mode: "0755"
+  when: "'raspberry_pi_overclock_none' in group_names"
+  notify: reboot system
+
+- name: overclock pi 3
+  copy:
+    src: pi3-overclock.txt
+    dest: /boot/config.txt
+    mode: "0755"
+  when: "'raspberry_pi3_overclock' in group_names"
+  notify: reboot system

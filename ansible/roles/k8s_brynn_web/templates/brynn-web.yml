@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "{{ services.brynn_web.name }}"
+  name: "{{ secret.services.brynn_web.name }}"
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: "{{ services.brynn_web.name }}-data"
-  namespace: "{{ services.brynn_web.namespace }}"
+  name: "{{ secret.services.brynn_web.name }}-data"
+  namespace: "{{ secret.services.brynn_web.namespace }}"
 spec:
   capacity:
     storage: 4Gi
@@ -23,13 +23,13 @@ spec:
     volumeAttributes:
       numberOfReplicas: '3'
       staleReplicaTimeout: '2880'
-    volumeHandle: "{{ services.brynn_web.name }}-data-2"
+    volumeHandle: "{{ secret.services.brynn_web.name }}-data-2"
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: "{{ services.brynn_web.name }}-data"
-  namespace: "{{ services.brynn_web.namespace }}"
+  name: "{{ secret.services.brynn_web.name }}-data"
+  namespace: "{{ secret.services.brynn_web.namespace }}"
 spec:
   storageClassName: longhorn
   accessModes:
@@ -37,46 +37,46 @@ spec:
   resources:
     requests:
       storage: 4Gi
-  volumeName: "{{ services.brynn_web.name }}-data"
+  volumeName: "{{ secret.services.brynn_web.name }}-data"
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "{{ services.brynn_web.name }}"
-  namespace: "{{ services.brynn_web.namespace }}"
+  name: "{{ secret.services.brynn_web.name }}"
+  namespace: "{{ secret.services.brynn_web.namespace }}"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "{{ services.brynn_web.name }}"
+      app: "{{ secret.services.brynn_web.name }}"
   template:
     metadata:
       labels:
-        app: "{{ services.brynn_web.name }}"
+        app: "{{ secret.services.brynn_web.name }}"
     spec:
       volumes:
-        - name: "{{ services.brynn_web.name }}-data"
+        - name: "{{ secret.services.brynn_web.name }}-data"
           persistentVolumeClaim:
-            claimName: "{{ services.brynn_web.name }}-data"
+            claimName: "{{ secret.services.brynn_web.name }}-data"
       containers:
-        - name: "{{ services.brynn_web.name }}"
+        - name: "{{ secret.services.brynn_web.name }}"
           image: nginx
           imagePullPolicy: Always
           env:
             - name: TZ
               value: "{{ default_timezone }}"
           volumeMounts:
-            - name: "{{ services.brynn_web.name }}-data"
+            - name: "{{ secret.services.brynn_web.name }}-data"
               mountPath: /usr/share/nginx/html
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: "{{ services.brynn_web.name }}"
-  namespace: "{{ services.brynn_web.namespace }}"
+  name: "{{ secret.services.brynn_web.name }}"
+  namespace: "{{ secret.services.brynn_web.namespace }}"
 spec:
   selector:
-    app: "{{ services.brynn_web.name }}"
+    app: "{{ secret.services.brynn_web.name }}"
   type: ClusterIP
   ports:
     - port: 80
@@ -85,17 +85,17 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: "{{ services.brynn_web.name }}"
-  namespace: "{{ services.brynn_web.name }}"
+  name: "{{ secret.services.brynn_web.name }}"
+  namespace: "{{ secret.services.brynn_web.name }}"
 spec:
   rules:
-  - host: {{ services.brynn_web.host }}
+  - host: {{ secret.services.brynn_web.host }}
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: "{{ services.brynn_web.name }}"
+            name: "{{ secret.services.brynn_web.name }}"
             port:
               number: 80

@@ -1,59 +1,18 @@
 ---
-- hosts: k8s_rpi_backup
+- hosts: k8s_backup
   gather_facts: false
   become: true
-  tasks:
-    - name: mount backup volume
-      ansible.posix.mount:
-        path: /mnt/backup
-        src: /dev/sda1
-        fstype: ext4
-        state: mounted
-  tags:
-    - k8s_setup
+  roles:
+    - provision/kubernetes/backup
 
-- hosts: k8s_rpi_master
+- hosts: k8s_initial_master
   gather_facts: false
   become: true
-  tasks:
-    - name: check if cluster is installed
-      ansible.builtin.stat:
-        path: "/usr/local/bin/k3s"
-      register: k3s_check_installed
-      check_mode: false
+  roles:
+    - provision/kubernetes/init_master
 
-    - name: install k3s on master
-      delegate_to: localhost
-      become: false
-      command:
-        chdir: "{{ playbook_dir }}/../../../"
-        cmd: >
-          k3sup install --host={{ server_hostname }} 
-          --user={{ ansible_user }} 
-          --k3s-version={{ k8s.k3s_version }} 
-          --k3s-extra-args="--disable servicelb --disable traefik --disable metrics-server"
-      when: not k3s_check_installed.stat.exists
-  tags: k8s_setup
-
-- hosts: k8s_rpi_cluster:!k8s_rpi_master
+- hosts: k8s_workers
   gather_facts: false
   become: true
-  tasks:
-    - name: check if cluster is installed
-      ansible.builtin.stat:
-        path: "/usr/local/bin/k3s"
-      register: k3s_check_installed
-      check_mode: false
-
-    - name: install k3s on worker
-      delegate_to: localhost
-      become: false
-      command:
-        chdir: "~"
-        cmd: >
-          k3sup join --host={{ server_hostname }} 
-          --server-host={{ groups['k8s_rpi_master'][0] }} 
-          --k3s-version={{ k8s.k3s_version }} 
-          --user={{ ansible_user }}
-      when: not k3s_check_installed.stat.exists
-  tags: k8s_setup
+  roles:
+    - provision/kubernetes/worker

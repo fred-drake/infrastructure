@@ -25,8 +25,8 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
-              cpu: "{{ cpu.request.default }}"
-              memory: "{{ memory.request.default }}"
+              cpu: "{{ k8s.resources.cpu.request.default }}"
+              memory: "{{ k8s.resources.memory.request.default }}"
           env:
             - name: TZ
               value: "{{ default_timezone }}"

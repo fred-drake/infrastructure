@@ -2,7 +2,8 @@
   gather_facts: true
   become: false
   roles:
-    - kubernetes/base/secrets
+    # - kubernetes/base/secrets
+    - kubernetes/base/backup
     - kubernetes/core/metallb
     - kubernetes/core/traefik
     - kubernetes/core/cert-manager
@@ -19,8 +20,4 @@
     - kubernetes/apps/mqtt
     - kubernetes/apps/tautulli
     - kubernetes/apps/homeassistant
-
-  # tasks:
-  # - name: test
-  #   debug:
-  #     var: cert_manager.cluster_issuer
+    - kubernetes/apps/calibre

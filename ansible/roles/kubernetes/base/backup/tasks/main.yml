@@ -1,0 +1,8 @@
+---
+- name: set backup drive label to node
+  become: false
+  kubernetes.core.k8s:
+    validate_certs: false
+    state: present
+    definition: "{{ lookup('template', 'backup_label.yml') | from_yaml_all }}"
+  with_items: "{{ groups['k8s_backup'] }}"

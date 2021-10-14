@@ -1,0 +1,18 @@
+- name: check if cluster is installed
+  ansible.builtin.stat:
+    path: "/usr/local/bin/k3s"
+  register: k3s_check_installed
+  check_mode: false
+
+- name: install k3s on master
+  delegate_to: localhost
+  become: false
+  command:
+    chdir: "{{ playbook_dir }}/../../../"
+    cmd: >
+      k3sup install --host={{ ansible_host.split(".")[0] }} 
+      --user={{ ansible_user }} 
+      --k3s-version={{ k8s.k3s.version }} 
+      --k3s-extra-args="--disable servicelb --disable traefik --disable metrics-server"
+  when: not k3s_check_installed.stat.exists
+  tags: k8s_setup

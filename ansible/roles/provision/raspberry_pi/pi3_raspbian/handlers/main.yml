@@ -1,0 +1,3 @@
+---
+- name: reboot system
+  reboot:

@@ -1,0 +1,17 @@
+- name: check if cluster is installed
+  ansible.builtin.stat:
+    path: "/usr/local/bin/k3s"
+  register: k3s_check_installed
+  check_mode: false
+
+- name: install k3s on worker
+  delegate_to: localhost
+  become: false
+  command:
+    chdir: "~"
+    cmd: >
+      k3sup join --host={{ ansible_host.split(".")[0] }} 
+      --server-host={{ groups['k8s_rpi_master'][0] }} 
+      --k3s-version={{ k8s.k3s.version }} 
+      --user={{ ansible_user }}
+  when: not k3s_check_installed.stat.exists

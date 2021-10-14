@@ -1,7 +1,0 @@
----
-metallb_iprange: "{{ vault_metallb_iprange }}"
-
-backup_nodes: "{{ vault_backup_nodes }}"
-
-longhorn_schedule_nodes: "{{ vault_longhorn_schedule_nodes }}"
-longhorn_backup_s3: "{{ vault_longhorn_backup_s3 }}"

@@ -1,0 +1,36 @@
+---
+- name: restart dhcp1-208
+  community.docker.docker_container:
+    name: "dhcp1-208"
+    restart: true
+
+- name: restart dhcp1-50
+  community.docker.docker_container:
+    name: "dhcp1-50"
+    restart: true
+
+- name: restart dhcp1-40
+  community.docker.docker_container:
+    name: "dhcp1-40"
+    restart: true
+
+- name: restart dhcp2-208
+  community.docker.docker_container:
+    name: "dhcp2-208"
+    restart: true
+
+- name: restart dhcp2-50
+  community.docker.docker_container:
+    name: "dhcp2-50"
+    restart: true
+
+- name: restart dhcp2-40
+  community.docker.docker_container:
+    name: "dhcp2-40"
+    restart: true
+
+- name: restart dhcp
+  community.docker.docker_container:
+    name: "{{ item.hostname }}"
+    restart: true
+  loop: "{{  secret.dhcp.machines }}"

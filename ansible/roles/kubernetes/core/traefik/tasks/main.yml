@@ -21,7 +21,7 @@
         enabled: true
         type: LoadBalancer
         spec:
-          loadBalancerIP: "{{ traefik.address }}"
+          loadBalancerIP: "{{ k8s.traefik.address }}"
           externalTrafficPolicy: Local
       logs:
         general:
@@ -44,7 +44,7 @@
         - "--metrics.prometheus=true"
         - "--metrics.prometheus.entryPoint=metrics"
       additionalArguments:
-        - "--providers.kubernetesingress.ingressendpoint.ip={{ traefik.address }}"
+        - "--providers.kubernetesingress.ingressendpoint.ip={{ k8s.traefik.address }}"
         - "--providers.kubernetescrd.allowexternalnameservices=true"
         - "--providers.kubernetesingress.allowexternalnameservices=true"
       ports:
@@ -72,8 +72,8 @@
           enabled: false
       resources:
         requests:
-            cpu: "{{ cpu.request.default }}"
-            memory: "{{ memory.request.default }}"
+            cpu: "{{ k8s.resources.cpu.request.default }}"
+            memory: "{{ k8s.resources.memory.request.default }}"
   tags: traefik
 
 - name: traefik dashboard

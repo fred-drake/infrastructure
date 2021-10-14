@@ -17,8 +17,8 @@
         imagePullPolicy: Always
       resources:
         requests:
-          cpu: "{{ cpu.request.default }}"
-          memory: "{{ memory.request.default }}"
+          cpu: "{{ k8s.resources.cpu.request.default }}"
+          memory: "{{ k8s.resources.memory.request.default }}"
       env:
         TZ: "{{ default_timezone }}"
       ingress:
@@ -26,7 +26,7 @@
           enabled: true
           ingressClassName: "traefik"
           annotations:
-            cert-manager.io/cluster-issuer: "{{ cert_manager.cluster_issuer }}"
+            cert-manager.io/cluster-issuer: "{{ k8s.cert_manager.cluster_issuer }}"
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
             hajimari.io/enable: "true"
             hajimari.io/icon: "test-tube"

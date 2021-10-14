@@ -1,26 +1,92 @@
----
-# The hosts.yml file contains all of my specific hostnames, their host-specific variables, and groups for each of these
-# hosts.  The groups are defined as:
-#
-# critical: hosts that are considered critical towards keeping my network afloat (e.g. DNS, DHCP)
-# services_docker1: docker host that runs a variety of services
-# services_docker2: docker host that runs a variety of services
-# critical_services_docker1: docker host that runs critical services
-
-# These groups defined above are used below when building groups of groups
 
 all:
+  #
+  # Host groupings
+  #
   children:
-    docker: # All docker servers
+    
+    # Groups by distribution
+    debian: # all debian-based servers
       children:
-        services_docker1:
-        services_docker2:
-        critical_services_docker1:
-        critical_services_docker2:
-    linux: # All linux servers
+        ubuntu:
+        raspbian:
+
+    ubuntu: # all ubuntu servers
+      hosts:
+        docker[1:4]:
+        kmaster01:
+        kworker[01:07]:
+
+    raspbian: # all raspbian servers
+      hosts:
+        kiosk:
+
+    # Docker container servers
+    docker:
       children:
-        docker:
-        k8s_rpi_cluster:
-    avahi: # Group for managing the avahi software
+        docker_services:
+        critical_docker_services:
+
+    docker_services:
+      hosts:
+        docker1:
+        docker2:
+    critical_docker_services:
+        docker3:
+        docker4:
+
+    avahi: # Host for avahi daemon
+      hosts:
+        docker3:
+    
+    # Kubernetes cluster servers
+    k8s_cluster: # every node in the cluster
       children:
-        critical_services_docker1:
+        k8s_initial_master:
+        k8s_additional_masters:
+        k8s_workers:
+        
+    k8s_initial_master: # initial master node
+      hosts:
+        kmaster01:
+    k8s_additional_masters: # subsequent masters that will attach to initial master when provisioning
+      hosts:
+    k8s_workers: # worker nodes
+      hosts:
+        kworker[01:07]:
+    k8s_backup: # node managing backup with specially attached storage
+      hosts:
+        kworker07:
+    k8s_storage: # nodes with SSD cluster-level storage
+      hosts:
+        kworker[02:04]:
+
+    # Raspberry Pi servers
+    raspberry_pi: # all raspberry pi machines
+      children:
+        raspberry_pi_3:
+        raspberry_pi_4:
+
+    raspberry_pi_3: # raspberry pi 3 machines
+      hosts:
+        kiosk:
+
+    raspberry_pi_4: # raspberry pi 4 machines
+      hosts:
+        kmaster01:
+        kworker[01:07]:
+
+    raspberry_pi_overclock_none: # no overclock profile
+
+    raspberry_pi3_overclock: # pi 3 default overclock profile
+      hosts:
+        kiosk:
+
+    raspberry_pi4_overclock_high: # pi 4 high overclock profile
+      hosts:
+
+    raspberry_pi4_overclock_medium: # pi 4 medium overclock profile
+      hosts:
+
+    raspberry_pi4_overclock_low: # pi 4 low overclock profile
+      hosts:

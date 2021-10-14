@@ -1,0 +1,39 @@
+- name: make sudo group
+  group:
+    name: sudo
+    state: present
+
+- name: allow sudo group to execute without password
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^sudo'
+    line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: update ubuntu motd
+  copy:
+    src: "{{ item }}"
+    dest: /etc/update-motd.d/
+    mode: "0755"
+  with_fileglob:
+    - "ansible/motd/*"
+
+- name: upgrade packages
+  apt:
+    update_cache: true
+    upgrade: "dist"
+  ignore_errors: true
+  notify: reboot
+  tags:
+    - update
+
+- name: check if reboot required
+  stat:
+    path: /var/run/reboot-required
+  register: reboot_required_file
+
+- name: reboot if required
+  reboot:
+    msg: "Rebooting after apt dist upgrade"
+  when: reboot_required_file.stat.exists

@@ -1,0 +1,24 @@
+---
+- name: create application container
+  community.docker.docker_container:
+    name: "office_touchpad"
+    image: "registry.{{ secret.domain }}/office-touchpad"
+    pull: "{{ container_pull }}"
+    hostname: "office_touchpad"
+    env:
+      TZ: "{{ default_timezone }}"
+    volumes:
+      - "{{ appdata_dir }}/office-touchpad:/app"
+    container_default_behavior: "{{ container_default_behavior }}"
+    network_mode: "{{ secret.docker.network.container }}"
+    restart_policy: unless-stopped
+    networks:
+      - name: "{{ secret.docker.network.container }}"
+        ipv4_address: "{{ secret.services.office_touchpad.ip }}"
+    networks_cli_compatible: "{{ container_networks_cli_compatible }}"
+    state: "{{ container_state }}"
+  notify:
+    - deep prune docker
+  tags:
+    - office_touchpad
+    - docker_update

@@ -1,0 +1,26 @@
+---
+- name: create application container
+  community.docker.docker_container:
+    name: "git_hash_updater"
+    image: "fdrake/git-hash-updater"
+    pull: "{{ container_pull }}"
+    hostname: "git_hash_updater"
+    env:
+      TZ: "{{ default_timezone }}"
+      GIT_USER_EMAIL: "{{ secret.services.git_hash_updater.git_user_email }}"
+      GIT_USER_NAME: "{{ secret.services.git_hash_updater.git_user_name }}"
+    volumes:
+      - "{{ appdata_dir }}/git-hash-updater-data:/data"
+    container_default_behavior: "{{ container_default_behavior }}"
+    network_mode: "{{ secret.docker.network.container }}"
+    restart_policy: unless-stopped
+    networks:
+      - name: "{{ secret.docker.network.container }}"
+        ipv4_address: "{{ secret.services.git_hash_updater.ip }}"
+    networks_cli_compatible: "{{ container_networks_cli_compatible }}"
+    state: "{{ container_state }}"
+  notify:
+    - deep prune docker
+  tags:
+    - git_hash_updater
+    - docker_update

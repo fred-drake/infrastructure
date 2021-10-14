@@ -1,0 +1,13 @@
+- hosts: docker3
+  gather_facts: false
+  become: true
+  roles:
+    - docker/base
+    - docker/dhcp
+
+- hosts: docker4
+  gather_facts: false
+  become: true
+  roles:
+    - docker/base
+    - docker/pihole

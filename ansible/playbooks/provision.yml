@@ -1,0 +1,49 @@
+- hosts: debian
+  gather_facts: true
+  become: true
+  roles:
+    - provision/debian
+
+- hosts: ubuntu
+  gather_facts: true
+  become: true
+  roles:
+    - provision/ubuntu
+
+- hosts: raspbian
+  gather_facts: true
+  become: true
+  roles:
+    - provision/raspbian
+
+- hosts: raspberry_pi_3:&raspbian
+  gather_facts: true
+  become: true
+  roles:
+    - provision/raspberry_pi/pi3_raspbian
+
+- hosts: raspberry_pi_4:&ubuntu
+  gather_facts: true
+  become: true
+  roles:
+    - provision/raspberry_pi/pi4_ubuntu
+
+- hosts: avahi
+  gather_facts: false
+  become: true
+  roles:
+    - avahi
+
+- hosts: docker
+  gather_facts: false
+  become: true
+  roles:
+    - provision/docker
+
+- hosts: k8s_cluster
+  gather_facts: false
+  become: true
+  roles:
+    - provision/kubernetes/cifs
+
+- import_playbook: kubernetes/k8s_install.yml

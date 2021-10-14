@@ -9,7 +9,7 @@
 
 - name: pull kubegres
   ansible.builtin.get_url:
-    url: "https://raw.githubusercontent.com/reactive-tech/kubegres/v{{ kubegres.version }}/kubegres.yaml"
+    url: "https://raw.githubusercontent.com/reactive-tech/kubegres/v{{ k8s.kubegres.version }}/kubegres.yaml"
     dest: "{{ tempfile_1.path }}"
     mode: '0664'
   changed_when: False

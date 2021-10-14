@@ -1,0 +1,52 @@
+---
+- name: create application torrent volume
+  block:
+    - &torrentvolume
+      name: create volume
+      community.docker.docker_volume:
+        volume_name: readarr_torrent
+        driver: local
+        driver_options:
+          type: cifs
+          device: "//{{ cifs_server }}/torrent"
+          o: "{{ cifs_docker_mount_options }},gid=100,uid=99,file_mode=0777,dir_mode=0777"
+        recreate: options-changed
+  rescue:
+    - name: remove application container
+      community.docker.docker_container:
+        name: "readarr"
+        state: absent
+        container_default_behavior: compatibility
+    - <<: *torrentvolume
+  tags:
+    - readarr
+
+- name: create application container
+  community.docker.docker_container:
+    name: "readarr"
+    image: "hotio/readarr:nightly"
+    pull: "{{ container_pull }}"
+    hostname: "readarr"
+    env:
+      TZ: "{{ default_timezone }}"
+      PUID: "99"
+      PGID: "100"
+      UMASK: "002"
+    mounts:
+      - source: readarr_torrent
+        target: /books
+    volumes:
+      - "{{ appdata_dir }}/readarr:/config"
+    container_default_behavior: "{{ container_default_behavior }}"
+    network_mode: "{{ secret.docker.network.container }}"
+    restart_policy: "{{ container_restart_policy }}"
+    networks:
+      - name: "{{ secret.docker.network.container }}"
+        ipv4_address: "{{ secret.services.readarr.ip }}"
+    networks_cli_compatible: "{{ container_networks_cli_compatible }}"
+    state: "{{ container_state }}"
+  notify:
+    - deep prune docker
+  tags:
+    - readarr
+    - docker_update

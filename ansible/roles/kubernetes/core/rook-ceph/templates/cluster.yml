@@ -181,16 +181,16 @@ spec:
   resources:
     mgr:
       requests:
-          cpu: "{{ cpu.request.default }}"
-          memory: "{{ memory.request.default }}"
+          cpu: "{{ k8s.resources.cpu.request.default }}"
+          memory: "{{ k8s.resources.memory.request.default }}"
     mon:
       requests:
-          cpu: "{{ cpu.request.default }}"
-          memory: "{{ memory.request.default }}"
+          cpu: "{{ k8s.resources.cpu.request.default }}"
+          memory: "{{ k8s.resources.memory.request.default }}"
     osd:
       requests:
-          cpu: "{{ cpu.request.default }}"
-          memory: "{{ memory.request.default }}"
+          cpu: "{{ k8s.resources.cpu.request.default }}"
+          memory: "{{ k8s.resources.memory.request.default }}"
 
 # The requests and limits set here, allow the mgr pod to use half of one CPU core and 1 gigabyte of memory
 #    mgr:

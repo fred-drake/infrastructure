@@ -1,4 +1,0 @@
----
-cluster_join_token: "{{ vault_cluster_join_token }}"
-cluster_master_host: "{{ vault_cluster_master_host }}"
-kubeconfig_location: /etc/rancher/k3s/k3s.yaml

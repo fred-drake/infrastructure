@@ -10,7 +10,7 @@ spec:
   secretName: internal-certificate-tls
   issuerRef:
     kind: ClusterIssuer
-    name: "{{ cert_manager.cluster_issuer }}"
+    name: "{{ k8s.cert_manager.cluster_issuer }}"
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute

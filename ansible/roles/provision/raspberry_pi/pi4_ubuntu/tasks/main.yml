@@ -1,0 +1,31 @@
+- name: overclock pi 4 (high)
+  copy:
+    src: config-pi4-high.txt
+    dest: /boot/firmware/usercfg.txt
+    mode: "0755"
+  when: "'raspberry_pi4_overclock_high' in group_names"
+  notify: reboot system
+
+- name: overclock pi 4 (medium)
+  copy:
+    src: config-pi4-medium.txt
+    dest: /boot/firmware/usercfg.txt
+    mode: "0755"
+  when: "'raspberry_pi4_overclock_medium' in group_names"
+  notify: reboot system
+
+- name: overclock pi 4 (low)
+  copy:
+    src: config-pi4-low.txt
+    dest: /boot/firmware/usercfg.txt
+    mode: "0755"
+  when: "'raspberry_pi4_overclock_low' in group_names"
+  notify: reboot system
+
+- name: update boot options
+  copy:
+    src: cmdline.txt
+    dest: /boot/firmware/cmdline.txt
+    mode: '0755'
+  notify: reboot system
+  when: "'k8s_cluster' in group_names"

@@ -1,0 +1,58 @@
+---
+
+- name: create database container
+  community.docker.docker_container:
+    name: leantime-db
+    image: "linuxserver/mariadb"
+    pull: "{{ container_pull }}"
+    hostname: leantime-db
+    env:
+      TZ: "{{ default_timezone }}"
+      PUID: "99"
+      PGID: "100"
+      MYSQL_ROOT_PASSWORD: "{{ secret.services.leantime_db.mysql_root_password }}"
+      MYSQL_DATABASE: "{{ secret.services.leantime_db.mysql_database }}"
+      MYSQL_USER: "{{ secret.services.leantime_db.mysql_user }}"
+      MYSQL_PASSWORD: "{{ secret.services.leantime_db.mysql_password }}"
+    volumes:
+      - "{{ appdata_dir }}/leantime-db:/config"
+    container_default_behavior: "{{ container_default_behavior }}"
+    network_mode: "{{ secret.docker.network.container }}"
+    restart_policy: "{{ container_restart_policy }}"
+    networks:
+      - name: "{{ secret.docker.network.container }}"
+        ipv4_address: "{{ secret.services.leantime_db.ip }}"
+    networks_cli_compatible: "{{ container_networks_cli_compatible }}"
+    state: "{{ container_state }}"
+  notify:
+    - deep prune docker
+  tags:
+    - leantime-db
+    - docker_update
+
+- name: create application container
+  community.docker.docker_container:
+    name: "leantime"
+    image: "leantime/leantime:latest"
+    pull: "{{ container_pull }}"
+    hostname: "leantime"
+    env:
+      TZ: "{{ default_timezone }}"
+      LEAN_DB_HOST: "{{ secret.services.leantime.lean_db_host }}"
+      LEAN_DB_USER: "{{ secret.services.leantime_db.mysql_user }}"
+      LEAN_DB_PASSWORD: "{{ secret.services.leantime_db.mysql_password }}"
+      LEAN_DB_DATABASE: "{{ secret.services.leantime_db.mysql_database }}"
+      LEAN_APP_URL: "{{ secret.services.leantime.lean_app_url }}"
+    container_default_behavior: "{{ container_default_behavior }}"
+    network_mode: "{{ secret.docker.network.container }}"
+    restart_policy: "{{ container_restart_policy }}"
+    networks:
+      - name: "{{ secret.docker.network.container }}"
+        ipv4_address: "{{ secret.services.leantime.ip }}"
+    networks_cli_compatible: "{{ container_networks_cli_compatible }}"
+    state: "{{ container_state }}"
+  notify:
+    - deep prune docker
+  tags:
+    - leantime
+    - docker_update

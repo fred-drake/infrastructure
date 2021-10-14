@@ -4,7 +4,7 @@ metadata:
   name: prometheus
   namespace: prometheus
   annotations:
-    cert-manager.io/cluster-issuer: "{{ cert_manager.cluster_issuer }}"
+    cert-manager.io/cluster-issuer: "{{ k8s.cert_manager.cluster_issuer }}"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     hajimari.io/enable: "true"
     hajimari.io/icon: "test-tube"

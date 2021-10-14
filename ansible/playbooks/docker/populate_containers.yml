@@ -1,0 +1,39 @@
+- hosts: docker1
+  gather_facts: false
+  become: true
+  roles:
+    - docker/base
+    - docker/nexus
+    - docker/swag_internal
+    - docker/nginx_static
+    - docker/ddns
+    - docker/influxdb
+    - docker/influxdb_wifi
+    - docker/node_red
+    - docker/dozzle
+    - docker/drone
+    - docker/epson_scanner
+    - docker/git_hash_updater
+    - docker/grafana
+    - docker/office_touchpad
+    - docker/portainer
+    - docker/prowlarr
+    - docker/radarr
+    - docker/smtp
+    - docker/paperless
+    - docker/sonarr
+    - docker/statping
+    - docker/syncthing
+    - docker/teslamate
+    - docker/torrent
+    - docker/readarr
+    - docker/calibre
+    - docker/calibre_web
+    - docker/n8n
+
+- hosts: docker2
+  gather_facts: false
+  become: true
+  roles:
+    - docker/base
+    - docker/sabnzbd

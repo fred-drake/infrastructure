@@ -19,15 +19,15 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
-              cpu: "{{ cpu.request.default }}"
-              memory: "{{ memory.request.default }}"
+              cpu: "{{ k8s.resources.cpu.request.default }}"
+              memory: "{{ k8s.resources.memory.request.default }}"
           env:
             - name: TZ
               value: "{{ default_timezone }}"
             - name: STORE_ACCESS_KEY
-              value: "{{ secret.notea_db.minio_root_user }}"
+              value: "{{ secret.notea.minio.minio_root_user }}"
             - name: STORE_SECRET_KEY
-              value: "{{ secret.notea_db.minio_root_password }}"
+              value: "{{ secret.notea.minio.minio_root_password }}"
             - name: STORE_BUCKET
               value: notea
             - name: STORE_END_POINT
@@ -59,7 +59,7 @@ metadata:
   name: notea
   namespace: notea
   annotations:
-    cert-manager.io/cluster-issuer: "{{ cert_manager.cluster_issuer }}"
+    cert-manager.io/cluster-issuer: "{{ k8s.cert_manager.cluster_issuer }}"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     hajimari.io/enable: "true"
     hajimari.io/icon: "test-tube"

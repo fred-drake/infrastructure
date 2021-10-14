@@ -1,0 +1,76 @@
+---
+- name: create application videos volume
+  block:
+    - &videovolume
+      name: create volume
+      community.docker.docker_volume:
+        volume_name: sonarr_videos
+        driver: local
+        driver_options:
+          type: cifs
+          device: "//{{ cifs_server }}/videos"
+          o: "{{ cifs_docker_mount_options }},gid=100,uid=99,file_mode=0777,dir_mode=0777"
+        recreate: options-changed
+  rescue:
+    - name: remove application container
+      community.docker.docker_container:
+        name: "sonarr"
+        state: absent
+        container_default_behavior: compatibility
+    - <<: *videovolume
+  tags:
+    - sonarr
+
+- name: create application torrent volume
+  block:
+    - &torrentvolume
+      name: create volume
+      community.docker.docker_volume:
+        volume_name: sonarr_torrent
+        driver: local
+        driver_options:
+          type: cifs
+          device: "//{{ cifs_server }}/torrent"
+          o: "{{ cifs_docker_mount_options }},gid=100,uid=99,file_mode=0777,dir_mode=0777"
+        recreate: options-changed
+  rescue:
+    - name: remove application container
+      community.docker.docker_container:
+        name: "sonarr"
+        state: absent
+        container_default_behavior: compatibility
+    - <<: *torrentvolume
+  tags:
+    - sonarr
+
+- name: create application container
+  community.docker.docker_container:
+    name: "sonarr"
+    image: "linuxserver/sonarr:latest"
+    pull: "{{ container_pull }}"
+    hostname: "sonarr"
+    env:
+      TZ: "{{ default_timezone }}"
+      PUID: "99"
+      PGID: "100"
+    mounts:
+      - source: sonarr_videos
+        target: /videos
+      - source: sonarr_torrent
+        target: /downloads
+    volumes:
+      - /dev/rtc:/dev/rtc:ro
+      - "{{ appdata_dir }}/sonarr_config:/config"
+    container_default_behavior: "{{ container_default_behavior }}"
+    network_mode: "{{ secret.docker.network.container }}"
+    restart_policy: "{{ container_restart_policy }}"
+    networks:
+      - name: "{{ secret.docker.network.container }}"
+        ipv4_address: "{{ secret.services.sonarr.ip }}"
+    networks_cli_compatible: "{{ container_networks_cli_compatible }}"
+    state: "{{ container_state }}"
+  notify:
+    - deep prune docker
+  tags:
+    - sonarr
+    - docker_update

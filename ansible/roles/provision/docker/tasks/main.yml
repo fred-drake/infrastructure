@@ -1,0 +1,122 @@
+---
+
+- name: install libraries
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg
+    - lsb-release
+    - python3
+    - python3-pip
+    - net-tools
+    - smbclient
+    - cifs-utils
+
+- name: install pip libraries
+  pip:
+    name:
+      - docker
+      - docker-compose
+
+- name: add GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: add docker repository to apt
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+
+- name: install docker
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  loop:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+
+- name: start docker service
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: wipe containers
+  shell: docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
+  when: "True"
+  tags:
+    - never
+    - rebuild_containers
+    - rebuild_all
+
+- name: wipe images, volumes and networks
+  community.docker.docker_prune:
+    images: true
+    images_filters:
+      dangling: false
+    containers: true
+    volumes: true
+    builder_cache: true
+  tags:
+    - never
+    - rebuild_all
+
+- name: setup admin network
+  docker_network:
+    name: "{{ secret.docker.network.admin }}"
+    driver: "macvlan"
+    internal: false
+    driver_options:
+      parent: "{{ interface_208 }}"
+    ipam_config:
+      - gateway: "{{ gateway_208 }}"
+        subnet: "{{ netmask_208 }}"
+  when: interface_208 is defined
+  # tags: docker_network
+
+- name: setup container network
+  docker_network:
+    name: "{{ secret.docker.network.container }}"
+    driver: "macvlan"
+    internal: false
+    driver_options:
+      parent: "{{ interface_50 }}"
+    ipam_config:
+      - gateway: "{{ gateway_50 }}"
+        subnet: "{{ netmask_50 }}"
+  when: interface_50 is defined
+  # tags: docker_network
+
+- name: setup iot network
+  docker_network:
+    name: "{{ secret.docker.network.iot }}"
+    driver: "macvlan"
+    internal: false
+    driver_options:
+      parent: "{{ interface_40 }}"
+    ipam_config:
+      - gateway: "{{ gateway_40 }}"
+        subnet: "{{ netmask_40 }}"
+  when: interface_40 is defined
+  # tags: docker_network
+
+- name: setup workstation network
+  docker_network:
+    name: "{{ secret.docker.network.workstation }}"
+    driver: "macvlan"
+    internal: false
+    driver_options:
+      parent: "{{ interface_30 }}"
+    ipam_config:
+      - gateway: "{{ gateway_30 }}"
+        subnet: "{{ netmask_30 }}"
+  when: interface_30 is defined
+  tags: docker_network
