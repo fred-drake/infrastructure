@@ -13,9 +13,9 @@ all:
 
     ubuntu: # all ubuntu servers
       hosts:
-        docker[1:4]:
+        docker[1:5]:
         kmaster01:
-        kworker[01:07]:
+        kworker[01:08]:
 
     raspbian: # all raspbian servers
       hosts:
@@ -34,6 +34,7 @@ all:
     critical_docker_services:
         docker3:
         docker4:
+        docker5:
 
     avahi: # Host for avahi daemon
       hosts:
@@ -42,18 +43,15 @@ all:
     # Kubernetes cluster servers
     k8s_cluster: # every node in the cluster
       children:
-        k8s_initial_master:
-        k8s_additional_masters:
+        k8s_masters:
         k8s_workers:
         
-    k8s_initial_master: # initial master node
+    k8s_masters: # master nodes.  The first is considered the initial master.
       hosts:
         kmaster01:
-    k8s_additional_masters: # subsequent masters that will attach to initial master when provisioning
-      hosts:
     k8s_workers: # worker nodes
       hosts:
-        kworker[01:07]:
+        kworker[01:08]:
     k8s_backup: # node managing backup with specially attached storage
       hosts:
         kworker07:

@@ -14,18 +14,18 @@
 
 - name: Add sudoers users to wheel group
   user:
-    name: "{{ username }}"
+    name: "{{ ansible_user }}"
     groups: 
      - wheel
     append: true
     state: present
     createhome: true
 
-- name: Set up authorized keys for the deployer user
-  authorized_key:
-    user: "{{ username }}"
-    key: "{{ item }}"
-  loop: "{{ public_keys }}"
+# - name: Set up authorized keys for the deployer user
+#   authorized_key:
+#     user: "{{ ansible_user }}"
+#     key: "{{ item }}"
+#   loop: "{{ public_keys }}"
 
 - name: disable automatic daily upgrade
   systemd:

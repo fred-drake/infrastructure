@@ -1,0 +1,11 @@
+- hosts: docker4
+  become: true
+  # gather_facts: false
+  # tasks:
+  #   - name: debug
+  #     debug:
+  #       var: container_pull
+  roles:
+    - docker/base
+    - docker/pihole
+  tags: pihole_update

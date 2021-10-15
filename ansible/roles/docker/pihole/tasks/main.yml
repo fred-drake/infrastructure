@@ -26,7 +26,7 @@
       - "1.1.1.1"
     capabilities:
       - "NET_ADMIN"
-  loop: "{{ secret.pihole_machines }}"
+  loop: "{{ secret.pihole.machines }}"
   notify:
     - deep prune docker
   tags:
@@ -49,7 +49,7 @@
     src: hostlist.j2
     dest: "{{ appdata_dir }}/{{ item.hostname }}/etc/pihole/custom.list"
     mode: "0644"
-  loop: "{{ secret.pihole_machines }}"
+  loop: "{{ secret.pihole.machines }}"
   notify:
     - restart DNS
   tags:
@@ -61,7 +61,7 @@
     src: "pihole-updatelists.conf"
     dest: "{{ appdata_dir }}/{{ item.hostname }}/etc/pihole-updatelists/pihole-updatelists.conf"
     mode: "0644"
-  loop: "{{ secret.pihole_machines }}"
+  loop: "{{ secret.pihole.machines }}"
   notify: execute pihole-updatelists
   tags:
     - pihole

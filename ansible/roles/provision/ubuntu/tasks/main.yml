@@ -17,14 +17,13 @@
     dest: /etc/update-motd.d/
     mode: "0755"
   with_fileglob:
-    - "ansible/motd/*"
+    - "motd/*"
 
 - name: upgrade packages
   apt:
     update_cache: true
     upgrade: "dist"
   ignore_errors: true
-  notify: reboot
   tags:
     - update
 
