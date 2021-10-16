@@ -1,12 +1,10 @@
 ---
 - name: restart DNS
   community.docker.docker_container_exec:
-    container: "{{ item.hostname }}"
+    container: "{{ pihole_id }}"
     command: /bin/bash -c "source /etc/profile; pihole restartdns"
-  loop: "{{ secret.pihole.machines }}"
 
 - name: execute pihole-updatelists
   community.docker.docker_container_exec:
-    container: "{{ item.hostname }}"
+    container: "{{ pihole_id }}"
     command: /bin/bash -c /usr/local/sbin/pihole-updatelists
-  loop: "{{ secret.pihole.machines }}"
