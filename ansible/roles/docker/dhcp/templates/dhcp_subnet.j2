@@ -1,16 +1,18 @@
-subnet {{ secret.dhcp.nets[item.subnet_id].subnet }} netmask {{ secret.dhcp.nets[item.subnet_id].netmask }} {
-    option routers {{ secret.dhcp.nets[item.subnet_id].router }};
-    option subnet-mask {{ secret.dhcp.nets[item.subnet_id].netmask }};
+subnet {{ t.value.subnet }} netmask {{ t.value.netmask }} {
+    option routers {{ t.value.router }};
+    option subnet-mask {{ t.value.netmask }};
     option domain-name "{{ secret.domain }}";
     option domain-search "{{ secret.domain }}";
-    option domain-name-servers {{ secret.dhcp.nets[item.subnet_id].dns1 }}, {{ secret.dhcp.nets[item.subnet_id].dns2 }};
+    option domain-name-servers {{ t.value.dns1 }}, {{ t.value.dns2 }};
+    default-lease-time 7200;
+    max-lease-time 7200;
     pool {
         deny dynamic bootp clients;
         failover peer "dhcp-failover";
         default-lease-time 14400;
-        range {{ secret.dhcp.nets[item.subnet_id].range_start }} {{ secret.dhcp.nets[item.subnet_id].range_end }};
+        range {{ t.value.range_start }} {{ t.value.range_end }};
     }
-{% for h in reservation_results.reservations[item.subnet_id] %}
+{% for h in reservation_results.reservations[t.key] %}
 
     host {{ h.hostname }} {
         hardware ethernet {{ h.mac_address }};

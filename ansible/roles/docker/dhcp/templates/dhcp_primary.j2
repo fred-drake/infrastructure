@@ -5,9 +5,9 @@ authoritative;
 ddns-update-style none;
 failover peer "dhcp-failover" {
     primary;
-    address {{ item.address }};
+    address {{ secret.dhcp.machines[dhcp_id].address }};
     port 647;
-    peer address {{ item.peer_address }};
+    peer address {{ secret.dhcp.machines[dhcp_id].peer_address }};
     peer port 647;
     max-response-delay 30;
     max-unacked-updates 10;
@@ -16,4 +16,8 @@ failover peer "dhcp-failover" {
     split 128;
 }
 
+{% for t in secret.dhcp.nets | dict2items %}
+
 {% include 'dhcp_subnet.j2' %}
+
+{% endfor %}

@@ -1,18 +1,11 @@
-- hosts: docker3
-  gather_facts: false
-  become: true
-  roles:
-    - docker/base
-    - docker/dhcp
-
 - hosts: docker1
   gather_facts: false
   become: true
   roles:
     - docker/base
-    - role: docker/pihole
+    - role: docker/dhcp
       vars:
-        pihole_id: pihole1
+        dhcp_id: dhcp2
 
 - hosts: docker5
   gather_facts: false

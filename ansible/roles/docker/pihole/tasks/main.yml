@@ -30,7 +30,6 @@
     - deep prune docker
   tags:
     - pihole
-    - docker_critical_update
 
 - name: generate pihole hosts from netbox
   connection: local
