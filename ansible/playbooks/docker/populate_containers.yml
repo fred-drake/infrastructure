@@ -15,7 +15,6 @@
     - docker/epson_scanner
     - docker/git_hash_updater
     - docker/grafana
-    - docker/office_touchpad
     - docker/portainer
     - docker/prowlarr
     - docker/radarr

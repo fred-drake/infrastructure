@@ -1,0 +1,75 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: office-touchpad
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: office-touchpad
+  namespace: office-touchpad
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: office-touchpad
+  template:
+    metadata:
+      labels:
+        app: office-touchpad
+    spec:
+      containers:
+        - name: office-touchpad
+          image: "registry.{{ secret.domain }}/office-touchpad"
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "{{ k8s.resources.cpu.request.default }}"
+              memory: "{{ k8s.resources.memory.request.default }}"
+          env:
+            - name: TZ
+              value: "{{ default_timezone }}"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: office-touchpad
+  namespace: office-touchpad
+spec:
+  type: ClusterIP
+  selector:
+    app: office-touchpad
+  ports:
+    - port: 80
+      targetPort: 3000
+      name: web
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: office-touchpad
+  namespace: office-touchpad
+  annotations:
+    cert-manager.io/cluster-issuer: "{{ k8s.cert_manager.cluster_issuer }}"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+  labels:
+    app.kubernetes.io/instance: office-touchpad
+    app.kubernetes.io/name: office-touchpad
+spec:
+  ingressClassName: "traefik"
+  rules:
+  - host: "office-touchpad.{{ secret.domain }}"
+    http: 
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: office-touchpad
+            port:
+              number: 80
+  tls:
+    - hosts:
+      - "office-touchpad.{{ secret.domain }}"
+      secretName: "office-touchpad-app-tls"
