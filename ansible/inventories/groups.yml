@@ -21,19 +21,29 @@ all:
       hosts:
         kiosk:
 
-    # Docker container servers
+    # All docker container servers
     docker:
       children:
         docker_services:
         critical_docker_services:
 
+    # Docker container servers who run regular services
     docker_services:
       hosts:
         docker1:
         docker2:
+
+    # Docker container servers who run critical services
+    critical_docker_services:
+      children:
+        critical_docker_primary:
+        critical_docker_secondary:
+
+    # Identifies the primary server for critical services        
     critical_docker_primary:
       hosts:
         docker5:
+    # Identifies the secondary server for critical services
     critical_docker_secondary:
       hosts:
         docker1:

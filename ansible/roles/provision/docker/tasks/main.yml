@@ -120,3 +120,23 @@
         subnet: "{{ netmask_30 }}"
   when: interface_30 is defined
   tags: docker_network
+
+- name: set DNS variables for services containers
+  set_fact:
+    dns1: "{{ secret.pihole.pihole1.address }}"
+    dns2: "{{ secret.pihole.pihole2.address }}"
+  when: "'docker_services' in group_names"
+
+- name: set DNS variables for critical services containers
+  set_fact:
+    dns1: "8.8.8.8"
+    dns2: "8.8.4.4"
+  when: "'critical_docker_services' in group_names"
+
+- name: set docker configuration
+  template:
+    src: "docker_config.j2"
+    dest: "/etc/default/docker"
+    mode: "0644"
+  notify:
+    - restart docker

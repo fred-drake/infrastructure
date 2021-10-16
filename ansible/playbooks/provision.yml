@@ -41,9 +41,10 @@
     - provision/docker
 
 - hosts: k8s_cluster
-  gather_facts: false
+  gather_facts: true
   become: true
   roles:
-    - provision/kubernetes/cifs
+    - provision/kubernetes/network
+    - provision/kubernetes/filesystem
 
 - import_playbook: kubernetes/k8s_install.yml
