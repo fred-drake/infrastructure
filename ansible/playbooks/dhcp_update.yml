@@ -6,12 +6,14 @@
     - role: docker/dhcp
       vars:
         dhcp_id: dhcp1
+        container_pull: false
 
-- hosts: critical_docker_primary
+- hosts: critical_docker_secondary
   gather_facts: false
   become: true
   roles:
     - docker/base
-    - role: docker/pihole
+    - role: docker/dhcp
       vars:
-        pihole_id: pihole1
+        dhcp_id: dhcp2
+        container_pull: false

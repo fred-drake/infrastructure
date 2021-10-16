@@ -3,15 +3,17 @@
   become: true
   roles:
     - docker/base
-    - role: docker/dhcp
+    - role: docker/pihole
       vars:
-        dhcp_id: dhcp1
+        pihole_id: pihole1
+        container_pull: false
 
-- hosts: critical_docker_primary
+- hosts: critical_docker_secondary
   gather_facts: false
   become: true
   roles:
     - docker/base
     - role: docker/pihole
       vars:
-        pihole_id: pihole1
+        pihole_id: pihole2
+        container_pull: false

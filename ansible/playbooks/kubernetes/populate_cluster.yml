@@ -21,3 +21,4 @@
     - kubernetes/apps/tautulli
     - kubernetes/apps/homeassistant
     - kubernetes/apps/calibre
+    - kubernetes/apps/office-touchpad

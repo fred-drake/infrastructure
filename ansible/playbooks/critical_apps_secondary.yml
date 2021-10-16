@@ -1,4 +1,4 @@
-- hosts: docker1
+- hosts: critical_docker_secondary
   gather_facts: false
   become: true
   roles:
@@ -7,7 +7,7 @@
       vars:
         dhcp_id: dhcp2
 
-- hosts: docker5
+- hosts: critical_docker_secondary
   gather_facts: false
   become: true
   roles:
