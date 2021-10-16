@@ -32,9 +32,11 @@ all:
         docker1:
         docker2:
     critical_docker_services:
+      hosts:
         docker3:
         docker4:
         docker5:
+        kworker08:
 
     avahi: # Host for avahi daemon
       hosts:
