@@ -1,0 +1,5 @@
+- hosts: kiosk
+  gather_facts: false
+  become: true
+  roles:
+    - provision/kiosk

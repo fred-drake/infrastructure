@@ -28,6 +28,12 @@
   roles:
     - provision/raspberry_pi/pi4_ubuntu
 
+- hosts: raspberry_pi_4:&raspbian
+  gather_facts: true
+  become: true
+  roles:
+    - provision/raspberry_pi/pi4_raspbian
+
 - hosts: avahi
   gather_facts: false
   become: true
