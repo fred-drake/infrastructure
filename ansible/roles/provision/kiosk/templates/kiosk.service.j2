@@ -1,0 +1,16 @@
+[Unit]
+Description=Chromium Kiosk
+Wants=graphical.target
+After=graphical.target
+
+[Service]
+Environment=DISPLAY=:0.0
+Environment=XAUTHORITY=/home/{{ ansible_user }}/.Xauthority
+Type=simple
+ExecStart=/bin/bash /home/{{ ansible_user }}/kiosk.sh
+Restart=on-abort
+User={{ ansible_user }}
+Group={{ ansible_group }}
+
+[Install]
+WantedBy=graphical.target

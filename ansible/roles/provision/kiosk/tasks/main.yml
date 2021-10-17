@@ -1,0 +1,57 @@
+- name: remove unnecessary libraries
+  apt:
+    name:
+      - purge
+      - wolfram-engine
+      - scratch
+      - scratch2
+      - nuscratch
+      - sonic-pi
+      - idle3
+      - smartsim
+      - java-common
+      - minecraft-pi
+      - libreoffice*
+      - openjdk-11-jre-headless
+    state: absent
+
+- name: remove useless packages from the cache
+  apt:
+    autoclean: true
+
+- name: remove dependencies that are no longer required
+  apt:
+    autoremove: true
+
+- name: install kiosk dependencies
+  apt:
+    name:
+      - xdotool
+      - unclutter
+      - sed
+    state: present
+
+- name: copy kiosk script
+  template:
+    src: kiosk.sh.j2
+    dest: "/home/{{ ansible_user }}/kiosk.sh"
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_group }}"
+
+- name: copy kiosk service file
+  template:
+    src: kiosk.service.j2
+    dest: /lib/systemd/system/kiosk.service
+    mode: '0644'
+  notify: restart kiosk service
+
+- name: restart service if necessary
+  meta: flush_handlers
+
+- name: enable kiosk service
+  systemd:
+    name: kiosk
+    enabled: true
+    masked: false
+    state: started

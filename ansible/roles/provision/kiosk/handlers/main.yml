@@ -1,0 +1,8 @@
+---
+- name: reboot system
+  reboot:
+
+- name: restart kiosk service
+  systemd:
+    name: kiosk
+    state: restarted

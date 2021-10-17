@@ -1,7 +1,0 @@
-- name: disable screensaver
-  copy:
-    src: lightdm.conf
-    dest: /etc/lightdm/lightdm.conf
-    mode: '0644'
-  notify: reboot system
-  
