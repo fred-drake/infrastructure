@@ -29,10 +29,10 @@
     - docker/calibre
     - docker/calibre_web
     - docker/n8n
-
-- hosts: docker2
-  gather_facts: false
-  become: true
-  roles:
-    - docker/base
     - docker/sabnzbd
+
+# - hosts: docker2
+#   gather_facts: false
+#   become: true
+#   roles:
+#     - docker/base

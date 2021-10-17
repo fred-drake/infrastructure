@@ -31,7 +31,6 @@ all:
     docker_services:
       hosts:
         docker1:
-        docker2:
 
     # Docker container servers who run critical services
     critical_docker_services:
@@ -46,7 +45,7 @@ all:
     # Identifies the secondary server for critical services
     critical_docker_secondary:
       hosts:
-        docker1:
+        docker2:
 
     avahi: # Host for avahi daemon
       hosts:

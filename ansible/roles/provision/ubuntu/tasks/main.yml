@@ -27,12 +27,12 @@
   tags:
     - update
 
-- name: check if reboot required
-  stat:
-    path: /var/run/reboot-required
-  register: reboot_required_file
+# - name: check if reboot required
+#   stat:
+#     path: /var/run/reboot-required
+#   register: reboot_required_file
 
-- name: reboot if required
-  reboot:
-    msg: "Rebooting after apt dist upgrade"
-  when: reboot_required_file.stat.exists
+# - name: reboot if required
+#   reboot:
+#     msg: "Rebooting after apt dist upgrade"
+#   when: reboot_required_file.stat.exists

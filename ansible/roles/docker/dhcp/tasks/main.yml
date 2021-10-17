@@ -60,6 +60,7 @@
     hostname: "glass-{{ dhcp_id }}"
     env:
       TZ: "{{ default_timezone }}"
+      PORT: "80"
     container_default_behavior: "{{ container_default_behavior }}"
     network_mode: "{{ secret.dhcp.machines[dhcp_id].network }}"
     restart_policy: "{{ container_restart_policy }}"
