@@ -1,13 +1,14 @@
 ansible_host: ENC[AES256_GCM,data:AlqiNzfBMEs4lX17LRphYDyHom5CSPVF0vNSM3RfFA==,iv:iQr/C7/gWBVPj2hnuSWrLD63FDnclWHTDqLx+Q+csJI=,tag:iLZS4i6NeGYUC651uMhJlQ==,type:str]
 ansible_user: ENC[AES256_GCM,data:oBg=,iv:WG1V+U6DNFOzqsqMUdwf/4T0NR7916QmWBqqAoi8uUw=,tag:mJWarPfR/d7UZotgF9MRxw==,type:str]
+ansible_group: ENC[AES256_GCM,data:VVk=,iv:XUkWo1kkd/DeGsQQdSrYgHlsGVfDw5ZG+xBAVJJqn4I=,tag:GawBAQadkEV/7hNLAU/QpQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-14T02:14:45Z"
-    mac: ENC[AES256_GCM,data:aEUKQz9eax9R1Hh8Zhl4bl/Wj0OmCi+rnIhVOli/a7HWQUNuoIkKgzL/1jMZ5bEKsLGgoVXBOkNX38QnThyHyTqKQUlsk+YUS712T3C545jPEMoDaLefpKYetfSNowdPyl80cXjBgKBybTA5TwMJMMN9MYvTuP+vxqvU41gdeSc=,iv:Bj8J0Y+lgkm5xBVF/U3LllPg2tkeZiSE0Y+wT7YV5Hk=,tag:4YWV+QnPSEnv9cm8A3qr5A==,type:str]
+    lastmodified: "2021-10-17T03:09:22Z"
+    mac: ENC[AES256_GCM,data:3miLIP7oUpInVjZ9QTrATv43Yenr4ZIvQrOcSdnJoIV0CwlNP3Ol5CAlrkrZXQ3vVlAIk5XXLuG+ksl3yq3eXZwbwoJDKXbYK4164Z5xTuzvWCjNttqmY5FnUUP5sn26Ke+jYMUV0vgyMwwp+rMddb9tbhYnLlTUeHtYj4Yl+UA=,iv:0prYqOE7ClpyojEXvkYsivztbLygziL+PAle2QIMJ2U=,tag:J11f3frT+gm37aypIltfGA==,type:str]
     pgp:
         - created_at: "2021-10-14T00:32:45Z"
           enc: |
