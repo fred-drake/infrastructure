@@ -246,13 +246,13 @@ spec:
     # when onlyApplyOSDPlacement is false, will merge both placement.All() and placement.osd
     onlyApplyOSDPlacement: false
     nodes:
-    - name: "k8srpiw02"
+    - name: "kworker02"
       devices:
         - name: "sda1"
-    - name: "k8srpiw03"
+    - name: "kworker03"
       devices:
         - name: "sda1"
-    - name: "k8srpiw04"
+    - name: "kworker04"
       devices:
         - name: "sda1"
   # The section for configuring management of daemon disruptions during upgrade or fencing.

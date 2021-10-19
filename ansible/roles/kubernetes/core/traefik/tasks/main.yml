@@ -8,7 +8,7 @@
   kubernetes.core.helm:
     name: traefik
     chart_ref: traefik/traefik
-    release_namespace: networking
+    release_namespace: kube-system
     create_namespace: true
     values:
       image:

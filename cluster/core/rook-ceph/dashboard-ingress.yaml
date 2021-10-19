@@ -7,8 +7,6 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: "${CERT_CLUSTER_ISSUER}"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-    hajimari.io/enable: "true"
-    hajimari.io/icon: "test-tube"
   labels:
     app.kubernetes.io/instance: rook-ceph-mgr-dashboard
     app.kubernetes.io/name: rook-ceph-mgr-dashboard

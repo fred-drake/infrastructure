@@ -12,7 +12,7 @@
     release_namespace: cert-manager
     create_namespace: true
     values:
-      installCRDs: false
+      installCRDs: true
       webhook:
         enabled: true
       extraArgs:
@@ -33,26 +33,26 @@
 
   tags: cert-manager
 
-- name: Create temporary file
-  ansible.builtin.tempfile:
-    state: file
-    suffix: temp
-  register: crdsfile
-  changed_when: False
-  tags: cert-manager
+# - name: Create temporary file
+#   ansible.builtin.tempfile:
+#     state: file
+#     suffix: temp
+#   register: crdsfile
+#   changed_when: False
+#   tags: cert-manager
 
-- name: Download crds file
-  ansible.builtin.get_url:
-    url: https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.crds.yaml
-    dest: "{{ crdsfile.path }}"
-    mode: '0664'
-  tags: cert-manager
+# - name: Download crds file
+#   ansible.builtin.get_url:
+#     url: https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.crds.yaml
+#     dest: "{{ crdsfile.path }}"
+#     mode: '0664'
+#   tags: cert-manager
 
-- name: apply crds file
-  k8s:
-    state: present
-    src: "{{ crdsfile.path }}"
-  tags: cert-manager
+# - name: apply crds file
+#   k8s:
+#     state: present
+#     src: "{{ crdsfile.path }}"
+#   tags: cert-manager
 
 - name: letsencrypt-production
   k8s:

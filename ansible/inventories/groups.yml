@@ -14,10 +14,8 @@ all:
     ubuntu: # all ubuntu servers
       hosts:
         docker[1:5]:
-        kmaster01:
-        kworker01:
-        k8srpiw[02:04]:
-        kworker[05:08]:
+        kmaster[01:02]:
+        kworker[01:08]:
 
     raspbian: # all raspbian servers
       hosts:
@@ -61,12 +59,10 @@ all:
         
     k8s_masters: # master nodes.  The first is considered the initial master.
       hosts:
-        k8srpim01:
+        kmaster[01:02]:
     k8s_workers: # worker nodes
       hosts:
-        kworker01:
-        k8srpiw[02:04]:
-        kworker[05:08]:
+        kworker[01:08]:
     k8s_backup: # node managing backup with specially attached storage
       hosts:
         kworker07:
@@ -86,10 +82,8 @@ all:
     raspberry_pi_4: # raspberry pi 4 machines
       hosts:
         kiosk:
-        k8srpim01:
-        kworker01:
-        k8srpiw[02:04]:
-        kworker[05:07]:
+        kmaster01:
+        kworker[01:07]:
 
     raspberry_pi_overclock_none: # no overclock profile
 

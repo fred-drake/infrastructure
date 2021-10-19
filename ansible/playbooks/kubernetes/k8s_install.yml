@@ -10,6 +10,7 @@
   become: true
   roles:
     - provision/kubernetes/init_master
+    - provision/kubernetes/additional_master
 
 - hosts: k8s_workers
   gather_facts: false

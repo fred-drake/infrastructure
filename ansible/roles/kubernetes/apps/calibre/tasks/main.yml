@@ -1,3 +1,10 @@
+- name: create calibre namespace
+  community.kubernetes.k8s:
+    name: calibre
+    api_version: v1
+    kind: Namespace
+    state: present
+
 - name: calibre books cifs pv
   k8s:
     state: present
@@ -34,8 +41,6 @@
 #           annotations:
 #             cert-manager.io/cluster-issuer: "{{ k8s.cert_manager.cluster_issuer }}"
 #             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-#             hajimari.io/enable: "true"
-#             hajimari.io/icon: "test-tube"
 #           hosts:
 #             - host: "calibre-server.{{ secret.domain }}"
 #               paths:
@@ -83,8 +88,6 @@
           annotations:
             cert-manager.io/cluster-issuer: "{{ k8s.cert_manager.cluster_issuer }}"
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-            hajimari.io/enable: "true"
-            hajimari.io/icon: "test-tube"
           hosts:
             - host: "calibre.{{ secret.domain }}"
               paths:

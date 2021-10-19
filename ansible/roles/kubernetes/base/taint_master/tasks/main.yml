@@ -1,0 +1,8 @@
+---
+- name: set taint on master nodes
+  become: false
+  kubernetes.core.k8s:
+    validate_certs: false
+    state: present
+    definition: "{{ lookup('template', 'taint_master.yml') | from_yaml_all }}"
+  with_items: "{{ groups['k8s_masters'] }}"

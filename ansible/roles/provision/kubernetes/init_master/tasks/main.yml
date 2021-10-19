@@ -4,15 +4,58 @@
   register: k3s_check_installed
   check_mode: false
 
-- name: install k3s on master
+- name: check if reboot required
+  stat:
+    path: /var/run/reboot-required
+  register: reboot_required_file
+
+- name: reboot if required and we haven't installed k3s yet
+  reboot:
+    msg: "Rebooting after apt dist upgrade"
+  when: reboot_required_file.stat.exists and not k3s_check_installed.stat.exists
+
+- name: install k3s as initial master
   delegate_to: localhost
   become: false
   command:
     chdir: "{{ playbook_dir }}/../../../"
     cmd: >
-      k3sup install --host={{ ansible_host.split(".")[0] }} 
+      k3sup install --host={{ inventory_hostname }} 
       --user={{ ansible_user }} 
       --k3s-version={{ k8s.k3s.version }} 
+      --cluster
       --k3s-extra-args="--disable servicelb --disable traefik --disable metrics-server"
-  when: not k3s_check_installed.stat.exists and inventory_hostname == initial_master_node_hostname
+  when: not k3s_check_installed.stat.exists and inventory_hostname == k8s.initial_master_node_hostname
   tags: k8s_setup
+
+- name: create temp file location
+  tempfile:
+    state: file
+    suffix: temp
+  register: kubeconfig_file
+  changed_when: False
+  when: inventory_hostname == k8s.initial_master_node_hostname
+
+- name: copy default k3s.yaml to temp file
+  copy:
+    src: /etc/rancher/k3s/k3s.yaml
+    remote_src: true
+    dest: "{{ kubeconfig_file.path }}"
+    mode: '0600'
+  changed_when: False
+  when: inventory_hostname == k8s.initial_master_node_hostname
+
+- name: update temp file with proper master node location
+  replace:
+    path: "{{ kubeconfig_file.path }}"
+    regexp: "127.0.0.1"
+    replace: "{{ ansible_host }}"
+  changed_when: False
+  when: inventory_hostname == k8s.initial_master_node_hostname
+
+- name: fetch remote kubectl into local KUBECONFIG location
+  fetch:
+    src: "{{ kubeconfig_file.path }}"
+    dest: "{{ lookup('env', 'KUBECONFIG') | default('/tmp', True) }}"
+    flat: true
+  when: inventory_hostname == k8s.initial_master_node_hostname

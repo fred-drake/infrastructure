@@ -67,4 +67,4 @@
   k8s:
     state: present
     definition: "{{ lookup('template', 'snmp-exporter.yml') | from_yaml_all }}"
-  tags: prometheus-exporter
+  tags: prometheus

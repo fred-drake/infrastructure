@@ -2,10 +2,31 @@
 # TODO add commands to nuke rook ceph
 #
 ---
-- hosts: k8s_rpi_cluster
+- hosts: k8s_cluster
   gather_facts: false
   become: true
   tasks:
-    - name: uninstall k3s
-      k3s:
-        state: absent
+    - name: check if cluster is installed
+      ansible.builtin.stat:
+        path: "/usr/local/bin/k3s"
+      register: k3s_check_installed
+      check_mode: false
+
+- hosts: k8s_workers
+  gather_facts: false
+  become: true
+  tasks:
+    - name: uninstall k3s on worker
+      command:
+        cmd: /usr/local/bin/k3s-agent-uninstall.sh
+      when: k3s_check_installed.stat.exists
+
+
+- hosts: k8s_masters
+  gather_facts: false
+  become: true
+  tasks:
+    - name: uninstall k3s on master
+      command:
+        cmd: /usr/local/bin/k3s-uninstall.sh
+      when: k3s_check_installed.stat.exists

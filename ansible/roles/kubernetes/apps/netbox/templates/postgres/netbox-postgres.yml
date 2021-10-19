@@ -8,6 +8,48 @@ type: Opaque
 stringData:
   superUserPassword: "{{ secret.netbox.postgres.superuser_password }}"
   replicationUserPassword: "{{ secret.netbox.postgres.replication_password }}"
+# ---
+# apiVersion: apps/v1
+# kind: StatefulSet
+# metadata:
+#   name: postgres-1
+#   namespace: netbox
+# spec:
+#   serviceName: postgres-1
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: postgres-1
+#   volumeClaimTemplates:
+#   - metadata:
+#       name: data
+#     spec:
+#       accessModes: ["ReadWriteOnce"]
+#       resources:
+#         requests:
+#           storage: 20Gi
+#   template:
+#     metadata:
+#       labels:
+#         app: postgres-1
+#     spec:
+#       containers:
+#       - name: busybox
+#         image: busybox
+#         args:
+#           - sleep
+#           - "1000000"
+#         imagePullPolicy: Always
+#         resources:
+#           requests:
+#             cpu: "{{ k8s.resources.cpu.request.default }}"
+#             memory: "{{ k8s.resources.memory.request.default }}"
+#         env:
+#         - name: TZ
+#           value: "{{ default_timezone }}"
+#         volumeMounts:
+#         - name: data
+#           mountPath: /config
 ---
 apiVersion: kubegres.reactive-tech.io/v1
 kind: Kubegres

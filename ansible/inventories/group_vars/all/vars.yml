@@ -6,7 +6,7 @@ default_timezone: America/New_York
 
 # kubernetes configuration
 k8s:
-  initial_master_node_hostname: k8srpim01
+  initial_master_node_hostname: kmaster01
   k3s: # k3s install version
     version: v1.21.5+k3s1
   kubegres: # scalable postgres for kubernetes
