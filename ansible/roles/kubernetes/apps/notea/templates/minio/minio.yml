@@ -57,7 +57,7 @@ metadata:
   name: minio
   namespace: notea
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: minio
   ports:
