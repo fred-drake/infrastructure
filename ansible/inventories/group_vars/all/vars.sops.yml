@@ -131,6 +131,8 @@ secret:
             mysql_root_password: ENC[AES256_GCM,data:5ZGD3Q==,iv:Yqlio2Q+L2cPwPlbV+caSnmi6mtPfKXalXeaNAxc9hg=,tag:s2MX+z8r/1MBGBgoT6lx9w==,type:str]
             mysql_user: ENC[AES256_GCM,data:pZ4Bd2w=,iv:shCi7HxXE8mO/Tw+H1HA5O7+5fIF0IpUJV8Z4ftFJ64=,tag:48o49xP87LIcIfSOFprAAw==,type:str]
             mysql_password: ENC[AES256_GCM,data:osD7QRU=,iv:RNuczbQmvtV/oDmovBGeApdRv0NDh9s74DCgaEADOt4=,tag:QYc0apbdAdmh5raAUpRSoQ==,type:str]
+    prometheus:
+        hass_token: ENC[AES256_GCM,data:qBzCFdpVeh7Fw7LUzkVPWcX0HQ9YMwOG+kN+SWT/m54l7NI1ut09aS+zuwqkjBGZTVJpB91L5EH/mOPE+Y3NkIdBMrk0PCk7Bdnr3vn8uk9DmI9JRMMGDTuqYvGbRqsi/jjF7FoVEec+sXzrsOBoB70Vrn7i3rZlEtb7M0vwr3iqWUOWRGmJ//rJ2xeYYbtj7VLozML/jYRTzq260sggvQtr6hQuUT7v+iMIR5jlEA9nM4xC17+t,iv:lGhsmyKT+/3STttbq2vof23p5TSDNMhWL/PD1UTdS1w=,tag:pnlG8dF7BaQBi+RdcA+btg==,type:str]
     wireguard:
         dns1: ENC[AES256_GCM,data:XolFEzmDgYU67Lc0aQ==,iv:gbsKsA3D23H9DhrstMSGm+O9LTutFyIk5v2rBKSWyFQ=,tag:9Vljugi0Wq4wzPE0DWCVUw==,type:str]
         dns2: ENC[AES256_GCM,data:pBQLGNJy7Yr/Yp2dRg==,iv:HIjH3/MX7ScM7rvjEVYQDSwmL6lUNBW5XLYNKQq1hgM=,tag:o0AoVZIqSwwpxgRAeuRBAw==,type:str]
@@ -261,8 +263,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-18T02:30:19Z"
-    mac: ENC[AES256_GCM,data:l/FXUdi8mQfmvfbdlulvCeZhMKWH5fYfwcuSIcUrIOdtng/HRfc5bINxPMERH8/G9oU0nMmmeffHCexXWQeY791BLmM3MW15CbxlpcjSUAGdkf4ucT7J7lj6i+d7qWr2CVWtOMI4LaVhSe4+CrzlyE631u2OLuw6BVSWEpB/WEU=,iv:sOM4QBkcCYVH6qhBgV5ZliDbLyXRZrHuNMdJqq1eV+I=,tag:7L4gdaodkLTZuGE8lp3/qQ==,type:str]
+    lastmodified: "2021-10-20T04:04:04Z"
+    mac: ENC[AES256_GCM,data:c3WPRAyu9J8vLbxfLrIuFEmZJVMLQAp0LReZsCs1ap7l/o+XONpkMPEFDeue3mg77CmzM03ChX20tK6dQNbH40ZEh0lkG/fnVXr3D7LupUpME3xOo0K5eT4psPSBdRfOSCl84PHsfGmFAFcLpQZmAAZFcJzOJAU/dPoWHddrMEo=,iv:hsGjxdciAZsjut7FgKzmrvbcT1wrzjwubyyxjPDLua8=,tag:xtr0GxuJMlzTgJiFukTCCg==,type:str]
     pgp:
         - created_at: "2021-10-07T00:59:11Z"
           enc: |

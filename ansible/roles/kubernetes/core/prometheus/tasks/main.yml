@@ -45,6 +45,15 @@
               target_label: instance
             - target_label: __address__
               replacement: snmp-exporter.prometheus.svc.cluster.local:9116
+        - job_name: 'hass'
+          scrape_interval: 10s
+          metrics_path: /api/prometheus
+          authorization:
+            credentials: "{{ secret.prometheus.hass_token }}"
+          scheme: https
+          static_configs:
+            - targets:
+              - "homeassistant.{{ secret.domain }}"
       server:
         statefulSet:
           enabled: true
