@@ -54,6 +54,20 @@
           static_configs:
             - targets:
               - "homeassistant.{{ secret.domain }}"
+        - job_name: 'unraid'
+          scrape_interval: 60s
+          metrics_path: /metrics
+          scheme: http
+          static_configs:
+            - targets:
+              - "larussa-50.{{ secret.domain }}:9100"
+        - job_name: 'unraid-nvidia'
+          scrape_interval: 60s
+          metrics_path: /metrics
+          scheme: http
+          static_configs:
+            - targets:
+              - "larussa-50.{{ secret.domain }}:9202"
       server:
         statefulSet:
           enabled: true
