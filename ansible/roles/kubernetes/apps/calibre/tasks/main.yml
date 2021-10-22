@@ -1,5 +1,5 @@
 - name: create calibre namespace
-  community.kubernetes.k8s:
+  k8s:
     name: calibre
     api_version: v1
     kind: Namespace
