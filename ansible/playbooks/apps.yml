@@ -1,3 +1,9 @@
 - import_playbook: docker/populate_containers.yml
 
 - import_playbook: kubernetes/populate_cluster.yml
+
+- hosts: scoreboard
+  gather_facts: false
+  become: true
+  roles:
+    - scoreboard/create

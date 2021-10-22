@@ -20,6 +20,7 @@ all:
     raspbian: # all raspbian servers
       hosts:
         kiosk:
+        scoreboard:
 
     # All docker container servers
     docker:

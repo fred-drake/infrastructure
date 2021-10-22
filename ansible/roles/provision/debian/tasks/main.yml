@@ -1,4 +1,13 @@
 ---
+- name: set authorized keys
+  become: false
+  ansible.posix.authorized_key:
+    user: "{{ ansible_user }}"
+    state: present
+    key: "{{ lookup('file', '{{ item }}') }}"
+  with_fileglob:
+    - "public_keys/*"
+
 - name: Make sure we have a 'wheel' group
   group:
     name: wheel
@@ -33,15 +42,6 @@
     enabled: false
     state: stopped
     daemon_reload: true
-
-- name: set authorized keys
-  become: false
-  ansible.posix.authorized_key:
-    user: "{{ ansible_user }}"
-    state: present
-    key: "{{ lookup('file', '{{ item }}') }}"
-  with_fileglob:
-    - "public_keys/*"
 
 - name: set hostname
   ansible.builtin.hostname:

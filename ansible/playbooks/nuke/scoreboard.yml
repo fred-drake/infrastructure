@@ -1,0 +1,5 @@
+- hosts: scoreboard
+  become: true
+  gather_facts: false
+  roles:
+    - scoreboard/delete

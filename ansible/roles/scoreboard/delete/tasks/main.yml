@@ -1,0 +1,20 @@
+- name: stop scoreboard if running
+  command: supervisorctl stop scoreboard
+
+- name: configure supervisor
+  blockinfile:
+    state: absent
+    path: /etc/supervisor/supervisord.conf
+    block: "{{ lookup('file', '../../create/files/supervisord-block.conf') }}"
+  notify: restart supervisor
+
+- name: delete scoreboard configuration
+  file:
+    state: absent
+    path: /etc/supervisor/conf.d/scoreboard.conf
+  notify: restart supervisor
+
+- name: Remove scoreboard directory
+  file:
+    state: absent
+    path: /opt/nhl-led-scoreboard

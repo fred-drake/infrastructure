@@ -1,0 +1,49 @@
+- name: install dependencies
+  apt:
+    name:
+      - git
+      - supervisor
+    state: present
+
+- name: determine if nhl scoreboard is already installed
+  stat:
+    path: /opt/nhl-led-scoreboard
+  register: nhl_scoreboard_dir
+
+- name: checkout nhl scoreboard
+  git:
+    repo: https://github.com/riffnshred/nhl-led-scoreboard
+    dest: /opt/nhl-led-scoreboard
+    depth: "1"
+  when: not nhl_scoreboard_dir.stat.exists
+
+- name: compile nhl scoreboard
+  shell: cd /opt/nhl-led-scoreboard; ./scripts/install.sh
+  when: not nhl_scoreboard_dir.stat.exists
+
+- name: apply scoreboard configuration
+  copy:
+    src: config.json
+    dest: /opt/nhl-led-scoreboard/config/config.json
+    mode: '0644'
+
+- name: configure audio config flag
+  replace:
+    path: /boot/config.txt
+    regexp: '^dtparam=audio=on$'
+    replace: 'dtparam=audio=off'
+  notify: reboot system
+
+- name: configure supervisor
+  blockinfile:
+    state: present
+    path: /etc/supervisor/supervisord.conf
+    block: "{{ lookup('file', 'supervisord-block.conf') }}"
+  notify: restart supervisor
+
+- name: apply scoreboard configuration
+  copy:
+    src: scoreboard.conf
+    dest: /etc/supervisor/conf.d/scoreboard.conf
+    mode: '0644'
+  notify: restart supervisor

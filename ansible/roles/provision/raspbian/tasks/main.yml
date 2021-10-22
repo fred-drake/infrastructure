@@ -15,11 +15,21 @@
     mode: "0644"
 
 # Raspbian has no check if we should reboot, so do it on any upgraded package
-# - name: upgrade packages
-#   apt:
-#     update_cache: true
-#     upgrade: "dist"
-#   ignore_errors: true
-#   notify: reboot system
-#   tags:
-#     - update
+- name: upgrade packages
+  apt:
+    update_cache: true
+    upgrade: "dist"
+  ignore_errors: true
+  notify: reboot system
+  tags:
+    - update
+
+- name: set wifi network
+  template:
+    src: wpa_supplicant.conf.j2
+    dest: "/etc/wpa_supplicant/wpa_supplicant.conf"
+    mode: "0600"
+  notify: 
+    - set wifi
+    - reboot system
+  when: wifi_ssid is defined and wifi_password is defined

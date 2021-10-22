@@ -1,3 +1,9 @@
 ---
+- name: set wifi
+  template:
+    src: wpa_supplicant.conf.j2
+    dest: "/boot/wpa_supplicant.conf"
+    mode: "0644"
+
 - name: reboot system
   reboot:
