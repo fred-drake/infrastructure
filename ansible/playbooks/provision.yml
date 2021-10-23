@@ -34,12 +34,6 @@
   roles:
     - provision/raspberry_pi/pi4_raspbian
 
-# - hosts: avahi
-#   gather_facts: false
-#   become: true
-#   roles:
-#     - avahi
-
 - hosts: docker
   gather_facts: false
   become: true

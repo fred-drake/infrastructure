@@ -6,12 +6,7 @@
     - role: docker/dhcp
       vars:
         dhcp_id: dhcp1
-
-- hosts: critical_docker_primary
-  gather_facts: false
-  become: true
-  roles:
-    - docker/base
     - role: docker/pihole
       vars:
         pihole_id: pihole1
+    - docker/avahi
