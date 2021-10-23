@@ -7,3 +7,9 @@
   become: true
   roles:
     - scoreboard/create
+
+- hosts: kiosk
+  gather_facts: false
+  become: true
+  roles:
+    - kiosk
