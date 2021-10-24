@@ -109,7 +109,7 @@ secret:
     cifs:
         services_server: ENC[AES256_GCM,data:CNQZJ9g8D5U/REKJ,iv:evQJU9Oa8fignSDdAlxUHrjMqJdRKivTM6OmDrbh7g0=,tag:lfZpsNnOo3CSm1F+55Ue4Q==,type:str]
         mount_options: ENC[AES256_GCM,data:RITLMV31u/KZb1lhFZJZNt9uNgugduetlnaspxtPCNDRFQZOsg==,iv:ofEC5QL2cORsz2K6AW4MPeV0lynHhEsMvgOnWY1McfM=,tag:+ML6RbNw/nDdWir1pgqZww==,type:str]
-        username: ENC[AES256_GCM,data:KGP50Q==,iv:+LN34ejjSUhaoV9BC8+EE6uxfH1WSkIYxeLSh610Mxw=,tag:4e1v51GdT91IQjHGHUSQEQ==,type:str]
+        username: ENC[AES256_GCM,data:jkZghRSqEQ==,iv:VzAQIch3knqAXEM1Z3t+pMJh9uy3JL3d0sdWysd4HO8=,tag:4ghj4T6O26h10DruetuvpQ==,type:str]
         password: ENC[AES256_GCM,data:MCiL2CktUanF8o5T,iv:6iNx5NLeef6h4PJXJY2qW1heoVteZmPzVd1+VbmckQ0=,tag:PoH3tprbe4ZjkhfgSYbsMQ==,type:str]
     notea:
         minio:
@@ -273,8 +273,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-23T02:12:16Z"
-    mac: ENC[AES256_GCM,data:s7Qm2QZ8pHKa7IrxipI35D/clVAN3nFw91ulCqc6Fc0kXYlofIEt5ElJfPc009wAHmbQ/pQ8tEAQdeMM+QUD14h/arWvk+6liVnTMvCsJPS0fjEJPivSM3QXpISyD/JxQB+GC4kXkxMv1Errl+10HFcfBaYhO1lZN43Jw5uHlyo=,iv:MHYH7WjkeJ21zhdMFh3kAgIoSIhJ0ZEptR7rkOT7KLg=,tag:8h3BjTK9X3lsDnteDdtCxg==,type:str]
+    lastmodified: "2021-10-23T21:43:45Z"
+    mac: ENC[AES256_GCM,data:I5TtGKHnGsoGZjqW6wLVQtIyUEzJPRgZ8ueGZJ3UkfEmuS6i23lgIRCaKb3xBJP7bv2vY0tzcXokZ5tdUURiKWytZSgXCj0wyvQ6QtCI/Na2wq+GcCAX8oZd5FXeOfPuEwzDmzeDLtTZ10otSPWzuviq7SedyAWlev5zA1MWcC0=,iv:tQejoIZEAH5brFcQJjo8hoUlzpDq8erneqHPBYjpDUs=,tag:xEXwNxXd4wSnxzXWSNaQZg==,type:str]
     pgp:
         - created_at: "2021-10-07T00:59:11Z"
           enc: |

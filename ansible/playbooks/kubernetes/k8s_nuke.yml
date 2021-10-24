@@ -1,7 +1,3 @@
-#
-# TODO add commands to nuke rook ceph
-#
----
 - hosts: k8s_cluster
   gather_facts: false
   become: true

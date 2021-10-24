@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calibre
+  namespace: calibre
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: calibre
+  template:
+    metadata:
+      labels:
+        app: calibre
+    spec:
+      volumes:
+        - name: calibre-config
+          persistentVolumeClaim:
+            claimName: calibre-config
+        - name: calibre-web-config
+          persistentVolumeClaim:
+            claimName: calibre-web-config
+        - name: books
+          persistentVolumeClaim:
+            claimName: calibre-books
+        - name: incoming
+          persistentVolumeClaim:
+            claimName: calibre-incoming
+      containers:
+        - name: calibre
+          image: linuxserver/calibre
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "{{ k8s.resources.cpu.request.default }}"
+              memory: "{{ k8s.resources.memory.request.default }}"
+          env:
+            - name: TZ
+              value: "{{ default_timezone }}"
+            - name: PUID
+              value: "99"
+            - name: PGID
+              value: "100"
+          volumeMounts:
+            - mountPath: /config
+              name: calibre-config
+            - mountPath: /books
+              name: books
+            - mountPath: /import
+              name: incoming  
+        - name: calibre-web
+          image: linuxserver/calibre-web
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "{{ k8s.resources.cpu.request.default }}"
+              memory: "{{ k8s.resources.memory.request.default }}"
+          env:
+            - name: TZ
+              value: "{{ default_timezone }}"
+            - name: PUID
+              value: "99"
+            - name: PGID
+              value: "100"
+            - name: DOCKER_MODS
+              value: linuxserver/calibre-web:calibre
+          volumeMounts:
+            - mountPath: /config
+              name: calibre-web-config
+            - mountPath: /books
+              name: books
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: calibre
+  namespace: calibre
+spec:
+  type: NodePort
+  selector:
+    app: calibre
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: server
+    - port: 8083
+      targetPort: 8083
+      name: web
+    - port: 9900
+      targetPort: 9900
+      name: sharing
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: calibre
+  namespace: calibre
+  annotations:
+    cert-manager.io/cluster-issuer: "{{ k8s.cert_manager.cluster_issuer }}"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+  labels:
+    app.kubernetes.io/instance: calibre
+    app.kubernetes.io/name: calibre
+spec:
+  ingressClassName: "traefik"
+  rules:
+  - host: "calibre-server.{{ secret.domain }}"
+    http: 
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: calibre
+            port:
+              number: 8080
+  - host: "calibre.{{ secret.domain }}"
+    http: 
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: calibre
+            port:
+              number: 8083
+  tls:
+    - hosts:
+      - "calibre.{{ secret.domain }}"
+      - "calibre-server.{{ secret.domain }}"
+      secretName: "calibre-tls"

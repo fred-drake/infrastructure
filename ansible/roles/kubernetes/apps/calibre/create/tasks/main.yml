@@ -1,0 +1,29 @@
+- name: create calibre namespace
+  k8s:
+    name: calibre
+    api_version: v1
+    kind: Namespace
+    state: present
+  tags:
+    - calibre
+
+- name: calibre network storage
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'network-storage.yml') | from_yaml_all }}"
+  tags:
+    - calibre
+
+- name: calibre storage
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'storage.yml') | from_yaml_all }}"
+  tags:
+    - calibre
+
+- name: calibre
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'calibre.yml') | from_yaml_all }}"
+  tags:
+    - calibre

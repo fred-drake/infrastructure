@@ -1,0 +1,15 @@
+- name: calibre
+  k8s:
+    state: absent
+    definition: "{{ lookup('template', '../../create/templates/calibre.yml') | from_yaml_all }}"
+  tags:
+    - never
+    - calibre
+
+- name: calibre network storage
+  k8s:
+    state: absent
+    definition: "{{ lookup('template', '../../create/templates/network-storage.yml') | from_yaml_all }}"
+  tags:
+    - never
+    - calibre

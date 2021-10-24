@@ -21,6 +21,6 @@
     - kubernetes/apps/mqtt
     - kubernetes/apps/tautulli
     - kubernetes/apps/homeassistant
-    - kubernetes/apps/calibre
+    - kubernetes/apps/calibre/create
     - kubernetes/apps/office-touchpad
     - kubernetes/apps/uptime-kuma

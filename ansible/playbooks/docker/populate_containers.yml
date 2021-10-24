@@ -26,9 +26,6 @@
     - docker/teslamate
     - docker/torrent
     - docker/readarr
-    - docker/calibre
-    - docker/calibre_web
-    # - docker/n8n
     - docker/sabnzbd
 
 # - hosts: docker2
