@@ -12,7 +12,8 @@
 
 - name: checkout nhl scoreboard
   git:
-    repo: https://github.com/riffnshred/nhl-led-scoreboard
+    repo: "https://gitea.{{ secret.domain }}/fdrake/led-scoreboard-temp"
+    # repo: https://github.com/riffnshred/nhl-led-scoreboard
     dest: /opt/nhl-led-scoreboard
     depth: "1"
   when: not nhl_scoreboard_dir.stat.exists
@@ -22,8 +23,8 @@
   when: not nhl_scoreboard_dir.stat.exists
 
 - name: apply scoreboard configuration
-  copy:
-    src: config.json
+  template:
+    src: config.json.j2
     dest: /opt/nhl-led-scoreboard/config/config.json
     mode: '0644'
 
