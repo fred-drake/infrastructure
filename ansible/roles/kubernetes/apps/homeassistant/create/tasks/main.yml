@@ -1,0 +1,15 @@
+- name: create homeassistant namespace
+  k8s:
+    name: homeassistant
+    api_version: v1
+    kind: Namespace
+    state: present
+  tags:
+    - homeassistant
+
+- name: homeassistant
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'homeassistant.yml') | from_yaml_all }}"
+  tags:
+    - homeassistant

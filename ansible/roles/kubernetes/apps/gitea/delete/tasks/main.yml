@@ -1,0 +1,15 @@
+- name: gitea database server
+  k8s:
+    state: absent
+    definition: "{{ lookup('template', '../../create/templates/gitea-db.yml') | from_yaml_all }}"
+  tags:
+    - never
+    - gitea
+
+- name: gitea server
+  k8s:
+    state: absent
+    definition: "{{ lookup('template', '../../create/templates/gitea.yml') | from_yaml_all }}"
+  tags:
+    - never
+    - gitea

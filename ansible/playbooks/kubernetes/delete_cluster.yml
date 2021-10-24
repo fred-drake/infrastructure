@@ -14,12 +14,12 @@
     # - kubernetes/core/prometheus
     # - kubernetes/apps/whoogle
     # - kubernetes/apps/notea
-    # - kubernetes/apps/cyberchef
+    - kubernetes/apps/cyberchef/delete
     # - kubernetes/apps/netbox
-    # - kubernetes/apps/gitea
+    - kubernetes/apps/gitea/delete
     # - kubernetes/apps/mqtt
     # - kubernetes/apps/tautulli
-    # - kubernetes/apps/homeassistant
+    - kubernetes/apps/homeassistant/delete
     - kubernetes/apps/calibre/delete
     # - kubernetes/apps/office-touchpad
     # - kubernetes/apps/uptime-kuma

@@ -15,12 +15,12 @@
     - kubernetes/core/prometheus
     - kubernetes/apps/whoogle
     - kubernetes/apps/notea
-    - kubernetes/apps/cyberchef
+    - kubernetes/apps/cyberchef/create
     - kubernetes/apps/netbox
-    - kubernetes/apps/gitea
+    - kubernetes/apps/gitea/create
     - kubernetes/apps/mqtt
     - kubernetes/apps/tautulli
-    - kubernetes/apps/homeassistant
+    - kubernetes/apps/homeassistant/create
     - kubernetes/apps/calibre/create
     - kubernetes/apps/office-touchpad
     - kubernetes/apps/uptime-kuma

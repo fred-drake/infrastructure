@@ -1,0 +1,9 @@
+- name: delete cyberchef namespace
+  k8s:
+    name: cyberchef
+    api_version: v1
+    kind: Namespace
+    state: absent
+  tags:
+    - never
+    - cyberchef
