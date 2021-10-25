@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: sealed-secrets
-  namespace: kube-system
+  namespace: argocd
 spec:
   destination:
     namespace: kube-system
