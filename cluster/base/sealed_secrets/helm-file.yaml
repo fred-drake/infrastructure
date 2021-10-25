@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: sealed-secrets
-  namespace: argocd
+  namespace: kube-system
 spec:
   destination:
     namespace: kube-system
@@ -15,7 +15,7 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-      
+
     automated:
       prune: false
       selfHeal: false
