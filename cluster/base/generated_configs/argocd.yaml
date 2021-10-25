@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: config
   namespace: argocd
-stringData:
+data:
   cert_manager.cluster_issuer: "letsencrypt-production"
