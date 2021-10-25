@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config
+  namespace: whoogle
+data:
+  keel.default_policy: "minor"
+  keel.default_poll_schedule: "1h"
+  cert_manager.cluster_issuer: "letsencrypt-production"
+  resources.cpu.request.default: "100m"
+  resources.memory.request.default: "128Mi"

@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - helm-file.yaml
   - argocd.yaml
+  - whoogle.yaml

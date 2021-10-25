@@ -1,0 +1,23 @@
+{
+  "kind": "SealedSecret",
+  "apiVersion": "bitnami.com/v1alpha1",
+  "metadata": {
+    "name": "secret-config",
+    "namespace": "argocd",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "template": {
+      "metadata": {
+        "name": "secret-config",
+        "namespace": "argocd",
+        "creationTimestamp": null
+      },
+      "type": "Opaque",
+      "data": null
+    },
+    "encryptedData": {
+      "domain": "AgBAUQx42EYS4iauQ8Cw21GNvJIhjhdyJ1wghlO72/gfRPAns9i6vu1Up4ZeDPYPvW9lkN9q+jVwXaK8I97Gt1strPRN8wsRqvZL/98bmgWYFREhdBFHs4QDOQps4+Mp+TevcsgTVWLt633y9rQ0lpUkqTTSGnjFpTrC+KMErggc4GasXUmRlgDBOclhegyeCnp8Y44b41kXdvdxVyYUMkFpzMOvhEQxHS5rrDakbab15yCDEzuSKjPitKn7yyI2pIgEl1il2RqGKu2DvDvbR0Ef3FCnzrxuxmUav9R0mpsr8z41YOIYPZhusjWkDkc67YfRrk8SZPBVAqCCZwtk7BUCLNM8beL9pf/wlogluJJWL2+MfpFgjNaubqUUr86LDSqe6yNmrdvArjHqdvyKdJOLPXEydx6L9YWCcvU4mS+RlBSyFhWfmpHQnPr8JSK6VBZjbZcadZOztbNabHvDKjuXtSPEuF12Bh8bPWm7NA8Go1h3pmJQhh1OvE8JUIWbATz8heVCK7BxvAJzmI27azJP7QJqCgO7CElbmTmtyCwnzllDG0Ml71ilRGh8Ic2U3qUFuWkgiK1KSZOJ/ey61EnWAFM5NJexscU8K2aILvd3K4TIqeS4hzZot7yRkdmg8iHZTwko4kWZaPF+n+nvsT/VJ7AKW0xys7f3KKV+gAe995cppjttkjcmZ/CEx63cw32IRKcsyU1F4PJZdnXniHIexWEL"
+    }
+  }
+}
