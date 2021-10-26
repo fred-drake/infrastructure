@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: config
-  namespace: argocd
-data:
-  cert_manager.cluster_issuer: "letsencrypt-production"

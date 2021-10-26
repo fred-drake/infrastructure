@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sealed-secrets
+  name: whoogle
   namespace: argocd
 spec:
   destination:
@@ -9,12 +9,12 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     helm:
-      parameters:
-        - name: "commandArgs[0]"
-          value: --update-status
-    repoURL: 'https://bitnami-labs.github.io/sealed-secrets'
-    targetRevision: 1.16.1
-    chart: sealed-secrets
+      valueFiles:
+        - values.yaml
+        - secrets+gpg-import-kubernetes://argocd/argocd-gpg-key#private.asc?https://raw.githubusercontent.com/fred-drake/infrastructure/master/cluster/apps/whoogle/secrets.yaml
+    repoURL: 'https://k8s-at-home.com/charts/'
+    # targetRevision: 1.16.1
+    chart: whoogle
   project: default
   syncPolicy:
     syncOptions:
