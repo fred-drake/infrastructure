@@ -6,6 +6,7 @@ controller:
     keel.sh/pollSchedule: "@every 1h"
 image:
   repository: benbusby/whoogle-search
+  tag: latest
   imagePullPolicy: IfNotPresent
 resources:
   requests:
