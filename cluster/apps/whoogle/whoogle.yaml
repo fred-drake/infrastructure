@@ -13,7 +13,7 @@ spec:
         - https://raw.githubusercontent.com/fred-drake/infrastructure/master/cluster/apps/whoogle/values.yaml
         # - secrets+gpg-import-kubernetes://argocd/argocd-gpg-key#private.asc?https://raw.githubusercontent.com/fred-drake/infrastructure/master/cluster/apps/whoogle/secrets.yaml
         # - secrets+gpg-import:///gpg-private-keys/private.asc?https://raw.githubusercontent.com/fred-drake/infrastructure/master/cluster/apps/whoogle/secrets.yaml
-        - secrets+gpg-import:///gpg-private-keys/private.asc?secrets.yaml
+        - secrets+gpg-import:///gpg-private-keys/private.asc?/tmp/https___github.com_fred-drake_infrastructure/cluster/apps/whoogle/secrets.yaml
     repoURL: 'https://k8s-at-home.com/charts/'
     targetRevision: 3.0.1
     chart: whoogle
