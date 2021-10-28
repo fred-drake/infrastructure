@@ -12,17 +12,12 @@ spec:
     targetRevision: 3.0.1
     repoURL: 'https://k8s-at-home.com/charts/'
     helm:
-      fileParameters:
-        - name: values
-          path: /helm/values/whoogle.yaml
-        - name: secrets
-          path: /helm/secrets/whoogle.yaml
       # values: |
       #   image:
       #     tag: latest
-      # valueFiles:
-      #   - /helm/values/whoogle.yaml
-        # - /helm/secrets/whoogle.yaml
+      valueFiles:
+        - /helm/values/whoogle.yaml
+        - /helm/secrets/whoogle.yaml
   project: default
   syncPolicy:
     syncOptions:
