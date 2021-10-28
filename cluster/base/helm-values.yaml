@@ -5,8 +5,28 @@ metadata:
   namespace: argocd
 data:
   whoogle.yaml: |
-    keel.default_policy: "minor"
-    keel.default_poll_schedule: "1h"
-    cert_manager.cluster_issuer: "letsencrypt-production"
-    resources.cpu.request.default: "100m"
-    resources.memory.request.default: "128Mi"
+    controller:
+      annotations:
+        keel.sh/policy: "minor"
+        keel.sh/approvals: "1"
+        keel.sh/trigger: poll
+        keel.sh/pollSchedule: "1h"
+    image:
+      repository: benbusby/whoogle-search
+      imagePullPolicy: IfNotPresent
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+    env:
+      TZ: "America/New_York"
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"        
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    monitoring:
+      enabled: false
+        
