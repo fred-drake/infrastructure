@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: whoogle
-  namespace: whoogle
+  namespace: argocd
 spec:
   destination:
     namespace: whoogle
@@ -12,9 +12,9 @@ spec:
     targetRevision: 3.0.1
     repoURL: 'https://k8s-at-home.com/charts/'
     helm:
-      # valueFiles:
-      #   - /helm-values/helm-values.yaml
-      #   - /helm-values/helm-secrets.yaml
+      valueFiles:
+        - /helm-values/helm-values.yaml
+        - /helm-values/helm-secrets.yaml
   project: default
   syncPolicy:
     syncOptions:
