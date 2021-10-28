@@ -13,8 +13,8 @@ spec:
     repoURL: 'https://k8s-at-home.com/charts/'
     helm:
       valueFiles:
-        - /helm-values/helm-values.yaml
-        - /helm-values/helm-secrets.yaml
+        - /helm/values/whoogle.yaml
+        - /helm/secrets/whoogle.yaml
   project: default
   syncPolicy:
     syncOptions:
