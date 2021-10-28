@@ -5,10 +5,10 @@ metadata:
   namespace: argocd
 data:
   whoogle.yaml: |
-    controller.annotations.{keel.sh/policy}: "minor"
-    controller.annotations.{keel.sh/approvals}: "1"
-    controller.annotations.{keel.sh/trigger}: poll
-    controller.annotations.{keel.sh/pollSchedule}: "1h"
+    controller.annotations.keel.sh/policy: "minor"
+    controller.annotations.keel.sh/approvals: "1"
+    controller.annotations.keel.sh/trigger: poll
+    controller.annotations.keel.sh/pollSchedule: "1h"
     image.repository: benbusby/whoogle-search
     image.imagePullPolicy: IfNotPresent
     resources.requests.cpu: "100m"
@@ -16,6 +16,6 @@ data:
     env.TZ: "America/New_York"
     ingress.main.enabled: true
     ingress.main.ingressClassName: traefik
-    ingress.main.annotations.{cert-manager.io/cluster-issuer}: "letsencrypt-production"
-    ingress.main.annotations.{traefik.ingress.kubernetes.io/router.entrypoints}: websecure
+    ingress.main.annotations.cert-manager.io/cluster-issuer: "letsencrypt-production"
+    ingress.main.annotations.traefik.ingress.kubernetes.io/router.entrypoints: websecure
     monitoring.enabled: false
