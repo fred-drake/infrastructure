@@ -16,7 +16,7 @@ spec:
       #   image:
       #     tag: latest
       valueFiles:
-        - /helm/values/whoogle.yaml
+        - /helm/values/whoogl.yaml
         - /helm/secrets/whoogle.yaml
   project: default
   syncPolicy:
