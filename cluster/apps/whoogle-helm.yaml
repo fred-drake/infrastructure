@@ -14,7 +14,7 @@ spec:
     helm:
       valueFiles:
         - /helm/values/whoogle.yaml
-        - /helm/secrets/whoogle.yaml
+        # - /helm/secrets/whoogle.yaml
   project: default
   syncPolicy:
     syncOptions:
