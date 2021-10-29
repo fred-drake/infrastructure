@@ -11,6 +11,14 @@ spec:
     chart: vault
     targetRevision: 0.17.1
     repoURL: 'https://helm.releases.hashicorp.com'
+    helm:
+      parameters:
+        - name: ui.enabled
+          value: "true"
+        - name: server.ingress.enabled
+          value: "true"
+        - name: server.ingress.hosts[0].host
+          value: vault.internal.freddrake.com          
   project: default
   syncPolicy:
     syncOptions:
