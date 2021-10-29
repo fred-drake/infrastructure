@@ -12,9 +12,9 @@ spec:
     targetRevision: 3.0.1
     repoURL: 'https://k8s-at-home.com/charts/'
     helm:
-      # values: |
-      #   image:
-      #     tag: latest
+      values: |
+        image:
+          repository: benbusby/whoogle-search
       valueFiles:
         - /helm/values/whoogle.yaml
       #   - /helm/secrets/whoogle.yaml
