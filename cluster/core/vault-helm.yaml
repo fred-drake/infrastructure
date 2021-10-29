@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault
+  namespace: argocd
+spec:
+  destination:
+    namespace: vault
+    server: 'https://kubernetes.default.svc'
+  source:
+    chart: vault
+    targetRevision: 3.0.1
+    repoURL: 'https://helm.releases.hashicorp.com'
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+
+    automated:
+      prune: false
+      selfHeal: true
