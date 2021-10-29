@@ -16,8 +16,8 @@ spec:
         image:
           repository: benbusby/whoogle-search
       valueFiles:
-        - /helm/secrets/whoogle.yaml
-        - /helm/values/whoogle.yaml
+        - /helm-secrets/whoogle.yaml
+        # - /helm/values/whoogle.yaml
   project: default
   syncPolicy:
     syncOptions:
