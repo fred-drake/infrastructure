@@ -5,7 +5,9 @@ metadata:
   namespace: argocd
 data:
   whoogle.yaml: |
-    image.tag: latest
+    parameters:
+      - name: image.tag
+        value: latest
   whoogle-orig.yaml: |
     controller.annotations.keel.sh/policy: "minor"
     controller.annotations.keel.sh/approvals: "1"
