@@ -9,7 +9,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     chart: vault
-    targetRevision: 3.0.1
+    targetRevision: 0.17.1
     repoURL: 'https://helm.releases.hashicorp.com'
   project: default
   syncPolicy:
