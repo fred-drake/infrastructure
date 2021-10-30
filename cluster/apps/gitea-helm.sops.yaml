@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: gitea
+    namespace: argocd
+spec:
+    destination:
+        namespace: gitea
+        server: https://kubernetes.default.svc
+    source:
+        chart: gitea
+        targetRevision: 4.1.1
+        repoURL: https://dl.gitea.io/charts/
+        helm:
+            values: ENC[AES256_GCM,data:I53rLcc6kf3vC1oG98Jmueox0qbzKgAlMpKghQ8LWoNmoCkVEgnBu1BEOX1jh2pix7+SLQqaiurcIXdooLY/evx4JIu+4A0Bhio3njkPYo2KblByd3WhGdhHohBrSojDUh35JmtkzF872k8wolUuGpigChMLGpgsW35fEyou+6hSKuSMEndpdt8O5FKpiGj95k/0feOMV5YWfgFjaypjikarpvZPOyA5VSS+ISNorRD3T1bGNrj/m3WpTFLjexRRTMS5f9sKQ+lWT6UKMxh0okNBkmFLWtmYqGdJ/rlcVoOwMaRHmYbZ9z1QnwCawFj8jqXm0S65j1JWlWPvB0RKVmULWU01iOJ2ZIiT91fkIPBJ0AJTaNdO/YIDQF8pPJ36dVH3c9/Czq6YG1tM2VfFzpgqeKUmFdsJUbeuCHP+M/ndYnqYUX6scxe7hDOIT9iwifUqlzEAsPQYuIEbBQ1OUVKWYH7OiXYK6k3sns7qRyXszjK4w6w2bs6gIeIWVdNBPc/JmzVMXXmPqdxUUQyEwBKfP398UaeCeL+w1mZh//KU+F+PGv4lQCIu15LAe2rGHdgQjoEU/qBKUUthbfNiO9UXXur5ZeoeV5YltuQ0Jju92yjbUbb2snTY7V+AnHG5SAJepz8uTztxKJT6h+aUeQOVwn5u5BebhTBV/ZCbp5fSGD+KssvmcF+hqBQF/05pxjP9x1aEKPJ5q4IRL1slnwnJ5THHBS1rVj9vyH6DO0W0W7uFnfTJjJQfc+o30rFUgfihQk7JkZwYBFKNjkFc0BV2kLppmYMGKUw0zRHxPXtK7w+gHYA7Dt+IpxJS6/nZk4mCYndL0c+eht/cN4IaDrnlQX69c+RwANEsrYBgDYEGC29UP5TqblwDteYkU0dtDvrucNKBKw0hpB6Z4lRKDng59lL8b/n5Ldds2bHeqPupnodJJmeTLKzcOxlUJDKu1s6MHVX4t1PVz2yjpR4jGR7r8aTTvu3gtVw6XSuB4vCXZ4nLDI2vhPn7v2HYgwGEU0IisrFtbUyLsEUOxDNtGy959dm9vmV+wGl7C7nllp/jHPu3NqZUEyU5Coso7Nm+HmalxSAtnCIpjSweOidT4cFlqUvZ8Twyx0DX+z9C7AWVSVwsdjAwsPedktQ3bBWbkgw6JXuHymt2YBiJfyw2OBuYArSveBm2TnzTDm9o7/zZpp6pFfgfcspx8VIHGc3HcpxvVYH2xNS9VJ5TRR/gDb52EuSS/WfhXsotiQo5cyRjU8i0TDGESSHomXuq/xvqW9MHO/UN8d947KTDqnvyar6lmklvVD+JmnhoyG+tq4X9wwe6VFmMcjCrun3TXpA05aYdhHMuxe+tBWrT6uiXjXiJpFPb0WyAU5xaTWsxqA==,iv:A6jb4L11/Yl7TTTPQAoFISPmqfzbZR38PF5uy4eLtWY=,tag:Zp+3RxwskUfcuA77d6GLtQ==,type:str]
+    project: default
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: false
+            selfHeal: true
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-10-30T22:50:03Z"
+    mac: ENC[AES256_GCM,data:WufRftriM4QcgncZQdF4e6MnVv6AxCbcgtRhISvLaly6g4Dr43w2qCfgdRZWov5ftJIIWfQoHAzoAqn2pHbIDRZ4VkpF4Sv4R7sF1/yK2jsW0BazgTffBVhjN7vZy0bs+c32BagP+9tSmCIRhC6/sHh602sR2vg7Rj8C7sy/LSM=,iv:6e2YPiVT/6DIx69qsMWp2wxG0z7km/y6n5x6DI2X/mA=,tag:njSSdVO+dS+xcxYjGxsnQA==,type:str]
+    pgp:
+        - created_at: "2021-10-30T22:50:02Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkAQ/9EVGn5ptMuI+rf0qSvrykm03GQ1hgPd0miILJxLF+kFhh
+            3JQaFzRir5YC+zUxiXHzpzwUhNY4emWKlu2G3iehgG6xmDYgnOxrIhRhVl1EYicy
+            HxHWzqAn7ZQdLeETCGCLGiYF35SdZhuxVxc0iDWehYhQkuP6z8Szm33X8KO0t2W4
+            wVQOJiR0KsaQbqPXhCrwdlWDfT8WpkC9o5dsXSjrwzuhhUd4hvPF5EzSq/HrG2gN
+            BfP7cJ3bdXDK2Vm6yYuS4RNrcHHrJT/90Cfwt+U0CJ1ZKhLNCh1PQ5V+LCZcC3W7
+            IN/KaOwGV6MqpH21Y3u9Scxx5oLyxnv3DXCr30ARXsBvUPszWj0cB5EJp+oA7emC
+            gq/wcbmSYgT3NOTVEowQq203mX6JrhwDm0AFn3vxokiia1m/HE7b9A1jNypmtYq+
+            hJc5a88MVFXJtMshJ45AvPnQ5wIizRQZJH9vtHYHruMnLzGrKFiTjCDBs9na9FGq
+            5/HPr+AZE0mcQVhWpC+UgUEJyjuscHdZxRn+XA0Iv29ej4Bhb+ziJ08Rnofg33Vy
+            6vVhLoHDHCQ/+PTE97IZ8aL3Ff3sB1fWZHIjfOeC+xOw8X7sgIjkIJbTbFZ2MlQc
+            qOjnJtuioKngttZG02b1OHBAaAxWpB9an/QsVH09conhtLFExQksURni9iabiB7S
+            XAFoBo0bn7ZKbqE47HYshHM+rx6qyZzfeZXwKg4i7hVbcZQP6hRYC2w1SeLNf+On
+            42LZKnTuAfkXvxKtMAXJSGTBTu9bHq8uipCkgGnze3Mckk/b+YjyxZ+nWnH/
+            =ruXD
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData)$
+    version: 3.7.1
