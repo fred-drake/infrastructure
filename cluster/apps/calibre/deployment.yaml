@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calibre
+  namespace: calibre
+  annotations:
+    keel.sh/policy: minor
+    keel.sh/approvals: "1"
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: '@every 1h'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: calibre
+  template:
+    metadata:
+      labels:
+        app: calibre
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      volumes:
+        - name: calibre-config
+          persistentVolumeClaim:
+            claimName: calibre-config
+        - name: calibre-web-config
+          persistentVolumeClaim:
+            claimName: calibre-web-config
+        - name: books
+          persistentVolumeClaim:
+            claimName: calibre-books
+        - name: incoming
+          persistentVolumeClaim:
+            claimName: calibre-incoming
+      containers:
+        - name: calibre
+          image: linuxserver/calibre
+          imagePullPolicy: Always
+          resources:
+            requests:
+                cpu: 100m
+                memory: 128Mi
+          env:
+            - name: TZ
+              value: America/New_York
+            - name: PUID
+              value: "99"
+            - name: PGID
+              value: "100"
+          volumeMounts:
+            - mountPath: /config
+              name: calibre-config
+            - mountPath: /books
+              name: books
+            - mountPath: /import
+              name: incoming  
+        - name: calibre-web
+          image: linuxserver/calibre-web
+          imagePullPolicy: Always
+          resources:
+            requests:
+                cpu: 100m
+                memory: 128Mi
+          env:
+            - name: TZ
+              value: America/New_York
+            - name: PUID
+              value: "99"
+            - name: PGID
+              value: "100"
+            - name: DOCKER_MODS
+              value: linuxserver/calibre-web:calibre
+          volumeMounts:
+            - mountPath: /config
+              name: calibre-web-config
+            - mountPath: /books
+              name: books

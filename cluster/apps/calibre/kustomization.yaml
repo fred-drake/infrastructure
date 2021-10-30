@@ -3,5 +3,5 @@ kind: Kustomization
 generators:
   - secret-generator.yaml
 resources:
-  - homeassistant
-  - calibre
+  - deployment.yaml
+  - service.yaml
