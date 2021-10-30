@@ -3,7 +3,7 @@ kind: Kustomization
 generators:
   - secret-generator.yaml
 resources:
-  - cyberchef-helm.sops.yaml
+  # - cyberchef-helm.sops.yaml
   - whoogle-helm.yaml
   - gitea-helm.yaml
   - homeassistant
