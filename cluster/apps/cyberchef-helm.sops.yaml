@@ -11,12 +11,14 @@ spec:
         chart: cyberchef
         targetRevision: 0.1.0
         repoURL: https://fred-drake.github.io/helm-chart/
+        helm:
+            values: ENC[AES256_GCM,data:Md4h5puXIJYLMy5ljmZ8KFZ5WYD+ZTSbTshOxDNiwlnEn3nc0g8McwVC/BW4cbfZSocUJ3ue0kgkO396OzWTEjQWzNBlfDqMhlaqbDqrkIHhKCrPgAFE4jp+cpLoidVlD5akNb9D4ZVQZv+lXsPURW+iOTx1EnNhwhtnbrymAfnXDeFAn37C8F+sJaM8fWB8Nyr6Nln0gfcRMddEEzA7hWN2tBx0mjodZi6hvYZ8qYUhiM5G0BJgdkNuiOC7o3T+KpoFrYEjVUWtRWnqyGBdjySupMOESX27EG9zYwyHSpYXvEsB/xE=,iv:3pbiILSXVFXYcNc+CJ2tDq2J3RLpOYK6JhuxCAm4HW4=,tag:HCwZgjq0w0ZhKvdmVlw/ZA==,type:str]
     project: default
     syncPolicy:
         syncOptions:
             - CreateNamespace=true
         automated:
-            prune: false
+            prune: true
             selfHeal: true
 sops:
     kms: []
@@ -24,8 +26,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-30T20:47:20Z"
-    mac: ENC[AES256_GCM,data:MfE7YpDHpg69BVqLVHAZ7CsTP/a2E9Ahl3J2q78ghJ/n3Fq6Vh+fsFR6DCE2OVNtLe8mn90Khb3guF2vucQ7+DRjwoNycyeccTiLPGZ00CytePQP7qez3eaE/4jnI25QhFe2F64SGmLVN7yuxbDUmhbxxjDftz5co19/MzKTIxQ=,iv:BMfMPDoploZXdHLUaPlMj/6uHEQjazrtjkhuFCfMHuo=,tag:RAH8qPF0y58WedN0REE1Rg==,type:str]
+    lastmodified: "2021-10-30T20:48:57Z"
+    mac: ENC[AES256_GCM,data:UyVXnSf5VA5WQpYj6HZ+Ut2JJMaQsuWXFVk3KI0L6Gm53J/XsNKKE3g73BoX4vSY02vtrSpaogODExWRU79XDDiWmiWVWyQRXJzcEzSJaMxnAR0WEACYvpKw7ASKp41KZqGg3/gDu75BLeQjJmsnMnk+j8FtXLo/cQS/tLqi0Lw=,iv:zDZz+G24D1sswicd+l7RPRNQugmOGHcdOMiU6Utng0E=,tag:30Yxk2SfQz33ZIgIg+uHVA==,type:str]
     pgp:
         - created_at: "2021-10-30T20:18:46Z"
           enc: |
