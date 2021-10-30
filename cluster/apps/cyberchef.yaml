@@ -10,7 +10,7 @@ spec:
   source:
     chart: cyberchef
     targetRevision: 0.1.0
-    repoURL: 'https://github.com/fred-drake/helm-chart'
+    repoURL: 'https://fred-drake.github.io/helm-chart/'
     helm:
       values: |
         image:
