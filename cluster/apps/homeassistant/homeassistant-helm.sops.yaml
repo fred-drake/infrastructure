@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: homeassistant
+    namespace: argocd
+spec:
+    destination:
+        namespace: homeassistant
+        server: https://kubernetes.default.svc
+    source:
+        chart: home-assistant
+        targetRevision: 11.0.5
+        repoURL: https://k8s-at-home.com/charts/
+        helm:
+            values: ENC[AES256_GCM,data:m7ZgVYu/8cIggGP80q1IJ2Ptib9CmZfLNfMxPPeVoU3do2Ya2/7dQNItROGBnB1lMPmFZoYI9agCdrDNLdzuG/mcQe3Tm01F8lBP9iAWBCqrUb/S16j6mpUksX9Sc5OrcCFIrzdyU1UB/OfaU80DEbrlQakP7k0Rcagde1ZxWf/XqmbL9C+BwCWYA4Ig7h+Evy/ZOx9gGfMstdO21uJ+58IG/nqw4AOM5mk3ETClAMEMi8P27oj0rO429LJA2I3znnvFELIiGFw7ZROkDRtcVeX+5L6QwW2cZdtEsFWZ18McTeCUTJS/cfI0Z+/oizquBBIgO8+uxkSaAL2X8CVCKekzbCEq0L/YA5zHD9YHR4gYJ5PXgbK3XZEiBoV+8e7pVV9SLP//AXUH33Z0o71WqnH8lWVVSazLQAlx5mGoyEQ8h3Jd2dnmir3RrnFCnFr5Otc8Rf6iaSWL4ptXnJbio3hO8poD2mLKA4e/zBoa0WfouMx9OsPIRCDsMymEAs3QmD0ktR2FLo7xaH0y4WI5rKX8OChNvhHqgmnystTjJQQXUOx9oqkyKf7Bk6pDbhtwqGC9fKJ4fNaBUPyL1WcFvfosMs1o/dLuPv5VGZFUl0eualwFgzu3+IfbW12uaaX/HWcbEYfnG32piMifo3y5mx/Lv1h+ccgwQFSBlr6u8kF6yyv43dsmYaTvLm+ewzDuWl029CYTet0gUMlJBu3IU7R1SUR3sjuxzvantc0aWVWxrX8CNTOZ2u2VLvJhCLanN6TdZvFyLv7h+XLsAnS1Don/8xCMD7wOQbID46V1hE0x7+xu8k/MHtMQWRaR04YfPr1iuBeOPbb3AlvRmyuhn+VH8KTuX6AQEmzJtEgY/UXwWQxK2UTup8pzBmHzbCpqzXMTgtJqnYiKIsji8V3ACp+ZHhJDcP9eXMt+K5+U4RMmeMsNclBJ1kBWGn/uus86UsSmpxhCPXtoKWCR03C2zlHx3piYWwT068tc4ZiPBrHU8GrEYR9BONnIGMrpIbZ3U1x17ZOM35Dh/mkJXa4F,iv:nRyuN05VhQ30/P8S4/w29JoFrMZ6a6xp4brLEXhWAVE=,tag:TUz5dN1OYJz2Fx+/kjUWwg==,type:str]
+    project: default
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: false
+            selfHeal: true
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-10-30T22:59:45Z"
+    mac: ENC[AES256_GCM,data:2JgZ9r9/DwJiw0/f2yJ4oUtcPSwNGY6pHGVtNsTZY68UqBAbe3NtG5YU+CI8aNwkn6qsRL7T39EP1ckPfwqR0zxpGy5vYTJDwQLPfSFFDkPA0VenX6fogpKjpdqlOa1jJpBavKYeRJTL10yXkS+e6ojlRfBMkSofh4Z2Ag9Yuhg=,iv:ab14Y8SO/d4Q63nMoEN25OW/FNzvaCwpgb4XspyCJLw=,tag:FZTnAV+aoROKV+zYA5l63w==,type:str]
+    pgp:
+        - created_at: "2021-10-30T22:59:43Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkARAAtiabJ98cIAeJ8SiH87+X7+ewYTnMTlu9Ua6vSVFzaAy9
+            UQbja4kMWaRzdHYES5q85EhA0V7YjkrwYBSIILXeOLvNDNGQ7YzNwlTFt/vh4GSd
+            +eNZ8bYtPq4TpyyKIep+Mlmia6t42fnGzz9w+XbkeW9E3dHjkhgNE+iJh7Uhhj2V
+            FLEK6ks58KfvtILcVoHrOHot+hajEj5cvMCxkJg/Ngxbn2BNiZRm0OjU/mDXqaVG
+            tHtlBrgHc45QbyUG6JSPQR0zAw5ofYxPO32MQhWT2qylv3uvV0IAJoIjJHM6Kv0v
+            e/t2GJ6tCCqbqtf2KMhINBLYgNcBae65YBn+iY7Hnjg3ypvns4vTqFFidoGD07EV
+            3eLX7gfCmNoGBH53j9rgrRFXBq5HYIYo6rcLpfOkM6na+CUBg6782ByO6VAKuLZC
+            w9QU1prxjnGI6wejP/KEM/SLmoHy8du9wOwKBVwZ4/mVewPpcTmijrCtsATituoL
+            BlVVUrg8P0LGhESgu7E7PNYmcu4lP6hr+m/ZM8ywfVXsFcV2YG6bgeaT4rGtDttb
+            gKMsAjQZAmYBb92kNmpTalfiPTaiDqyqKxWsRVgMcuIs4Oc4t4ZM4MBPs8PNXtN2
+            e7HnbQoqdyJOwSty+tmz1JJDyBgFOOBnnHiEiYV+y/QRKZFV6vcK+JGXk8yyS4HS
+            XgE57A9ok0RkiuO4WIcDM4rmzt8gZ0DT3nAJpBjKlAfOE0iqI1d7vfo+SZX93x4K
+            nH+KqV7Naa+QdItLmFylY2nDb8L70QUWxdo8/NM/GFAtnOZsqHjAMsj8M366krQ=
+            =qXLG
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData)$
+    version: 3.7.1
