@@ -13,8 +13,6 @@ spec:
         repoURL: https://fred-drake.github.io/helm-chart/
         helm:
             values: ENC[AES256_GCM,data:uUoLh33v1YyVxzk25+fdloy9uKj4zTA+CEVAWZgeeALvNSGmpuALRBeGT5DArvgU4TY6yX2rnWth7jdblbi2fw1GeIPJGG/0Ih/hPJPabYpW7G/LuZkxDY5JsmhLYy/hwypafDXrhYISII0waIZhBpoLPt+QFKKo4elgRILO8tlB/n6GFNKmRnNNrSQcHdqoz7qFkVRdNdelJQR8xFTru9l108OV9SSZs5DhzB6GeUxETilqlA9fnJ8ZohTYrBwXUHwlWXP4fwG8aZBkDu/HsTIOQMZHpn2uTtMfT2AwCqP6AuIrFrKBW35RabaXoDvGtbAZo50O1drlAXClZklxefb2BkQ7CSFQb4L464sNY8e4/ESgROLcpHFHJ8Oy08qU7nuAEtQ5knPCyODdA3dLOnYNvYIntnnycHV4fXkR+/Jh2cVgde/prorvQ6TA4jSkA5h7cbA9Ft3TpNNpODn/nI2ZClRqwW5zs9VbHui1wsLKPYefrquEbw2kdjB0XH/9be8rDm6K8wCZBSz7gF700hJld3FBCvuu6FTmwmHljAQOqWnhf83LEvSx4YTRLjlAnze40ncEC8Cq6BPUdK++bBVv0w3mc6XgiTN17/kKwoknvRCam0DnUFFOr/0BYNZSQK7wxIDp2IKHHEBFYpl6WEWK91UTdEV0oLuxSSM4IuX8FpraQSjx+YepfCVj+6VW+gvuCc7cCi7vjPMqQD6PIXJSE7MHXjXHMKcRV1o46Jo1hdEf0PYjaC6qsKzuXiNkxnIU6EIhFgArtDtNIZOfHMYG42X023/qggHnDz2S7VIBrdBJGS6Fv6noM7qGR9bOPKH+LOy2mtED3d/LdCeHDjtEDMaIemdibIk51i1x9Pw/JN+KbvOnI2PgfZBzqVVU8XQHMZD02Fh8bTAKg8QpgvVwc2RTXg2+esHRPjiFlmNFurgDm0WZMjapOuEO96jFyx4zaBIvpjguDIJbeUXo1CZobSjeqUqPHJKUD6vlInRP0rYnXBCK0+867B6fw+naUIVEcBZeX+RFhx8rC+r7ATXbCw==,iv:wBiAwYm1a/FL8s1y9/66MCfqVNAsVdg4eNpfDQfRPqA=,tag:Gt8M6V2ZKYIZffVn/p2k1Q==,type:str]
-            valueFiles:
-                - ENC[AES256_GCM,data:jdA/izaZ7y8VWE/BqydR/ThnpaaCEtCG+yGXzg==,iv:bws7V4Nsvsp2b9bqMsLipm9Q4G3pDDjnO4/uCO/PS9w=,tag:jdOKhKkuJ2PTv7U51Vv+ww==,type:str]
     project: default
     syncPolicy:
         syncOptions:
@@ -28,8 +26,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-30T20:34:01Z"
-    mac: ENC[AES256_GCM,data:c07sqKvCH30ZU2AOrO43dp/YDKlSsCmGhu/lxGeFT3N/yM+gfjOYP+bZoCu8ipNiQ9N/AxGhJs36fmd0bElKTmH0FIXbZ9JvUf/Zij9fqZ04V5Cgusop+e8R7SwlozflGcKw+8F4ZoZCa2ZA5Uy7GbY6iqXoKAIymvCbPVvW05M=,iv:Lpov5BGlTbjbSX72BJ0qB9yT8m2Ji2VJ06MU7liJzr0=,tag:FHZPgX3ijT8M2GTidATS/A==,type:str]
+    lastmodified: "2021-10-30T20:37:21Z"
+    mac: ENC[AES256_GCM,data:uYO6PMznt1ExfhT9vCnR3wtmORB6dcE3XxwqognW3cV0M/Zqh3JPDCrraHOiPnxbDqMcwHyOHK6PZkVRcavT4Ki8itble+PTY5hOSmGoci9EdU6xU4oT+zEa84VEEZ9Mz+NlER0j+s92D8V4ejBewN4PKxvZQSViP4Trmdr3TEc=,iv:Y1Hr612x6Nm1hviJMlodakPlyTMnWxNUXBSFSCYmQ0A=,tag:gARS7zwktJe/nzS+3bASbg==,type:str]
     pgp:
         - created_at: "2021-10-30T20:18:46Z"
           enc: |
