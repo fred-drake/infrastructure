@@ -12,7 +12,7 @@ spec:
         targetRevision: 0.1.0
         repoURL: https://fred-drake.github.io/helm-chart/
         helm:
-            values: ENC[AES256_GCM,data:ceeoAAuhZqNkZOzUL0aIjDNz3zrY0I6fyTG97tj7bzDc8ChsedNZLBbE1okz0/M01CJDTpTnx4ZJ4ELZ7LnboAc8jM5YMtxC5aYi52tTiWbWkGQL1gFdZ9p/2Mg6SoyAN1MgQSsFO6iAQmRf6SRNSusZ536KPmB0QVJo3goJ/6s4K1kP6luI3ky3cz2zxjax/P12zpGAOVi8kno1zP4cIGQ7s2waGlhaevrZyyDlSp93iXt50cWJk5W2qUJtDuWiJsscbVMml9oOTVGFG3SAbwTv3Hrv7rF6LkFro5heaMdm6ZXjRwZtX7NXW9pDUPUU6lTE2zPpSzMidF4YwntGDogXZxvqo6Puz1ki630y51lB9h7Ai7P30M4LF63eZowipLfaWxmALfRnLgox+vvL+we2wLmrj5gths3zlPjRlPLIpseb9a0dok5yxMvgkuh0+nL7CiDpehjP1Z+yi9CaCB53dM8Wq3ovXC1UYOSj3CV6eQJAlo6YAwBImdgLVuav0SThsfakRhpmvZTOcgdG7vUtH5klB9+X+0v3/LaRzqUyo9sXjfGqJfUk4z5U1akc7sls7soPQ6dNW8y/5wi2VPEI58h+s8lNdSoRiM69lOU5BKPknbWAKN7yE8QxVj4dsmrpVb391aRsVPAElv3zNytefQ==,iv:p0uAYXVeVBphyC1RjqA2NIuNjW8NryqMJnxKHmEwcco=,tag:O/dRbPRHlCk0hcJN6xIrOg==,type:str]
+            values: ENC[AES256_GCM,data:diSIT8u9YDLr6TcZJkrULoXzr/JYmxnj7QXb9L2tbzxEild6HfXWlJhPYz1yykKPvCfrsvjUWofPze98OQtpuyXTdpUnStGLFZ4GoY+iIl5dTP5S9jK+/j07sljB3s+5po3T/QVCsKsnOcrvtq4GNBCczjDks30FBuizfUVCXDREVm5LTMtRLpxLtJ6vFoexYZLy4RZxtUA4VrYwtvUUI4q7Mv9J1FF0HW0TkjNUdelhCMmIxsMGE/F0qItXZObj8wlpKY5zZTVD1s9euYGqjxr8LGJhvmPxOXhU6VMPSp771cEhWgoLjXsSLb/S0Qhn12isM19wP3wEJEuqoIJwTRxCIV5euWeHlZcZ/NPg47yuQGMOGFDdOyYKH7DKSI0U2o1cgkVkHDWNCXotUXwoLly4K0QuDVJd0FPS+UIyg6oljgE/wAwXfXt7W0brTZ3NEj/ODh7rFNVzW6JcspSIeZOcz165iy/2/gIQhwJyUYzGqfVlcGx/+AJ/F+X3SXmRtJPdBBrYkRQhp8aOObI/r+Isj5FiFvW3Lmbhd5k9iJzk4ZUarenUNJIf0oSC8a9y2sFd18kSmUpfiHx8WINCdP3peE5KHTWOElrdrgm6g5/r7hopG8SKUyOEXfuwxmMvM2cXb7HnJ6KNC+zJ6QXeU/VNRLfxOCoecZ9F+3I5bRD54pRoioAVjDLkVjlKHlOu//apqw7f9Sc4uPFVZFdcD9hNox8Ec+ObqkVz/1TtfLpiYFc5iTRA9bL3R5Izj+wG6nY0dGoeYjqYpIHuCeIPeMBy44C5xbFvNTOifWRveHAyzn6IkzcZ87Ildl+ReVJ+RCz2+cjh7raDtQ+4OcLFvxPYI3YBT0+6+ER+M20UhRgjW1xl0TZCjuWX2BqrhQmhPNLwHMAidmzBEpJC55b6nAo9KyODFqduQJlJlYJWEzzKjxgGQyix73A0EHhI8EsezVAuyrgzFwbrJgusxmEt786eStWhWkv/i+Akn8wG1Xi6l7wOFYF6XhkBcuW+4MMZBKys2euPgaxYqbziqhmxOAJVUycUKbc=,iv:FCwIF4I4sv9W9fBlQkxebXgI7CrE1TBP2NweCyd5n3E=,tag:Dc+eHJ8tZZFI6T2RI+dC/w==,type:str]
     project: default
     syncPolicy:
         syncOptions:
@@ -26,8 +26,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-30T20:51:06Z"
-    mac: ENC[AES256_GCM,data:hiZW6RSisMKgNxpPvTTr6i3MmbI+qx+nWwo7YkjkS5N9NmJ9GV/XHm2G0JqwuNkchhrL9vMXoVs19RIHaBT1nHth1yKMXBvXh6NAVbc/cqEp144rldIemFgab0+IpGd1+neqGQQ/Al3LZ6Yq6GY9AeQm+azd40ViXnI8sG5ATT8=,iv:J1VZwQkRs0y8Dz81z3vOWBxjyxA1hkd15AilHonbkgU=,tag:MpDnXghIL1tPhQBSOtuySQ==,type:str]
+    lastmodified: "2021-10-30T20:52:12Z"
+    mac: ENC[AES256_GCM,data:Sv0ZCJebVDno7hrSfU5jL7dCne9lM40i9MjsU7fOOa3y11Fm4QgakdmUfDMM7tdQooGZcVWAx1k+AxCyWxuJwU1NR34JVVADJOezXJq7mVmGNQZVQeUXO9wDGAoZZauXnlKwnf0quOiF9eD2KPPRE2i9EAehCXC8qKnOwqx8WNs=,iv:6MITItPXLWZUmecv3wEu7ptLQ7qSZlCVoQFbKNc7CS0=,tag:DLoQNRv0++TM0Kr5IqVz2g==,type:str]
     pgp:
         - created_at: "2021-10-30T20:18:46Z"
           enc: |
