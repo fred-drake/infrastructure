@@ -3,6 +3,5 @@ kind: Kustomization
 generators:
   - secret-generator.yaml
 resources:
-  - whoogle-helm.yaml
   - gitea-helm.yaml
   - homeassistant
