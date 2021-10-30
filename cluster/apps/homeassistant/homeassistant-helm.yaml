@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: homeassistant
+  namespace: argocd
+spec:
+  destination:
+    namespace: homeassistant
+    server: 'https://kubernetes.default.svc'
+  source:
+    chart: home-assistant
+    targetRevision: 11.0.5
+    repoURL: 'https://k8s-at-home.com/charts/'
+    helm:
+      values: |
+        image:
+          repository: ghcr.io/home-assistant/home-assistant
+          tag: 2021.10.6
+      valueFiles:
+        - /helm/secrets/homeassistant.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+
+    automated:
+      prune: false
+      selfHeal: true

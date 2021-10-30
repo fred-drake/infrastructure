@@ -12,7 +12,7 @@ data:
         keel.sh/policy: "minor"
         keel.sh/approvals: "1"
         keel.sh/trigger: poll
-        keel.sh/pollSchedule: "1h"
+        keel.sh/pollSchedule: "@every 1h"
     resource:
       requests:
         cpu: "100m"
