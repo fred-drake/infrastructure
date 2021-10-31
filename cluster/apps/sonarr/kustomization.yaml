@@ -4,5 +4,4 @@ generators:
   - secret-generator.yaml
 resources:
   - namespace.yaml
-  - network-pvc.yaml
   - pvc.yaml
