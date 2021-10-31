@@ -33,12 +33,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: minio-secret
-                  key: rootUser
+                  key: user
             - name: STORE_SECRET_KEY
               valueFrom:
                 secretKeyRef:
                   name: minio-secret
-                  key: rootPassword
+                  key: password
             - name: STORE_BUCKET
               value: notea
             - name: STORE_END_POINT
