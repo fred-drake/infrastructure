@@ -1,0 +1,111 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: netbox
+  namespace: netbox
+  annotations:
+    keel.sh/policy: minor
+    keel.sh/approvals: "1"
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: '@every 1h'
+spec:
+  selector:
+    matchLabels:
+      app: netbox
+  template:
+    metadata:
+      labels:
+        app: netbox
+    spec:
+      containers:
+        - name: netbox
+          image: linuxserver/netbox:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          env:
+            - name: TZ
+              value: America/New_York
+            - name: PUID
+              value: "99"
+            - name: PGID
+              value: "100"
+            - name: SUPERUSER_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: netbox-secret
+                  key: superUserEmail
+            - name: SUPERUSER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: netbox-secret
+                  key: superUserPassword
+            - name: ALLOWED_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: netbox-secret
+                  key: allowedHost
+            - name: DB_NAME
+              value: netbox
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgresUser
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: superUserPassword
+            - name: DB_HOST
+              value: "postgres.netbox.svc.cluster.local"
+            - name: DB_PORT
+              value: "5432"
+            - name: REDIS_HOST
+              value: "redis.netbox.svc.cluster.local"
+            - name: REDIS_PORT
+              value: "6379"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: netbox
+  namespace: netbox
+spec:
+  type: NodePort
+  selector:
+    app: netbox
+  ports:
+    - port: 80
+      targetPort: 8000
+      name: ui-port
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: netbox
+  namespace: netbox
+  annotations:
+    cert-manager.io/cluster-issuer: "{{ k8s.cert_manager.cluster_issuer }}"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+spec:
+  ingressClassName: "traefik"
+  rules:
+  - host: "netbox.{{ secret.domain }}"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: netbox
+            port:
+              number: 80
+  tls:
+    - hosts:
+      - "netbox.{{ secret.domain }}"
+      secretName: "netbox-tls"
+

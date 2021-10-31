@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: netbox
+  namespace: netbox
+spec:
+  type: NodePort
+  selector:
+    app: netbox
+  ports:
+    - port: 80
+      targetPort: 8000
+      name: ui-port
