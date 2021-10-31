@@ -8,7 +8,7 @@ spec:
         namespace: grafana
         server: https://kubernetes.default.svc
     source:
-        chart: whoogle
+        chart: grafana
         targetRevision: 6.17.4
         repoURL: https://grafana.github.io/helm-charts
         helm:
