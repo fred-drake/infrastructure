@@ -24,7 +24,7 @@ spec:
             claimName: uptime-kuma-data
       containers:
         - name: uptime-kuma
-          image: louislam/uptime-kuma:latest
+          image: louislam/uptime-kuma:1.10.0
           resources:
             requests:
               cpu: 100m
@@ -32,8 +32,6 @@ spec:
           env:
             - name: TZ
               value: America/New_York
-            - name: PORT
-              value: "3001"
             - name: UPTIME_KUMA_PORT
               value: "3001"
           volumeMounts:
