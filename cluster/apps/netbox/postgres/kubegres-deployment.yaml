@@ -12,10 +12,6 @@ spec:
   replicas: 1
   image: postgres:12
   imagePullPolicy: Always
-  resources:
-    requests:
-      cpu: 100m
-      memory: 128Mi
   database:
     size: 20Gi
   env:
