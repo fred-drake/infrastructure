@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: grafana
+    namespace: argocd
+spec:
+    destination:
+        namespace: grafana
+        server: https://kubernetes.default.svc
+    source:
+        chart: whoogle
+        targetRevision: 6.17.4
+        repoURL: https://grafana.github.io/helm-charts
+        helm:
+            values: ENC[AES256_GCM,data:1KZaiquwSVlEzoYD3+XBx3IwLF/Hd8YLrtyOGzTYh4SPWQpJovfqw9AHqLYvNrVV/um0ocUMU8NmDvx0HzIm33xVExd/KFpcqiOcmb2qMgxtaRe4v7m8D3s+e/VZIq2Yqfa8pwSzjMwqTzpLbqmdkDYvTcZawtbGMzuAb6MH3WALD3QwO49t6qsDzuewlTk3657+ZXE9PAJOqvksfURy9X+1/avcZsCnMV5FxXf4BwaMiTEjvmdd9sFrbeOYTWqFEIjZ2VYrTx0cbnosBO8ROiyqhG8fQWePZmh4/9S3yB/TW/Cr4By8XVsD0P73tfmHJrA60t7CmwRYkMju6U0Z+7T/qIMoux7Qjp19iTVPFuRvO33Ld45E+3zQoVVw6+Xse0dSwHRNfmWRP7qOmPmFXNVsM3xRKk7joGGEePkljC4lK1ApY99i41B9r7+tlcnEWueVDVIe7vxBvtkTH1kxRH5AGrfMx/mZ5nG3TjQftTnZ521bEFGEyGYeWqMYmEdK6MjNoz6H3YUhSngMJKmlnI+QPmkCXEO7lYOpY5nVEPZyS7AN3k1GK/qfBx2tflKCXdSswHZzICVlODY8V4kKYHFqSmP0Qel1l+FXyjzcjgwc94NKa3hJXcBsNfVfHAZ23aeAJiQOV0dkR7K59BI+QxU7GDNOQSlSQpVgTOLPwkjj6zXoTjS7qdaFV6N2SAJQOfcfayd0V00wI77FydDtXDdt9P077D0/b6FoCu5Wr0xqAFxNw9n0xFuiURnRyEFkwXA3HaRm8HP/ZNDAJNWNal+W/u2F2u4P1m29WSdKsz3kvqgx6olhRsTG45QpIVplBSzUsliJ6yhB4tiYyQbK0CsNqBDniChCwBxgfNX6k0sUYSbfumX9DoC+/2fPoZI6QpoVK/oNAiBEpNPmNt1ZuHiJrClAlR5kC/mzymF5gbnX4G7YkYjLfHZCWvJQhSTLBkP9aPNjFd5l8OwDxglEjZB5JrHjeEYTs9qQOFGI5yeNll8d9lEPYBEWP9Gmsz82JvVUlA9ZkFcJQNb43FKrLz9Uqc38pAFHfNL1KZqyw66iuhXshu4MVfrrpo35YBlJZG9q/4yEPVSLyj+vK7i0NfzYgAeBnPmalmow4P+Rlw==,iv:yALvzrHjoZa+GkUw5fJFZgguVl1fnQ0y98oE24xcCik=,tag:WbDKXGFoSf2R030eUibvNA==,type:str]
+    project: default
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: true
+            selfHeal: true
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-10-31T23:49:13Z"
+    mac: ENC[AES256_GCM,data:P2a1pGqYM+aM6rvxL2TWq8nyuPbFrOSPEf4psdmoripXqce2KI898VDIkg8/nJGytTD0AC/DWu18cHcNvqsXrNP96VXuGY17CZ3ILoRyQpkr/KVRmp6n7zelddXBKB8cOBemXRJHaYwg2Sri7clD2fffIHX6J09wzwrlg3/Pg7g=,iv:m6qRx5OfFKYPoAfdGJaRx6C5PPODpNS12rb8xifh3qg=,tag:Vp3COIxjsvw9fozP5tkhCQ==,type:str]
+    pgp:
+        - created_at: "2021-10-30T22:36:08Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkARAAr4z9Vs7KvxQYmE1cZdWJPUsLRO8GqzTb0dac7swOsmzC
+            nuJOvnYf7ec5WiSCtJMn4sdRrh/4te2XFnMtF2W+20lsE/2oemgAL04Fv8vwUFnS
+            ZcY5G1TZwyCgYvuC7FLVEvnx9JjbYU6IKkEE61tQHordBFlkjihHG4Y0vnWOSRIt
+            Dmb6nersZSVnR41AsfDA57aJqdoEJtJ0rDXlie33H+hRVyc2b66hPVMyTQoGD+/h
+            WFmQXeuPltlCe1oTCYovGCZO7A/r2WZhJtW2Qwzqf3PyNVevAX0sI3pDnoa0lUKm
+            bromqhz8s0OXYDQteXHeVXYwnYHaNlVHMWRGMHU4Qe9uXpRmScTMOAlCJWpnQlqH
+            JTtwhl01n/4SnO+UYeVfBGTpMxmIiOVaGFhR1BgyQUi+NaB5TgWx9ykYPlgaXqBt
+            hURtclTkLwjsjtks6nOx7rakD+kclS6f83YrJDzEALs4z7nblsJwFq0oaQ+Pb/OP
+            uYpPd50yzH9pO6D89oRIsWiftexjgQ5HBiAYJgLRPYVk0lIf66XEdiZKvLPEgjfZ
+            fLS5+SsG3OZTUQtYrf1k5KxXmxhWHGmVt+higZPMt3Th4gLyQpcM8ExKdRKkQAst
+            wki7rG0KWhlhTiaUxfhhgxS97Mi5XewfP3h8mE+u02hWYZ314GKQGO3Ieqp1dZzS
+            XAGo+qD67tRN5pPoirBnzfqs0We1h1UUTR/s1CtsS1bV8/ExYPm6zbbsw+YojG45
+            uf3ZtWyrBXcU4zLwDXPhSrq/yHZKsSOhkj7jrULaOOcryfIQPb47E9lKPXzC
+            =Cq63
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData)$
+    version: 3.7.1
