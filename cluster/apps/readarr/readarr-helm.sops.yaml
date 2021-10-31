@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: readarr
+    namespace: argocd
+spec:
+    destination:
+        namespace: readarr
+        server: https://kubernetes.default.svc
+    source:
+        chart: readarr
+        targetRevision: 6.0.1
+        repoURL: https://k8s-at-home.com/charts/
+        helm:
+            values: ENC[AES256_GCM,data:kTteu/oYtbgq6/R0LHEJn4Uz9x+CnjYlikUySi/StONMDTmDzpgRlwQhBD8Q3c0z2STPrys4LQFDjCqEPbNBBpbRSlTCbjrVdccixh5VAzvJXgWm9uwx9saG4w9qlGM/IUMJvSxQrLvkUibKjZ6L+hD9kP1PmoF1ozj7lH9IdmksRiDClG6nXZkRBovAwXMT6Z7UObES7j4A3WZ0LxWRZVB9lT3gbzgSLCLp3YCvDSB28st06tur6sr6Lp7jjQEWTor2mnsZD9A2WWKR82SbgSmDc+N6A6fFEwj59n9Dg4GrIpYqeA/N94CdAp1bjVgOXo11+o0D8H/rKIp+LI10a2sGLzKF1qwtpuRiZT8hx5geTLKc2uHETn0o2NSDO6l6WH5qIQmFHsLk8C4U/Ad2r4eR1U8EITml/uj5nN15eqITKnT9Qle4S4aCkC9dZl1ScjGrWDYxwmUpRz2ItYn2CzfsDbwWnkMtlkgIvyg3/uOxfvnKOGvXniS/5QsauVS/ZVRQpiRhNbG8+R2mM7NwvtFal638ergG23Gj+suOmwaKRig/A6GRFf3vkNIZ5kCj6P5NU/AyJxYdydTP2UOmOwroPnb/CiBvYHq4ZrT8eHoju+naf6P3lVkxXURQYaZsNMkePmeI/fkFP7fGDJQFLCAszvUGiBA8IQX8rrUNoVLBH9sEX41+WC8OPdv94wovkpTEzr/Ms/rfKIr0bHUbmAy/nc9cUNSvNYn9FV0aND8LuOP9TaI4v5h1L660DWpjivLxfaYnMdpQy0ODa10ponPnpKM4yxLTKUrWU03Q62Omc0MRbicRaCP6FIAK30acXVKfI+vYJhaAyKypfrDo8ikvWQjjlf4MbILI9Zuwg2N4mSHwojNtwWPQWQyAdPTy3Lukg7tZLL/AZAWlNjEgAl0zzk8AQ/D4qKXIXKalft87vrOJInTmBMwWtJ0Ww1RqSiX1iLabx5p+7/AugJOTxu/4+eXpyvJKBGm02NeD5uznZ+P1JkDnhOzYGt5Eo+eDb1ojZYLO2xccfzzJ2aF+k/4mzWykhgBobUTy7/rA2uwlSW8vlgcXFzogRk5yUQ/B8oqgu+WkhRYIx9qLGOXD/PrWyBD5WZ1WlDtsMEkUjKixdLoq1mNEzftpoTOXEjPq9jyRGTAoLZuQ1BElRk7fSl0b+1Ao1s72n1Jv2sYgBomd38/CVcIXSDt/ymtezB1OcR+AbPHr/28vAlgrOkSwc8Mo4dw0EZm4iw==,iv:HuV1978cgTqrswHe9UTWdxM/0iBSJDOPIplj3lVWT/k=,tag:L/BtQonSYNaPtfrnQ/Eolg==,type:str]
+    project: default
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: true
+            selfHeal: true
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-10-31T17:10:13Z"
+    mac: ENC[AES256_GCM,data:WcRCB0yTCFlMLGlTO59NobsQgQ8VYYkPF0HjhTlxjk8NCHt+PBS9s4ItUeUfhHeai79JLD1rJDT4OFLNRrGW+lIaI7rgixOYTvlOLmOceNpXy92vDqhSNPBaAdCZkszrgUIsZnUttEtpe0cGKM7RsOL7x9UyMaoGSECpuA/h8+g=,iv:2UJYkkV7eoychq8dr0NYAZozJ9G/pUiAudyAh6XiRs4=,tag:pdXoNxPHRG1pnmjI3TMazA==,type:str]
+    pgp:
+        - created_at: "2021-10-30T22:36:08Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkARAAr4z9Vs7KvxQYmE1cZdWJPUsLRO8GqzTb0dac7swOsmzC
+            nuJOvnYf7ec5WiSCtJMn4sdRrh/4te2XFnMtF2W+20lsE/2oemgAL04Fv8vwUFnS
+            ZcY5G1TZwyCgYvuC7FLVEvnx9JjbYU6IKkEE61tQHordBFlkjihHG4Y0vnWOSRIt
+            Dmb6nersZSVnR41AsfDA57aJqdoEJtJ0rDXlie33H+hRVyc2b66hPVMyTQoGD+/h
+            WFmQXeuPltlCe1oTCYovGCZO7A/r2WZhJtW2Qwzqf3PyNVevAX0sI3pDnoa0lUKm
+            bromqhz8s0OXYDQteXHeVXYwnYHaNlVHMWRGMHU4Qe9uXpRmScTMOAlCJWpnQlqH
+            JTtwhl01n/4SnO+UYeVfBGTpMxmIiOVaGFhR1BgyQUi+NaB5TgWx9ykYPlgaXqBt
+            hURtclTkLwjsjtks6nOx7rakD+kclS6f83YrJDzEALs4z7nblsJwFq0oaQ+Pb/OP
+            uYpPd50yzH9pO6D89oRIsWiftexjgQ5HBiAYJgLRPYVk0lIf66XEdiZKvLPEgjfZ
+            fLS5+SsG3OZTUQtYrf1k5KxXmxhWHGmVt+higZPMt3Th4gLyQpcM8ExKdRKkQAst
+            wki7rG0KWhlhTiaUxfhhgxS97Mi5XewfP3h8mE+u02hWYZ314GKQGO3Ieqp1dZzS
+            XAGo+qD67tRN5pPoirBnzfqs0We1h1UUTR/s1CtsS1bV8/ExYPm6zbbsw+YojG45
+            uf3ZtWyrBXcU4zLwDXPhSrq/yHZKsSOhkj7jrULaOOcryfIQPb47E9lKPXzC
+            =Cq63
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData)$
+    version: 3.7.1
