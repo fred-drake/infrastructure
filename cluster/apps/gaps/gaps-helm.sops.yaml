@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: gaps
+    namespace: argocd
+spec:
+    destination:
+        namespace: gaps
+        server: https://kubernetes.default.svc
+    source:
+        chart: gaps
+        targetRevision: 5.0.1
+        repoURL: https://k8s-at-home.com/charts/
+        helm:
+            values: ENC[AES256_GCM,data:UBC/nytrIyNzY2+uRkCjWoG92BUqm8CcvlVry5i7Mp6lxPRi2HttEB4PzaTEeQHBybl/6CWV70LaupF+1kOs14fu6EuzYg7VeDVGliJJeAGtPjzNQYBJjvpZOmsA/e8u5ONMCpYPJOhjIGkLwkEJFwEMiMRRtWjKXtE7LithughE0uaT7Q1c0J1OLtYJmAA55pv+uUW5g+uj4gnXdNkCnX5leELj3TY8pJU/DRgxUlpbvQiDDaRrmkZGfWJfHsdEw7l5xqg819GfBRMYoDz1/iypJhYAZopzOLo2x2uf8ITPfRGxyy9uM/ydHtjvrRtLrlIOsLvklASM1RyoomVCb8q1S7YIfIZx5c5Q1TvVUASGtHvw4f6soG5y1WKW6whS/vdP8Iy6XN6FDwwS/v/1YMqQdIqYznHQhFXEfX/SMexwvFL0Sy/3b/g70PijrS6D4ol1hlV9q1ZwD+vVs1tYrqa0db0IEAuBIrVKuSCwbErLbDKnd+rg4L+1tABsHDw5eaNkLhuoogbIvp/6jHn9Datcb/eFP/AQZYqTsQWYvNvixPZJx79tvTlYr+SCI762PU40s+E4+vYuQ+ypNbu5J25sBfQfvqhaBKKoIzkRcl9Ch4Qu+kMou4nJtVvpPi5kq6OUuhSZlU3QlPSx26fc3/xzJkvj3iby+H2OzIVDfC3/3hg39EE2DVIbzGkweGtv82Ad99vR7ivhC4Bdzhgt1XpWoFPAr0LC5ez+DdI9i58uN3I1t/3M9ungCMzf2GZWNyIAfUv+CSpfBW/EW5C4atHxT7p30zdxp0s2mjx1zoi87SQAQHP9Gg9o19UuhMEwsSQhm8K5H4rIjE02KNr3GlUl56iSufvOD2qSdlOUM6CxgTGvdZ/L9BEtoMpmm91c4dm7kaWlg1wDOy6gLrglis07neg0l6TBxiz4tbNl7Rr01iXoD3MDEnh4bPOcOgAQjGfVmvvgS0wOJGBZnMZMpahNYi3owj1ly+Ta88ft0sUubdg0D/qKrn/eTcroS6fXKJHY1LlG24ScTEH7EAe6H4jjZZJMStSNgwe1Xh1WR+jYGcyUwQ==,iv:ahUvNTabFbhWwyC1BbevT6rTu2s4heXHcAM/4zUWGHo=,tag:Fnj+XKLc2PDLcYU+52X0aA==,type:str]
+    project: default
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: true
+            selfHeal: true
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-10-31T22:47:02Z"
+    mac: ENC[AES256_GCM,data:fQRW/ry0jKV8tX0b9LohXf3FUpRDOdWqGZbqsmp3Ufh8YzQh7b0X1/lZer4xR7tUMeF96Z68JVTUPGeO18uGiwlVWoGb3fEziuccX3VJrs9s3tSZBuAoJIUMqK3vEHHrO6CDlB3ErYNQ7PFlYxC8O32zLh/6sYuSGijOVYnxMNI=,iv:9iqwr6Iij8QS/sGkGtu47z9ENEns8+LBPhFzg5ESoeQ=,tag:tLUUXccQDvSKn/Srp4VoHQ==,type:str]
+    pgp:
+        - created_at: "2021-10-30T22:36:08Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkARAAr4z9Vs7KvxQYmE1cZdWJPUsLRO8GqzTb0dac7swOsmzC
+            nuJOvnYf7ec5WiSCtJMn4sdRrh/4te2XFnMtF2W+20lsE/2oemgAL04Fv8vwUFnS
+            ZcY5G1TZwyCgYvuC7FLVEvnx9JjbYU6IKkEE61tQHordBFlkjihHG4Y0vnWOSRIt
+            Dmb6nersZSVnR41AsfDA57aJqdoEJtJ0rDXlie33H+hRVyc2b66hPVMyTQoGD+/h
+            WFmQXeuPltlCe1oTCYovGCZO7A/r2WZhJtW2Qwzqf3PyNVevAX0sI3pDnoa0lUKm
+            bromqhz8s0OXYDQteXHeVXYwnYHaNlVHMWRGMHU4Qe9uXpRmScTMOAlCJWpnQlqH
+            JTtwhl01n/4SnO+UYeVfBGTpMxmIiOVaGFhR1BgyQUi+NaB5TgWx9ykYPlgaXqBt
+            hURtclTkLwjsjtks6nOx7rakD+kclS6f83YrJDzEALs4z7nblsJwFq0oaQ+Pb/OP
+            uYpPd50yzH9pO6D89oRIsWiftexjgQ5HBiAYJgLRPYVk0lIf66XEdiZKvLPEgjfZ
+            fLS5+SsG3OZTUQtYrf1k5KxXmxhWHGmVt+higZPMt3Th4gLyQpcM8ExKdRKkQAst
+            wki7rG0KWhlhTiaUxfhhgxS97Mi5XewfP3h8mE+u02hWYZ314GKQGO3Ieqp1dZzS
+            XAGo+qD67tRN5pPoirBnzfqs0We1h1UUTR/s1CtsS1bV8/ExYPm6zbbsw+YojG45
+            uf3ZtWyrBXcU4zLwDXPhSrq/yHZKsSOhkj7jrULaOOcryfIQPb47E9lKPXzC
+            =Cq63
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData)$
+    version: 3.7.1
