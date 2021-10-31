@@ -1,0 +1,48 @@
+kind: Service
+apiVersion: v1
+metadata:
+    name: mqtt
+    namespace: mqtt
+spec:
+    type: LoadBalancer
+    loadBalancerIP: ENC[AES256_GCM,data:YQhGhmrNG74EUexL5w0=,iv:XkOw9+MVPCwmBmenslOyX9PcsAuWgDAePqLFzEfah0U=,tag:oNOB+WaDN42mT99wPjxg7w==,type:str]
+    selector:
+        app: mqtt
+    ports:
+        - port: 1883
+          targetPort: 1883
+          name: mqtt
+        - port: 9001
+          targetPort: 9001
+          name: websockets
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-10-31T00:16:35Z"
+    mac: ENC[AES256_GCM,data:Yhf/GmdR7QEsZqOvgtXxduo3jDLkY29+DM9PJumhFoGp/DiNpGxnY/cROjPA4nxwSW1bF8X90c+i+PnS4stKayvhe+tBGY6Q/tXLcSODNyAhM7i/zi4HHhJnXAfZEYm4SEXErlDEJ/DNepM6p9SuuqpaapmYoI9m9jPYFVL8W/s=,iv:CvhVza5q74fpuWqKBmMhX0ZogQKb+WWXiBvsl772DvY=,tag:FTog+8ueKvdp14TdMtGZ1w==,type:str]
+    pgp:
+        - created_at: "2021-10-31T00:16:33Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkAQ//QqDNX479lTnDPyHQJlIpXlho7BCRAGM25nHXot2VQbDX
+            cCQQ4JcQa5pWfQDjgdr4+1rgSDZfATXu4Ucca8m9WVcjTX8c8k5Vrok3LoIput5o
+            ljxE8TKx+dYeymOs38Id5RALBhHLR0H67q/xtT/UBv9VGGwLNOIRy/HraPbGLzI/
+            A4lF07runBvuWwwKajTOogLjokQTtLrrYFZLfX/jGyiyRoPFKsReWbhjb8MPyn/F
+            oIy14RWik8KNWne/SHO+8OkSJENENQHpqSRH029TOWdMWfLHaLO+zVsSqaDpNZRG
+            CChXaogPX+qpMWXUgkCoLkRxuh4BEnA3YbwOto6yjDFStLxmQJo762rv+3uTDmbd
+            2cjvbBig222N6zmOIQKWoMzd/rOVnrNw6KLPBDl9QYRh8btuTQGkIvRhVC1QNeVR
+            P/sSJGHt92V1UdJ/01rpOSryIVlv0hzXAidw2PwGs0IRo0SBEHCYGZs7QcSA9iCE
+            dvVqzx8J/kZqGgmFOvngdcQmGsrDzgssDE36Sbpm7gNg5aK9VrUwruaM7HrLVc6M
+            HfgdaYupWhilNcx8QngwDlf/d7/3lZXc5Km+uyS6ALaBvvlx9CG7cgeU3LoMXo+2
+            KdI9qeuAYwlybjktTnCBK/vf8goo9uST4C7yNKvg31Xs7YD/UiG1Qrvy93YeigbS
+            XgGznSwd8Nuf/AS++n/jrXQz1BH0uIkitetjQf4q/2GSEJFRmkpt+7Vpojyq4Ju8
+            OCgXCYK77V+4oaBAS+udd8k+CU5sp1U8rK32BinsxJSW+efqyXGL49lV20sulLQ=
+            =xhNk
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData|networkPath|hosts?}|loadBalancerIP)$
+    version: 3.7.1
