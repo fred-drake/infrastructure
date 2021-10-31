@@ -32,10 +32,21 @@ spec:
                         name: calibre
                         port:
                             number: 8083
+        - host: ENC[AES256_GCM,data:D6DwgcjaoMzF0zfRnO7MTGj14Z+cWlf4vatyq4p7BoyL5x86zUs=,iv:fR5XqGBhRvwBw+RGAw1EVYFfKs0EcYspKfAFmwiBPLc=,tag:ZGT3kL4dU90Gl4NNvtdUTQ==,type:str]
+          http:
+            paths:
+                - pathType: Prefix
+                  path: /
+                  backend:
+                    service:
+                        name: calibre
+                        port:
+                            number: 9900
     tls:
         - hosts:
             - ENC[AES256_GCM,data:b6T9+LaSdnm1b+4gOzVMnJsbdjLODwAe+w922Oyu,iv:PgtCDpeNmiim/pyl+zzN5FcQh2/yROBP1vr+Nktr0IM=,tag:XD/Ypbpvqq0AMiHrV4L+KA==,type:str]
             - ENC[AES256_GCM,data:R0gDEI7OfPQgWkDivdtH60RWyOO99LhL2zG20cbag5rtyyizlQ==,iv:3bh9jnQelx9vxgyNgF9PjUA62lbliKmWwesZYrtn3yg=,tag:cnKei+tMbkXdn7tKQTbjmQ==,type:str]
+            - ENC[AES256_GCM,data:gKB780I/2CJ6iSEGvLg2mc+p2sdO9KTB10pleFf0vwp++DblpIA=,iv:Czg4XNqgAJtWofQiZZHGiAktVAvS3AZ5f7vcDJViyw4=,tag:n1cttmS9KhVR8j21moTQBQ==,type:str]
           secretName: calibre-tls
 sops:
     kms: []
@@ -43,8 +54,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-30T23:41:30Z"
-    mac: ENC[AES256_GCM,data:dAnJjn+jvJW1ZJ8SNGoCJxeOVE4kgbBEJWEhfw20yj7nK9X1SH4UMXZRwfuh5jyw3vLB3rBo2jzrH35HbXqfvIYn5wB59zGkkkeGC07lZ8u/ieUpRUDySK58Q+MGQGxa9mswe6GNqMRkfsM3D7goIuV9b5z9iQ1GpTd21UVd97o=,iv:7GY4bziy5m3bxddaSTbc3DNkE2zCkua+ea7fKjAA54Q=,tag:S5n2l6DEnWEQmwDAP6A/yg==,type:str]
+    lastmodified: "2021-10-31T22:19:07Z"
+    mac: ENC[AES256_GCM,data:eDWIWv4HvKJzgYkglSjC+qU/3EgNn/C42xR9dxixPxW73F+ct8dkpp2R7HtcqxpKo3vy8NcNk6zhCcUEVt/0B+MsmklNWW5BShItqdQkADCsONVp1grmMzdHWcHdGjpnqng3UvykYV/prGU2cgd1Wv0V1E1aKpf8Vx0Oh6rX6Uw=,iv:2YNTOgGO1G0PLjcDnFUuyAx6WqE4qXP0Y78IzSB4q2w=,tag:uenMO1gjdmL1J+75O4hFqA==,type:str]
     pgp:
         - created_at: "2021-10-30T23:41:29Z"
           enc: |
