@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: prowlarr-config
-  namespace: prowlarr
+  name: sonarr-config
+  namespace: sonarr
 spec:
   storageClassName: rook-ceph-block
   accessModes:
