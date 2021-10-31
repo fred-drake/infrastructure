@@ -24,7 +24,7 @@ spec:
             claimName: uptime-kuma-data
       containers:
         - name: uptime-kuma
-          image: louislam/uptime-kuma:1.9.0
+          image: louislam/uptime-kuma:latest
           resources:
             requests:
               cpu: 100m
