@@ -12,7 +12,7 @@ spec:
         targetRevision: 0.1.6
         repoURL: https://duyet.github.io/charts
         helm:
-            values: ENC[AES256_GCM,data:aGD9uNpLKajWtiCWril4DlvcKgwUoP4dL4YCWchtgz7nnWKnqxmcYIgw2skLZsAlQ42t1D1LtmkJ8FNCiHHJb+SRfPneSvwGPZxmSSEP1REp0H9/CkeE7Vs0NV5q7Ip7kByjyWjZUaYu2gCh977XDs2YnfuMKo6BLov7/SJt9soHgPvE9Fc//+YeDCHRPK51gbtNS3rkuvGxBVOMB3PpCBiXBiYG2gMptQp7ql0awRAuZMNQaqRM2KmaGnDDuIyT+BTQdOb9EHHu0OdK5vJeoLuKDcxHG0X8HjAVT7cUXncKVTCRPa4+dwyYlLJX7LQNGZN492UFqRGdLg6PwqtZF0KL2cxMU2h7ZLpRKI7aospgxIrXCQpzuCTGBb0/ZYrRdfZt7VxGb11XtApudVfiTBs0BAbn6x27vRR95PEXy5IKjdyhjqZFSO7sGQJV9WpRGkLovbHSaVaVN0r4UHPV3pGO3iBJ7Rpq0xzd6oDhsgYbUbgoc8d7z3HAeQZVmECofkaKjr7TZSmmMUNFVmuFwI/rl4qSbxlnUuJPso1QRyVQzxv/AJWpbXnB5tT+mOFR/SZ9i4y26smKKYua7hZzhGPzZoSXhFLQjuKB8OzMvEzI5vXvm7gtwKW6SuOlGaVo4hNoY+l0K5QR87DzK5xTrPrzjSBLuns2LCnP7n+CclUBUnMCM6OyNYm3AcgB45tr2qNhJ6RGHYxT/pG3GbG4wgb70Rd/BlJzUunAmSQrQCbdcT0o3mHNJCmGPDhwebAIfGoOopwfjeWX0f6Coby7Vniw2qBu0oNM8wAv+idF9jx5pDv2tzaoqaFd4cTrfevCFJ+WVq2mF427Ix6dSK7PtB9aX9ovHpVLIP99HVufoQv/farnnR6xFmN8CdJq,iv:7Ua9A/RxBlNK96M80O7WQZTUeBW2JAjJOo3AkiRZdaE=,tag:C9tEM8qnd7TrJo2yetQq8w==,type:str]
+            values: ENC[AES256_GCM,data:w9R3FaQqyJheBN7m+p6cPn0uH/NqlzU=,iv:SC0W8GP5mvlKlxBXgl4aJCMUIEBozdhdcDaJAS8JFgM=,tag:iPIV15214a7994jFnsZFmQ==,type:str]
     project: default
     syncPolicy:
         syncOptions:
@@ -26,8 +26,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-31T14:26:00Z"
-    mac: ENC[AES256_GCM,data:vM7Cnwugnzui5zHg3i4LpiZ8CP+jjDXApmPxJNNFxrUpy70+Blp4L4RJ8/jC/osxDDHBS+inR0jILFPlXlVLELEGqFAdMkDngNTAfrkTFDHCkHeSbVQmniRIkNkuVKGreVjEGvaiRYdGQ7hhzDEcQv4pOi+A0h07nXD4bcOjU+4=,iv:BTNeWfNQ0REGXTJCiDpgru6Uma0J5qXRHqKH024tXNk=,tag:4fF+cUaUdXM+nleJx2pWGw==,type:str]
+    lastmodified: "2021-10-31T14:33:45Z"
+    mac: ENC[AES256_GCM,data:+x+Os+79YEj9oN+upCTQ2P34ZN1CltclV6kURQkFMPVoaIm3Xb1wmhvqKX3R7/MZnyTu+tXefV8i28Qp6PEARPafigC579iqXKkO3yzMn0GVpI6JQzmp8XARepEIgeC/VDz65W/vPsk4u01GQl9UqinP8O0TC7m0kisfzcA3el0=,iv:LcK3V+QKudKEwAfUkwzgVVHj2Bmp4WxratKf1X2dh6w=,tag:tvuvgqW2I7M+7djPjPmjTg==,type:str]
     pgp:
         - created_at: "2021-10-31T04:42:56Z"
           enc: |
