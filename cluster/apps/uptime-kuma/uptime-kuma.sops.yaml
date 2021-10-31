@@ -12,7 +12,7 @@ spec:
         targetRevision: 0.1.6
         repoURL: https://duyet.github.io/charts
         helm:
-            values: ENC[AES256_GCM,data:5r/znhTp5HIry0UHcEfH1JoWOUpVeXgjbM7hXyfJbr5tmYyaOZlcnzWtoYbf+CKw4LYPy/ZC0XAWX5FV6bwQAR0TchQb8fC1XAJj09P/BXJ6q1NJ2Em+t4GnQF28icjWc4mdGJg4rk2P1fZBzgwi1Hr5+Q+OMh4sfT6gQwZZJolSvSzpGJVh1Yo7o58AP9gcdGC5Ex9f1QMXdS4Cte/TQeUhg1aIbU0o9KIJ1vO5Hm0xfrLrADv01AGWFAyUDbOZD/EShXeS69SFcXJ/BJ3q451B31VrL7wQEBiAcxs8GB/i5a74sA1JQXjfn29/oUVSSlCh3nfVysk4pPIUlCRcUja6wOO9Cq+kl4QG7g5Euh+EbyrZtkLAX7eeUD2FV699IGBE9ICnwZ7T0MbwQOiXM565aWq0C6lBP0d8Oc7319LLVKncXWrsrSb/G3w2wbDv6obQzqTkTz789cLWlOIdVyvS8TYGhjDAWybhSEPdAzbK2aXchwEnLjQvwwm83G+W3q5s3lLAsgK+hjnQv0g3bF4Uh85oUUoQRrfnubOr5UhLWW9nU9ExurIV5iN4uDazgOeHlnSfROiN9nrnXvjqQWNMP2tz2aZIxjb3lASdkrwvFPHRzTGnQizCNG4uRsgODPGv2hqQD3R/vI4M6AupVtJtR/LNo2/igGiUJATsA1fjjor7lTO3qCeBjs8dwKJ0pvfPQlkKdE+hWo3X7jSlvSaeSJLIPyGnIflqwCKbeksXBrifBGRAMUBS4M2x4bNPSpYyTx2aEOxa4D1KEQnb0vG/n1E7D3LOFp21NkFQNc0hfCTwc9qo6zuRMcRp8xKn96qrTHFQAsAR7lghRZx73QsRo0A/MmCRdFq7y2h05BgOnAGNiwpRNeYlERcAwJGw6EWZqzqcZFGiMDUId0FnfalL33hn0TDh6bLPoaVjfeU9s1xt3tcW4NTMmL1ifXXA0S3lVyYMCi6fu5bz91kBcpuBKTgEvtXbcshDsjtFs+6CRoPl+bCXma8dtGtNo+eze3KrTXwC7qvZQPOymW5mEAecZR5zmoo1CCyYOH2gzyHU6AyOef4wLvyMVXU6M78KQPgwi9SwIBy5heRt+olgVRuMTpNcVvQp8VPlHI/CVzenB/Ik,iv:bwf6gfAVf64u65Z37XQ5s3SKn38qJgciYJxf1kqS43Y=,tag:/yvK3IGxAAc3n65yuDElzg==,type:str]
+            values: ENC[AES256_GCM,data:ryRBw5VEljUy/1X3XjyulFJ5Q6Ng50D18A/tWi5zyJAJ/UdaspqKn9RyMiCdAohgthd+SgUFP76YHIaSl7vZo1nDUDXMe1oEqwPDuVKZG8CCnbxJ7/f+4SWQ070EUDK0INIl79/3a/2LPzVU+wcm+LaceQV5f+KMSCzyPTyQpEH3xseaxSL4MKBcdxWK1cJOlPbgaDhEimWuB+78IzRolhtjsYOuKC4cNysakp1XEJIkfkdSbqfLmXGmDh7sRb9jkSmMyqsB/cK/3XgTPAQ6AVqzYoXal4lw7Np+nCOKiuRqilfJRmhwxSgnqbOpUIkk0jA/KFjPhzCu83Hn1cG+Hw25+wYem54BcJttUo9e6dYauwBhySIE7awr6lQKx9L9QTeGlgoV/rqh4jkN1Xp+nGcwCwZNCrqe1ZVxrET6DPXGmG65IGwrMWN8uLKMpW96hu30Y3P1EDZetGqoP4FdPvuUY672jnSnE8wOd5T3tQAeAlFDyZ/glXlH2meaa/glSpPf+W2ybddkNwnFR2eP27U+tV8Rdubo6hSeWb6TvhrMwRvopCRQnpbN4Y6QwFrVDWPIEsCWUSt27t/hOJFJeK4eFkREDEpWWzlBieqMWLirkcWIEclp71m3KDL4KOJLmZFHpBhAElwLPznFiS23sIahWevMIKUovW3+tPsB8wFvwbXINR4KBdfVG4x8jFHJIyRJq1qAS2uyprhPgFeYI85ZYV6Ez30gkE6HQfzTiilQWa9THEmfO94oVpRSSm5TESg/BhKo0yf7IGpoScSbqFaQrv4TxRV7SSD2W+EzWaLEGh9oKIMfqb+EkK4D3T6p3vnJfSMpXISUtmlQLD49/9LG/G+q7cdxQZp86IzXIdL73zRmQ3LlrYKHSGN4s69ams1/Nk16h6Tvbednrw7XzsJyJRg2w0PZNdyvB8EVAkWR334vC8pAWQRcj4rg8khzMywL34quSWMEi//jqqJe3ivVFbxMn+6L9p4blDvDLV0D3u4b8ydk+Zj3cA+4pzVFIyuZLDYRmLKSNBrm59hZfaelL+SddaZqb/qmk510tqIl,iv:PcjvyVA3RBd4VfxjF3OcRe7PeMD3pchkPFd4FxmNkp4=,tag:qW/xeA3rMNG9Ry65cJrOjA==,type:str]
     project: default
     syncPolicy:
         syncOptions:
@@ -26,28 +26,28 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-31T04:33:22Z"
-    mac: ENC[AES256_GCM,data:ZWUV44l6U1So+Y1EavCN2es8r07sGjrE0iSLYDTRbL9yJtKyDFVV4KagWdcOjjNyx/KWGon+0lWidu7mwwNqOK7uD1W0ZZb80JdxYA/rlcVjoj6GGqP+pYySO0ZwQacAHGxoaiianDhD2+4Bluec6iUS9swdg4POBWEPwNHknDE=,iv:dG8JH99p7MXgxc4A6CElyfV1EM8f1YFVrkJmvcrUYDg=,tag:90L3EdT0X37YGua//qDljg==,type:str]
+    lastmodified: "2021-10-31T04:42:57Z"
+    mac: ENC[AES256_GCM,data:lxYfbaKXNW7Vbthtg9V0lxZnPnA+ry/5ONXQcsvyIpjFtEgvAg3vXo1g2ZaZOlb/IEydIS8p5R83Lb9jXsgqRlkn+liZkUCC/a87HL2FGrI5MWuZn3eB0lNCHAJuKEF5fLT5ABVOc6UBMwjwlqGnRdu/kdKMmFaM+CpXQBVxYXg=,iv:lCxuPKMTCYNn7QQbV4vBT7km3RBSrvEjOPlbKP02uUA=,tag:T/cLMRyO3jCDOhiOGfgWYA==,type:str]
     pgp:
-        - created_at: "2021-10-30T22:36:08Z"
+        - created_at: "2021-10-31T04:42:56Z"
           enc: |
             -----BEGIN PGP MESSAGE-----
 
-            hQIMA80P3erPiRpkARAAr4z9Vs7KvxQYmE1cZdWJPUsLRO8GqzTb0dac7swOsmzC
-            nuJOvnYf7ec5WiSCtJMn4sdRrh/4te2XFnMtF2W+20lsE/2oemgAL04Fv8vwUFnS
-            ZcY5G1TZwyCgYvuC7FLVEvnx9JjbYU6IKkEE61tQHordBFlkjihHG4Y0vnWOSRIt
-            Dmb6nersZSVnR41AsfDA57aJqdoEJtJ0rDXlie33H+hRVyc2b66hPVMyTQoGD+/h
-            WFmQXeuPltlCe1oTCYovGCZO7A/r2WZhJtW2Qwzqf3PyNVevAX0sI3pDnoa0lUKm
-            bromqhz8s0OXYDQteXHeVXYwnYHaNlVHMWRGMHU4Qe9uXpRmScTMOAlCJWpnQlqH
-            JTtwhl01n/4SnO+UYeVfBGTpMxmIiOVaGFhR1BgyQUi+NaB5TgWx9ykYPlgaXqBt
-            hURtclTkLwjsjtks6nOx7rakD+kclS6f83YrJDzEALs4z7nblsJwFq0oaQ+Pb/OP
-            uYpPd50yzH9pO6D89oRIsWiftexjgQ5HBiAYJgLRPYVk0lIf66XEdiZKvLPEgjfZ
-            fLS5+SsG3OZTUQtYrf1k5KxXmxhWHGmVt+higZPMt3Th4gLyQpcM8ExKdRKkQAst
-            wki7rG0KWhlhTiaUxfhhgxS97Mi5XewfP3h8mE+u02hWYZ314GKQGO3Ieqp1dZzS
-            XAGo+qD67tRN5pPoirBnzfqs0We1h1UUTR/s1CtsS1bV8/ExYPm6zbbsw+YojG45
-            uf3ZtWyrBXcU4zLwDXPhSrq/yHZKsSOhkj7jrULaOOcryfIQPb47E9lKPXzC
-            =Cq63
+            hQIMA80P3erPiRpkARAAytJ0RK6X/ezhX5tHRlRktenAvF1kBoOzacAQmJ6UDnk4
+            qTv6FPeupuibN5f3A/zX+wUukwPC44cQjbyFF11G+1SeIbbxi28I29wjdtEdFwnM
+            U4qVpGN1pVJuyYX+sU3DhwkeXNjFAIKcFy6K7JLcZVLnAu/7RAISN+q734xeqVzN
+            LLE9MFyRYCRmlBtdmPfNxx1kz45sMmp62ZbdCLR+nfVhd40Lw/fyS5y+GttMBIwC
+            WKxUmFvtuNRHkENVO5pZ3pCRrAA6Je8VCwt6bashELof+/Ag0Js6vrfjNeIdP4QX
+            E8IIK93P08cgijXSRziFMF201MtYF2K212pJ2QD4IeRg+LjyX6ZM+FL2qmdFZ8T9
+            Z8hpx8Tz/8MiTbT21usE30Lw7DZRFqgSBH8KobNIi7XOfChdQ4UQDR5smbg9N2Gl
+            T89o4UFyQ7nLCMn+n4xhU6BlcgOsyHukd99fbfPzRDcdymC8HmMWLGDjLwZZnmcr
+            hVMYi3xdFC05ScaF5b3ucA83qeXsMH99LC4kZc9gGxklQXAG+cUUCUw/K8f8anwk
+            lddD9oP82r3ht9SQs4zvECAW6+bvhIA2L4J6I+vpoTxnISNSM2JIWjvSKVdPDKfu
+            N/NUgwQtAZX1mRhwVOiwRQcvKQ3R33J+HVyGa25SmleM2g95hmdxnJINxMFHR7/S
+            XgEg/VgsMHOL2lxbzUeWLK7QWgTILREeOZAldk852NMKPpwljqu+BnASyiYfmur9
+            243kWV0NjfdmLESqZpDEHgLVqNUdQQQlVhUKiFCLrhFa5tBX5tHcG1mifN43oW4=
+            =fDxv
             -----END PGP MESSAGE-----
           fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
-    encrypted_regex: ^(helm|data|stringData)$
+    encrypted_regex: ^(helm|data|stringData|networkPath|hosts?|loadBalancerIP|image)$
     version: 3.7.1
