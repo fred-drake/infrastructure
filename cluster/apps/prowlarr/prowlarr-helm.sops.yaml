@@ -8,11 +8,11 @@ spec:
         namespace: prowlarr
         server: https://kubernetes.default.svc
     source:
-        chart: readarr
+        chart: prowlarr
         targetRevision: 4.0.1
         repoURL: https://k8s-at-home.com/charts/
         helm:
-            values: ENC[AES256_GCM,data:cmLC0c7Ru/ZK8c9tZhxgeIFtWF8D4yK2P9Myc2eWWpybfWuBCdZpbMlx7lz4f1eIKmEHgDOn/95ZhxERiXjpbsbcPsQ13jjJz0bXS66W3IVSqugzo7cygMwnpdzs1AHJhgU8Cy3EA8KSkYLx9grz6JjrK+9oi62bxQyaICPZjVqkcSRrYqESj0H8egUtJfc1svzbeWrumaKS6uUnmhlZebtl2CT4UDjp4tndwn+Tge+l6YwqNWsPhs0nN6SA//+AqtH9zI2YhzjBNB5cs+/fOSfBTWD+7zw5W2y/SQx7R9Y9XD4f/A9Fgmh4YzVALM4Bbdxz9wsrmFY+nqCBR2hXS5dDY4h2T4KyR+ZS2lPP7TghAkLeIee5+jZU79KuOV3hFkZWNV3Kj7O2TwjGBdUGHc4cBbTwnpB1ZzdrtviR1cbaeBQ5yjiTPL5n0ayNcWFiVZTR13+G3IURtqoTJCSVIqkzRv6ulsSJMb8OyujZd6Jx8UWVpmOcX0oEe20u2N7qlpQz/5DWAS/W3q13wgzWNKIC+MnMSbF55jIqYGMlLDPK5ttBgCGi1XXDjsPrtNRd9t3+83196RNvH4EOyYb20TxGZYygLVPsXWCZCaGVHO4+PytoByenTCYkZ88700DJrd+IxEV0sbvS/ZdyZJ/rbLMZAa3ainryz+5z3X6zmFw0TqRlIjs8BpBzbMfkLu7tWCCfY2dnnzm7dThJ5JYgr7y6PjB3AhCdEEf9dCxBnDV3ZSe+8Uedal6FdOl07TWiuWRMMYKKg93JksDW/I9mAvqABg6AYHQGyYIBRlydgvowcyGsrGMP6kCzJoj0RhGvgNOaDKcRnHD43kINl2S/z8q1clq6Adp8tIXdzQ34J7lTHZXq3jBEae5GNNOblHs2HT+EHjgE9AGO27KKFXSpER4Pq5UjC/W+LYKdgGQI67OUMbZfVPG5ZOzC4UwALnuKTdZzJNSJlSdDShLx2wMZXcar4tzzu5W/PaY4azRsh0J7G5Qr7BegoY0UA6LqJQh2a7Bj7zHXl39rl9FUY7Pu8C248gNZIychJbj7bAvrRR/yAgUS8eh2//hvLf2bk40raMmaM1imZrt91nN3SYJUJo2MUYEs/F9QI6afTrKCVzn8KE+ejR889Zbh6xYZl1lEVysHQTmG+NNllPhSDuCZwETxHA2xkrEiirD4uYbkPsOGGm+JQNrT+gIXarr81PP224YRHI6BQaXRvoAdmGbTlicE8764ZuGDn2ajTw==,iv:vYMWS+DTrSLrdehBREYNb642yE8u7ZJoeG7cKw7onyU=,tag:yrl1BEpHncOYthY54JnSqg==,type:str]
+            values: ENC[AES256_GCM,data:XMBtlHupmcdvRHsqZyh8nKCif/BYV7kthYY6sCvWbWcZSK8fdpR5SWX0vmHrCmXvY1am1Ky9jtalaaggiua46dAq6cLh8N7S20Ww1m818bLlJfZktbHKo4+mOMVtV3s3dHmOE4ydbrVEHDFUaI7HYBfqb34K5s/6e+LpD9a27qF4+mi9+wHOWGOCpRmA9RsrH9VhUhc1NmDHcb269992Rk6GQ/HYp2fxxJNK/6/O4p1DL35TF7N8z061gBXyvMAxO6D2KN3QSx8Tu/YidV+2gnRuuZQ0SAs6mic8Z1lKuw4Pj6zyxwcpDwK6WKZMDYDRQS2x/2l4WEIOfO4zUZnutCXkebF7JsuxyMLYHWlW0byifv/fk873+15OcmxVNkOo5RyyxgfWu+7DCDMGGUlBceCNd+eEyCJGTaZ3Vh9svzSVPZGVpXEDhk4EYPu+5oD7I/LqkWfAIXwo6I5UkUpEiDzwEZX1YhR/BuYHdW3n9u8eEC9P0w1bztccsOcb66veS2U+5DPIbghU4+oGUyvKWSstgqHjhJu2EQeiaJahRoWab7Niyl3N+oZ6rMikHbuKcs9C4WWcOfF6hr1LK2X+aZn+8dooqVinmXvbd1FTywnJvoS55OjwE8rfJNBnZGH+a4ZTrYK8oBURhBRfqnZdGIwTqoGXCcOx3bp0y2tLpA4GwLZD8WdmvonmrvBL+ArXLz2wSwuuyyUrpLH5AfDax8r64JAHh3K0ydu8GGNMQeaPJUVMNOAE0UFvJojSFe5mhIU/Q8FgWdGeqLqxy9q6jKOnFffQQ7kLzcuBXV8cf+C7IcmVsSwpscx9Yyfnjh4+WYc7JabAwl/zKLhlUMpNA6NWon3/MFiDsVrz8txcEKwS2CR6CA6bCVQOZs9jjuN7UkLnsqFWEmkxoIE6ooiRSwVHUZAr6t3WgjdwuWkMRT3VE5bORr+T2mowt84DGuIdHSDQrVHTaKgGrTMTOwDfBPNLg0j8LBo62hw4bpRw/M9IxF6WqGLP72fVSlDwbBK7OXAHPG3gkrfTq0JMFgzpTKTQWXh0zL+pr/FDTN+c6aI3mBwtLzV8Fm1IlbUQqkM6pSANiJUc5hS5V5N1WDeg8dblNeS/rvb6rs7QxlRoJsQfhZL5VyqR1y3g46GNE3rndnbzlZuxeTeE7ODVr0sHiJi04cKBj8wVl1QkgQtR6LcBb8VrGUYmH1KFFtNvuGl+y1wzWwvJPH7J5Pgtxhwt3dPWBcgGAgDlADrRs8eI,iv:GgRy7RdZwGf+PUpjZ93VNhEhdVTo8bk9h96CeobfBk4=,tag:h4fuGt9yPyP/EJkv2r2eyw==,type:str]
     project: default
     syncPolicy:
         syncOptions:
@@ -26,8 +26,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-31T17:37:04Z"
-    mac: ENC[AES256_GCM,data:7cgdeRKoz456qkTh8VnUpZ7Kz0B+mjhu0U/zfZvN9XRziK6taSWmnQubMCOt995flUWjp4WlrKRlMw5zvdkV57tFFrvr9nuM1mE37CTvF9r3AhV7Y7dX1h4LmqMh5LAZusfYQyEpdHraMaHDsx7+5pNF97Mh6o9tycA9H0CWI5o=,iv:Koe/o2E4ZraW1xbVrSsF8gVkh5OegFa4zfYyfBsP/EQ=,tag:otRQKTxDAnaK5lw9DO7edQ==,type:str]
+    lastmodified: "2021-10-31T17:38:26Z"
+    mac: ENC[AES256_GCM,data:P2/e2NtTTu2ESa79LK6JNhruKjhf31KhJBWm27sSLB0x16S//9gXnjyaPPjIrdoVSw4lksvQL3DWmg7lCOohhG/b3910gCE609eha3vXkGCHOtgsPcFKmt7CouFjnTSyHEC2oAO1ysRwTaXeeVamkafWM7yuZK3LoYi0/U8SSHU=,iv:zSklYrxO4hKTfrF8uUWZ9UeQ+OEeY5J0ou5A06/gM4s=,tag:6mK8YfrtxFHWOhDJNfsIww==,type:str]
     pgp:
         - created_at: "2021-10-30T22:36:08Z"
           enc: |
