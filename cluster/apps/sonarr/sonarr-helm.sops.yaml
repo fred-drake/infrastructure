@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: sonarr
+    namespace: argocd
+spec:
+    destination:
+        namespace: sonarr
+        server: https://kubernetes.default.svc
+    source:
+        chart: sonarr
+        targetRevision: 15.1.0
+        repoURL: https://k8s-at-home.com/charts/
+        helm:
+            values: ENC[AES256_GCM,data:jGdt02jldlIqn51DUSkyPiQiP9UM75so01ycU1+SER8DTMf+Mb80C3k1inIe8Kxo8PeNg5R95i/pWur2C/iJQdoxhSqVmuW+rq5STOaYQc1EKDPE1Fnjp6y88693eVW/W4lY99UVl5xQqOpkX64RYSkiruClhfZAzKrGE1HoGlc8+jT5m0ezRYktk9XpuR8kurfeTgNvg6vtDWNgxc0YtMdcT1C/N9+ValOjXMKjJWotsWIPnde8pIXw4m3rjrz2w8QE84HYZIsjgUKO3btFsIbXevW6zzDLNdRdbi7aIPVrPeY7e5GWz7ENSDK23t7scC39UFAQqUsWt6Kz/LSjwO9yg+TrVn1ifgz1oN7jgdKUsCJ8aS4ZYAPSoAxwFYMtDLZKKCM7bAl6liTqCysiX+NpollJ+mQdg5cAqPi3Us/93dMT4WcJE9wWRBfUoxk2Z4Z/+3jIwJd7MHzs026PwdsKac2SVxEuqLrENML/k2zY37VlwGODOQSYbdnyeIsPvhlbSsmiJCxrdzyyJwn3BUR541XL7C1ciH6cRzjRioEncZisQzmwsag1QJ/vLUtIJlgG1m8NixCIgIdlPPZ2oI8qaFK7ZWS6x+mJLj7WwIZi61FR1axq+O56VCImUkpl7eo0WLrp9TTvjaMJhv6nkLxu4+sez6loaMfX6sp//x6uXKgDG/BCkkLzJg3mkpfi+1U2tIlbT+EYlA+qroO0CAR39/w/DCVjoEh0X00Rxv2OFhK/vHFsLp3PhxljnYzYHx7CVRdqvZ0UQwH+OzELGsPFAdslRLlee6HdGsoV0sVSW4NVFGmVkYHivDAI9fi+/8kgFDx0vNlHqg4Cqynx0E1ewm+qLxybRruAUQ5JU3K/clqnca8wa261c5w82qOuCs+Rdtwzct7KZqoxCZTnzSMxxhZxMikeSjuTfqWDbjlSva/HP7TPa9V4uuyrA+y13fW+WU357JIvmX06BrMCsdtUlRPXIvW4jDbgx0HPsGyPMUPEp7M9DqlS5zY7HjohO2W+mTmRbrWo2ssScMXZ9sXr0wBCAJj1lW433/FkXQD5nJPQ7olsb+huP2huATsCtczD1+AUA5nplIhR2EVqv1PmF+zLJZHq1ngFCOIAVc9WJsI4CNk/TiC6njf0k5xvg5ZDyXnw5lucZXaq4uITprHIQbiOdDR3T3KQJHkbIiSNJ+ebWQbBuhGs74vNWomCfVnKvu7cVDgrzu3nE56teg5XE5fW6P5MVa8z7XVj80MKEAWF9O7yAFrt8DXoxrGUZ2ciIn7vFGqVvMciuIHi7mSDsw3QCTOCLf6XRQP91nkt7froyKPAn75M5/KCYQ44d6zuEzwvIUShoTxMluPQwE/XgyAXaknCDrf13j7u4uOdeLLA7HxCYq5yZlSMuOpyCYYNIpaoiqf9WkwhD/V9metP9XK6uv5FVSx5RRiXKvNsakptDYb47zLr75MZNja+50ba214Rn+z2GV/GPBvit1i9YxY7IRh5HT3aKW3m41SGd3xvQKt69SWFShoxKQFe5tbllJQNtK8=,iv:W6jqmeS0KEvy8SSus6uFW30STq/Ofp9XSqiLDswGex4=,tag:wg+hBBppBEIRF2uBZ1BMUw==,type:str]
+    project: default
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: true
+            selfHeal: true
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-10-31T18:20:50Z"
+    mac: ENC[AES256_GCM,data:IEZhs30ReeXhzWA4vS0qd3EDHWYI2n276AR9r44R2EaI8yzusTTo+csYeH7x4Um9aUfnxcfKZZXrgevc9SfZH1WNgMZVZUVym9NOzPOOrPEDIZ2Y89Z+n/5L1zhTcFbY7QZEwiyQ+wL4+oVKQW6TkptEGy0T3A5PDUfltHi7Tmo=,iv:vtChwKYqjGdab57l69raDo/ZGR244KpAVe3GzllGCSQ=,tag:Zta7D4bILMF/Rz5pjdjvng==,type:str]
+    pgp:
+        - created_at: "2021-10-30T22:36:08Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkARAAr4z9Vs7KvxQYmE1cZdWJPUsLRO8GqzTb0dac7swOsmzC
+            nuJOvnYf7ec5WiSCtJMn4sdRrh/4te2XFnMtF2W+20lsE/2oemgAL04Fv8vwUFnS
+            ZcY5G1TZwyCgYvuC7FLVEvnx9JjbYU6IKkEE61tQHordBFlkjihHG4Y0vnWOSRIt
+            Dmb6nersZSVnR41AsfDA57aJqdoEJtJ0rDXlie33H+hRVyc2b66hPVMyTQoGD+/h
+            WFmQXeuPltlCe1oTCYovGCZO7A/r2WZhJtW2Qwzqf3PyNVevAX0sI3pDnoa0lUKm
+            bromqhz8s0OXYDQteXHeVXYwnYHaNlVHMWRGMHU4Qe9uXpRmScTMOAlCJWpnQlqH
+            JTtwhl01n/4SnO+UYeVfBGTpMxmIiOVaGFhR1BgyQUi+NaB5TgWx9ykYPlgaXqBt
+            hURtclTkLwjsjtks6nOx7rakD+kclS6f83YrJDzEALs4z7nblsJwFq0oaQ+Pb/OP
+            uYpPd50yzH9pO6D89oRIsWiftexjgQ5HBiAYJgLRPYVk0lIf66XEdiZKvLPEgjfZ
+            fLS5+SsG3OZTUQtYrf1k5KxXmxhWHGmVt+higZPMt3Th4gLyQpcM8ExKdRKkQAst
+            wki7rG0KWhlhTiaUxfhhgxS97Mi5XewfP3h8mE+u02hWYZ314GKQGO3Ieqp1dZzS
+            XAGo+qD67tRN5pPoirBnzfqs0We1h1UUTR/s1CtsS1bV8/ExYPm6zbbsw+YojG45
+            uf3ZtWyrBXcU4zLwDXPhSrq/yHZKsSOhkj7jrULaOOcryfIQPb47E9lKPXzC
+            =Cq63
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData)$
+    version: 3.7.1
