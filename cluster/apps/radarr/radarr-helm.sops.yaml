@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: radarr
+    namespace: argocd
+spec:
+    destination:
+        namespace: radarr
+        server: https://kubernetes.default.svc
+    source:
+        chart: radarr
+        targetRevision: 15.0.3
+        repoURL: https://k8s-at-home.com/charts/
+        helm:
+            values: ENC[AES256_GCM,data:6Bi8GgErbVvET6CTbpVS8OyneHTcriyMMm48AaYe7SE3YMY0fU3UPKoF+5W11VgjC+8/wtQ6mksQnfSbPQLagV60RBzgPQ9Xo0WIp6JH6rs8np/dmujtKMpawTI7skCJVOJ7dSydJJlem8yJEsnFNJ1O7EU1lq8E3VjoD1M9a5muHGffRBb+RmMAsRHMPOy5Qy1Nr2cIiEPhDfKfy88URXYkHSkZYFzi+CyyXsr3TeEVgIZ0CFW/WQuDymlh7Otgs+b9BSDnlL7dO8O93sFI8LVU0FCoVgU2yTre3bBuO/jGoM45Rdf0qrY/Cs8T1D6Hs7vzze1QUbTgSlbPu5ALeqi7l6Qbe7S5El9OukRuFDBwPGFCeS0bXfr6O2B6JPTJzpfGCDEjXLmSRq//GthMSS7kuv3m4vBQ8i/ZPycJQxBQBO/h+6KWNYB2E4iW1vWk3h6ylbbr0wmbV/iYJMt4xe6h/j2OPpLixaHvKyq3W+6lVxMrL0ZVtqUvlvXcrejaIctyqdYi/GHUyYzPyO8cWS6V79Fu0+/Bi0SmS/9netuP7yf9CyDc9Nh0cFxoi6aoM1zOYqBlGLOa33QmBOxKtBBXDW6R1/NPlt/C+UhM8860ucs8SkPKP7YJAv/H1D4fztkaxFSiAkDwNkLTfJrpghMr/hwnQPjMd9dtZ0+rr0nCWL9I5MqUyvhZBw+cDknFgB1lPTUZGAtJ0UXLG5TeBDzI1ciQ0zs+q3QP3dU/ODPypdlvay+ILbXSuWayXWSZYSxvr+6tuf6ovPacvHNew+9Q4E+DMCb4cojTzyMeN88FiPG3yw3Tm68lkiFVva3HaHbDDASkbWdbIZtySnm7t0lZWL7UgCLnSQO1BgOfgQ8+ITJgZwIK4ryJhdcvwQ3ht46y+gekeEfHJKbEknWvWXxe1+PdJG0T8r0ihraitpXzotoH3jWrydymP4J24L4Hp4/Kg5tKtmqd9VM1hmCChbITVhqnwtyxK2trokcSpHuMKm9Evk6q0sh00RryJx47hFOQftL/Y8Kn7GjGnk9QftYJJeZFdoeC/HE1JBzOW0vzK4nyD6vSpbpbTrZRzaOIEinilavlax8kbQo7dVaJHlwta7fhnPggwUFw7y4S1NOmZIL1xLN9AJsAb01/9RntAuwkO5SZx9z9OUgEje9kXWByR5jJX9EHS1wOVunEikIU2rAIYVX0L9vfloDZuMiSqOiAWprNyXI1k+3i2EGQ+oia8MTawf14ozdDj89hxDibNV5VuiVe5VRNm4qiQDGLmxDm9vTW1jpKOrEfIaDTTEY0JQ7SJh1PRQywtrqTol1u6R4AEC4VRuA815PSZ7yKQeZ2v4H+tY301ot4LlhNx0befBplPs5k57h1TcYQs4PbSEgaC+SfNqkW3dAHe2FG7UyuqheRQAvy7tAp0Z+pepwSRFA84QhY2LsCWF2VgrwnJONKP+Iu60xkw/wOUUfgvjQmYFo/bh1VRe/i93yKNkLXpO3jbVgLZon6Bm4UsFb5aJRr64rh8PIUCfc0/xSOditTDBQL+CK4ZPjJnSIDAnVQVG4OTWgVB49IA827qq70YC76+Y8nLOxs7fLx1kIyJuR1ryCU8jZIEY3f1keBOGzjrLdTyguryzqagaJKly5o1XUHX7CEOtT0+Guj6Ql5R6DYifETeOnu5Q==,iv:W1UhgOykoB6jXhuNi8284tLbyob/WKliO68nAhVQtjo=,tag:cGzzfOQJJ9M6xUgf5bB+GA==,type:str]
+    project: default
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: true
+            selfHeal: true
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-10-31T18:57:45Z"
+    mac: ENC[AES256_GCM,data:FIsPgL4X41SOknM5UR8CSoODejWh4bL1+Vcjf/6jR+cQliVkslwnAOLauyHYg40moP7Vszd08L8qTqYq16rv0SL1W49gvxGDZ76YQqNF/Qt8v1VrJSCQ2mQot5nGQNUnR2SxWdD7yOsUfDX3ddbAllBqG8rBBxy23zmpM+fDudE=,iv:bNd4qhyEfWk6ukdAuewgScCbTusC8HE06d7zvbKZRY0=,tag:XLPLPH58YZxXW4CQtKJe5w==,type:str]
+    pgp:
+        - created_at: "2021-10-30T22:36:08Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkARAAr4z9Vs7KvxQYmE1cZdWJPUsLRO8GqzTb0dac7swOsmzC
+            nuJOvnYf7ec5WiSCtJMn4sdRrh/4te2XFnMtF2W+20lsE/2oemgAL04Fv8vwUFnS
+            ZcY5G1TZwyCgYvuC7FLVEvnx9JjbYU6IKkEE61tQHordBFlkjihHG4Y0vnWOSRIt
+            Dmb6nersZSVnR41AsfDA57aJqdoEJtJ0rDXlie33H+hRVyc2b66hPVMyTQoGD+/h
+            WFmQXeuPltlCe1oTCYovGCZO7A/r2WZhJtW2Qwzqf3PyNVevAX0sI3pDnoa0lUKm
+            bromqhz8s0OXYDQteXHeVXYwnYHaNlVHMWRGMHU4Qe9uXpRmScTMOAlCJWpnQlqH
+            JTtwhl01n/4SnO+UYeVfBGTpMxmIiOVaGFhR1BgyQUi+NaB5TgWx9ykYPlgaXqBt
+            hURtclTkLwjsjtks6nOx7rakD+kclS6f83YrJDzEALs4z7nblsJwFq0oaQ+Pb/OP
+            uYpPd50yzH9pO6D89oRIsWiftexjgQ5HBiAYJgLRPYVk0lIf66XEdiZKvLPEgjfZ
+            fLS5+SsG3OZTUQtYrf1k5KxXmxhWHGmVt+higZPMt3Th4gLyQpcM8ExKdRKkQAst
+            wki7rG0KWhlhTiaUxfhhgxS97Mi5XewfP3h8mE+u02hWYZ314GKQGO3Ieqp1dZzS
+            XAGo+qD67tRN5pPoirBnzfqs0We1h1UUTR/s1CtsS1bV8/ExYPm6zbbsw+YojG45
+            uf3ZtWyrBXcU4zLwDXPhSrq/yHZKsSOhkj7jrULaOOcryfIQPb47E9lKPXzC
+            =Cq63
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData)$
+    version: 3.7.1
