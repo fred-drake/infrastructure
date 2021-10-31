@@ -49,12 +49,12 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: minio-secret
-                key: rootUser
+                key: user
           - name: MINIO_ROOT_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: minio-secret
-                key: rootPassword
+                key: password
         volumeMounts:
           - mountPath: /root/.minio
             name: config-vol
