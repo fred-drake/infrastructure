@@ -32,6 +32,8 @@ spec:
           env:
             - name: TZ
               value: America/New_York
+            - name: PORT
+              value: "3001"
           volumeMounts:
           - name: uptime-kuma-data
             mountPath: /app/data
