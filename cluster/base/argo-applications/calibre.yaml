@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: homeassistant-calibre
+  name: calibre-application
   namespace: argocd
 spec:
   project: default
