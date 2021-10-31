@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: office-touchpad
+  namespace: office-touchpad
+spec:
+  type: ClusterIP
+  selector:
+    app: office-touchpad
+  ports:
+    - port: 80
+      targetPort: 3000
+      name: web
