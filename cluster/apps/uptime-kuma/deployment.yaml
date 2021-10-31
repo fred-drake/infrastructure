@@ -1,0 +1,32 @@
+kind: Deployment
+metadata:
+  name: uptime-kuma
+  namespace: uptime-kuma
+  annotations:
+    keel.sh/policy: minor
+    keel.sh/approvals: "1"
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: '@every 1h'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uptime-kuma
+  template:
+    metadata:
+      labels:
+        app: uptime-kuma
+    spec:
+      containers:
+        - name: uptime-kuma
+          image: louislam/uptime-kuma:1.10.0
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          env:
+            - name: TZ
+              value: America/New_York
+          volumeMounts:
+          - name: uptime-kuma-data
+            mountPath: /app/data
