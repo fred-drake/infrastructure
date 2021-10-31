@@ -18,6 +18,8 @@ spec:
             labels:
                 app: office-touchpad
         spec:
+            nodeSelector:
+                kubernetes.io/arch: amd64
             containers:
                 - name: office-touchpad
                   image: ENC[AES256_GCM,data:LcmS0Ztq4epe/Hoof66ct37vV1gksQQ4PBCfg2POB4ZCo7V/t19+II0LDi9lJsU=,iv:hsM/o7PljK3fA3fNY3zwiuWP/1Okmcier329k9wSw5I=,tag:C6E+f9D3eyTWQqmt0e8uWQ==,type:str]
@@ -34,8 +36,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-31T03:55:48Z"
-    mac: ENC[AES256_GCM,data:04s3FBf0HabBOH25bmnKkxqtwzPNFSciqOuXnosQuC5L2C2oKenlgm6L95JKQZz5b7HiggErwqdZgMngxTtEOU68wnxCcxSbLlHCXF/Hmn9Q3HgiV/P10fQ9fL1R8Aj3LnmZjqHjea4j6EVOJlfBz1LJAmFhtkzIIIaWeMlsAfM=,iv:R0xOLvfmAcjctnR+xxtjpWiAhbx5/4oL/Mxs5tdFukY=,tag:XkSGrFwy3i1Tc2SLtSgZUQ==,type:str]
+    lastmodified: "2021-10-31T04:01:19Z"
+    mac: ENC[AES256_GCM,data:tNdbu8+RExxVSUCWJwsJkkIWo2YSmE6Rj3pIKABI2zJ/auY54F6qKF0WUw/bh0vOSei0TtRpgC/TgkWlge7jU/KCXZpNCrBYjsskqT55uVx52SV9pANxGkYHKGwQr1AEG8jaGMHmdOeT+s4OKxS31JFdSeqyDCZaZ9AaSRB6Isw=,iv:ThNlvRIXpraz5IShxmxUuro9GtsA0/vz3hZ9R4bWyYk=,tag:VVBdLjTyRLEQT8e51PpaRw==,type:str]
     pgp:
         - created_at: "2021-10-31T03:55:48Z"
           enc: |
