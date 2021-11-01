@@ -12,7 +12,7 @@ spec:
         targetRevision: 6.17.4
         repoURL: https://grafana.github.io/helm-charts
         helm:
-            values: ENC[AES256_GCM,data:1KZaiquwSVlEzoYD3+XBx3IwLF/Hd8YLrtyOGzTYh4SPWQpJovfqw9AHqLYvNrVV/um0ocUMU8NmDvx0HzIm33xVExd/KFpcqiOcmb2qMgxtaRe4v7m8D3s+e/VZIq2Yqfa8pwSzjMwqTzpLbqmdkDYvTcZawtbGMzuAb6MH3WALD3QwO49t6qsDzuewlTk3657+ZXE9PAJOqvksfURy9X+1/avcZsCnMV5FxXf4BwaMiTEjvmdd9sFrbeOYTWqFEIjZ2VYrTx0cbnosBO8ROiyqhG8fQWePZmh4/9S3yB/TW/Cr4By8XVsD0P73tfmHJrA60t7CmwRYkMju6U0Z+7T/qIMoux7Qjp19iTVPFuRvO33Ld45E+3zQoVVw6+Xse0dSwHRNfmWRP7qOmPmFXNVsM3xRKk7joGGEePkljC4lK1ApY99i41B9r7+tlcnEWueVDVIe7vxBvtkTH1kxRH5AGrfMx/mZ5nG3TjQftTnZ521bEFGEyGYeWqMYmEdK6MjNoz6H3YUhSngMJKmlnI+QPmkCXEO7lYOpY5nVEPZyS7AN3k1GK/qfBx2tflKCXdSswHZzICVlODY8V4kKYHFqSmP0Qel1l+FXyjzcjgwc94NKa3hJXcBsNfVfHAZ23aeAJiQOV0dkR7K59BI+QxU7GDNOQSlSQpVgTOLPwkjj6zXoTjS7qdaFV6N2SAJQOfcfayd0V00wI77FydDtXDdt9P077D0/b6FoCu5Wr0xqAFxNw9n0xFuiURnRyEFkwXA3HaRm8HP/ZNDAJNWNal+W/u2F2u4P1m29WSdKsz3kvqgx6olhRsTG45QpIVplBSzUsliJ6yhB4tiYyQbK0CsNqBDniChCwBxgfNX6k0sUYSbfumX9DoC+/2fPoZI6QpoVK/oNAiBEpNPmNt1ZuHiJrClAlR5kC/mzymF5gbnX4G7YkYjLfHZCWvJQhSTLBkP9aPNjFd5l8OwDxglEjZB5JrHjeEYTs9qQOFGI5yeNll8d9lEPYBEWP9Gmsz82JvVUlA9ZkFcJQNb43FKrLz9Uqc38pAFHfNL1KZqyw66iuhXshu4MVfrrpo35YBlJZG9q/4yEPVSLyj+vK7i0NfzYgAeBnPmalmow4P+Rlw==,iv:yALvzrHjoZa+GkUw5fJFZgguVl1fnQ0y98oE24xcCik=,tag:WbDKXGFoSf2R030eUibvNA==,type:str]
+            values: ENC[AES256_GCM,data:RHjhPbyfTbY+FDg4YgGryE261kLrIn7b9FgfvtpniFtEj89sSjkjw3Pet+AGbnZFncx79h5pdzSj4zHNVByUFLP21oTIQeId6VwsG9tUYNCqoxQ9QKcyglixS5SKikc+GUxrJedIVO5NSy0ngPHMZgvlT0IZOaAlZOtpeo6p5NrDTJqWmu8Cn09MCb4S7cqmtCOZRPhQUjmS9imCl/4F0VGvaE3BLfehlIZhxy7SMofulLZkcT5PYEEA2IJ6NaIEQQPt86IybWtYUw1Yo7/FPFBBO/RcY9gBNFzv2jE8jMeFDTSI2QjdoPjkyD9VvYA8Vs/nvi48jqgaZIBFRTauMZ5AplGtBlLytCmQnsPdtNkxRhdFZJdqupTzkMG8aFnuN5gvD3/TUBMfI5d8Lfs3dxjqQVcxpf6dhB9Rc2iaHsiIFHbE1QMd/Mzjj2W8dH4+HsFu5+sf1+p22+xaJDudeyxQKl2LgSvGvg5fY6S1PlCApCW0bU8oIHyedY4CNcXUT34iroXhIeNTdUKh5cCrZgNPKR1T0ac8AALipfZFbzWdz33kM4UQUXBcJhIssv7Oqs99z78Ijgv2e2z5SHALmyYaBWxTWUkfXCPcufVHpN7Dl/NcQaiewtPE0Ns28dqFrqWHT6m2owcMC+7MfgdfdIJBfkiRDDIjVM99Goy7FLlk6bsCpOKVvB+AfaMMARY0TOp9Tkhz1XaGSBlJc/IZac1SN8b7tAOAibOPT0I/Nr8dBeSku9BQx4UCXb1MY38/nqA/o677Qj0B11RptlqGdY3o/4qo+CSsxHqTtEO4cI6JSl3qoH77Fdo71Z3XTpzWn90nxqGZrRghFmUOyzTXKqX721ZePQFgTM5zpHFuCrXoc6yOJtTbBLGCoipo0Zkw6hbbIQTj7+g3SAUQVl609QHDgj3EZh1C9ueq4C0em+nnZtlojODs82XEORYexakUhxK5voejt65IQJORWRIfg9dP4PWNvJ696JyYbKumTDTuBSJdJUEjfEx4V3p7ApxXQWvqO41XHTC61i6KDCr1TtnkNQ==,iv:kK649MswDZUA/C4Hs8CuMGa3/Xs6wcVvstMsy16M8iY=,tag:vsx/X0n7uMiBKF7LvCPt3A==,type:str]
     project: default
     syncPolicy:
         syncOptions:
@@ -26,8 +26,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-31T23:57:13Z"
-    mac: ENC[AES256_GCM,data:VrftGlBqw7CQhekfGtkuiU5lJX9TrLqKLMZj9Bqb+eDq7srH/8TObMnFi9oHcifBldgA0RDAfJRtlN0acIUEyf8wWYZcKoLGC5otsg1KfstQ5Qs/cvZFVFs9B8W6ZmbA6fxCF/HruM610YP7BgqyjZJkcx63ev+Y3oPDDGXn/SA=,iv:rd7rf2gPbNfCSg9cAREnXELmpYJeilw2oV918ABg9mw=,tag:J1dLcfM/0aL4mW6A2kiaUw==,type:str]
+    lastmodified: "2021-11-01T00:01:42Z"
+    mac: ENC[AES256_GCM,data:u8F31xi71bDmPY8RhLUa+ZU0Iqmz1jsgSo08QX6VIPD0ieJtR7TkmplCLtpK3ZLV7hCW8vJt2h0l+z7JVMWf1AOi/rOVNBO8EbXq11WdwqFI85RmW9fZOUHdvvdzKzwfsBYoRIFlJXdWTz1aIGwb8Rfp2GQbekrE28gvGVhnZPc=,iv:xmsU+Y7WpXDl7d+hPPx84V90Ir0vhwZB37kav/8Jf6Q=,tag:uJ7aK6Ww5H4J+x1T5ldS6g==,type:str]
     pgp:
         - created_at: "2021-10-30T22:36:08Z"
           enc: |
