@@ -3,6 +3,7 @@ kind: Kustomization
 generators:
   - secret-generator.yaml
 resources:
+  - namespace.yaml
   - persistent-storage.yaml
   - service.yaml
   - deployment.yaml
