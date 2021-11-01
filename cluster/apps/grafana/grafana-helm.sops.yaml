@@ -12,7 +12,7 @@ spec:
         targetRevision: 6.17.4
         repoURL: https://grafana.github.io/helm-charts
         helm:
-            values: ENC[AES256_GCM,data:V/wcp/8a7BMle3qv6EOTBdB4ddi5kKeiQkcN8GU9wrgPMhQBXyr6DYKR8Xt4YlMLb4hBFjCWnkOSURLdeERRwwxjks55WPn2/aJ9+xo2aFesatqgq3fsduLUeXBznJjXTrzBYY8EuuD7m0XtgaKZ7R82C82M2+HVxU0X6L1IDXwnWluWB7vJUu4BqVNGvqV841aH/EOcsCxo8Hk0TXMGiKcTpv7rfoqezIhaDjIMMV8cAr8EOZWTugAOZkdQabRyEYM9DZQD7OGTv0LCKaLlTFb14wmlWcqDe7ZKb2ssNvt1Hj5a7Q/9zjY4KTKWo7lgZgZjGeF+cbF3iQH2v9APwlfX3z39BMQw7HIPwQ0At89l7YScnBFcKmqRTM2asjSXl9DXal+sB8HAH1Yxq0q321NA8ZAZltTmdwK6vDnrodQP12JsiBKfnaxAo5FFbsluZL9VheUnyqVF3j/AMy0rlt+ed+yUNVEMxLoQkyPgU7qVleMlgttHEBkIhRPsKENWCTmkeb2srqemyhucJExXB/hgF0BDuE7sACo+wQxRKaqaSu2Zhgc8RYEVuYSj3EBNF4mTVM9CgX2ibOX7DdVdKiXGPJzMx0xyEZ6XAmbbPeTQMFIzTA7T1RsDHdn+XmOJbJV5vnIOyAI9NWkwJBJMsRvUyi7DnYSorP5Se7XtIkQyPmhpq2fnIqkEaaVfUqkVfqsU8hJFl6NKgDm0cBsQiJ11M3MOF+2TNoYNqf5BA6BP3bs1u+B8RUFX7qKPGICURQv8gtlj8nh/esDEBcDmVZtOjky3Ypz9suSqWBGb0fq8Gswe8+tzjaFYZbeKSU6L/wyxTLSNdQdZ2hYi0b157p+KJZnDaF0KOqo7Eae/QGLV/fKUDzlEvzAosEqbdT+4CPnuClug2YPsJLvud2S0OlvdOZssfwJrY/YPfju4Oh+NhxJWgEpD/MqFfySjLf9JTA8suwsNudB7M3mh0Intl5YpPeYdu6wS,iv:aIy+GSDqfy0XwH3/aF/QM4CtM3O3uI5dupUPdl5qAzk=,tag:5ssOk14WdvDeAlpIez0+JA==,type:str]
+            values: ENC[AES256_GCM,data:ztv3961UqNTzql9ZqekfXbazrt6DypRF3KaxEr+mJbFGUgMnIEswRH1jHor8Hyfj8tEer+5oGrDV56PmB1MHaf85G5aQ5r4iFbLgc3m3dFY8zbptW4V6+jWTMKOjBiZ9bYIZ0FlL3YbMnL1tysd6xa2XGWWi5UEe8MAc/a9GTeMnkCfLYTydOD2vECmphhD4XZ7sOC+Yti44R+a+LU3W+1rztL/dCnHtyta30eqihdDLlxoQ09HudfuVYKHBpCUiTov3sWK8pcUiGAaOPKBtouyNgWLUfYPYKm26hfL5S0zdUn6lKVYMAQVcPOhokgo7ILVfehuZgQ8kgHMdkyX6fU3onbnPp0AoPL8M+4P5rhELXPOKs6rvJiawKkxqJz81fAPvuhnedhYSDye/bDswQwVAHOFfmdVevANZcjm8OAg+06CxB8YiZRywazx8maIhZljI2tbVS5d5CvbNwu4MYnzNO9wmzWyLPS7ZGlCBUKj+VHDvEJxFXjgOYZds7wvXp/6EoOAAt7FJ/AayjsXXToQAnm/ewezgmCGKGhJSdibWiQJLtTL3TIQhTmtOwyLmYvk1SL68Toa4uhOYJ/JW9iQSZ/vB6+iJlWGcpHSGPO/qYoBauqyk2k+eMUa9P4A7xjgN4oHwj/hv6D1ZHagBWIUhRsjQOT9wUsexjlt2gEIB4EBqBfi4EwULTKlC66g+fEtrYU+1NxlpXQKuk8dth/nQZK+DxmqvBmc8/v2WFvjPUJ4XiJJEedXJ4KLVL2tM4fRaSwlmqZEe76tH8EGjHOTZ4ulNeaRYpfZ7CU3SGr0CzAW0s6klHi4FSRSzv6WKUv6KyGoELDaByrAIvo2HIXumW/V8JDZTY3YpozOMdb9lyLdA4BUX2wv5+m0YG4dJDKaTcsRw27J17U70KR3FD+FzfV2cYuwjMqQwwG5f+n0rb+aK7bhZk35Y5DeFkBqxzWofBq6VorjnfxtNJyI5gjcm,iv:xaHg/ZbvGzWj4uSy9kUnOnbfneIl+JCXN1BOA6qiud8=,tag:SeCbRkGFRwjffFWnlg+g3A==,type:str]
     project: default
     syncPolicy:
         syncOptions:
@@ -26,8 +26,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-01T00:05:58Z"
-    mac: ENC[AES256_GCM,data:XM6dVspAFEd/EHlZNanuCK5B735jxPTKeUm58knY5WQX2C3l2xBI0sN2iVevYUO/qDgY3gfNCHLve4FPpbNKp26bL+wzGNwcKto18uzbmtG9WuiT1BJ/rAjEUpMJM/HFUrB81o1UdTnEGMpM2kFoY5b8gNeT3nJRRcjZglao0DA=,iv:1lzfsOX/8mfre/Hz0l5plTCnH1p/aKnat94HTsl7KMI=,tag:aElRIqE9Psx0r/Q+R0sYeA==,type:str]
+    lastmodified: "2021-11-01T00:08:34Z"
+    mac: ENC[AES256_GCM,data:brmnLrBrt36NnZrykQcfDNIk3OoeLpwOqqPyS+OTtSuaZoPcrU7rX7GtMc4aNKUTfOnyZgW1lb1Ww2QKpFHBvh+jhPD2ER/8yh4J6rmHjsUQXhPjhdIU+OmH2Pk68Uq+5x/LhKocb7awBWGa3YCbGkCSOgSBbUU1S7rit4pe4tg=,iv:MEDMqb9wRiRuLsgn+COs1nWuJmELIc/I0ZhHDPVQzSY=,tag:VqwZGQ4gzfeJW3b1/ZVSsg==,type:str]
     pgp:
         - created_at: "2021-10-30T22:36:08Z"
           enc: |
