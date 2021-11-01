@@ -1,0 +1,51 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+    name: letsencrypt-production
+spec:
+    acme:
+        server: https://acme-v02.api.letsencrypt.org/directory
+        email: ENC[AES256_GCM,data:ue4wlSj3RUAjhUZ2Cj7GIm9bcz8=,iv:cNG6to+zzqF8meLN87Hj6z+wUc3/HFj1pzXkip0/Ym0=,tag:fwPnhidL3OnbtzJwZnknNQ==,type:str]
+        privateKeySecretRef:
+            name: letsencrypt-production
+        solvers:
+            - dns01:
+                cloudflare:
+                    email: ENC[AES256_GCM,data:pG+5kKRTB55FNVvVIpjIC2hBTcY=,iv:PHz0zeG6WIzM4l6Pls9tWhDCupR4q+uoY4RiGe1+wKc=,tag:wx9sCOijRKstKZeZ5y8TEQ==,type:str]
+                    apiTokenSecretRef:
+                        name: cloudflare-token-secret
+                        key: cloudflare-token
+              selector:
+                dnsZones:
+                    - ENC[AES256_GCM,data:OjDCar16fZFcOYyAlwISwSNEdx4wBg==,iv:UfEMHUsoYN+fawmP64UDVeUjVH7VjA6gspchWhRCjGg=,tag:nZ6ZAz0I/pSKPxXFbj5RdA==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-11-01T23:03:33Z"
+    mac: ENC[AES256_GCM,data:bgkCn5av1QkFqojB8NsFCP62frEzBm1YVZzstwKQMoLPiUZbwWUFOyJeldTFU6zn95JJR3VXLnS2Jno7eNg6CfxqeCquyExlU8NUA3ijcXlKpCiR5WsVmBFJheSXBGifylYJvGQGJRuuFUWQQ4f2W4f5uM3iYCunUcJMq9xvn4A=,iv:CgKFHQk21M1nK6TbgkrOViFmR/ebB3jbsfHxB5UcUb4=,tag:2H8WJ4czBmNSYqzN6aZHmg==,type:str]
+    pgp:
+        - created_at: "2021-11-01T23:03:32Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkARAAjYzVSsbDMmDueSbpjd8nRqjHEdcqw5BFwIaDzwYIDOqS
+            Sx6BKVd6SWBtUkSyoQDzmn1dcJWx3bz/S6bXCivEIgLzNobp/LqVk4kZHQG1gOTy
+            EMymG/WoHqdiPBvIt9tU/u39B6yc+y70MBUb6uYl+YK1PXBBbrXFFO/qPf/Zy96H
+            OykhhH4f+OVmV3hWcVky6zyfUnvT6GmHRbA3Tg6gD4RKXyJK8EwOJZfdpBRW+T8z
+            U5nInPYHxt3gpPuJnrVK/0wq4x8ttiqTKcbQv73p2BaVBOMxR2TpiBSaXelyomsX
+            UXyhn7AHuorTw6Kwl+/vrpKlbC7JWk6Jht8T9aBVPzCoJxuRiILnP+MUdDkA44q/
+            Bd8uOQVOcjJvQgfotbRSctB3PP0Lb3QSYF8AKoH6vZiWuh/l7ji0uGvwHvC9dr/6
+            RY1aD1TukJL3ooZmNchfvW5xunMbmEdr5D69M6iZPzgygJTkLx1ksNyN263nHiUy
+            9U+E8BqkfehYEo/a4htCbp3zRMg8/9ZjVVU6tC1x+l633Uv6UbfPaZuXHq+nv6MA
+            kUFjd/ZmmI38Zbi3qgAbgAeHMOsZXE9eqqrmar7fBfyE0rF9x7B/ACGvO6MV4thg
+            tGpOlHdnhprvGfOBpayNmrz7EarmrStQeZ+qZ2zpdJI2hi42DbhR6/YLZfAKgqjS
+            XgEf5p2oYbL26qJx4r7qi/QG+Mdf++ReGgi2Vm1RTlZTxDYWTPPBHLa8wjG5be/G
+            FukJKcoJWG1IuWzzM8IhOEgOnMjDGH5b9R8HZS0qgMZbtC0+2S4uWZtvB8AxlRA=
+            =AP4P
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData|networkPath|hosts?|loadBalancerIP|image|email|dnsZones)$
+    version: 3.7.1

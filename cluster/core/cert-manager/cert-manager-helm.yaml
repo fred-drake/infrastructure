@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: cert-manager
+    namespace: argocd
+spec:
+    destination:
+        namespace: cert-manager
+        server: https://kubernetes.default.svc
+    source:
+        chart: cert-manager
+        targetRevision: 1.6.1
+        repoURL: https://charts.jetstack.io/
+        helm:
+            values: |
+                deploymentAnnotations:
+                    keel.sh/policy: minor
+                    keel.sh/approvals: "1"
+                    keel.sh/trigger: poll
+                    keel.sh/pollSchedule: '@every 1h'
+                installCRDs: true
+                webhook:
+                    enabled: true
+                extraArgs:
+                    - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
+                    - --dns01-recursive-nameservers-only
+                replicaCount: 1
+                podDnsPolicy: "None"
+                podDnsConfig:
+                    nameservers:
+                    - "1.1.1.1"
+                    - "9.9.9.9"
+                resource:
+                    requests:
+                        cpu: 100m
+                        memory: 128Mi
+    project: default
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: true
+            selfHeal: true

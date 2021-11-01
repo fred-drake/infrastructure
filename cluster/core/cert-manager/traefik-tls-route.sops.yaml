@@ -1,0 +1,48 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+    name: traefik-tls-route
+    namespace: cert-manager
+spec:
+    entryPoints:
+        - web
+        - websecure
+    routes:
+        - match: ENC[AES256_GCM,data:l3mNQs1GnYsO37WNtSXsg8BJq9zMfdRVFBm1eozVQ/c=,iv:Yn7m224q9Z7kL2FOusUBneykoNKx0g0raTD4yN3vA/A=,tag:+x/4W+G0rBlxMMpUc8z8fQ==,type:str]
+          kind: Rule
+          services:
+            - name: api@internal
+              kind: TraefikService
+    tls:
+        secretName: internal-certificate-tls
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-11-01T23:09:51Z"
+    mac: ENC[AES256_GCM,data:2Ycu1dDNK6D3lFwrrBmCUOYzFimRTkuJmv3RH4icobFDr36i5wqoaw5+nT9kZ1fwzV9VFBzkCG12akPj48bIYEmBC3jPIB7YtagtsrxFVAN/fzn9C7J6Knw1k6MumKei4tWvWDSnkMKpKBA7ISzQkVDO/yr5vANtXfJxU7H3ego=,iv:5VKfJ6JgGA8xYpiToY6WzDS9PaGVhFGeve8p0R218Nc=,tag:upTkCjKNGHIVxmG5+m0HjQ==,type:str]
+    pgp:
+        - created_at: "2021-11-01T23:09:50Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkAQ/9EHkETfJsm4nd6YbBV1Kh3Q73MKoJrSX2VUl4k48Fyowu
+            NYMXXi/bECwTo2ZfFA2VTqJNtQj7DH4nkwaCmXN3aIQswPd6PPebiZjistRIATr/
+            wgMgB+d1plrBJXPPessY07iLyf+5JSGByp2EhWu5taKoBzx/kCFRLhXyuROjqXfQ
+            oiYWgaBawMlf8eyBoA28GkQiYPaAuoBkPvriqHzJWzm2G2hmPtCnIAupsDKgZ3oE
+            L1ccQJ0WKtGI7UPWcIrEDs40+0vXk0ArJRzG+7+rklsAmFH7cSFR2uFP4ueldm0o
+            T3j+LLrUwAshjJE8UIWzlLhfG3r2qUupo17sVN8zmwMzSodVVEWq36g8pQZj36AV
+            wu3FkCGEbBOCLYNXA1Ouy3gLy5Klv6mt/+LwNgXerwnHbxqnUDYotQPlnx8+kg7O
+            TnaojaopPXdGeM0LfOGzyK0WEhOb0bZP2Rbuc0siNrmmEkFnJ3pquwgpXVpnxxsl
+            T5nsd0Nh7+RFkc2Ctn5E4UlfJ0T1XCDbsTNqwenTnTQsPhiJfi6ySv42xUAd1k9/
+            W1WsDaNplXSgWcanlh/jX8W9vtXQoXB5M8K3eqezEUv0EoVaisIxhXUZMceFoslh
+            7kTgaVoQC1lCSM1B3mjySW2+3crgHrAOHck6aq2Jtxd4aSPgFugJLYEi06GayUrS
+            XgERk+VfFrb+cUotga6HDr2BSgVDrXGaW9BJIjcQfQMmTWSB0lPu8W4L/rGoFyX+
+            7PBbStcg6FbC+jCkBv/ZKRNyYcp5Jz6Ftzd5zZ9BxTxWXBFyW5hUY5W/SaIi4L0=
+            =pU80
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData|networkPath|hosts?|loadBalancerIP|image|email|dnsZones|dnsNames|match)$
+    version: 3.7.1
