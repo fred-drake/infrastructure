@@ -29,52 +29,52 @@ spec:
           persistentVolumeClaim:
             claimName: paperless-data
       containers:
-        # - name: paperless
-        #   image: jonaswinkler/paperless-ng:1.5.0
-        #   resources:
-        #     requests:
-        #       cpu: 100m
-        #       memory: 128Mi
-        #   env:
-        #     - name: TZ
-        #       value: America/New_York
-        #     - name: PUID
-        #       value: "99"
-        #     - name: PGID
-        #       value: "100"
-        #     - name: PAPERLESS_REDIS
-        #       value: redis://paperless-db:6379
-        #       # value: redis://redis.paperless.svc.cluster.local:6379
-        #     - name: PAPERLESS_OCR_LANGUAGE
-        #       value: eng
-        #     - name: PAPERLESS_FILE_FORMAT
-        #       value: "{created}-{correspondent}-{title}"
-        #     - name: PAPERLESS_CONSUMER_POLLING
-        #       value: "0"
-        #     - name: PAPERLESS_SECRET_KEY
-        #       valueFrom:
-        #         secretKeyRef:
-        #           name: paperless-secret
-        #           key: secretKey
-        #   volumeMounts:
-        #     - mountPath: /usr/src/paperless/media
-        #       name: paperless-documents
-        #     - mountPath: /usr/src/paperless/consume
-        #       name: paperless-scanner
-        #     - mountPath: /usr/src/paperless/data
-        #       name: paperless-data
-        - name: test
-          image: ubuntu:latest
+        - name: paperless
+          image: jonaswinkler/paperless-ng:1.5.0
           resources:
             requests:
               cpu: 100m
               memory: 128Mi
-          command: [ "/bin/bash", "-c", "--" ]
-          args: [ "while true; do sleep 30; done;" ]
+          env:
+            - name: TZ
+              value: America/New_York
+            - name: PUID
+              value: "99"
+            - name: PGID
+              value: "100"
+            - name: PAPERLESS_REDIS
+              value: redis://paperless-db:6379
+              # value: redis://redis.paperless.svc.cluster.local:6379
+            - name: PAPERLESS_OCR_LANGUAGE
+              value: eng
+            - name: PAPERLESS_FILE_FORMAT
+              value: "{created}-{correspondent}-{title}"
+            - name: PAPERLESS_CONSUMER_POLLING
+              value: "0"
+            - name: PAPERLESS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-secret
+                  key: secretKey
           volumeMounts:
-            - mountPath: /media
+            - mountPath: /usr/src/paperless/media
               name: paperless-documents
-            - mountPath: /consume
+            - mountPath: /usr/src/paperless/consume
               name: paperless-scanner
-            - mountPath: /data
+            - mountPath: /usr/src/paperless/data
               name: paperless-data
+        # - name: test
+        #   image: ubuntu:latest
+        #   resources:
+        #     requests:
+        #       cpu: 100m
+        #       memory: 128Mi
+        #   command: [ "/bin/bash", "-c", "--" ]
+        #   args: [ "while true; do sleep 30; done;" ]
+        #   volumeMounts:
+        #     - mountPath: /media
+        #       name: paperless-documents
+        #     - mountPath: /consume
+        #       name: paperless-scanner
+        #     - mountPath: /data
+        #       name: paperless-data
