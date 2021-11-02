@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: keel
+    namespace: argocd
+spec:
+    destination:
+        namespace: kube-system
+        server: https://kubernetes.default.svc
+    source:
+        chart: keel
+        targetRevision: 0.9.8
+        repoURL: https://charts.keel.sh
+        helm:
+            values: ENC[AES256_GCM,data:8CT3IUtUkq3bApcqchRh6l4l6+HViggjA+0FkV3IrKIBcNdSlENIoIjtI6cEL2Sd86xKL0z/bEgnBnfLmGqkWJGUESF1fkH+vjKZjN3GZkGkI8taZhmqlJJYpYNvJ+DRDz2do4JKWgsjxtqzQWD7rFV/rTeLVbqL4R88eF4V/LUyVwj3mrVk1Gy7xzb7dX307DYmgALLgEmk3K5o4xm23Xcv5I/ITXxtqHRr2a4hbDrYoHxw2P7e6HxK3Pp4KAtsxVBNR3I78THhpuC7I6xFKKFbUYoyb/GBJDRQ1UVaSeXtL1tduXEHNTD1Ni8VgzdzGUhx3Rtm39iKIA9GbE/WWvIhzxb6vNtHFAPHoN9BSsJU2CbeS1sGS9xW5vNxYgsADdquNjkNmC47PPAtyhZ+JpXYj16/NYwZrdLaDwzRyXS80KXuxFiE3t2ISHK+ilrDsdRa3ZEO7VtdA7wZeMPqYuAfQeTt8sB976I1dCtouRVSP2EYhaMgRtthuFj4mwAcSl/BSTjSTvSORjyVgi4/Q4jQHGvrxaBMOmMGuK0SvymNDnxQ4PApaK1VXf143ZAy5D0Ep4oKDI7MliU4+Ta7NsQKE2UM0gjeU0Y6Jm9LWM2OrZ/ck2ULsi6ENBV1Iy+sav3cE821Lkh4J0WwNat4Hwe7AOtvnU8ZAly/ZVZ3BnMRSIHpO4ThmXkXtBgQLUqhARzWUgNZCtDxbfOSioF5SIRnsR71A8UIPQYD4smLewy2CK3QupkQS6KeunZb2JU76tpYw9DqdXlzBUSnQSzacgc4KnQV45j0NzchhJYMbg5b2Mydl5AWHrphQTUYz4kDbVxFGnTgPe/XbXb7w3SnZj456yfq9qIjpENtz4lXsJOHRRMT9OR7qQyRn837tCD4Krgq3zkw0AjGOjuaunXtNM3rqe8mu3sqesF8u4moFf7HpHuK6374ro9hmfeq6sx+iTayh9cZ+F6T4raKixD3b+bN2HCCow5TPHvieweukmS711E8O2JZYmH9ioyYCghmDTPRXMo45JivNN3RLz/rPatm6gSTNOda2hwSx3U/KGRmfr8t5Fa/+OkFu3HzjBRUk17U,iv:3urdeV5J4oFiNMrLxoOLmuwEsWB7vrdhoF7UgttA7ew=,tag:FzIGwUV3pISxQCVs6Aucng==,type:str]
+    project: default
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: true
+            selfHeal: true
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-11-02T03:18:45Z"
+    mac: ENC[AES256_GCM,data:naran5YisE8agQAJjzXJ1sCgKwnC2sog+U1GbtgOb6epyWWTSr/76e21wgetRuBNUpZXmhZOTPAMeqai0nxxnFswutExSNBWJDx0nIUGoFz5P45kf8MSZH0/rd63o+aewuWy81lFW+lpxN57OLfbo4ay1t6xNAc4RzRQ7YfMcQQ=,iv:wasNLr55U94fHnR9bEIJRORtVa4OgLiJutXA6LDOXII=,tag:Jdq8OxKyssllDdBNp4JWUg==,type:str]
+    pgp:
+        - created_at: "2021-11-02T03:18:44Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkARAAwwoGYl5s/ZRMPpLe9/FdhoxuWG8NCtLcHbAqeSlGAUwL
+            6KxdSxvjQvAib5W6liXPaBUWECFG23PbrSUuzogRGC2gQYMUTegAmRLWDBePVmUX
+            3LtB/d+y50a5Xi5MrvrFTWOh+vjxW8ynMTzU+ewQT2tJy2Zb6+dNF/YbB1YYGpgj
+            W4mOq5fc3xAMMm+QsRuaKGEMzvGppGea6vdXWv0Kv/PtPBVD3MA2hdyYusM7Pdf4
+            CPJGfT576TTOlUMho53//U/gxMVG0oniq/5B/MUcqmxaUmXKlGbYzRKxUjeQFXMG
+            sDUI9zweEcoUA/ZyUFBVCp+f/ZAD0yb/7apOYQf3DTdU+ZbS2dHem42FvIzW10jK
+            aalKk4ibMSBTTnPCAp5EbqfQThpY0hXm0GtBdS1GVrBa/SGwi8bDAkkb0gCiDzNm
+            zhyzdVhuYoasEr4iFLREyH9oAjpLiH2uDLyEaprMerQiM8xWtgtGekefbeuwTzP2
+            oJ9bm+appOyEJQ5jxfSFiEr8hxZ9bESziBom/1VttPkDnT+YkYE/muHWOT3bn/3S
+            kMj7w6wkccuJa+B495R12zdm21rMFNdsAcaDQm/AlT1oN1I+TvkFyCZVzzwd0uPx
+            HKIbT5aPvtPREAEdZLBPgFQ/pme1IRwiwnWgyCojlnFvbWsRJ+9AzufHMJncG/rS
+            XgHmHYSWzZhxngoqDnO44MF4BCmzrgxbtoTFznml7lcWSvPj9EzdRTaeHokepofD
+            /2GELY5aA+IEc9VSrTEtTbI88rT+LU+0xjHW0JZGhx45krCYWwjJPK7j/HAyTqk=
+            =JUMt
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData|networkPath|hosts?|loadBalancerIP|image|email|dnsZones|dnsNames|match)$
+    version: 3.7.1
