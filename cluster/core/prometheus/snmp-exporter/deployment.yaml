@@ -20,8 +20,7 @@ spec:
     spec:
       volumes:
         - name: config
-          persistentVolumeClaim:
-            claimName: config-vol
+          emptyDir: {}
       containers:
       - name: snmp-exporter
         image: prom/snmp-exporter:v0.20.0
