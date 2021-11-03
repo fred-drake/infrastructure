@@ -24,7 +24,7 @@ spec:
             claimName: config-vol
       containers:
       - name: snmp-exporter
-        image: prom/snmp-exporter
+        image: prom/snmp-exporter:v0.20.0
         resources:
             requests:
                 cpu: "100m"
