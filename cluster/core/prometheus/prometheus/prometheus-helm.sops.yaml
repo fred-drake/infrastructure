@@ -1,0 +1,142 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: prometheus
+    namespace: argocd
+spec:
+    destination:
+        namespace: prometheus
+        server: https://kubernetes.default.svc
+    source:
+        chart: prometheus
+        targetRevision: 14.11.0
+        repoURL: https://prometheus-community.github.io/helm-charts
+        helm:
+            values: |
+                server:
+                    enabled: true
+                    ingress:
+                        enabled: true
+                        ingressClassName: traefik
+                        annotations:
+                            cert-manager.io/cluster-issuer: letsencrypt-production
+                            traefik.ingress.kubernetes.io/router.entrypoints: websecure
+                        hosts:
+                            - prometheus.internal.freddrake.com
+                        tls:
+                            - hosts:
+                                - prometheus.internal.freddrake.com
+                              secretName: prometheus-tls
+                    statefulSet:
+                        enabled: true
+                    annotations:
+                        keel.sh/policy: minor
+                        keel.sh/approvals: "1"
+                        keel.sh/trigger: poll
+                        keel.sh/pollSchedule: "@every 1h"
+                env:
+                    TZ: America/New_York
+                image:
+                    imagePullPolicy: Always
+                resources:
+                    requests:
+                        cpu: "100m"
+                        memory: "128Mi"
+                extraScrapeConfigs: |
+                    - job_name: 'gateway-snmp'
+                    static_configs:
+                        - targets:
+                        - "gateway-50.internal.freddrake.com"
+                    metrics_path: /snmp
+                    params:
+                        module: [pfsense]
+                    relabel_configs:
+                        - source_labels: [__address__]
+                        target_label: __param_target
+                        - source_labels: [__param_target]
+                        target_label: instance
+                        - target_label: __address__
+                        replacement: snmp-exporter.prometheus.svc.cluster.local:9116
+                    - job_name: 'hass'
+                    scrape_interval: 10s
+                    metrics_path: /api/prometheus
+                    authorization:
+                        credentials: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJiOTc4MzNhMjM4ZDY0NTY0YmRkNGUxNzEyOTNkYjc0NSIsImlhdCI6MTYzNDcwMjM5NywiZXhwIjoxOTUwMDYyMzk3fQ.NFL61f35QY9KpdWoOCcQDSPb6ktKHrzjay5Ks1yH_20"
+                    scheme: https
+                    static_configs:
+                        - targets:
+                        - "homeassistant.internal.freddrake.com"
+                    - job_name: 'unraid'
+                    scrape_interval: 60s
+                    metrics_path: /metrics
+                    scheme: http
+                    static_configs:
+                        - targets:
+                        - "larussa-50.internal.freddrake.com:9100"
+                    - job_name: 'unraid-nvidia'
+                    scrape_interval: 60s
+                    metrics_path: /metrics
+                    scheme: http
+                    static_configs:
+                        - targets:
+                        - "larussa-50.internal.freddrake.com:9202"
+                nodeExporter:
+                    deploymentAnnotations:
+                        keel.sh/policy: minor
+                        keel.sh/approvals: "1"
+                        keel.sh/trigger: poll
+                        keel.sh/pollSchedule: "@every 1h"
+                alertmanager:
+                    deploymentAnnotations:
+                        keel.sh/policy: minor
+                        keel.sh/approvals: "1"
+                        keel.sh/trigger: poll
+                        keel.sh/pollSchedule: "@every 1h"
+                pushgateway:
+                    deploymentAnnotations:
+                        keel.sh/policy: minor
+                        keel.sh/approvals: "1"
+                        keel.sh/trigger: poll
+                        keel.sh/pollSchedule: "@every 1h"
+                    tolerations:
+                    - key: node-role.kubernetes.io/master
+                        value: "true"
+                        effect: "NoSchedule"
+
+                controller:
+                    annotations:
+                        keel.sh/policy: minor
+                        keel.sh/approvals: "1"
+                        keel.sh/trigger: poll
+                        keel.sh/pollSchedule: "@every 1h"
+                resource:
+                    requests:
+                        cpu: "100m"
+                        memory: "128Mi"
+                env:
+                    TZ: "America/New_York"
+                ingress:
+                    main:
+                        enabled: true
+                        ingressClassName: traefik
+                        annotations:
+                            cert-manager.io/cluster-issuer: "letsencrypt-production"
+                            traefik.ingress.kubernetes.io/router.entrypoints: websecure
+                        hosts:
+                        - host: "cyberchef.internal.freddrake.com"
+                          paths:
+                            - path: /
+                              pathType: Prefix
+                        tls:
+                        - hosts:
+                            - "cyberchef.internal.freddrake.com"
+                          secretName: cyberchef-tls
+                    monitoring:
+                        enabled: false
+    project: default
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: true
+            selfHeal: true
