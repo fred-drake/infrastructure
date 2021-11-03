@@ -12,127 +12,7 @@ spec:
         targetRevision: 14.11.0
         repoURL: https://prometheus-community.github.io/helm-charts
         helm:
-            values: |
-                server:
-                    enabled: true
-                    ingress:
-                        enabled: true
-                        ingressClassName: traefik
-                        annotations:
-                            cert-manager.io/cluster-issuer: letsencrypt-production
-                            traefik.ingress.kubernetes.io/router.entrypoints: websecure
-                        hosts:
-                            - prometheus.internal.freddrake.com
-                        tls:
-                            - hosts:
-                                - prometheus.internal.freddrake.com
-                              secretName: prometheus-tls
-                    statefulSet:
-                        enabled: true
-                    annotations:
-                        keel.sh/policy: minor
-                        keel.sh/approvals: "1"
-                        keel.sh/trigger: poll
-                        keel.sh/pollSchedule: "@every 1h"
-                env:
-                    TZ: America/New_York
-                image:
-                    imagePullPolicy: Always
-                resources:
-                    requests:
-                        cpu: "100m"
-                        memory: "128Mi"
-                extraScrapeConfigs: |
-                    - job_name: 'gateway-snmp'
-                    static_configs:
-                        - targets:
-                        - "gateway-50.internal.freddrake.com"
-                    metrics_path: /snmp
-                    params:
-                        module: [pfsense]
-                    relabel_configs:
-                        - source_labels: [__address__]
-                        target_label: __param_target
-                        - source_labels: [__param_target]
-                        target_label: instance
-                        - target_label: __address__
-                        replacement: snmp-exporter.prometheus.svc.cluster.local:9116
-                    - job_name: 'hass'
-                    scrape_interval: 10s
-                    metrics_path: /api/prometheus
-                    authorization:
-                        credentials: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJiOTc4MzNhMjM4ZDY0NTY0YmRkNGUxNzEyOTNkYjc0NSIsImlhdCI6MTYzNDcwMjM5NywiZXhwIjoxOTUwMDYyMzk3fQ.NFL61f35QY9KpdWoOCcQDSPb6ktKHrzjay5Ks1yH_20"
-                    scheme: https
-                    static_configs:
-                        - targets:
-                        - "homeassistant.internal.freddrake.com"
-                    - job_name: 'unraid'
-                    scrape_interval: 60s
-                    metrics_path: /metrics
-                    scheme: http
-                    static_configs:
-                        - targets:
-                        - "larussa-50.internal.freddrake.com:9100"
-                    - job_name: 'unraid-nvidia'
-                    scrape_interval: 60s
-                    metrics_path: /metrics
-                    scheme: http
-                    static_configs:
-                        - targets:
-                        - "larussa-50.internal.freddrake.com:9202"
-                nodeExporter:
-                    deploymentAnnotations:
-                        keel.sh/policy: minor
-                        keel.sh/approvals: "1"
-                        keel.sh/trigger: poll
-                        keel.sh/pollSchedule: "@every 1h"
-                alertmanager:
-                    deploymentAnnotations:
-                        keel.sh/policy: minor
-                        keel.sh/approvals: "1"
-                        keel.sh/trigger: poll
-                        keel.sh/pollSchedule: "@every 1h"
-                pushgateway:
-                    deploymentAnnotations:
-                        keel.sh/policy: minor
-                        keel.sh/approvals: "1"
-                        keel.sh/trigger: poll
-                        keel.sh/pollSchedule: "@every 1h"
-                    tolerations:
-                    - key: node-role.kubernetes.io/master
-                        value: "true"
-                        effect: "NoSchedule"
-
-                controller:
-                    annotations:
-                        keel.sh/policy: minor
-                        keel.sh/approvals: "1"
-                        keel.sh/trigger: poll
-                        keel.sh/pollSchedule: "@every 1h"
-                resource:
-                    requests:
-                        cpu: "100m"
-                        memory: "128Mi"
-                env:
-                    TZ: "America/New_York"
-                ingress:
-                    main:
-                        enabled: true
-                        ingressClassName: traefik
-                        annotations:
-                            cert-manager.io/cluster-issuer: "letsencrypt-production"
-                            traefik.ingress.kubernetes.io/router.entrypoints: websecure
-                        hosts:
-                        - host: "cyberchef.internal.freddrake.com"
-                          paths:
-                            - path: /
-                              pathType: Prefix
-                        tls:
-                        - hosts:
-                            - "cyberchef.internal.freddrake.com"
-                          secretName: cyberchef-tls
-                    monitoring:
-                        enabled: false
+            values: ENC[AES256_GCM,data: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,iv:3ijXo1D0x22p6QFS/XIEWKZTADsWJgKZYLpT6CogFo0=,tag:Uk48SxQQ2TEVeAyJfJ3riA==,type:str]
     project: default
     syncPolicy:
         syncOptions:
@@ -140,3 +20,34 @@ spec:
         automated:
             prune: true
             selfHeal: true
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-11-03T01:15:42Z"
+    mac: ENC[AES256_GCM,data:+Zvd9ua9o3GtTpVVxmkGDU87hTsRKzEU7/oNeZV499vXIOsk0Ri86Ry9GPJETGx/pLCqMZv/+gJhqUGMakZWbdCOIjkUHm22Yl7xJBcP/dG2jeeoiT/qoNf7iXIxFCUkMn7D2kjThPDLuSJ4dH6ED2v3QYo/cEWHhvJ2efhGIYI=,iv:vVGXfAQovFDVzc2gjul0MrPm2cVtvCMZmMpZHx+pTec=,tag:WMawCwO9YV7R0MvkYSjFOQ==,type:str]
+    pgp:
+        - created_at: "2021-11-03T01:15:40Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkAQ//RmCdEUqAsXcmx4pE5FZQi/ruvpNe6FRL3Z9IrFFf5uhi
+            py6ggCGzVisEIdAVpMtFeLrJfu/WhPJ7kRIZb2fKVWJNg4R0BD7pEWRi225RR0kH
+            tx1Bb4Fo2/6FOXCVTQR4gsUZErHR3mxOL2YQmfMOILu1m9/hBgrtEeHKEC8AUPqS
+            bLTD9oz+3/rH+wZUFFrYc1OV0890GpmmohnSZSjm58xv9oADtxjyiZ3V997LS6f5
+            Ja8ZVzyVfTdreffcLT1y8AO6Tq5sdrpXIsdDgr8vQCLBgYF2LJMszMczm7vHiDpn
+            qbodtOe7DlohUSKnVbYrVTk82UfU/HQfDVJMrI3fPovhcm7Ky0wI+MYmk0ygpUTF
+            NKi6dYQCZ8cwkXPeKJNhltzsT/di4oz2vqQn7xSejue9cibKS73nKhwA7pnXoFYB
+            WmVDIGVF+7vrZC1ZbeIgF0lU9rT7MSp28JE7AKuQKTffR4jwDwMRpujsnblp3+aY
+            M2MqSwO3gKJrPDSs4Yvao24Jt9W2ZTJis1JlaxPJKrXQ1U+KGJF48K4pJeubbiKm
+            +uXFdj5Hm+tEL7vnRapOWH1NhLXrY4vr8vAeD9uAWlV4RMbnGcWK89dSIij0QLKt
+            /J2JySxy/v6kG76Y952uSE+3MvI1XRb69THgT5osuoFOeh2Z+k86t5oGhggBY9bS
+            XgE5RgylLbs6RCbaUelpsvxnW6zRML0R4Sj8ea0GmBoYRP8d4butoH2MmLOoeHiN
+            5Ldlh1U3UVuZjZ4f1qUHi5XZW3ETUNow52S+IpWwKaM3SqUZA+pL1GhkTiLLJmQ=
+            =Dr4/
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData|networkPath|hosts?|loadBalancerIP|image|email|dnsZones|dnsNames|match)$
+    version: 3.7.1
