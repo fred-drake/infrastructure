@@ -5,7 +5,7 @@ metadata:
     namespace: argocd
 spec:
     destination:
-        namespace: metallb
+        namespace: metallb-system
         server: https://kubernetes.default.svc
     source:
         chart: metallb
@@ -26,8 +26,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-03T22:36:15Z"
-    mac: ENC[AES256_GCM,data:/IsDpG+wjRG2ec8xbjDTlXazEJuRH1CkZnbPO5YBFECbmjf36mMahBZEOmUApQUmSMFSVdFHEaADVG78mEjT8HvYl0xW4WK6/bzV0AWePaIi5AIXLgNUCGg4aFUvAfohXeL31OlEeLjS8L/cqWKx225ax086iY0dWzd6ezlR4Rw=,iv:qkf7WQNzITuGVZrHyu+4V2YlWORHLdpUQG1E44U9vs0=,tag:LHyLjJEYoOxudF3Jbg1akw==,type:str]
+    lastmodified: "2021-11-03T22:41:07Z"
+    mac: ENC[AES256_GCM,data:FWBsCw3fpIHeYrOd7qTUlwzC4nxvd7zJvjCBRoZ0GAoQKbdW8jJP1dIevjLfZXlKMDOGghliMsHgvlYIsqe5RPdA1dnUEqdh3vVg9ZcLJmhSUKV+iRN14KpgApJfR1+To0UT0TT5FbZqlfrPF2wQ1ifYQHTnJq32lvXHJXMe2VM=,iv:sVxwsSDLkqoxkSali+ieYxxVJLtFfyV13P7HAT4IFM8=,tag:oBjr3lbZ34pTnwbvQXqKLA==,type:str]
     pgp:
         - created_at: "2021-11-03T01:15:40Z"
           enc: |
