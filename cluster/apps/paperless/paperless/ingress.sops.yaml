@@ -21,7 +21,7 @@ spec:
                     service:
                         name: paperless
                         port:
-                            number: 80
+                            name: web
     tls:
         - hosts:
             - ENC[AES256_GCM,data:xgwao0KsniIm2sNK5B4zX+VVbQc5vDgWiKNyxuqe8SU=,iv:Y+SCUEzxEu+tccwrI8b8+BOIR0QqS6w87svfNecrUgc=,tag:p4PbQ/2a5UBhsgIN65N1eQ==,type:str]
@@ -32,8 +32,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-01T02:54:22Z"
-    mac: ENC[AES256_GCM,data:YcAwxTNVbB56JrL6Ca3qCJIwyF76FoFJRffhsAkNhGNctscea9exW5LFwCGZFBywKUnOWB64WwTxTnBk73m0Xqxb6ObHfb79anEdi/8mD7OUIMYFeMIhMkojD4SqMXQrilWFIjIqOgKZkuOyxaKsRlZOXoJEWrNxCCcZc41KVQI=,iv:PpqiFjaUkffAKCBYejKbko0y1O0331MEC+4ZTIx9hBI=,tag:kh+d2SyZTC6YRp8H603NXA==,type:str]
+    lastmodified: "2021-11-03T03:12:02Z"
+    mac: ENC[AES256_GCM,data:eECArkEqcrie0MgZH/HuvM/CN4l4PVCDuqQIaUL0ny0I4Wtt3kPEeC3JOveZ4eg4nSiPDRl60bSWzAuHLs8Tvalh5lSz1xpHi4O3ohzMlWpriQa3TIyC0w9DWa1Kx+r4W+dKoTFuCgCq3GZ9ElYDl+tFdG7cYwIEtKxVES+tFMI=,iv:VCvPboWw0HmtbDO8S+mjTbWDvind8Qr2V0TCkii7kOk=,tag:0nbEFwKfQC/hMvPhTQahAA==,type:str]
     pgp:
         - created_at: "2021-10-31T13:54:14Z"
           enc: |

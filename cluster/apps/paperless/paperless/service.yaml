@@ -8,6 +8,6 @@ spec:
   selector:
     app: paperless
   ports:
-    - port: 80
+    - port: 8000
       targetPort: 8000
-      name: ui-port
+      name: web
