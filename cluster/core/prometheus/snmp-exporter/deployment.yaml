@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snmp-exporter
+  namespace: prometheus
+  annotations:
+    keel.sh/policy: minor
+    keel.sh/approvals: "1"
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: "@every 1h"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snmp-exporter
+  template:
+    metadata:
+      labels:
+        app: snmp-exporter
+    spec:
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: config-vol
+      containers:
+      - name: snmp-exporter
+        image: prom/snmp-exporter
+        resources:
+            requests:
+                cpu: "100m"
+                memory: "128Mi"
+        env:
+        - name: TZ
+          value: America/New_York
+        volumeMounts:
+        - name: config
+          mountPath: /etc/snmp_exporter
+        ports:
+        - containerPort: 9116
+          name: metrics
+      initContainers:
+      - name: init-config
+        image: fdrake/snmp-exporter-generator
+        command:
+          - sh
+          - -c
+          - cp -f /opt/snmp.yml /etc/snmp_exporter
+        volumeMounts:
+        - name: config
+          mountPath: /etc/snmp_exporter
