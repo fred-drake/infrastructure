@@ -3,8 +3,6 @@ kind: Application
 metadata:
     name: cert-manager
     namespace: argocd
-    annotations:
-        argocd.argoproj.io/sync-wave: "-5"
 spec:
     destination:
         namespace: cert-manager
