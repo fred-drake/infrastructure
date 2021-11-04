@@ -3,6 +3,8 @@ kind: Certificate
 metadata:
     name: internal-certificate
     namespace: cert-manager
+    annotations:
+        argocd.argoproj.io/sync-wave: "5"
 spec:
     dnsNames:
         - ENC[AES256_GCM,data:Nb+YxUI09axu+wxSUv/PWrD1syleJfJ7,iv:n7b+xom5J4XhXHR+W4x4k68lMjIu7GZupZB+TAfVSH0=,tag:t6j2VsIJ2SUizU+9itQzQw==,type:str]
@@ -16,8 +18,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-01T23:07:51Z"
-    mac: ENC[AES256_GCM,data:INSRmBFBS/ru9W7urddaXytLgtcWIO2ccZciVyaPuglUEmUSJCDYlnLxeFM6d+OPrUFSzihQYyB9yLHfjK8AcC5fQTdvmMQs9LrlnnmEUkFGIRiJL/H2X6JKMiM0On1W5vxZ2bN/DP3L92dv2yxLKYcFTFDH4vaZ7+Pphw0T4lM=,iv:CIAzp46h8uzcyU20GQmMmi8JfGam94+He8BatcyD4CI=,tag:zUQn07n5boiGiVWarotKIQ==,type:str]
+    lastmodified: "2021-11-04T03:30:05Z"
+    mac: ENC[AES256_GCM,data:D0YuOdlYXj76Az4cPNprArv5dQzsFcmdrbKVnbWnhPaKGUl6su2MQ+eLpXkL27W+9mQmUZHCXsCQzx/5aOAJwffHFjnluO/AdvdOrZ9u89t+WJXNeb0owB/qHyLgxGb3ienWW1OGS4c9Qy14mga9Mu+blP+mwqkkab759oVcLNY=,iv:nxch+M2FQnPTmzZcgHlaCPImyd5LlPsgSGxX5TyO2Es=,tag:jdish9dOxtIhEzAO9bpoCw==,type:str]
     pgp:
         - created_at: "2021-11-01T23:07:51Z"
           enc: |

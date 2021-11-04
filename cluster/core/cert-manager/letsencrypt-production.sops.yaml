@@ -3,6 +3,8 @@ kind: ClusterIssuer
 metadata:
     name: letsencrypt-production
     namespace: cert-manager
+    annotations:
+        argocd.argoproj.io/sync-wave: "5"
 spec:
     acme:
         server: https://acme-v02.api.letsencrypt.org/directory
@@ -25,8 +27,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-04T03:21:30Z"
-    mac: ENC[AES256_GCM,data:kn1jKW0i+CPCGainG/ndhgjBmFkMc7Pg6mpS8ZjCpYdkqL0FNprvDvqy8XyGB1uqERQ3M8yzMaah6HRsuOoSbBlCQOdLgwu/bn+HfxJJZNu0x1YsvVOnaPaHDn1wMu4Iz5StcIjI2Y/GOTL1/izESEUrkxcZF2d+0WlXePAypsE=,iv:OSenepVBYsiOvCW8G1JCOvB6WXBbSl0uJnwSTT4iH7Q=,tag:e1DL+oPONUsrT9NRlOpCqg==,type:str]
+    lastmodified: "2021-11-04T03:30:15Z"
+    mac: ENC[AES256_GCM,data:kdvCP64JINX4ePzqufO3AWOPPSSigYGZI/FltEacHvbQCc7cZudRSvs7tZCpxTgrj/7UMCxNWNLK5jGZrvvdOXHQ9dWj6nAtknLkWPlPDbE+fTTvLk7s5cYR2B7hyBscrSKDLHL2dopma4JHIGLwAJiQX99/FC9fZ0omWgn2C8w=,iv:d5EcJUEjLD+Ieuklr+oYOHtc66qgPsNKqEKsoRrV/Jw=,tag:gN6Jtmv4lAS0eVO5Qrmydw==,type:str]
     pgp:
         - created_at: "2021-11-01T23:03:32Z"
           enc: |
