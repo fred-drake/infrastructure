@@ -10,6 +10,7 @@ spec:
     source:
         chart: traefik
         repoURL: https://helm.traefik.io/traefik
+        targetRevision: 10.6.0
         helm:
             values: |
                 image: ghcr.io/k8s-at-home/traefik
