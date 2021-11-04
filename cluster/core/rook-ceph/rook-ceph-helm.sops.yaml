@@ -9,7 +9,7 @@ spec:
         server: https://kubernetes.default.svc
     source:
         chart: rook-ceph
-        targetRevision: v1.7.4
+        targetRevision: v1.7.6
         repoURL: https://charts.rook.io/release
         helm:
             values: ENC[AES256_GCM,data:QOJ3pJoijkIhHr0DZcEjW9sBZguuXovmuQeKpxdPamZMSM04m7fV6BZ/pjHxCplWDN8TkBFfIZLV1xKxXq44y3trTpx9Rqu9stbdPUsucE/NsDerMHAb/Qdxlf4Zawer1n2OJiaI1A+xrdZMyVLLsN4zbWco0MnqMgP6bqnM08Y=,iv:g+nSpsxGHjg+mHhCe09BjfIXWOsd29a889wLj8eNotQ=,tag:GVmoWCjOSNTTg/484kXg1g==,type:str]
@@ -26,8 +26,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-04T02:03:02Z"
-    mac: ENC[AES256_GCM,data:DonAipoctMRoIPQEg1gKbVsqtGeU3RJoAp13SMxphAAfD+80y4r8rGFZQIZ2NRrbJaQeEPLx5Z8EECLTAy8SxubY1CwtBH7jT12jDouvoCS5zKfFOaqTEA8see4ugdAHCQLIo3Ko8aXTaZqbLQQst7r6qdV9gjI8oKeGWYVYeKo=,iv:OGE1Ju1X9aXFNKWMztkhNX7xpot1D8KPfmJVTHBjhaw=,tag:Uq1bBrsNYVh1n0erTjy0xQ==,type:str]
+    lastmodified: "2021-11-04T02:53:09Z"
+    mac: ENC[AES256_GCM,data:3/t2J45TW0odxuQGpW1rY/FJWKnObtjwe82i6uOKOOR2BSrhXfV5sbpMy/pe8iTQTWCoI3nDRfS9yRfDxos+xR5l1R+Q8guDJ80BCaj3UprXjU1IiVTkZju6JQUJeZXgPvrERdYEyYcDiPlKMN4+0NKjlM9VVyXMkRv+yAERFiY=,iv:8LA5AmhORXCy0Oglv+01orY6awFfjLu+6cYLmbs8hEA=,tag:tzfQ/PkB1AuWoUmGRQb6Dw==,type:str]
     pgp:
         - created_at: "2021-11-03T01:15:40Z"
           enc: |
