@@ -5,7 +5,7 @@ metadata:
     namespace: argocd
 spec:
     destination:
-        namespace: traefik
+        namespace: kube-system
         server: https://kubernetes.default.svc
     source:
         chart: traefik
