@@ -29,7 +29,7 @@ spec:
                     type: LoadBalancer
                     spec:
                         loadBalancerIP: 192.168.50.240
-                        externalTrafficPolicy: local
+                        externalTrafficPolicy: Local
                 logs:
                     general:
                         format: json
