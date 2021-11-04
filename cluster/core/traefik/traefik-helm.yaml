@@ -1,0 +1,87 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: traefik
+    namespace: argocd
+spec:
+    destination:
+        namespace: traefik
+        server: https://kubernetes.default.svc
+    source:
+        chart: traefik
+        repoURL: https://helm.traefik.io/traefik
+        helm:
+            values: |
+                image: ghcr.io/k8s-at-home/traefik
+                deployment:
+                    annotations:
+                        keel.sh/policy: minor
+                        keel.sh/approvals: "1"
+                        keel.sh/trigger: poll
+                        keel.sh/pollSchedule: '@every 1h'
+                    kind: Deployment
+                    replicas: 1
+                service:
+                    enabled: true
+                    type: LoadBalancer
+                    spec:
+                        loadBalancerIP: 192.168.50.240
+                        externalTrafficPolicy: local
+                logs:
+                    general:
+                        format: json
+                        level: DEBUG
+                    access:
+                        enabled: true
+                        format: json
+                ingressClass:
+                    enabled: true
+                    isDefaultClass: true
+                    fallbackApiVersion: v1
+                ingressRoute:
+                    dashboard:
+                        enabled: false
+                globalArguments:
+                    - "--api.insecure=true"
+                    - "--serverstransport.insecureskipverify=true"
+                    - "--providers.kubernetesingress.ingressclass=traefik"
+                    - "--metrics.prometheus=true"
+                    - "--metrics.prometheus.entryPoint=metrics"
+                additionalArguments:
+                    - "--providers.kubernetesingress.ingressendpoint.ip=192.168.50.240"
+                    - "--providers.kubernetescrd.allowexternalnameservices=true"
+                    - "--providers.kubernetesingress.allowexternalnameservices=true"
+                ports:
+                    traefik:
+                        expose: true
+                    web:
+                        redirectTo: websecure
+                    websecure:
+                        tls:
+                            enabled: true
+                            options: "default"
+                    metrics:
+                        port: 8082
+                        expose: true
+                        exposedPort: 8082
+                tlsOptions:
+                    default:
+                        minVersion: VersionTLS12
+                        maxVersion: VersionTLS13
+                        sniStrict: true
+                pilot:
+                    enabled: false
+                experimental:
+                    plugins:
+                        enabled: false                        
+                resources:
+                    requests:
+                        cpu: 100m
+                        memory: 128Mi
+    project: default
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: true
+            selfHeal: true
