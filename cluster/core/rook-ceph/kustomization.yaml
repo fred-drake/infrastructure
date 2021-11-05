@@ -4,7 +4,5 @@ generators:
   - secret-generator.yaml
 resources:
   - namespace.yaml
-  - cluster.yaml
   - toolbox.yaml
   - remove-default-storage.yaml
-  - storageclass.yaml

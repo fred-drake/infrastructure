@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: rook-ceph-cluster
+    namespace: argocd
+    annotations:
+        argocd.argoproj.io/sync-wave: "1"
+spec:
+    destination:
+        namespace: rook-ceph
+        server: https://kubernetes.default.svc
+    source:
+        chart: rook-ceph-cluster
+        targetRevision: v1.7.6
+        repoURL: https://charts.rook.io/release
+        helm:
+            values: ENC[AES256_GCM,data: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,iv:KOlTLKl3rYHJ1z0/cyV65/pt4kUpcI9lM1xNS1rbVUI=,tag:/s4sWkM43U5mwXc9SFeZbA==,type:str]
+    project: default
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: true
+            selfHeal: true
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-11-05T03:24:56Z"
+    mac: ENC[AES256_GCM,data:aVDCaX5DR3m0ouJ7bX9lzUQdbaTqkGSn5ZeaoIaQ0t+TmvdnEDnhL8eme2ceNyOI+Y5oKwoa/59YaTpNO2O9zQmfWK7DMt8SGXiemZeV0eL7YwmC3/BVb6ZCIpdjCLA8q2UqTAxeHLFVAT/jVpGamLsJWFxeRhyomyETh6beQIs=,iv:ILPtAygWXdd+S7K0YEXQ4v3IU73u6qpjTP1ECyVV+hk=,tag:CC9pbkQfUUzhrtrNeW0w/Q==,type:str]
+    pgp:
+        - created_at: "2021-11-03T01:15:40Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkAQ//RmCdEUqAsXcmx4pE5FZQi/ruvpNe6FRL3Z9IrFFf5uhi
+            py6ggCGzVisEIdAVpMtFeLrJfu/WhPJ7kRIZb2fKVWJNg4R0BD7pEWRi225RR0kH
+            tx1Bb4Fo2/6FOXCVTQR4gsUZErHR3mxOL2YQmfMOILu1m9/hBgrtEeHKEC8AUPqS
+            bLTD9oz+3/rH+wZUFFrYc1OV0890GpmmohnSZSjm58xv9oADtxjyiZ3V997LS6f5
+            Ja8ZVzyVfTdreffcLT1y8AO6Tq5sdrpXIsdDgr8vQCLBgYF2LJMszMczm7vHiDpn
+            qbodtOe7DlohUSKnVbYrVTk82UfU/HQfDVJMrI3fPovhcm7Ky0wI+MYmk0ygpUTF
+            NKi6dYQCZ8cwkXPeKJNhltzsT/di4oz2vqQn7xSejue9cibKS73nKhwA7pnXoFYB
+            WmVDIGVF+7vrZC1ZbeIgF0lU9rT7MSp28JE7AKuQKTffR4jwDwMRpujsnblp3+aY
+            M2MqSwO3gKJrPDSs4Yvao24Jt9W2ZTJis1JlaxPJKrXQ1U+KGJF48K4pJeubbiKm
+            +uXFdj5Hm+tEL7vnRapOWH1NhLXrY4vr8vAeD9uAWlV4RMbnGcWK89dSIij0QLKt
+            /J2JySxy/v6kG76Y952uSE+3MvI1XRb69THgT5osuoFOeh2Z+k86t5oGhggBY9bS
+            XgE5RgylLbs6RCbaUelpsvxnW6zRML0R4Sj8ea0GmBoYRP8d4butoH2MmLOoeHiN
+            5Ldlh1U3UVuZjZ4f1qUHi5XZW3ETUNow52S+IpWwKaM3SqUZA+pL1GhkTiLLJmQ=
+            =Dr4/
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData|networkPath|hosts?|loadBalancerIP|image|email|dnsZones|dnsNames|match)$
+    version: 3.7.1
