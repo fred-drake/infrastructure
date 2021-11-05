@@ -4,7 +4,7 @@ metadata:
     name: rook-ceph-mgr-dashboard
     namespace: rook-ceph
     annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-production
+        cert-manager.io/cluster-issuer: letsencrypt-staging
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
     labels:
         app.kubernetes.io/instance: rook-ceph-mgr-dashboard
@@ -32,8 +32,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-03T22:55:40Z"
-    mac: ENC[AES256_GCM,data:/a82etyew1N+ShuTZDMFkDAKtkhyN7TVyB48a+GeAidSuE4bBmz8n/RxDweIi1hGeO/tgEHiwXQtRMhYoSlxtRoKDVtsEOIlxtYUhi054sAZcUu0PDtxWuPVCNnlyNaHDU5/hLOuPw6N9R4Jokriexsa7n1aX12e7vnBYCk/50w=,iv:J1P3HcmyP3Va6pj2qXwTd1/gOpBqy2QB/MMlOa1JMo8=,tag:sWF7g+EIfvzFGN6UoAGETQ==,type:str]
+    lastmodified: "2021-11-05T01:31:19Z"
+    mac: ENC[AES256_GCM,data:mwiBQtomim7wGK78MeB64mIQZKqXh0nHBmGSnDzTfIppl/5ywPfCXQ3f9OG25pjHmgNST3gOm+13aQ6bIWSTpxZe3hLOFsYwQO2c/7zVyIf2kM90eFIRQFCHLyIji/ScmiayRcFGg4sKC5YoqsfUwECGcK+K1IYOMPuhyZNN+J0=,iv:gEGMUANYMdDAuaZnoUEJugpM2rGh6w0CqatJDbNIgv8=,tag:ITkZqQ1mcf4Mb3PVizwhNw==,type:str]
     pgp:
         - created_at: "2021-11-03T22:55:39Z"
           enc: |

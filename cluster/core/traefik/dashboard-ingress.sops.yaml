@@ -4,7 +4,7 @@ metadata:
     name: traefik-dashboard
     namespace: kube-system
     annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-production
+        cert-manager.io/cluster-issuer: letsencrypt-staging
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
     ingressClassName: traefik
@@ -29,8 +29,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-04T18:58:42Z"
-    mac: ENC[AES256_GCM,data:ItehDRvGQMpZKop9dXaqUkmHnVR55jfdHoAq5FaftDXLAD9EB30rbee9Tv3y2dpb+5iDarLUlP+7fZxuW2hY4FtlwGjCKZyR/4HEpJo7e4g1FOeOvG4q3dc8iV51yt2E2/HqrSxygOfKw3miCp0jILfrIIHry9bv7E3ZsHrT0sg=,iv:KDOEiKqRrxKamYp8CypP3DQhxGkw4lM7XayAMzebFCM=,tag:CBPbbWDfzMG14J9419hhdw==,type:str]
+    lastmodified: "2021-11-05T01:30:44Z"
+    mac: ENC[AES256_GCM,data:ZXDsCt6DXy85EH09NLJ4q2PB532kaYvGJvxU/dxpAHWBZ3wmlHQXkzIx5H9kHVrRaPoUTBQ/eMT+zntmwwQa6/mdAc8i1qUMJtvhP/wrGWgFtcC1YzvhehgvIXDcbNmyQdSjCxGCDm5JeuPvwYBlrMC5o22n6dfsxaQd98bzW8g=,iv:4/TD0RCC9uwefBLHjRaUMjReY7OGPkNfKc4JE74qHoQ=,tag:W3Z9ldlubY90fTNCFyF2wA==,type:str]
     pgp:
         - created_at: "2021-11-03T22:55:39Z"
           enc: |
