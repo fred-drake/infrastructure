@@ -12,7 +12,7 @@ spec:
         targetRevision: 1.2.2
         repoURL: https://charts.longhorn.io
         helm:
-            values: ENC[AES256_GCM,data:TxfhfdIX72OQq4/kF8FOCCXX/JMgTAIcDk5u2RM4YUrYIMtvTGsSyNwZWeVij9BltcmFwzKogMDPi32kkLYkhdR2/VUqxdB13xq2SBHRjr9ATLgk+BRK3WT7yjNtqWiCDwQspTowzlqrnGFQpqt4vTN050RU8DkQGibT0HZOyuwDhbYTIjLUhaeE1A3ygv1YjTioRtLH4zpCDAr5JQDu6xdD7YrQcVFa4xk3qqszeZ9lE4aDQtZ4HjRLNAahcZ+c8A1zp76btJR6i/Qene2f9lYeu3EfxeivUl3m+gAyDi5sBWr6ouCZ1DUJu4Aorp1IqRE1eGpPPi/MQMAtfKR3x44DLw72Xti3qigUA82vT3/aFzR5hB9FND8bO2xlbT7NTmyziHsMZntqtZynXBWMxlT2VcS603GupLO3shU5/jNxULzK1m1DS52L5gZF13X3tfeh2wiIxDvQPbB+Mm0cqH1bP38V8PvihZoNRbdZ9iLEtcyGDToBaAk3yeRwMMjgvHg8rUq08hMXcBpUO4aC6jv6tTWjktKhB71Tz/wfTSczuw30LtOgeinhthNV2GBUhs3QlgMVdA6z3Zqds0a8oF8R5hd++fDTHuwTS8lY7NNveAhJXYPpY5wL0t3nDlG/aBhetA==,iv:PcBSYeOhSVJcTa1e3dLcY5WrDWuXmCcI6Sw3bar/dJY=,tag:D69pnuEfL+OScLgbV8Ll6g==,type:str]
+            values: ENC[AES256_GCM,data:4WnQ7x6RER6HjnrwbdN1FBdrmHrcGNlAsWmib53vZVCrPCd3sxLu4221qYgvluf+Fj7eDhRl/HZHVUTCR2XCX7Z1hCjXSjdihQD4HQm0I5jGh7CF9tgkd+LS7IE+5bNB7osSVt5Y3gdP+xkYb2J4KrpiKYwt+3UaZ1+PqFbXjTeFE7JB6n+yeQIGDxLvkTXP8KKaOF+lzaOhtW6xhXZMAopz1tFLGmEEe1fA0RfTCHrYNdKz86obn0WAXfcj6brDpctxgqOkBTiJOHLw0B/JD7DxLvgi487E4WzVV+OKwy1lChXeXI11KM0djsgYzREnKUw/DS9Eb2gSbV+RslcDm50ya9fqvF+OWxSI9x1hxFgr4vCcUOZmWFCVnjSTrGQgt3wMAZ2widF/I7rz8BItManozA6816PuDK76W7sz/wKVhhu66ogl0lVHzuudb6MIEosY71gvoQ1OI/ekbMcB/yyGzVJnME/RhYUCfH06Ry6OqpBZn+61hPpk0XyaT9yYgF1WJyJTxlIiFrNFcVD6EAnIje2HuO8Z1cQ0wGBDwFd92N/IQ5xkeCI2O4Yg,iv:iU4UNv11gIUCU2IqE8fHoODvSaK3TSTHAzevAXjXifI=,tag:ujTF3O0HCHKRsrwG/iVG+w==,type:str]
     project: default
     syncPolicy:
         syncOptions:
@@ -26,8 +26,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-05T17:54:30Z"
-    mac: ENC[AES256_GCM,data:87o2ND96IhqqDx+VBND6lysgw89yNXocUs5FeCyYsEnt+8iL9bVBu99uc89EXvJKh1UGLEeMghjq65YT+ZhY+GDHyF5sLNwRCAMU40VB9tkPh2q6e5hBzap3o+yu6u0dRdGmzvuJC6piIHj66l3ZVr2crJ9zU0r9ozXrrv4zOKs=,iv:LQyocySlMPWnj1ngMpVtg4RJByxlU98x6dUx8hsF/74=,tag:0J1Lc3imxnI7cJAXxYpSlQ==,type:str]
+    lastmodified: "2021-11-05T18:35:41Z"
+    mac: ENC[AES256_GCM,data:oiWIsqx33wqY1QcJOnoE8gUSC9FRN7hvzSIQlauF+xpXhM5qqS4m52a3+xi1tplWgmXbHRhj2z7YAk5vFLeYPg01F/JhVA5DDmSuD0/PSFWwdL3ToUbKaxGrOGCpbcqo16nKx2l9QA/70aj8uluddbBhvEWCKO++yXTFiz5BLa4=,iv:vJpj49LU6VYfYRYUQbaqOW+Yax0Z2DQc56O2AUvLf+o=,tag:YG947LWb9SNcj5m9lvqwsQ==,type:str]
     pgp:
         - created_at: "2021-11-03T01:15:40Z"
           enc: |
