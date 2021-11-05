@@ -22,7 +22,7 @@ spec:
                     keel.sh/approvals: "1"
                     keel.sh/trigger: poll
                     keel.sh/pollSchedule: '@every 1h'
-                installCRDs: true
+                installCRDs: false
                 webhook:
                     enabled: true
                 extraArgs:
