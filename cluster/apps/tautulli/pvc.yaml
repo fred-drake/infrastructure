@@ -4,7 +4,7 @@ metadata:
   name: tautulli-config
   namespace: tautulli
 spec:
-  storageClassName: rook-ceph-block
+  storageClassName: longhorn
   accessModes:
   - ReadWriteOnce
   resources:

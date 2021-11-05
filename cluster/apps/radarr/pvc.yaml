@@ -4,7 +4,7 @@ metadata:
   name: radarr-config
   namespace: radarr
 spec:
-  storageClassName: rook-ceph-block
+  storageClassName: longhorn
   accessModes:
   - ReadWriteOnce
   resources:

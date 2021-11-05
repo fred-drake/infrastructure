@@ -4,7 +4,7 @@ metadata:
   name: grafana-config
   namespace: grafana
 spec:
-  storageClassName: rook-ceph-block
+  storageClassName: longhorn
   accessModes:
   - ReadWriteOnce
   resources:

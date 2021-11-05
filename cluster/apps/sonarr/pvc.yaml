@@ -4,7 +4,7 @@ metadata:
   name: sonarr-config
   namespace: sonarr
 spec:
-  storageClassName: rook-ceph-block
+  storageClassName: longhorn
   accessModes:
   - ReadWriteOnce
   resources:

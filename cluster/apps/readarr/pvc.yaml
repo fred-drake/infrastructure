@@ -4,7 +4,7 @@ metadata:
   name: readarr-config
   namespace: readarr
 spec:
-  storageClassName: rook-ceph-block
+  storageClassName: longhorn
   accessModes:
   - ReadWriteOnce
   resources:

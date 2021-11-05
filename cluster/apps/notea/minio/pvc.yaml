@@ -4,7 +4,7 @@ metadata:
   name: minio-config-pvc
   namespace: notea
 spec:
-  storageClassName: rook-ceph-block
+  storageClassName: longhorn
   accessModes:
   - ReadWriteOnce
   resources:
@@ -17,7 +17,7 @@ metadata:
   name: minio-data-pvc
   namespace: notea
 spec:
-  storageClassName: rook-ceph-block
+  storageClassName: longhorn
   accessModes:
   - ReadWriteOnce
   resources:
