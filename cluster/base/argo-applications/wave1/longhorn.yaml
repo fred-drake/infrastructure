@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: rook-ceph-application
+  name: longhorn-application
   namespace: argocd
 spec:
   project: default
@@ -9,12 +9,12 @@ spec:
   source:
     repoURL: https://github.com/fred-drake/infrastructure.git
     targetRevision: HEAD
-    path: cluster/core/rook-ceph
+    path: cluster/core/longhorn
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-system
 
   syncPolicy:
     automated:
-      prune: false
-      selfHeal: false
+      prune: true
+      selfHeal: true
