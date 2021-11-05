@@ -12,7 +12,7 @@ spec:
         targetRevision: v1.7.6
         repoURL: https://charts.rook.io/release
         helm:
-            values: ENC[AES256_GCM,data:Wd1EK7ouUpNAj2o9L/WC4ZgwIYbkaCM6sGouqUSnSW3O6ZePkUxc3/4ehP7ybS4Ph+Kawhut7tkCoMMSJDMy9JZVX0g2aadUMKVOKbKDFF9PbMUr57nQx/UMJVRVa5LPvfJrjKG2HKZP5h+FfC3oJRo2mduaLB4VtDDePmsQtYEKn+RLRK3JHnL+Xlt9EIKMGHabu2CmUvzzY1s2zq48gjzXhd2reicu+CNUD2tFea6pFLxrNmcWNfIMD40brgIkV3bsLkzFP12lFxi9wAiY0qYxdbaPclNszA==,iv:fEWXB0leK+7bv5TrR669+iLg6LXD6cKxS3UX4jIy/lU=,tag:POCdR4Brorxmihv4guWXVQ==,type:str]
+            values: ENC[AES256_GCM,data:Dtc7juLMb0tkp070Reax78rBjrSUDllLhtgcxczLstD57fBLuw85XvyCwXdmkY1fZJNLwpqneacWJHK0TLuF9oSr7wzaVfjzcLkf2sr+172v7YQRqa7PuA/v,iv:lfuXSubxQcsIy0NoyLSijKQIQ6X7eyMm4nCrTZF7CHE=,tag:vzKrv7DhNRS7ik8F1Purmg==,type:str]
     project: default
     syncPolicy:
         syncOptions:
@@ -26,8 +26,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-04T02:56:19Z"
-    mac: ENC[AES256_GCM,data:T/FmChyksybtyKyvO0zhbYnwbyIaidtEOrF0iIIMKhjaRd9RWKoBctD9t4Yti6qfy9iNn3bznfZbmBU6sjG1ckelo000K268/v0Z7yELBsIrgxPXvGGNHyDb2k6FxkYyGfSEkVlaFd6UrtFDrg1wewr+fxzKqATU9uLFzndVWcI=,iv:rFj1PRlojYvMSnF1gKM+8LRPHuC6GCcAEEC8I+zwdco=,tag:FuLK/ePGhBfF9KD61KSpeA==,type:str]
+    lastmodified: "2021-11-05T04:19:40Z"
+    mac: ENC[AES256_GCM,data:WbSa7v3Sk58FVXwvwtdSBeq5ZyWewjcqstqC3Y3mvrgoI59T+2Ho1jmFm91IK18bR8lpomEXfZfCWlwjXq7p2TOs1td9dyzOSYMmZ23IhZagJDsT6MxBpGscULvsth+4JtbD8KY13clPFLYGYFqZ/jRiqSIgkVQfYnV3V9XVo98=,iv:J3m7WsV7laQpCesPGaOnv2Nbl3+fM+DmI4n1yF6LtBM=,tag:SgR1BTQN4HttGF9AblIfcw==,type:str]
     pgp:
         - created_at: "2021-11-03T01:15:40Z"
           enc: |
