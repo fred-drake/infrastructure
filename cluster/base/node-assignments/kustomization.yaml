@@ -4,4 +4,4 @@ resources:
   - taint-masters.yaml
   - backup-label.yaml
   # - ceph-storage-nodes.yaml
-  - longhorn-taints.yaml
+  # - longhorn-taints.yaml
