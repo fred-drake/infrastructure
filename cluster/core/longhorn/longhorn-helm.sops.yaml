@@ -12,7 +12,7 @@ spec:
         targetRevision: 1.2.2
         repoURL: https://charts.longhorn.io
         helm:
-            values: ENC[AES256_GCM,data:9NWtyLyreTt/kQ+SrV/yyFJs5zmCWJpuy20DQV5CRdCD8yl24a2AmBcVrWVpLKhEPasD+FWupTJrLLN8ekpMe1KZ9swVtiLCGYhhuBiqQHi+zWXV+I0RU4cHvd0vc62V6nqeP4ZCeZaLml5x8Q+5nfRkgQ/hsoVLnj2dabWXULX4MS6uNAdrO83mD0n82bWIhDQfMo6T3tBUa8Dm7J2jH6qVbP5iB2YS9bL5P6AelpPXNXtbUUk2+53momdWJBCedPbfrUX2U85h7KDL0KK1L/i8bm74BknLrtNTlPV6QQrlNohVcQw2YSUWHRlyJ7RO0yQI3IFWndINDzinqD3t0048CdtFKIRj/MQ8wO3HLL5/oyZmgn77Gfrp2HMlGj9MjuWOPCisdnFZZaNKABJTFRwV8yiC63TuFRQR4dGe+YS10wjb1cN4T+1cEgZ85dm4Pdkms0DdJnjehw8Xu3mn,iv:lIp6seLzb1nZRj0nzHd3S6eo/f4rhiNGSbR8oc+D06Y=,tag:GaVY9xIanGwy55EZz/5sXA==,type:str]
+            values: ENC[AES256_GCM,data:TxfhfdIX72OQq4/kF8FOCCXX/JMgTAIcDk5u2RM4YUrYIMtvTGsSyNwZWeVij9BltcmFwzKogMDPi32kkLYkhdR2/VUqxdB13xq2SBHRjr9ATLgk+BRK3WT7yjNtqWiCDwQspTowzlqrnGFQpqt4vTN050RU8DkQGibT0HZOyuwDhbYTIjLUhaeE1A3ygv1YjTioRtLH4zpCDAr5JQDu6xdD7YrQcVFa4xk3qqszeZ9lE4aDQtZ4HjRLNAahcZ+c8A1zp76btJR6i/Qene2f9lYeu3EfxeivUl3m+gAyDi5sBWr6ouCZ1DUJu4Aorp1IqRE1eGpPPi/MQMAtfKR3x44DLw72Xti3qigUA82vT3/aFzR5hB9FND8bO2xlbT7NTmyziHsMZntqtZynXBWMxlT2VcS603GupLO3shU5/jNxULzK1m1DS52L5gZF13X3tfeh2wiIxDvQPbB+Mm0cqH1bP38V8PvihZoNRbdZ9iLEtcyGDToBaAk3yeRwMMjgvHg8rUq08hMXcBpUO4aC6jv6tTWjktKhB71Tz/wfTSczuw30LtOgeinhthNV2GBUhs3QlgMVdA6z3Zqds0a8oF8R5hd++fDTHuwTS8lY7NNveAhJXYPpY5wL0t3nDlG/aBhetA==,iv:PcBSYeOhSVJcTa1e3dLcY5WrDWuXmCcI6Sw3bar/dJY=,tag:D69pnuEfL+OScLgbV8Ll6g==,type:str]
     project: default
     syncPolicy:
         syncOptions:
@@ -26,8 +26,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-05T15:56:24Z"
-    mac: ENC[AES256_GCM,data:3Lu/9cD/dUuvd/yPJuf7Uidq6RtfnSQzVHls3wbsA1zE4uMwvTql0FnIn1imfew9bhQ4DWGoAo+I/kFb+FHUB5Y5NF+wlVnUoM4GfI0IbykgJNNeKa5UByTLYD1QEGfFbE6M0rGEsiCVkJ8ibYP0Ry0DCKjaaSVp/L2V/5UhyxI=,iv:8MjmXwBVIvHe3aaEt+0zLheGKW29LfaOACM12TV39do=,tag:asH3FZbAqlckdlbkM4d0eg==,type:str]
+    lastmodified: "2021-11-05T17:54:30Z"
+    mac: ENC[AES256_GCM,data:87o2ND96IhqqDx+VBND6lysgw89yNXocUs5FeCyYsEnt+8iL9bVBu99uc89EXvJKh1UGLEeMghjq65YT+ZhY+GDHyF5sLNwRCAMU40VB9tkPh2q6e5hBzap3o+yu6u0dRdGmzvuJC6piIHj66l3ZVr2crJ9zU0r9ozXrrv4zOKs=,iv:LQyocySlMPWnj1ngMpVtg4RJByxlU98x6dUx8hsF/74=,tag:0J1Lc3imxnI7cJAXxYpSlQ==,type:str]
     pgp:
         - created_at: "2021-11-03T01:15:40Z"
           enc: |

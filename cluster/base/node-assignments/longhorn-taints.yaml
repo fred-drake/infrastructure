@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Node
+metadata:
+  name: kworker01
+spec:
+  taints:
+    - effect: NoSchedule
+      key: longhorn_schedule
+      value: "false"
