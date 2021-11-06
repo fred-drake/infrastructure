@@ -3,7 +3,8 @@ kind: Kustomization
 # generators:
 #   - secret-generator.yaml
 resources:
+  - namespace.yaml
   - mqtt-helm.yaml
+  - service.yaml
   # - app.yaml
-  # - namespace.yaml
   # - deployment.yaml
