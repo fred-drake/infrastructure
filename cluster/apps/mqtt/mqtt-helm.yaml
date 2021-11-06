@@ -28,11 +28,9 @@ spec:
                         memory: 128Mi
                 env:
                     TZ: America/New_York
-                service:
-                    enabled: true
-                    type: LoadBalancer
-                    loadBalancerIP: 192.168.50.227
                 monitoring:
+                    enabled: false
+                service:
                     enabled: false
     project: default
     syncPolicy:
