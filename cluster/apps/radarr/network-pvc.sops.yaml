@@ -25,8 +25,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-31T18:58:22Z"
-    mac: ENC[AES256_GCM,data:e3aj5JPjc2BjelQvADV5vygKsNVkZmKNhKjp6DTZPZvsP4SMVlwrqIrK0HRCbytwtVjTXqQ6yBoTpIa7oGODa6BHIF+gCkzvwEg/Uo1A8RbhzGy5b94LOIqULwp02j4yEkb0X7jeOojCDQo1STEM2vLZrvulvQro5N1u4eI/ijA=,iv:JbWVcJx6QTnj8qohOtFoM2K15oD/8hZxN6v0jqIiH34=,tag:jYdkDT3cr3LHzcY5N9wd2w==,type:str]
+    lastmodified: "2021-11-06T03:52:19Z"
+    mac: ENC[AES256_GCM,data:tcMF3Y66R//+7SbT+2me/NeiAsyd5VGrBYgu5O0tgwuEv9l0TqnHdRlg75hnUqlGWqftpOMwKQpJxvJf7OV8b2PFxESlVAgppSF4j9wiFkv7bY6quox2QJfIGYwe22E8wR9NIux9Jin2T2iCfNdqR/HpLquA6LQapZGiLSongqM=,iv:ETFXW4hQjC/6c9gTgSLgMFDUnMp4dKsWaulq3y7hQDg=,tag:KxigiJtCekRWIz/vA3DQaw==,type:str]
     pgp:
         - created_at: "2021-10-30T23:13:30Z"
           enc: |
@@ -78,8 +78,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-31T18:58:22Z"
-    mac: ENC[AES256_GCM,data:e3aj5JPjc2BjelQvADV5vygKsNVkZmKNhKjp6DTZPZvsP4SMVlwrqIrK0HRCbytwtVjTXqQ6yBoTpIa7oGODa6BHIF+gCkzvwEg/Uo1A8RbhzGy5b94LOIqULwp02j4yEkb0X7jeOojCDQo1STEM2vLZrvulvQro5N1u4eI/ijA=,iv:JbWVcJx6QTnj8qohOtFoM2K15oD/8hZxN6v0jqIiH34=,tag:jYdkDT3cr3LHzcY5N9wd2w==,type:str]
+    lastmodified: "2021-11-06T03:52:19Z"
+    mac: ENC[AES256_GCM,data:tcMF3Y66R//+7SbT+2me/NeiAsyd5VGrBYgu5O0tgwuEv9l0TqnHdRlg75hnUqlGWqftpOMwKQpJxvJf7OV8b2PFxESlVAgppSF4j9wiFkv7bY6quox2QJfIGYwe22E8wR9NIux9Jin2T2iCfNdqR/HpLquA6LQapZGiLSongqM=,iv:ETFXW4hQjC/6c9gTgSLgMFDUnMp4dKsWaulq3y7hQDg=,tag:KxigiJtCekRWIz/vA3DQaw==,type:str]
     pgp:
         - created_at: "2021-10-30T23:13:30Z"
           enc: |
@@ -131,8 +131,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-31T18:58:22Z"
-    mac: ENC[AES256_GCM,data:e3aj5JPjc2BjelQvADV5vygKsNVkZmKNhKjp6DTZPZvsP4SMVlwrqIrK0HRCbytwtVjTXqQ6yBoTpIa7oGODa6BHIF+gCkzvwEg/Uo1A8RbhzGy5b94LOIqULwp02j4yEkb0X7jeOojCDQo1STEM2vLZrvulvQro5N1u4eI/ijA=,iv:JbWVcJx6QTnj8qohOtFoM2K15oD/8hZxN6v0jqIiH34=,tag:jYdkDT3cr3LHzcY5N9wd2w==,type:str]
+    lastmodified: "2021-11-06T03:52:19Z"
+    mac: ENC[AES256_GCM,data:tcMF3Y66R//+7SbT+2me/NeiAsyd5VGrBYgu5O0tgwuEv9l0TqnHdRlg75hnUqlGWqftpOMwKQpJxvJf7OV8b2PFxESlVAgppSF4j9wiFkv7bY6quox2QJfIGYwe22E8wR9NIux9Jin2T2iCfNdqR/HpLquA6LQapZGiLSongqM=,iv:ETFXW4hQjC/6c9gTgSLgMFDUnMp4dKsWaulq3y7hQDg=,tag:KxigiJtCekRWIz/vA3DQaw==,type:str]
     pgp:
         - created_at: "2021-10-30T23:13:30Z"
           enc: |
@@ -164,6 +164,7 @@ metadata:
     namespace: radarr
 spec:
     storageClassName: ""
+    volumeName: radarr-videos
     accessModes:
         - ReadWriteMany
     resources:
@@ -175,8 +176,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-31T18:58:22Z"
-    mac: ENC[AES256_GCM,data:e3aj5JPjc2BjelQvADV5vygKsNVkZmKNhKjp6DTZPZvsP4SMVlwrqIrK0HRCbytwtVjTXqQ6yBoTpIa7oGODa6BHIF+gCkzvwEg/Uo1A8RbhzGy5b94LOIqULwp02j4yEkb0X7jeOojCDQo1STEM2vLZrvulvQro5N1u4eI/ijA=,iv:JbWVcJx6QTnj8qohOtFoM2K15oD/8hZxN6v0jqIiH34=,tag:jYdkDT3cr3LHzcY5N9wd2w==,type:str]
+    lastmodified: "2021-11-06T03:52:19Z"
+    mac: ENC[AES256_GCM,data:tcMF3Y66R//+7SbT+2me/NeiAsyd5VGrBYgu5O0tgwuEv9l0TqnHdRlg75hnUqlGWqftpOMwKQpJxvJf7OV8b2PFxESlVAgppSF4j9wiFkv7bY6quox2QJfIGYwe22E8wR9NIux9Jin2T2iCfNdqR/HpLquA6LQapZGiLSongqM=,iv:ETFXW4hQjC/6c9gTgSLgMFDUnMp4dKsWaulq3y7hQDg=,tag:KxigiJtCekRWIz/vA3DQaw==,type:str]
     pgp:
         - created_at: "2021-10-30T23:13:30Z"
           enc: |
@@ -208,6 +209,7 @@ metadata:
     namespace: radarr
 spec:
     storageClassName: ""
+    volumeName: radarr-movies
     accessModes:
         - ReadWriteMany
     resources:
@@ -219,8 +221,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-31T18:58:22Z"
-    mac: ENC[AES256_GCM,data:e3aj5JPjc2BjelQvADV5vygKsNVkZmKNhKjp6DTZPZvsP4SMVlwrqIrK0HRCbytwtVjTXqQ6yBoTpIa7oGODa6BHIF+gCkzvwEg/Uo1A8RbhzGy5b94LOIqULwp02j4yEkb0X7jeOojCDQo1STEM2vLZrvulvQro5N1u4eI/ijA=,iv:JbWVcJx6QTnj8qohOtFoM2K15oD/8hZxN6v0jqIiH34=,tag:jYdkDT3cr3LHzcY5N9wd2w==,type:str]
+    lastmodified: "2021-11-06T03:52:19Z"
+    mac: ENC[AES256_GCM,data:tcMF3Y66R//+7SbT+2me/NeiAsyd5VGrBYgu5O0tgwuEv9l0TqnHdRlg75hnUqlGWqftpOMwKQpJxvJf7OV8b2PFxESlVAgppSF4j9wiFkv7bY6quox2QJfIGYwe22E8wR9NIux9Jin2T2iCfNdqR/HpLquA6LQapZGiLSongqM=,iv:ETFXW4hQjC/6c9gTgSLgMFDUnMp4dKsWaulq3y7hQDg=,tag:KxigiJtCekRWIz/vA3DQaw==,type:str]
     pgp:
         - created_at: "2021-10-30T23:13:30Z"
           enc: |
@@ -252,6 +254,7 @@ metadata:
     namespace: radarr
 spec:
     storageClassName: ""
+    volumeName: radarr-torrent
     accessModes:
         - ReadWriteMany
     resources:
@@ -263,8 +266,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-31T18:58:22Z"
-    mac: ENC[AES256_GCM,data:e3aj5JPjc2BjelQvADV5vygKsNVkZmKNhKjp6DTZPZvsP4SMVlwrqIrK0HRCbytwtVjTXqQ6yBoTpIa7oGODa6BHIF+gCkzvwEg/Uo1A8RbhzGy5b94LOIqULwp02j4yEkb0X7jeOojCDQo1STEM2vLZrvulvQro5N1u4eI/ijA=,iv:JbWVcJx6QTnj8qohOtFoM2K15oD/8hZxN6v0jqIiH34=,tag:jYdkDT3cr3LHzcY5N9wd2w==,type:str]
+    lastmodified: "2021-11-06T03:52:19Z"
+    mac: ENC[AES256_GCM,data:tcMF3Y66R//+7SbT+2me/NeiAsyd5VGrBYgu5O0tgwuEv9l0TqnHdRlg75hnUqlGWqftpOMwKQpJxvJf7OV8b2PFxESlVAgppSF4j9wiFkv7bY6quox2QJfIGYwe22E8wR9NIux9Jin2T2iCfNdqR/HpLquA6LQapZGiLSongqM=,iv:ETFXW4hQjC/6c9gTgSLgMFDUnMp4dKsWaulq3y7hQDg=,tag:KxigiJtCekRWIz/vA3DQaw==,type:str]
     pgp:
         - created_at: "2021-10-30T23:13:30Z"
           enc: |
