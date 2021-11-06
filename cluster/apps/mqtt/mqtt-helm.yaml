@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: mqtt
+    namespace: argocd
+spec:
+    destination:
+        namespace: mqtt
+        server: https://kubernetes.default.svc
+    source:
+        chart: mosquitto
+        targetRevision: 4.0.1
+        repoURL: https://k8s-at-home.com/charts/
+        helm:
+            values: |
+                image:
+                    repository: eclipse-mosquitto
+                    tag: 2.0.13
+                controller:
+                    annotations:
+                        keel.sh/policy: minor
+                        keel.sh/approvals: "1"
+                        keel.sh/trigger: poll
+                        keel.sh/pollSchedule: '@every 12h'
+                resource:
+                    requests:
+                        cpu: 100m
+                        memory: 128Mi
+                env:
+                    TZ: America/New_York
+                monitoring:
+                    enabled: false
+    project: default
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: true
+            selfHeal: true
