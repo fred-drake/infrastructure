@@ -30,8 +30,6 @@ spec:
                     TZ: America/New_York
                 monitoring:
                     enabled: false
-                service:
-                    enabled: false
     project: default
     syncPolicy:
         syncOptions:
