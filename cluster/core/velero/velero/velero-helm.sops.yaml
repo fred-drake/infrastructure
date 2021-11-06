@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: velero
+    namespace: argocd
+spec:
+    destination:
+        namespace: velero
+        server: https://kubernetes.default.svc
+    source:
+        chart: velero
+        targetRevision: v2.26.1
+        repoURL: https://vmware-tanzu.github.io/helm-charts
+        helm:
+            values: ENC[AES256_GCM,data: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,iv:RN1i+erY3trG2ZFOfLOoipmNiuraU3iNL5A+oGgBwuw=,tag:GdiYxL1SdoXLMDvfZQu7sQ==,type:str]
+    project: default
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: true
+            selfHeal: true
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-11-06T01:44:14Z"
+    mac: ENC[AES256_GCM,data:aXtW5SNgNOSvClLhfay4f5PjbBfoVI14KfRSlFPq2fOZFPJG7JKzLq2Pkz32iAkaXVvUH69NFc4t0qzt4zzLVg9bUmLd3vpFgX+UavTZ2Rvfenc2SZ8JWDpgjJJoeDfE3uIkYSBi/859OXy7KrX9Rce7JPfFaF4pwrLuWZySibQ=,iv:bbANv5iTqfKg3zHw6+D0ni04bd+IZjrpNbOSe1Z2rc8=,tag:JnRF7a4EYTF5dVB58ZXPfw==,type:str]
+    pgp:
+        - created_at: "2021-11-06T01:43:43Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkAQ/+J3AeSGNOwbcdUjbcO6Q70mjoDpVdl58iUY5IBMc0dhHp
+            vEY+HwrTqFY/2KT02VXepv6QXAIzX5ozKisJ++HNk7Rso0kEG+yryrfTyCDstKBJ
+            sExy+/3qfGN/sF8MpS9jkDCZpMDCw0/5HeImyUypJo9nYKc9eOeDEgym1Af7gp/d
+            /Jd0hW6gm0LfpJTjDIjei4+ugCma/8MsF0ybQaOU5mquT/wZyRtANv8aC6HABaZ8
+            loFvm3Gqd0xF2l31ZpIFl9F6AClVr5SLlpQpNHq/PtTO1CHymhCcEZjszObccCEG
+            3vpZ1SLmDlcjcDpfR0UiOUfBaOYqpEwYkU7kgbynLqiGt5IVfOBKYXGnSQHxU+Pu
+            5SVddIxzm24FhnrdUMfROIQyDRdZluEchkIdT1Ma+OvSLPU0X5bPj0NASBuAYwYz
+            4lCs4VNpc6K60uGXi4PLCAc7i+lwy4Lj/EaOelDowUVZ8h0Gtxg81+Q5IBJB9Ic7
+            Y07ifiWfUq45xl0GMye4VOXZdHRZWlD2HokcMynGYr7JT4UFb1Qy8KhXACJcjGjW
+            OXWNR51QJrQiVikT3SVAKyT8n0FzYM+TUmvMjQ/IwTaV3Vfd7Z7GIS0ud0KpYr9Z
+            s44J4WB+jAxziKkvzoy+GGxcis3Ve9CdgSeeT8+qbcmA3ybHKRPGf5IoiXuwSHLS
+            XgE7UN7beo0mO/DxyznqvqjQ6mCP9WoCdnh5DYE94ZN4CzHClk6jm+4cAnFwXprK
+            Cn41NwDIYVrkCzLeQydSMgf2Mrh3YrdGJm2QorYGLROTZe77pcw3XfuuwCvkYYY=
+            =lhBF
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData|networkPath|hosts?|loadBalancerIP|image|email|dnsZones|dnsNames|match)$
+    version: 3.7.1
