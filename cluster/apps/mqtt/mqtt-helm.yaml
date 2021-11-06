@@ -29,6 +29,7 @@ spec:
                 env:
                     TZ: America/New_York
                 service:
+                    enabled: true
                     type: LoadBalancer
                     loadBalancerIP: 192.168.50.227
                 monitoring:
