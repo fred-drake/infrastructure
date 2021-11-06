@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minio
+  namespace: velero
+  annotations:
+    keel.sh/policy: minor
+    keel.sh/approvals: "1"
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: '@every 12h'
+spec:
+  serviceName: minio
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  volumeClaimTemplates:
+  - metadata:
+      name: config-vol
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 20Gi
+  - metadata:
+      name: data-vol
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 20Gi
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+      - name: minio
+        image: minio/minio
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        args: ['server', '/data', '--console-address', ':9001']
+        env:
+          - name: TZ
+            value: America/New_York
+          - name: MINIO_ROOT_USER
+            valueFrom:
+              secretKeyRef:
+                name: minio-secret
+                key: user
+          - name: MINIO_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: minio-secret
+                key: password
+        volumeMounts:
+          - mountPath: /root/.minio
+            name: config-vol
+          - mountPath: /data
+            name: data-vol

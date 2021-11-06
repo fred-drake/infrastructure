@@ -1,0 +1,70 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: minio
+    namespace: velero
+    annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    labels:
+        app.kubernetes.io/instance: minio-dashboard
+        app.kubernetes.io/name: minio-dashboard
+spec:
+    ingressClassName: traefik
+    rules:
+        - host: ENC[AES256_GCM,data:Hdvumod7xtcpCsZdn4qA2S5xLTO+StXGrcbqPK50sEukuyc=,iv:BhMeHihkg9jvBF/Uv4cDiWjRr2A/IdATynDBs367NyA=,tag:IB5OnBBJdVCPuR3vOnPB+g==,type:str]
+          http:
+            paths:
+                - pathType: Prefix
+                  path: /
+                  backend:
+                    service:
+                        name: minio
+                        port:
+                            number: 9000
+        - host: ENC[AES256_GCM,data:SeVjb/QKkaEo58KY6na30MrK30rRqSFHLwXIZATThvhbpO6zd14=,iv:o3z+3fJlzwxlyyF3iWOrUpRdFxXPLM0iJseTGJ/1z7Y=,tag:Ynwo52iNZtCS+OERfKhxHw==,type:str]
+          http:
+            paths:
+                - pathType: Prefix
+                  path: /
+                  backend:
+                    service:
+                        name: minio
+                        port:
+                            number: 9001
+    tls:
+        - hosts:
+            - ENC[AES256_GCM,data:AjRdsC3/JFOc8G0wJbsJiSUiyu3M67tjmLsPzboXdUT/duSdzs8=,iv:9xwGAR9VWaU6z1PZwfYWYEpbIMTk5aN9xCYnOzcFxUo=,tag:L0rM40xMBdG1M9SZwk1TmQ==,type:str]
+            - ENC[AES256_GCM,data:jENOnWvOfuPtl13EY9Uj/I8SfCzke4CjQIBDSHZCwX5/b20=,iv:Yor0FYSSiDaoyy//DdiL70Rq9T4Jr1JHpWhs4LO6NnM=,tag:9wdTZEKyGTBgErasJAg+XA==,type:str]
+          secretName: velero-tls
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-11-06T01:51:30Z"
+    mac: ENC[AES256_GCM,data:RQKUrr6ViZ/8270nnQ/TZMYKUdcS/N9mm5+d6upfTMuFooa8/n57JX9G4h11sSgmvKQ20MT5D2jLe9n6KipTliaUUtarXFRbNZ5GRHGpb/ZGO4ShSx1yPsrkBxnsv+InYvCPuKzDaUgnjdzrf4QsoBKCaUq7zXyTCitTv/o09lg=,iv:uKNzUeCBnkbFoakERhhHTyrAcg5QyLrVET624oEJwhw=,tag:8iKbVmrjMmVS9eOG1s2w7Q==,type:str]
+    pgp:
+        - created_at: "2021-10-31T13:45:51Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkAQ/+Pl9P4dEijR0GNLftQYOgnPzKFKVSQ6VarqFBWRE5cRNS
+            r9yyPzTV239J7Bcbm0FHYj8auxqJoVlUmsuyZ9zqTowayfm2u2KQfpfdAL+fXNtW
+            8TZggmRwkvorEq92Ba8k49XJ2TX4fv9LvBnPnNHdv6ds9zfBV8o+Vy08u3bi+Q01
+            NklJariPMvkOTdfoet+4sk3/Q2g9Hg/ESwhQH8+l1EAR2PXoSCKI1L4If0iiMC1L
+            L153lor43uOA+0g/t/nK2+tzAHuuhJYuFVw947rGwejbsGNvEVHJj7vQuqQIa31j
+            Ym20wpzup6CCyf2gvnEKnVqo/2mdVwZc7Ee7Aoqwr62VbeMQWYx/H4iTy3i3qG80
+            5lnwj556CUafaIRNxcPTf77bwal27CSGGaUCoQ5X4Jb8ZnxK6w74RYI1itkHtu5X
+            JvZ6NMPHdHFs8WYJHKVUiyX77HnGQIjVT5PHyCllSwgOQnwkGiNw+QG4MHNR/fzl
+            taFyMqL24U6hQ7lxym6l/Shkx1okAEAzTCpJ6NtU85RslAie9DtKXBaMEE6FnrWH
+            uBHp5OZlgayWbX+Y7atBY5dw4ibPZgreEmYCvn4yZzc2Ij4z9+Lm2eneCPdUJA+j
+            /z5DSQmX0OyaN13IGqvTkzlOcNSkRM4u3/gUUAZri9p4xDD7jlLhZLcyOd+RdQzS
+            XAEYgZIhcbhFvgtvS+AJVunq7+9fmEJPF373ErLi1wwziVWzTjFCEpQhu7r2HWdA
+            tsi4M9r8WjSQgIMkVoD4IkDndwtpls6oohmZH5Vy7R/yjHMhZW65m20Mxdef
+            =yZoS
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData|networkPath|hosts?|loadBalancerIP|image)$
+    version: 3.7.1
