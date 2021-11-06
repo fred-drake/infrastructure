@@ -5,4 +5,4 @@ generators:
 resources:
   - pvc.yaml
   - service.yaml
-  - statefulset.yaml
+  - deployment.yaml

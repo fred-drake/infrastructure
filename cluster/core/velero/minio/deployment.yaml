@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: minio
   namespace: velero
@@ -9,31 +9,26 @@ metadata:
     keel.sh/trigger: poll
     keel.sh/pollSchedule: '@every 12h'
 spec:
-  serviceName: minio
   replicas: 1
   selector:
     matchLabels:
       app: minio
-  volumeClaimTemplates:
-  - metadata:
-      name: config-vol
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 20Gi
-  - metadata:
-      name: data-vol
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 20Gi
   template:
     metadata:
       labels:
         app: minio
     spec:
+      nodeSelector:
+        backup_storage: "true"
+      volumes:
+        - name: config-vol
+          hostPath:
+            path: /mnt/backup/minio/config
+            type: DirectoryOrCreate
+        - name: data-vol
+          hostPath:
+            path: /mnt/backup/minio/data
+            type: DirectoryOrCreate
       containers:
       - name: minio
         image: minio/minio
