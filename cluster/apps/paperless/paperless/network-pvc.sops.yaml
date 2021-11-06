@@ -25,8 +25,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-01T03:01:43Z"
-    mac: ENC[AES256_GCM,data:iWLuU1A33OQ0KFyTrlxNLSa9mZop8coPUizvpYzNqa4l9Oo4XMu8+tUIvDbs+UEr+7vvEUMmPLZH1WZ0meJ3uNSQAwok2EVHMQqwg28Y2GiVk0tm66ootPUqS5RwVNxliYfR/hQU2D9JU65oDyajpP9OB1qZbmhYnS6OYSijtCw=,iv:ptZYjGtmNBRSMCivhi2fix9r0fi9wFyWV93IhdH8uEw=,tag:B7WgGkd29o4ir3tcDL3XmQ==,type:str]
+    lastmodified: "2021-11-06T05:30:46Z"
+    mac: ENC[AES256_GCM,data:a9+VuODow8ALV7MKBsSO5O7sKDYy5nXXxvl+u8SMlJg1QsQf7KdgiatAvGnTlKd/Xwx7KWpTaYK7CxeAvAt0SI3hPT57mPtggyZKPjIM/DKb/RdZa6YELiO68ud875gVJeZuuYDLrQ3d8Wj9/3/aH1By7/m5ISz8pRUmlO4poPo=,iv:N3GXYHAIxQTtFba+uakrvPNOaFwZuvSHjkwZAMaELik=,tag:X6RGaP0zWdbxE+JXEBSvBQ==,type:str]
     pgp:
         - created_at: "2021-10-30T23:13:30Z"
           enc: |
@@ -58,6 +58,7 @@ metadata:
     namespace: paperless
 spec:
     storageClassName: ""
+    volumeName: paperless-documents
     accessModes:
         - ReadWriteMany
     resources:
@@ -69,8 +70,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-01T03:01:43Z"
-    mac: ENC[AES256_GCM,data:iWLuU1A33OQ0KFyTrlxNLSa9mZop8coPUizvpYzNqa4l9Oo4XMu8+tUIvDbs+UEr+7vvEUMmPLZH1WZ0meJ3uNSQAwok2EVHMQqwg28Y2GiVk0tm66ootPUqS5RwVNxliYfR/hQU2D9JU65oDyajpP9OB1qZbmhYnS6OYSijtCw=,iv:ptZYjGtmNBRSMCivhi2fix9r0fi9wFyWV93IhdH8uEw=,tag:B7WgGkd29o4ir3tcDL3XmQ==,type:str]
+    lastmodified: "2021-11-06T05:30:46Z"
+    mac: ENC[AES256_GCM,data:a9+VuODow8ALV7MKBsSO5O7sKDYy5nXXxvl+u8SMlJg1QsQf7KdgiatAvGnTlKd/Xwx7KWpTaYK7CxeAvAt0SI3hPT57mPtggyZKPjIM/DKb/RdZa6YELiO68ud875gVJeZuuYDLrQ3d8Wj9/3/aH1By7/m5ISz8pRUmlO4poPo=,iv:N3GXYHAIxQTtFba+uakrvPNOaFwZuvSHjkwZAMaELik=,tag:X6RGaP0zWdbxE+JXEBSvBQ==,type:str]
     pgp:
         - created_at: "2021-10-30T23:13:30Z"
           enc: |
@@ -122,8 +123,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-01T03:01:43Z"
-    mac: ENC[AES256_GCM,data:iWLuU1A33OQ0KFyTrlxNLSa9mZop8coPUizvpYzNqa4l9Oo4XMu8+tUIvDbs+UEr+7vvEUMmPLZH1WZ0meJ3uNSQAwok2EVHMQqwg28Y2GiVk0tm66ootPUqS5RwVNxliYfR/hQU2D9JU65oDyajpP9OB1qZbmhYnS6OYSijtCw=,iv:ptZYjGtmNBRSMCivhi2fix9r0fi9wFyWV93IhdH8uEw=,tag:B7WgGkd29o4ir3tcDL3XmQ==,type:str]
+    lastmodified: "2021-11-06T05:30:46Z"
+    mac: ENC[AES256_GCM,data:a9+VuODow8ALV7MKBsSO5O7sKDYy5nXXxvl+u8SMlJg1QsQf7KdgiatAvGnTlKd/Xwx7KWpTaYK7CxeAvAt0SI3hPT57mPtggyZKPjIM/DKb/RdZa6YELiO68ud875gVJeZuuYDLrQ3d8Wj9/3/aH1By7/m5ISz8pRUmlO4poPo=,iv:N3GXYHAIxQTtFba+uakrvPNOaFwZuvSHjkwZAMaELik=,tag:X6RGaP0zWdbxE+JXEBSvBQ==,type:str]
     pgp:
         - created_at: "2021-10-30T23:13:30Z"
           enc: |
@@ -155,6 +156,7 @@ metadata:
     namespace: paperless
 spec:
     storageClassName: ""
+    volumeName: paperless-scanner
     accessModes:
         - ReadWriteMany
     resources:
@@ -166,8 +168,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-01T03:01:43Z"
-    mac: ENC[AES256_GCM,data:iWLuU1A33OQ0KFyTrlxNLSa9mZop8coPUizvpYzNqa4l9Oo4XMu8+tUIvDbs+UEr+7vvEUMmPLZH1WZ0meJ3uNSQAwok2EVHMQqwg28Y2GiVk0tm66ootPUqS5RwVNxliYfR/hQU2D9JU65oDyajpP9OB1qZbmhYnS6OYSijtCw=,iv:ptZYjGtmNBRSMCivhi2fix9r0fi9wFyWV93IhdH8uEw=,tag:B7WgGkd29o4ir3tcDL3XmQ==,type:str]
+    lastmodified: "2021-11-06T05:30:46Z"
+    mac: ENC[AES256_GCM,data:a9+VuODow8ALV7MKBsSO5O7sKDYy5nXXxvl+u8SMlJg1QsQf7KdgiatAvGnTlKd/Xwx7KWpTaYK7CxeAvAt0SI3hPT57mPtggyZKPjIM/DKb/RdZa6YELiO68ud875gVJeZuuYDLrQ3d8Wj9/3/aH1By7/m5ISz8pRUmlO4poPo=,iv:N3GXYHAIxQTtFba+uakrvPNOaFwZuvSHjkwZAMaELik=,tag:X6RGaP0zWdbxE+JXEBSvBQ==,type:str]
     pgp:
         - created_at: "2021-10-30T23:13:30Z"
           enc: |
