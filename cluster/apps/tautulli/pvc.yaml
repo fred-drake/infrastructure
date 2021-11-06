@@ -4,9 +4,8 @@ metadata:
   name: tautulli-config
   namespace: tautulli
 spec:
-  storageClassName: longhorn
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 20Gi
+      storage: 3Gi
