@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/fred-drake/infrastructure.git
     targetRevision: HEAD
-    chart: cluster/apps/readarr/helm
+    path: cluster/apps/readarr/helm
   syncPolicy:
     automated:
       prune: true
