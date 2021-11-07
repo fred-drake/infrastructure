@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: office-touchpad
+    namespace: office-touchpad
+    annotations:
+        keel.sh/policy: minor
+        keel.sh/approvals: "1"
+        keel.sh/trigger: poll
+        keel.sh/pollSchedule: '@every 1h'
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: office-touchpad
+    template:
+        metadata:
+            labels:
+                app: office-touchpad
+        spec:
+            nodeSelector:
+                kubernetes.io/arch: amd64
+            containers:
+                - name: office-touchpad
+                  image: fdrake/office-touchpad
+                  resources:
+                    requests:
+                        cpu: 100m
+                        memory: 128Mi
+                  env:
+                    - name: TZ
+                      value: America/New_York
+                    - name: NODERED_URL_PREFIX
+                      valueFrom:
+                        secretKeyRef:
+                            name: environment-secret
+                            key: nodeRedUrlPrefix
+                    - name: SCANNER_URL_PREFIX
+                      valueFrom:
+                        secretKeyRef:
+                            name: environment-secret
+                            key: scannerUrlPrefix

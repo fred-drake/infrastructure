@@ -4,4 +4,5 @@ generators:
   - secret-generator.yaml
 resources:
   - namespace.yaml
+  - deployment.yaml
   - service.yaml

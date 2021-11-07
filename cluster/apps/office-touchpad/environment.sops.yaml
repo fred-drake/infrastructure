@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: environment-secret
+    namespace: office-touchpad
+type: Opaque
+stringData:
+    nodeRedUrlPrefix: ENC[AES256_GCM,data:mIPdtTO9eADKKW8rPY/n5GQNrsDGJ5EIetr+kBLXrQMqMQlH+Dg=,iv:lMttDFi5x4SC8zsUJCg6TI5ohNcpECrr/LAJr7tm9R4=,tag:r7d7Q2O5ZId+lOCliULHBQ==,type:str]
+    scannerUrlPrefix: ENC[AES256_GCM,data:KVYTVT2zKD6C8S1HtnWUuvF7o98Eza0UGOaYRlTlXuJGKX2l8E67X6Yl,iv:l7xedHhkcKo9jBgkmCbXYbaWYH6L4eyDNwRBlR8cU6E=,tag:E+zFuxWzJhtgvFFOE5XYMQ==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-11-07T04:52:51Z"
+    mac: ENC[AES256_GCM,data:R7CY8ARahn3qUZQwHRLVO3ZgEE0BPucDGZfs1D8/r581JYqJL66PDUJz/vaDTl0iCSIAcy6e2WA016N+0vCxG4CibrgWByMsRTd/S04rShL0Ayl7mnhSevCmW159k+BXRKzyyqn84iizfiIMMI4/B3P+GZeawrxK2bi/EEWZvsc=,iv:aoij4nBaUuZhpaUJIigcjYrdioHBC9hYk7vUKgENtwQ=,tag:sXbFR2CnFVTfXwYdkM5S9g==,type:str]
+    pgp:
+        - created_at: "2021-10-30T23:09:47Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkAQ//VussLanT48GK1h998j+Y2MjG0j3e7I0/KBx97nhtOp+Z
+            j2lATE2gi25DYcV3h32lyEG5ZDb7BcaTtW/CYD3loLt99UNGMxI4f4J63+Q2jj2s
+            dzmhxP0/GoTVwPSh9qjcgfSuRBrqwZftLWLL8gUEbyTsxmAKaJ7qGFZN5ArKYl11
+            JG6Cmy9uQEXlhWKVnCpWC3jEPzMaUG0BAoomhOyBaLxmKTI8w3v8JsHESeRFcEYF
+            8ejjRkCE4Gi3ZdgmcPl6UJyoS82un0PqQgkphadKrBKcJlWdd4BK5vWRTHxYSRlb
+            fqbVffh/SZ1NvrkZRo3ooI+WqvfR80v8B/YBmJkEEjQt4fCOqjxlV0vuJyFXw5h9
+            hFOh9YUdAe3mn9ZHx68OZqPsNJalioRYx8X3RXLQbLpCAel40GZQ6XS6EaYCMzMn
+            FJ65ySyMZoFWeJ2jTV7j6r2tBv4E/jh5kUJg9zWIm3UBtIksnQCjFYrbPyuTlxNv
+            /JaLFFDH9i2dpSaPzssvIiS38BQpGy5eQ80LS469pUjnq7QPbTZBLx75g77/aFnK
+            WZxioeRA3aEE6Nd3VmWA5KFQpcI9dijgasBV807JmQWijZRf/q6anC0E1bJKXJ7w
+            HdeXACtcufZ6A9eF0nZ3L69RQi402in6S+dP14f7NAFbcD+HoC9TPz98ocLkeXnS
+            XAGqOaWEVHN3jMcrUk8sFPVMEuF4XIAV7N6SKSbHkjkCHYlvFvQWmZuVo2cVcaOw
+            p4wpQjYgviUs+q5bbbKCU5CApSnGruLBtOu656uyk2CZUxI1wOGCUbZX/kSe
+            =wEkX
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData)$
+    version: 3.7.1
