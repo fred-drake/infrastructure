@@ -30,12 +30,12 @@ spec:
                   env:
                     - name: TZ
                       value: America/New_York
-                    - name: NODERED_URL_PREFIX
+                    - name: REACT_APP_NODERED_URL_PREFIX
                       valueFrom:
                         secretKeyRef:
                             name: environment-secret
                             key: nodeRedUrlPrefix
-                    - name: SCANNER_URL_PREFIX
+                    - name: REACT_APP_SCANNER_URL_PREFIX
                       valueFrom:
                         secretKeyRef:
                             name: environment-secret
