@@ -1,0 +1,31 @@
+- hosts: k8s_storage
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
+  pre_tasks:
+    - name: Pausing for 5 seconds...
+      pause:
+        seconds: 5
+  tasks:
+    - name: unmount disk
+      ansible.posix.mount:
+        path: /var/lib/longhorn
+        state: unmounted
+
+    - name: wipe disk
+      community.general.filesystem:
+        dev: /dev/sda1
+        state: absent
+
+    - name: create ext4 filesystem
+      community.general.filesystem:
+        dev: /dev/sda1
+        state: present
+        fstype: ext4
+    
+    - name: mount disk
+      ansible.posix.mount:
+        path: /var/lib/longhorn
+        src: /dev/sda1
+        state: mounted
+        fstype: ext4

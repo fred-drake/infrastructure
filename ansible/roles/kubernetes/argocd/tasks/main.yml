@@ -1,0 +1,24 @@
+- name: create argocd wave 2 for cluster
+  k8s:
+    state: present
+    definition:
+      apiVersion: argoproj.io/v1alpha1
+      kind: Application
+      metadata:
+        name: argo-wave2-application
+        namespace: argocd
+      spec:
+        project: default
+
+        source:
+          repoURL: https://github.com/fred-drake/infrastructure.git
+          targetRevision: HEAD
+          path: cluster/base/argo-applications/wave2
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: kube-system
+
+        syncPolicy:
+          automated:
+            prune: false
+            selfHeal: true

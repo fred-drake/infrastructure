@@ -1,9 +1,0 @@
-- name: delete gitea namespace
-  k8s:
-    name: gitea
-    api_version: v1
-    kind: Namespace
-    state: absent
-  tags:
-    - never
-    - gitea

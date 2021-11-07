@@ -1,17 +1,22 @@
 ---
 - name: install apt dependencies
   apt:
-    name: "{{ item }}"
+    name:
+      - cifs-utils
+      - jq
+      - util-linux
+      - coreutils
+      - open-iscsi
     state: present
     update_cache: true
-  loop:
-    - cifs-utils
-    - jq
-    - util-linux
-    - coreutils
   tags: 
     - cifs
     - k8s_setup
+
+- name: start iscsid service
+  service:
+    name: iscsid
+    state: started
 
 - name: add fstab/cifs directory
   file:

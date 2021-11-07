@@ -6,6 +6,8 @@ default_timezone: America/New_York
 
 # kubernetes configuration
 k8s:
+  cert_manager: # manages automatic https certificates
+    cluster_issuer: letsencrypt-production
   initial_master_node_hostname: kmaster01
   k3s: # k3s install version
     version: v1.21.5+k3s1
@@ -22,5 +24,8 @@ k8s:
     address: "192.168.50.240"
   metallb: # kubernetes load balancer
     range: 192.168.50.225-192.168.50.250
-  cert_manager: # manages automatic https certificates
-    cluster_issuer: letsencrypt-production
+  keel:
+    default_policy: minor
+    default_approvals: "1"
+    default_trigger: "poll"
+    default_poll_schedule: "@every 1h"

@@ -1,6 +1,0 @@
-- name: mqtt server
-  k8s:
-    state: present
-    definition: "{{ lookup('template', 'mqtt.yml') | from_yaml_all }}"
-  tags:
-    - mqtt

@@ -1,7 +1,0 @@
-- name: homeassistant
-  k8s:
-    state: absent
-    definition: "{{ lookup('template', '../../create/templates/homeassistant.yml') | from_yaml_all }}"
-  tags:
-    - never
-    - homeassistant

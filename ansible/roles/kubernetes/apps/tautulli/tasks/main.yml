@@ -1,5 +1,0 @@
-- name: tautulli
-  k8s:
-    state: present
-    definition: "{{ lookup('template', 'tautulli.yml') | from_yaml_all }}"
-  tags: tautulli

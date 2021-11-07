@@ -1,9 +1,0 @@
-- name: delete calibre namespace
-  k8s:
-    name: calibre
-    api_version: v1
-    kind: Namespace
-    state: absent
-  tags:
-    - never
-    - calibre

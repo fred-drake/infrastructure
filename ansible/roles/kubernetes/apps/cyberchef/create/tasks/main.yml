@@ -1,5 +1,0 @@
-- name: cyberchef
-  k8s:
-    state: present
-    definition: "{{ lookup('template', 'cyberchef.yml') | from_yaml_all }}"
-  tags: cyberchef

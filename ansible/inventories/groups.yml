@@ -13,9 +13,10 @@ all:
 
     ubuntu: # all ubuntu servers
       hosts:
-        docker[1:5]:
+        docker[1:2]:
+        docker5:
         kmaster[01:02]:
-        kworker[01:08]:
+        kworker[01:10]:
 
     raspbian: # all raspbian servers
       hosts:
@@ -50,7 +51,7 @@ all:
 
     avahi: # Host for avahi daemon
       hosts:
-        docker3:
+        # docker3:
     
     # Kubernetes cluster servers
     k8s_cluster: # every node in the cluster
@@ -63,7 +64,7 @@ all:
         kmaster[01:02]:
     k8s_workers: # worker nodes
       hosts:
-        kworker[01:08]:
+        kworker[01:10]:
     k8s_backup: # node managing backup with specially attached storage
       hosts:
         kworker07:

@@ -1,9 +1,0 @@
-- name: delete homeassistant namespace
-  k8s:
-    name: homeassistant
-    api_version: v1
-    kind: Namespace
-    state: absent
-  tags:
-    - never
-    - homeassistant

@@ -3,24 +3,15 @@
   become: false
   roles:
     # - kubernetes/base/secrets
-    - kubernetes/base/backup
-    - kubernetes/base/taint_master
-    - kubernetes/core/metallb
+    # - kubernetes/base/backup
+    # - kubernetes/base/taint_master
+    # - kubernetes/core/metallb
     - kubernetes/core/traefik
-    - kubernetes/core/cert-manager
+    # - kubernetes/core/cert-manager
     - kubernetes/core/velero
-    - kubernetes/core/rook-ceph
-    - kubernetes/core/reloader
-    - kubernetes/core/kubegres
-    - kubernetes/core/prometheus
-    - kubernetes/apps/whoogle
-    - kubernetes/apps/notea
-    - kubernetes/apps/cyberchef/create
-    - kubernetes/apps/netbox
-    - kubernetes/apps/gitea/create
-    - kubernetes/apps/mqtt
-    - kubernetes/apps/tautulli
-    - kubernetes/apps/homeassistant/create
-    - kubernetes/apps/calibre/create
-    - kubernetes/apps/office-touchpad
-    - kubernetes/apps/uptime-kuma
+    # - kubernetes/core/rook-ceph
+    # - kubernetes/core/reloader
+    # - kubernetes/core/kubegres
+    # - kubernetes/core/prometheus
+    # - kubernetes/core/keel/create
+    # - kubernetes/core/argocd

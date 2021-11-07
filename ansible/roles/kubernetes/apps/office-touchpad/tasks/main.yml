@@ -1,6 +1,0 @@
-- name: office touchpad server
-  k8s:
-    state: present
-    definition: "{{ lookup('template', 'office-touchpad.yml') | from_yaml_all }}"
-  tags:
-    - office-touchpad
