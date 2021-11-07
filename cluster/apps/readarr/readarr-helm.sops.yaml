@@ -3,10 +3,6 @@ kind: Application
 metadata:
     name: readarr
     namespace: argocd
-    annotations:
-        argocd-image-updater.argoproj.io/image-list: linuxserver/readarr:1.x
-        argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
-        argocd-image-updater.argoproj.io/git-branch: master
 spec:
     destination:
         namespace: readarr
@@ -30,8 +26,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-07T20:09:44Z"
-    mac: ENC[AES256_GCM,data:BqcbPIkxy6ey2OJ5XeZn5EsYKLE/HkvVEidprgw7yLV2SiXTOP8ceL0qRvcsf3JYNKnAXLhldj1htvc6l7q+gzDWxdCWWFu3eUaCxZhSy+px33P4d7qPDsVPLOoXrBt7xT572SKbbDILoS4ucSJ1dUI3F4OORrL0btuMa/0Zn9M=,iv:IZgi3hByCXEVCb1b8IhFO+qPYCm/NuVqAY4INqR4soU=,tag:cxYlHlqMPLy05qFJyywYOA==,type:str]
+    lastmodified: "2021-11-07T20:49:15Z"
+    mac: ENC[AES256_GCM,data:ecPz7SrOY7CQM5gRnVLyHtnPMBnTK6w9F6UAWZ5yB0JqfAmwLUKbmJB1NLFhqpSrJ7NhZ7hiPgQ57VB5Vn4vZ68xULDVJUNK0FF7detP/JMwXCTOcVC+OzA1ZU5sbE2FwX/bzIeDKfYQ3/+ftcUsKK5LH5ZUUGZTMC6XPEVS2vo=,iv:CDNQVsuC2yi66HDMapAzNuya0ZwiyIwiwVIVvvrrKbA=,tag:OlZaJSqwqCjuy29oJOT/uw==,type:str]
     pgp:
         - created_at: "2021-10-30T22:36:08Z"
           enc: |
