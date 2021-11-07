@@ -1,2 +1,3 @@
 image:
   repository: linuxserver/readarr
+  tag: 1.0.1003
