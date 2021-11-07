@@ -5,4 +5,4 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - pvc.yaml
-  - helm
+  - readarr-helm.yaml
