@@ -19,7 +19,7 @@ spec:
                 app: office-touchpad
         spec:
             nodeSelector:
-                kubernetes.io/arch: amd64
+                kubernetes.io/arch: arm64
             containers:
                 - name: office-touchpad
                   image: fdrake/office-touchpad:0.0.1
