@@ -1,22 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-    name: readarr
+    name: readarr-helm
     namespace: argocd
+    finalizers:
+        - resources-finalizer.argocd.argoproj.io
 spec:
     destination:
         namespace: readarr
         server: https://kubernetes.default.svc
-    source:
-        chart: readarr
-        targetRevision: 6.0.1
-        repoURL: https://k8s-at-home.com/charts/
-        helm:
-            values: ENC[AES256_GCM,data:kTteu/oYtbgq6/R0LHEJn4Uz9x+CnjYlikUySi/StONMDTmDzpgRlwQhBD8Q3c0z2STPrys4LQFDjCqEPbNBBpbRSlTCbjrVdccixh5VAzvJXgWm9uwx9saG4w9qlGM/IUMJvSxQrLvkUibKjZ6L+hD9kP1PmoF1ozj7lH9IdmksRiDClG6nXZkRBovAwXMT6Z7UObES7j4A3WZ0LxWRZVB9lT3gbzgSLCLp3YCvDSB28st06tur6sr6Lp7jjQEWTor2mnsZD9A2WWKR82SbgSmDc+N6A6fFEwj59n9Dg4GrIpYqeA/N94CdAp1bjVgOXo11+o0D8H/rKIp+LI10a2sGLzKF1qwtpuRiZT8hx5geTLKc2uHETn0o2NSDO6l6WH5qIQmFHsLk8C4U/Ad2r4eR1U8EITml/uj5nN15eqITKnT9Qle4S4aCkC9dZl1ScjGrWDYxwmUpRz2ItYn2CzfsDbwWnkMtlkgIvyg3/uOxfvnKOGvXniS/5QsauVS/ZVRQpiRhNbG8+R2mM7NwvtFal638ergG23Gj+suOmwaKRig/A6GRFf3vkNIZ5kCj6P5NU/AyJxYdydTP2UOmOwroPnb/CiBvYHq4ZrT8eHoju+naf6P3lVkxXURQYaZsNMkePmeI/fkFP7fGDJQFLCAszvUGiBA8IQX8rrUNoVLBH9sEX41+WC8OPdv94wovkpTEzr/Ms/rfKIr0bHUbmAy/nc9cUNSvNYn9FV0aND8LuOP9TaI4v5h1L660DWpjivLxfaYnMdpQy0ODa10ponPnpKM4yxLTKUrWU03Q62Omc0MRbicRaCP6FIAK30acXVKfI+vYJhaAyKypfrDo8ikvWQjjlf4MbILI9Zuwg2N4mSHwojNtwWPQWQyAdPTy3Lukg7tZLL/AZAWlNjEgAl0zzk8AQ/D4qKXIXKalft87vrOJInTmBMwWtJ0Ww1RqSiX1iLabx5p+7/AugJOTxu/4+eXpyvJKBGm02NeD5uznZ+P1JkDnhOzYGt5Eo+eDb1ojZYLO2xccfzzJ2aF+k/4mzWykhgBobUTy7/rA2uwlSW8vlgcXFzogRk5yUQ/B8oqgu+WkhRYIx9qLGOXD/PrWyBD5WZ1WlDtsMEkUjKixdLoq1mNEzftpoTOXEjPq9jyRGTAoLZuQ1BElRk7fSl0b+1Ao1s72n1Jv2sYgBomd38/CVcIXSDt/ymtezB1OcR+AbPHr/28vAlgrOkSwc8Mo4dw0EZm4iw==,iv:HuV1978cgTqrswHe9UTWdxM/0iBSJDOPIplj3lVWT/k=,tag:L/BtQonSYNaPtfrnQ/Eolg==,type:str]
     project: default
+    source:
+        repoURL: https://github.com/fred-drake/infrastructure.git
+        targetRevision: HEAD
+        path: cluster/apps/readarr/helm
+        helm:
+            parameters:
+                - name: readarr.ingress.main.hosts[0].host
+                  value: ENC[AES256_GCM,data:FOrh5dPyx94QNWZLsEpaqOpBRK5h0rEzd0ixTbwq,iv:ibNvoHjfCTE1hlqbVtcqUG3ntUP6atqbVnCx1YT3W38=,tag:c3QmxwX6Yyc/xgebuDoFtQ==,type:str]
+                - name: readarr.ingress.main.tls[0].hosts[0]
+                  value: ENC[AES256_GCM,data:FOrh5dPyx94QNWZLsEpaqOpBRK5h0rEzd0ixTbwq,iv:ibNvoHjfCTE1hlqbVtcqUG3ntUP6atqbVnCx1YT3W38=,tag:c3QmxwX6Yyc/xgebuDoFtQ==,type:str]
     syncPolicy:
-        syncOptions:
-            - CreateNamespace=true
         automated:
             prune: true
             selfHeal: true
@@ -26,28 +30,28 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-07T20:49:15Z"
-    mac: ENC[AES256_GCM,data:ecPz7SrOY7CQM5gRnVLyHtnPMBnTK6w9F6UAWZ5yB0JqfAmwLUKbmJB1NLFhqpSrJ7NhZ7hiPgQ57VB5Vn4vZ68xULDVJUNK0FF7detP/JMwXCTOcVC+OzA1ZU5sbE2FwX/bzIeDKfYQ3/+ftcUsKK5LH5ZUUGZTMC6XPEVS2vo=,iv:CDNQVsuC2yi66HDMapAzNuya0ZwiyIwiwVIVvvrrKbA=,tag:OlZaJSqwqCjuy29oJOT/uw==,type:str]
+    lastmodified: "2021-11-08T21:20:25Z"
+    mac: ENC[AES256_GCM,data:UAF+GW2608DYJXEdMj4fPPjd7eMQM077Sl2tUm2o6HtcmjQl+5VRG56QfgtMLAMVofOTkLKyeu4ckMX4iL2k23dxSSfCs1bDAtUlAkqp1VPxNKSzH2tI4sTZXBvhStQx5+D7BsCwdgBCPP7Q8r2gynqC4Pq2jsteftOiW6r+dCA=,iv:bBv/3CfjBeYMtYFPxirbezuuHhR7GuLBmlQD5tCM3ys=,tag:kd2BN6QoL1L00xSTZKj0xQ==,type:str]
     pgp:
-        - created_at: "2021-10-30T22:36:08Z"
+        - created_at: "2021-11-08T21:19:36Z"
           enc: |
             -----BEGIN PGP MESSAGE-----
 
-            hQIMA80P3erPiRpkARAAr4z9Vs7KvxQYmE1cZdWJPUsLRO8GqzTb0dac7swOsmzC
-            nuJOvnYf7ec5WiSCtJMn4sdRrh/4te2XFnMtF2W+20lsE/2oemgAL04Fv8vwUFnS
-            ZcY5G1TZwyCgYvuC7FLVEvnx9JjbYU6IKkEE61tQHordBFlkjihHG4Y0vnWOSRIt
-            Dmb6nersZSVnR41AsfDA57aJqdoEJtJ0rDXlie33H+hRVyc2b66hPVMyTQoGD+/h
-            WFmQXeuPltlCe1oTCYovGCZO7A/r2WZhJtW2Qwzqf3PyNVevAX0sI3pDnoa0lUKm
-            bromqhz8s0OXYDQteXHeVXYwnYHaNlVHMWRGMHU4Qe9uXpRmScTMOAlCJWpnQlqH
-            JTtwhl01n/4SnO+UYeVfBGTpMxmIiOVaGFhR1BgyQUi+NaB5TgWx9ykYPlgaXqBt
-            hURtclTkLwjsjtks6nOx7rakD+kclS6f83YrJDzEALs4z7nblsJwFq0oaQ+Pb/OP
-            uYpPd50yzH9pO6D89oRIsWiftexjgQ5HBiAYJgLRPYVk0lIf66XEdiZKvLPEgjfZ
-            fLS5+SsG3OZTUQtYrf1k5KxXmxhWHGmVt+higZPMt3Th4gLyQpcM8ExKdRKkQAst
-            wki7rG0KWhlhTiaUxfhhgxS97Mi5XewfP3h8mE+u02hWYZ314GKQGO3Ieqp1dZzS
-            XAGo+qD67tRN5pPoirBnzfqs0We1h1UUTR/s1CtsS1bV8/ExYPm6zbbsw+YojG45
-            uf3ZtWyrBXcU4zLwDXPhSrq/yHZKsSOhkj7jrULaOOcryfIQPb47E9lKPXzC
-            =Cq63
+            hQIMA80P3erPiRpkARAAz6RJf/AyTn6mIMV2xJcePEziJitBGulXUEnKim9ZxsqI
+            NLdDPz0bMvcH7jfrPjfvo9EGGuvg/16uif9Bq1/qCXM+ubMuTMq1l8YZop/hVq0y
+            aAimKYvqDCuKKJMLOxiA3lnB0tmU6HMDC5oo4/gVnMTMhyiOk6/IwdwaLhnV6rh9
+            +KfLBwNt8Cb2G/XyDSSBEo8wggUiVGj2hVHlDTy1Le2RC5ZBHbk4Co6zi3xg9uBE
+            iO0KfOnv4qmoQiDRnwoGyhjl/NWCNrpeuEb4kkj9zJig0T0FRT5jKPuf+fPz8C8I
+            Rz/zvNk2tC32IeTWnihDbFw7uLWydzbKFJlIM7Yp8W6NgzhE09f8nS6I/uPfTSW8
+            mfy4M1SrWz09BVhJN3cFoF5nUsodrDjqPZuZmvBxZyE8t8O6ufqUoJHNeygl6wrx
+            fU05rcdzFRNXiMqwRK+bOqNqi1MLqi6DCLh3qmKnuU7AkcWRTSlajwYJ5Z/GBmk+
+            lcmeDaGO4YlDjII5EvlZ3oLbsqG71jc/EaemAuelEx5sKAdAoegG9ouF6CqyIeS4
+            WqJrNXj7CoUZ66cBg9rCF6B6xxICY8zP37STJM2oxqnzQNROfzqKR3ujFxW0mWB6
+            qFn6EeA9Cnrsa1KNZBasbZSWIGmWG2lLRTaYVa45b78YMKOLqTewdJpJaUPQsYHS
+            XgFWNn3iQEej8cWllWQ5u7DuysMb7FKYFdxfpchfoUOjxGn3mv3H2b2hW5frOiKi
+            wU5lYZkXURQgSdP03hRGk7tBnaJixt8VZqt9EXk+k0Os16OTtaue1oqWjBVoPvk=
+            =baJH
             -----END PGP MESSAGE-----
           fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
-    encrypted_regex: ^(helm|data|stringData)$
+    encrypted_regex: ^(value)$
     version: 3.7.1
