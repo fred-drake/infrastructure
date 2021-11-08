@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-    name: readarr-helm
+    name: readarr
     namespace: argocd
     finalizers:
         - resources-finalizer.argocd.argoproj.io
@@ -30,8 +30,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-08T21:20:25Z"
-    mac: ENC[AES256_GCM,data:UAF+GW2608DYJXEdMj4fPPjd7eMQM077Sl2tUm2o6HtcmjQl+5VRG56QfgtMLAMVofOTkLKyeu4ckMX4iL2k23dxSSfCs1bDAtUlAkqp1VPxNKSzH2tI4sTZXBvhStQx5+D7BsCwdgBCPP7Q8r2gynqC4Pq2jsteftOiW6r+dCA=,iv:bBv/3CfjBeYMtYFPxirbezuuHhR7GuLBmlQD5tCM3ys=,tag:kd2BN6QoL1L00xSTZKj0xQ==,type:str]
+    lastmodified: "2021-11-08T21:26:38Z"
+    mac: ENC[AES256_GCM,data:7db3+dNAfw6S4tc4sX0ayn+8gPIWrj7oPo/YwndwdvghWTNm+Ewepf0SMiZ0ZMYmVuj3vJUzGm6Cbi5DbBifZaWtCpY7eQWOQvEbTXeZy0/88UC/5uRzZwxv7p1piK1bxMdYG2rZVA5Ae8MuvH1kBrkV+de/h68SEtYf3ig1SQY=,iv:CDm+WDlD8PyoijR0g8x6qI7ip/Nc0H2LHjza/RSf+uE=,tag:z/LxzzGpSp5gHrw0dse+uQ==,type:str]
     pgp:
         - created_at: "2021-11-08T21:19:36Z"
           enc: |
