@@ -14,7 +14,7 @@ readarr:
           memory: 128Mi
   env:
       TZ: America/New_York
-  # ingress:
+  # ingress: 
   #     main:
   #         enabled: true
   #         ingressClassName: traefik
@@ -30,9 +30,9 @@ readarr:
   #             - hosts:
   #                 - readarr.domain.com
   #               secretName: readarr-tls
-  # persistence:
-  #     config:
-  #         enabled: true
-  #         existingClaim: readarr-config
-  # monitoring:
-  #     enabled: false
+  persistence:
+      config:
+          enabled: true
+          existingClaim: readarr-config
+  monitoring:
+      enabled: false
