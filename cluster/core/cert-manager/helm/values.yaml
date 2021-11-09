@@ -1,0 +1,22 @@
+cert-manager:
+  deploymentAnnotations:
+      keel.sh/policy: major
+      keel.sh/approvals: "1"
+      keel.sh/trigger: poll
+      keel.sh/pollSchedule: '@every 12h'
+  installCRDs: false
+  webhook:
+      enabled: true
+  extraArgs:
+      - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
+      - --dns01-recursive-nameservers-only
+  replicaCount: 1
+  podDnsPolicy: "None"
+  podDnsConfig:
+      nameservers:
+      - "1.1.1.1"
+      - "9.9.9.9"
+  resource:
+      requests:
+          cpu: 100m
+          memory: 128Mi

@@ -3,45 +3,25 @@ kind: Application
 metadata:
     name: cert-manager
     namespace: argocd
-    annotations:
-        argocd.argoproj.io/sync-wave: "-2"
     finalizers:
         - resources-finalizer.argocd.argoproj.io
+    annotations:
+        argocd-image-updater.argoproj.io/image-list: cert-manager=quay.io/jetstack/cert-manager-controller:1.x
+        argocd-image-updater.argoproj.io/readarr.helm.image-name: cert-manager.image.name
+        argocd-image-updater.argoproj.io/readarr.helm.image-tag: cert-manager.image.tag
+        argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+        argocd-image-updater.argoproj.io/git-branch: master
+        argocd.argoproj.io/sync-wave: "-2"
 spec:
     destination:
-        namespace: cert-manager
+        namespace: readarr
         server: https://kubernetes.default.svc
-    source:
-        chart: cert-manager
-        targetRevision: 1.6.1
-        repoURL: https://charts.jetstack.io/
-        helm:
-            values: |
-                deploymentAnnotations:
-                    keel.sh/policy: minor
-                    keel.sh/approvals: "1"
-                    keel.sh/trigger: poll
-                    keel.sh/pollSchedule: '@every 1h'
-                installCRDs: false
-                webhook:
-                    enabled: true
-                extraArgs:
-                    - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
-                    - --dns01-recursive-nameservers-only
-                replicaCount: 1
-                podDnsPolicy: "None"
-                podDnsConfig:
-                    nameservers:
-                    - "1.1.1.1"
-                    - "9.9.9.9"
-                resource:
-                    requests:
-                        cpu: 100m
-                        memory: 128Mi
     project: default
+    source:
+        repoURL: https://github.com/fred-drake/infrastructure.git
+        targetRevision: master
+        path: cluster/core/cert-manager/helm
     syncPolicy:
-        syncOptions:
-            - CreateNamespace=true
         automated:
             prune: true
             selfHeal: true
