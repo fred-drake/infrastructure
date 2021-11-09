@@ -14,12 +14,6 @@ spec:
         repoURL: https://github.com/fred-drake/infrastructure.git
         targetRevision: HEAD
         path: cluster/apps/readarr/helm
-        helm:
-            parameters:
-                - name: readarr.ingress.main.hosts[0].host
-                  value: ENC[AES256_GCM,data:FOrh5dPyx94QNWZLsEpaqOpBRK5h0rEzd0ixTbwq,iv:ibNvoHjfCTE1hlqbVtcqUG3ntUP6atqbVnCx1YT3W38=,tag:c3QmxwX6Yyc/xgebuDoFtQ==,type:str]
-                - name: readarr.ingress.main.tls[0].hosts[0]
-                  value: ENC[AES256_GCM,data:FOrh5dPyx94QNWZLsEpaqOpBRK5h0rEzd0ixTbwq,iv:ibNvoHjfCTE1hlqbVtcqUG3ntUP6atqbVnCx1YT3W38=,tag:c3QmxwX6Yyc/xgebuDoFtQ==,type:str]
     syncPolicy:
         automated:
             prune: true
@@ -30,8 +24,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-08T21:26:38Z"
-    mac: ENC[AES256_GCM,data:7db3+dNAfw6S4tc4sX0ayn+8gPIWrj7oPo/YwndwdvghWTNm+Ewepf0SMiZ0ZMYmVuj3vJUzGm6Cbi5DbBifZaWtCpY7eQWOQvEbTXeZy0/88UC/5uRzZwxv7p1piK1bxMdYG2rZVA5Ae8MuvH1kBrkV+de/h68SEtYf3ig1SQY=,iv:CDm+WDlD8PyoijR0g8x6qI7ip/Nc0H2LHjza/RSf+uE=,tag:z/LxzzGpSp5gHrw0dse+uQ==,type:str]
+    lastmodified: "2021-11-09T00:13:11Z"
+    mac: ENC[AES256_GCM,data:9Zr/oFgKHsy22NVN6zd//0LbAUgRpZALqIBqF+rSmd4m2jOY3hWCEulQok2IWu76QJp5L2f8bjnfm/ZMBmPfETjfvJlaAvrrFcXhaseIpgeRDXJpFdlqmWi79aNAIB4SONVC4EciifaekIM1xkzwNJqXO53N1td6hAYwqnGI7gU=,iv:PE2aTyAy2QhEx6nfe4zqIa9XfFeih7eE5NbMUPIYoW4=,tag:vxbFEu31Fh/tbHb3J19SDw==,type:str]
     pgp:
         - created_at: "2021-11-08T21:19:36Z"
           enc: |
