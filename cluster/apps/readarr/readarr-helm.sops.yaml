@@ -6,7 +6,9 @@ metadata:
     finalizers:
         - resources-finalizer.argocd.argoproj.io
     annotations:
-        argocd-image-updater.argoproj.io/image-list: linuxserver/readarr:1.x
+        argocd-image-updater.argoproj.io/image-list: readarr=linuxserver/readarr:1.x
+        argocd-image-updater.argoproj.io/readarr.helm.image-name: readarr.image.name
+        argocd-image-updater.argoproj.io/readarr.helm.image-tag: readarr.image.tag
         argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
         argocd-image-updater.argoproj.io/git-branch: master
 spec:
@@ -30,8 +32,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-09T01:02:20Z"
-    mac: ENC[AES256_GCM,data:ud5cTgPMbTu7F1vKY7w25ri8zcEseKDo1tNyYgzjKYLkb3xtbRAQSKdE7HxWTpfsPYb8r4jB43kyXj+rpw+1eIg+4ccrJlL2duXehX2DCUFk1d/6DAziijTDR2WJIOxNFyNzrJFpL8CniedA0cU59SEySqBhbiwsOYNnhzs3IUs=,iv:d2YKDMv3qWLGPExhJo824bjK4wMP+3cYA96AWi8C7Zo=,tag:XsNB55K6GzEX9I9TwwRFJg==,type:str]
+    lastmodified: "2021-11-09T01:13:35Z"
+    mac: ENC[AES256_GCM,data:b+mCZNZcIj6JB8iD+L2mVpZ47wRnZSXlhRUDTwg/KXf+mUXaH9/ZqXSbGYHNoT7nvHZPAbpqr3gYavokrdUvDcigybg2cRwSRQ7liGwvhBP2XTnNpaTbOPKyH3Vl+caJRjvHML1xU40emkyb1BEvH1WC+jcvkEFqEXsflRQ/Ojg=,iv:qzxyBM4vCIVxUUDud7MiVf357HQGsvE7inIVJOEaLPk=,tag:ERs3/KRv3oLDPufTHeY/aQ==,type:str]
     pgp:
         - created_at: "2021-11-09T00:55:41Z"
           enc: |
