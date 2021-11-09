@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: readarr.image.name
+    value: linuxserver/readarr
+    forcestring: true
+  - name: readarr.image.tag
+    value: 1.0.1006
+    forcestring: true
