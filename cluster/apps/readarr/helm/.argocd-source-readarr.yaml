@@ -1,8 +1,5 @@
 helm:
   parameters:
-  - name: readarr.env.TZ
-    value: America/Chicago
-    forcestring: false
   - name: image.name
     value: linuxserver/readarr
     forcestring: true
