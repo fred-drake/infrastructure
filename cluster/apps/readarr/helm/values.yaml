@@ -21,15 +21,6 @@ readarr:
           annotations:
               cert-manager.io/cluster-issuer: letsencrypt-production
               traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          hosts:
-              - host: readarr.domain.com
-                paths:
-                  - path: /
-                    pathType: Prefix
-          tls:
-              - hosts:
-                  - readarr.domain.com
-                secretName: readarr-tls
   persistence:
       config:
           enabled: true

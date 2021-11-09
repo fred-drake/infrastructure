@@ -1,0 +1,43 @@
+readarr:
+    ingress:
+        main:
+            hosts:
+                - host: ENC[AES256_GCM,data:DZsEip2eubwqYm6xeKcHoMYAesJB2Lxex9Md+GN7,iv:X/YSkkwWl0z1de+9o+hcDj1OJgIKCAVM56ioVOt4Bys=,tag:EhLtnTAC/zCPvmf+hzuaww==,type:str]
+                  paths:
+                    - path: ENC[AES256_GCM,data:Rw==,iv:WpUYnL/UcsQIuQ+YeKy42z34gETjd8Fmnko9ffcqnHc=,tag:rog5kJsGdgzr3o8MuhrUHg==,type:str]
+                      pathType: ENC[AES256_GCM,data:LOkVBZXU,iv:BWZ7ekrSA0t5+NyqhsL14VEyJVejtd7pKoZMUSbZ9vY=,tag:9mM/G/CFFE7SOsPFgTH70A==,type:str]
+            tls:
+                - hosts:
+                    - ENC[AES256_GCM,data:aoh00CUCqqds4rcX2q75T9QcE3TGzcpcK5aAs+pf,iv:aVQe88dwQx+7w0PrcaswGonhoPxrRNdI44jyP1l8saE=,tag:shof2xx70vH//jcKFPZrQw==,type:str]
+                  secretName: readarr-tls
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-11-09T00:49:08Z"
+    mac: ENC[AES256_GCM,data:/vGfjv0zq/lVQLX0fMCcs1Y3sjcgDtOlL0ZMf0WUO/RUEd2eY/oU6J+SJMM9Vgy7Y8atV7bNCvTD6ixC8kqCVCJWYUJ9T8by9aOhQCPIz4oNpkTw4xxDEtnCSr/oqmmDCRwFQ2Udhzvmo+kVnS2MiiR3EFYMG7McVlRycHQSzb8=,iv:MTqNoUTWSsq8emm+mSEIx52ylxny8JdHX5bQyPqpUXo=,tag:fmH9IcjzGHgn+faYJUmsQQ==,type:str]
+    pgp:
+        - created_at: "2021-11-09T00:47:55Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA80P3erPiRpkAQ/+KLLfvdqigaR+MQdI00L5s0+ROKZjCzNIPMSJPwaesbTM
+            KtAJ+DfuZ2cKFAc9ceQUJ3Lrf7fujDqVU9zRi/7ySyirksl71mYq49l4Occin14s
+            m65ykW/lQPcUet1ue/LquY4uzpeUYALfe1+WiP5UUtSMy2kQr7QjbdvxXC9zCOh8
+            /veYCB56SZkgv6zeU3W/N67DdWTcvW6aYVWpvyNi1SquYm2i7PvtPOnB6B+qA+Uh
+            HaiqIhpY2T/xFNHWhbOzt1gi90xY9w2w8fc01u0JJNNdIZxNHdh1o70+/1UrvNpE
+            YUVbEDwT0dzuTBBYxzHCi+66hgxxThKYLDTtl4l1Lu4Tw/dMLuiSnykNlv9DiAQW
+            4ilVnGyImfTB6zZxBB70p1DRbLRu+PMv985n2ZA0dnYA0AsF7sW6nw19gdLmWT28
+            o7NLbyfU41rX9rmicKK02D4rgwMiu2KZRhLrlMeJNv9Rl4oynZtBpFqwLg7RTPZU
+            EKGaDbd0ERvB4A+QdQFy0ZV+gk1+qdymV/wP9bwNmZPwYr5vWDdbWVnAK9PvcF85
+            9/o/HKBRMplJzsqMT4FIQjtdptbuJNWvAOzfvejYdRkTzj8eSl9mv4SrFQUJqgCT
+            icy3yjBvXF2MikZUClKRrxtLfFuKQhKLVLd+b1bzSykN6fA3WqjZhx2xFSpHtV3S
+            XgFHmMO0YOI9uZ/JILUUit7Ao4RUUK5bNoTvGRlc8hyL31YMWELehky2ATnRkBTG
+            TsdjBH1qO16LBMbZymJOpCggx4ibdSSLQyoGeoI3FyolOMB13sMM4eixtELXLIU=
+            =kqfT
+            -----END PGP MESSAGE-----
+          fp: F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    encrypted_regex: ^(helm|data|stringData|networkPath|hosts?|loadBalancerIP|image|email|dnsZones|dnsNames|match)$
+    version: 3.7.1
