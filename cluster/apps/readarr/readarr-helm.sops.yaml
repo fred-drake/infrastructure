@@ -16,7 +16,7 @@ spec:
     project: default
     source:
         repoURL: https://github.com/fred-drake/infrastructure.git
-        targetRevision: HEAD
+        targetRevision: master
         path: cluster/apps/readarr/helm
     syncPolicy:
         automated:
@@ -28,8 +28,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-09T00:26:56Z"
-    mac: ENC[AES256_GCM,data:NNhBpFNRoyrVFBYOaJsATBM38Ur/Cy3ybI3MKw7QRGQkAC02dNK5ywE2NFomquICmEVnV5w4OxiJCFK7VFzOBt8KEclV9W2kM5Qghn5thWalCqzSrTjYBd/A/yZwc/L6uBAu1mj8iFJ2ryh4II3fFpvRZ4hg5v8mpJQOv7C42dg=,iv:UVozpS/VcBHxyyNqdZ6ynVb55r+ZbAbIEB1pb/Yo0Zc=,tag:86/Kt6bPwMGTW1URwZe8yQ==,type:str]
+    lastmodified: "2021-11-09T00:37:47Z"
+    mac: ENC[AES256_GCM,data:qKIr40pOhvoG4lfG3qrPVuVIsKXmd8TlPCmgrfX9jIShRL8pOv3YJ3Ag4FNOt+/VpsvCP+JGgWWfTj06kZUoHrjCy1/LcBprI3I5oEdTE/k7TCavfaaL5ssF4+sdrCxPTDRzjF1EDIoDSZXlk/C9DRwebie6ADSeobvvJoaZltc=,iv:leg8b0xqTYry7CvkYxCi0uff5dTeGTnNnyA5PVYg2+g=,tag:QwX5d863vAa3Q0a8O5ORRw==,type:str]
     pgp:
         - created_at: "2021-11-08T21:19:36Z"
           enc: |
