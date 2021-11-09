@@ -5,4 +5,3 @@ generators:
 resources:
   - namespace.yaml
   - pvc.yaml
-  # - readarr-helm.yaml
