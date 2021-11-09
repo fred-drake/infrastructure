@@ -1,0 +1,12 @@
+readarr:
+    ingress:
+        main:
+            hosts:
+                - host: readarr.foo.com
+                  paths:
+                    - path: /
+                      pathType: Prefix
+            tls:
+                - hosts:
+                    - readarr.foo.com
+                  secretName: readarr-tls

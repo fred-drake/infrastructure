@@ -20,7 +20,7 @@ spec:
         path: cluster/apps/readarr/helm
         helm:
             valueFiles:
-                - values.sops.yaml
+                - values-override.yaml
     syncPolicy:
         automated:
             prune: true
@@ -31,8 +31,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-09T00:45:17Z"
-    mac: ENC[AES256_GCM,data:KF9mj+xWZWwMLaZ57wM9YB57s45J2tJCbKcFiDAe16FA4Hpi5jwdiK6o1dVYkFdjMe3RVMI6VEsrVZC3zBYo0m/8TnPYF4kFFlhdWTCKc09HoCDGtWC8yzWmiSzFZ+jBCKshYpcwD7RTOSmIgBWOHgr4mhKJyNgBGmeCxK//CDw=,iv:uMgqrqcb8A7gc/xx3Eu07aHLFCw9pfAAYV7HXuTYk8g=,tag:HdlQLFYVfhK+1wu5fEg9yg==,type:str]
+    lastmodified: "2021-11-09T00:51:41Z"
+    mac: ENC[AES256_GCM,data:f70BlyYSEDZmbiUp/x9ripYIUHtASv+xVt9EIB4DmMSVPw++mf/rG7zfxo+/ev0Iqc3ZsTDm2hPTB7Z+nO3Aan7osop0udckW1UtNj0fbLyllhzg7YWiMMnnQiEkfeP37NbQOWWS8eIjAOzb555RilEhBECFsYUemrtOfA7eKwE=,iv:cWy1VxC77NXSshz/dt2Ddwl4Jq9xSrAT91dTw0/xsVw=,tag:ctsjQrLKM8bVws4PFMX4iQ==,type:str]
     pgp:
         - created_at: "2021-11-08T21:19:36Z"
           enc: |
