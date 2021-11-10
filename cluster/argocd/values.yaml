@@ -1,0 +1,86 @@
+argo-cd:
+  controller:
+    nodeSelector:
+      kubernetes.io/arch: amd64
+  repoServer:
+    env:
+      - name: XDG_CONFIG_HOME
+        value: /.config
+      - name: HELM_PLUGINS
+        value: /custom-tools/helm-plugins/
+      - name: HELM_SECRETS_SOPS_PATH
+        value: /custom-tools/sops
+      - name: HELM_SECRETS_KUBECTL_PATH
+        value: /custom-tools/kubectl
+    nodeSelector:
+        kubernetes.io/arch: amd64
+    volumeMounts:
+      - mountPath: /usr/local/bin/kustomize
+        name: custom-tools
+        subPath: kustomize
+      - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
+        name: custom-tools
+        subPath: ksops
+      - mountPath: /home/argocd/.gnupg
+        name: gnupg
+      - mountPath: /sops
+        name: sops
+      - mountPath: /custom-tools
+        name: custom-tools
+    volumes:
+      - name: custom-tools
+        emptyDir: {}
+      - name: sops
+        secret:
+            secretName: sops
+      - name: gnupg
+        emptyDir: {}
+    initContainers:
+      - name: install-ksops
+        image: viaductoss/ksops:v3.0.1
+        command: ["/bin/sh", "-c"]
+        env:
+          - name: HELM_SECRETS_VERSION
+            value: "3.10.0"
+          - name: SOPS_VERSION
+            value: "3.7.1"
+          - name: KUBECTL_VERSION
+            value: "1.22.0"
+        args:
+          - echo "Installing KSOPS...";
+            mv ksops /custom-tools/;
+            mv $GOPATH/bin/kustomize /custom-tools/;
+            gpg --import /sops/sops.asc;
+            chown -R 999:999 /root/.gnupg;
+            echo "Installing Helm Secrets...";
+            mkdir -p /custom-tools/helm-plugins;
+            wget -qO- https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/helm-secrets.tar.gz | tar -C /custom-tools/helm-plugins -xzf-;
+            wget -qO /custom-tools/sops https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux;
+            wget -qO /custom-tools/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl;
+            chmod +x /custom-tools/*;
+            echo "Done.";
+        volumeMounts:
+          - mountPath: /custom-tools
+            name: custom-tools
+          - mountPath: /sops
+            name: sops
+          - mountPath: /root/.gnupg
+            name: gnupg
+  dex:
+    nodeSelector:
+      kubernetes.io/arch: amd64
+  server:
+    config:
+      kustomize.buildOptions: "--enable-alpha-plugins"
+    nodeSelector:
+      kubernetes.io/arch: amd64
+    extraArgs:
+      - --insecure
+    ingress:
+      enabled: true
+      ingressClassName: "traefik"
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      paths: 
+        - "/"            

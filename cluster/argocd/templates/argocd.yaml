@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: argocd
+    namespace: argocd
+    finalizers:
+        - resources-finalizer.argocd.argoproj.io
+spec:
+    destination:
+        namespace: argocd
+        server: https://kubernetes.default.svc
+    project: default
+    source:
+        repoURL: https://github.com/fred-drake/infrastructure.git
+        targetRevision: master
+        path: cluster/argocd
+        helm:
+            valueFiles:
+              - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
+    syncPolicy:
+        automated:
+            prune: true
+            selfHeal: true
