@@ -48,6 +48,8 @@
             subPath: ksops
           - mountPath: /home/argocd/.gnupg
             name: gnupg
+          - mountPath: /sops
+            name: sops
         volumes:
           - name: custom-tools
             emptyDir: {}
@@ -60,12 +62,25 @@
           - name: install-ksops
             image: viaductoss/ksops:v3.0.1
             command: ["/bin/sh", "-c"]
+            env:
+              - name: HELM_SECRETS_VERSION
+                value: "3.10.0"
+              - name: SOPS_VERSION
+                value: "3.7.1"
+              - name: KUBECTL_VERSION
+                value: "1.22.0"
             args:
               - echo "Installing KSOPS...";
                 mv ksops /custom-tools/;
                 mv $GOPATH/bin/kustomize /custom-tools/;
                 gpg --import /sops/sops.asc;
                 chown -R 999:999 /root/.gnupg;
+                echo "Installing Helm Secrets...";
+                mkdir -p /custom-tools/helm-plugins;
+                wget -qO- https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/helm-secrets.tar.gz | tar -C /custom-tools/helm-plugins -xzf-;
+                wget -qO /custom-tools/sops https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux;
+                wget -qO /custom-tools/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl;
+                chmod +x /custom-tools/*;
                 echo "Done.";
             volumeMounts:
               - mountPath: /custom-tools
