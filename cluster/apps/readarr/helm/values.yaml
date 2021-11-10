@@ -14,13 +14,13 @@ readarr:
           memory: 128Mi
   env:
       TZ: America/New_York
-  ingress: 
-      main:
-          enabled: true
-          ingressClassName: traefik
-          annotations:
-              cert-manager.io/cluster-issuer: letsencrypt-production
-              traefik.ingress.kubernetes.io/router.entrypoints: websecure
+#   ingress: 
+#       main:
+#           enabled: true
+#           ingressClassName: traefik
+#           annotations:
+#               cert-manager.io/cluster-issuer: letsencrypt-production
+#               traefik.ingress.kubernetes.io/router.entrypoints: websecure
   persistence:
       config:
           enabled: true
