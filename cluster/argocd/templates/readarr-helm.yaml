@@ -19,7 +19,7 @@ spec:
   source:
     repoURL: https://github.com/fred-drake/infrastructure.git
     targetRevision: master
-    path: cluster/apps/readarr/helm
+    path: cluster/apps/readarr
     helm:
       valueFiles:
         - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
