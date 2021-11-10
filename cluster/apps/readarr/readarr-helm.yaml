@@ -22,9 +22,9 @@ spec:
         path: cluster/apps/readarr/helm
         helm:
             valueFiles:
-              - secrets://secret-values.sops.yaml
+              - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
+              # - secrets://secret-values.sops.yaml
               # - test-values.yaml
-              # - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
     syncPolicy:
         automated:
             prune: true
