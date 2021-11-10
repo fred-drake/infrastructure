@@ -37,6 +37,12 @@
         env:
           - name: XDG_CONFIG_HOME
             value: /.config
+          - name: HELM_PLUGINS
+            value: /custom-tools/helm-plugins/
+          - name: HELM_SECRETS_SOPS_PATH
+            value: /custom-tools/sops
+          - name: HELM_SECRETS_KUBECTL_PATH
+            value: /custom-tools/kubectl
         nodeSelector:
           kubernetes.io/arch: amd64
         volumeMounts:
@@ -50,6 +56,8 @@
             name: gnupg
           - mountPath: /sops
             name: sops
+          - mountPath: /custom-tools
+            name: custom-tools
         volumes:
           - name: custom-tools
             emptyDir: {}

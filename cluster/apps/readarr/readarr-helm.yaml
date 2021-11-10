@@ -23,8 +23,6 @@ spec:
         helm:
             valueFiles:
               - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
-              # - secrets://secret-values.sops.yaml
-              # - test-values.yaml
     syncPolicy:
         automated:
             prune: true
