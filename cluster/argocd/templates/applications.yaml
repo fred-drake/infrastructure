@@ -16,6 +16,10 @@ metadata:
   {{- end -}}
   {{- end -}}
 spec:
+  destination:
+    namespace: {{ $app.namespace }}
+    server: {{ $app.destination_server | default "https://kubernetes.default.svc" }}
+  project: {{ $app.default_project | default "default" }}
   syncPolicy:
     automated:
       prune: {{ $app.prune }}
