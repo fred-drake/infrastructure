@@ -4,7 +4,9 @@ metadata:
   name: readarr
   namespace: argocd
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  {{- range .Values.application.finalizers }}
+    - {{ . -}}
+  {{ end }}
   annotations:
     argocd-image-updater.argoproj.io/image-list: readarr=linuxserver/readarr:1.x
     argocd-image-updater.argoproj.io/readarr.helm.image-name: readarr.image.name
@@ -14,18 +16,20 @@ metadata:
 spec:
   destination:
     namespace: readarr
-    server: https://kubernetes.default.svc
-  project: default
+    server: {{ .Values.application.destination.server }}
+  project: {{ .Values.application.project }}
   source:
-    repoURL: https://github.com/fred-drake/infrastructure.git
-    targetRevision: master
+    repoURL: {{ .Values.application.source.repoURL }}
+    targetRevision: {{ .Values.application.source.targetRevision }}
     path: cluster/apps/readarr
     helm:
       valueFiles:
-        - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
+        - {{ .Values.application.source.secretsValueFile }}
   syncPolicy:
     automated:
-      prune: true
-      selfHeal: true
+      prune: {{ .Values.application.syncPolicy.prune }}
+      selfHeal: {{ .Values.application.syncPolicy.selfHeal }}
     syncOptions:
-      - CreateNamespace=true
+  {{- range .Values.application.syncOptions }}
+    - {{ . -}}
+  {{ end }}    

@@ -84,3 +84,20 @@ argo-cd:
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
       paths: 
         - "/"            
+
+application:
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  destination:
+      server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://github.com/fred-drake/infrastructure.git
+    targetRevision: master
+    secretsValueFile: secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
+  syncPolicy:
+    prune: true
+    selfHeal: true
+  syncOptions:
+    - CreateNamespace=true
