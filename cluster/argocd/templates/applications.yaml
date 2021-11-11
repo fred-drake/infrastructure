@@ -7,11 +7,11 @@ kind: {{ $app.kind | default "Application" }}
 metadata:
   name: {{ $app.name }}
   namespace: {{ $app.app_namespace | default "argocd" }}
-  {{- if $app.annotations -}}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
   annotations:
   {{- range $key, $value := $app.annotations -}}
     {{ $key }}: {{ $value | quote }}
-  {{- end -}}
   {{- end -}}
 spec:
   destination:
