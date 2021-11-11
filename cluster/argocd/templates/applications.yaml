@@ -7,8 +7,6 @@ kind: {{ $app.kind | default "Application" }}
 metadata:
   name: {{ $app.name }}
   namespace: {{ $app.app_namespace | default "argocd" }}
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
   {{- if $app.annotations -}}
   annotations:
   {{- range $key, $value := $app.annotations -}}
