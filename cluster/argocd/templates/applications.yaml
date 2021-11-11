@@ -16,14 +16,6 @@ metadata:
   {{- end -}}
   {{- end -}}
 spec:
-  destination:
-    namespace: {{ $app.namespace }}
-    server: {{ $app.destination_server | default "https://kubernetes.default.svc" }}
-  project: {{ $app.default_project | default "default" }}
-  source:
-    repoURL: {{ $app.repoURL | default "https://github.com/fred-drake/infrastructure.git" }}
-    targetRevision: {{ $app.targetRevision | default "master" }}
-        path: {{ $app.path }}
   syncPolicy:
     automated:
       prune: {{ $app.prune }}
