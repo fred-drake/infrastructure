@@ -36,3 +36,4 @@ spec:
     syncOptions:
       - CreateNamespace=true
 {{- end }}
+{{- end }}
