@@ -9,10 +9,6 @@ metadata:
   namespace: {{ $app.app_namespace | default "argocd" }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  annotations:
-  {{- range $key, $value := $app.annotations -}}
-    {{ $key }}: {{ $value | quote }}
-  {{- end -}}
 spec:
   destination:
     namespace: {{ $app.namespace }}
