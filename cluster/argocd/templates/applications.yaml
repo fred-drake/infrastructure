@@ -1,0 +1,38 @@
+
+{{- if .Values.applications -}}
+{{- range $index, $app := .Values.applications }}
+---
+apiVersion: {{ $app.apiVersion | default "argoproj.io/v1alpha1" }}
+kind: {{ $app.kind | default "Application" }}
+metadata:
+  name: {{ $app.name }}
+  namespace: {{ $app.app_namespace | default "argocd" }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  {{- if $app.annotations }}
+  annotations:
+  {{- range $key, $value := $app.annotations }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+  {{- end }}
+spec:
+  destination:
+    namespace: {{ $app.namespace }}
+    server: {{ $app.destination.server | default "https://kubernetes.default.svc" }}
+  project: {{ $app.default.project | default "default" }}
+  source:
+    repoURL: {{ $app.repoURL | default "https://github.com/fred-drake/infrastructure.git" }}
+    targetRevision: {{ $app.targetRevision | default "master" }}
+        path: {{ $app.path }}
+        {{- if $app.hasSecretsFile -}}
+        helm:
+          valueFiles:
+            - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
+        {{ end -}}
+  syncPolicy:
+    automated:
+      prune: {{ $app.syncPolicy.prune }}
+      selfHeal: {{ $app.syncPolicy.selfHeal }}
+    syncOptions:
+      - CreateNamespace=true
+{{- end }}
