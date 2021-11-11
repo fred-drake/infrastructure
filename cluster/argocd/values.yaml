@@ -86,12 +86,6 @@ argo-cd:
         - "/"
 
 applications:
-  - name: argocd
-    namespace: argocd
-    path: cluster/argocd
-    hasSecretsFile: true
-    prune: true
-    selfHeal: true
   - name: readarr
     namespace: readarr
     path: cluster/apps/readarr
