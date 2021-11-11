@@ -1,6 +1,6 @@
 
 {{- if .Values.applications -}}
-{{- range $index, $app := .Values.applications }}
+{{- range $index, $app := .Values.applications -}}
 ---
 apiVersion: {{ $app.apiVersion | default "argoproj.io/v1alpha1" }}
 kind: {{ $app.kind | default "Application" }}
@@ -28,12 +28,12 @@ spec:
         helm:
           valueFiles:
             - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
-        {{ end -}}
+        {{- end -}}
   syncPolicy:
     automated:
       prune: {{ $app.prune }}
       selfHeal: {{ $app.selfHeal }}
     syncOptions:
       - CreateNamespace=true
-{{- end }}
+{{- end -}}
 {{- end -}}
