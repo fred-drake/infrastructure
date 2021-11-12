@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+    name: traefik-tls-route
+    namespace: cert-manager
+spec:
+    entryPoints:
+        - web
+        - websecure
+    routes:
+        - match: "Host('*.{{ .Values.domain }}')"
+          kind: Rule
+          services:
+            - name: api@internal
+              kind: TraefikService
+    tls:
+        secretName: internal-certificate-tls

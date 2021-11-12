@@ -1,5 +1,5 @@
 apiVersion: v2
-name: cert-manager
+name: cert-mgr
 version: 1.0.0
 dependencies:
   - name: cert-manager
