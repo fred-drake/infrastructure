@@ -100,7 +100,7 @@ applications:
     selfHeal: true
   - name: argo-image-updater
     namespace: argo-cd
-    path: cluster/core/argo-image-updater
+    path: cluster/core/argocd-image-updater
     annotations:
       argocd-image-updater.argoproj.io/image-list: argo-image-updater=argoprojlabs/argocd-image-updater
       argocd-image-updater.argoproj.io/readarr.helm.image-name: argo-image-updater.image.name
