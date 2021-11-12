@@ -1,39 +1,25 @@
-
-{{- if .Values.applications -}}
-{{- range $index, $app := .Values.applications -}}
----
-apiVersion: {{ $app.apiVersion | default "argoproj.io/v1alpha1" }}
-kind: {{ $app.kind | default "Application" }}
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
 metadata:
-  name: {{ $app.name }}
-  namespace: {{ $app.app_namespace | default "argo-cd" }}
+  name: applications
+  namespace: argo-cd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  {{- if $app.annotations }}
-  annotations:
-  {{- range $key, $value := $app.annotations }}
-    {{ $key }}: {{ $value | quote }}
-  {{- end }}
-  {{- end }}
 spec:
   destination:
-    namespace: {{ $app.namespace }}
-    server: {{ $app.destination_server | default "https://kubernetes.default.svc" }}
-  project: {{ $app.default_project | default "default" }}
+    namespace: argo-cd
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    repoURL: {{ $app.repoURL | default "https://github.com/fred-drake/infrastructure.git" }}
-    targetRevision: {{ $app.targetRevision | default "master" }}
-    path: {{ $app.path }}
-    {{- if $app.hasSecretsFile }}
+    repoURL: "https://github.com/fred-drake/infrastructure.git"
+    targetRevision: "master"
+    path: cluster/base/applications
     helm:
       valueFiles:
         - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
-    {{- end }}
   syncPolicy:
     automated:
-      prune: {{ $app.prune }}
-      selfHeal: {{ $app.selfHeal }}
+      prune: false
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
-{{- end -}}
-{{- end -}}
