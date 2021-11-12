@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: git-creds
+    namespace: argo-cd
+stringData:
+    username: {{ .Values.git_user }}
+    password: {{ .Values.git_token }}
