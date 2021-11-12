@@ -1,5 +1,5 @@
 apiVersion: v2
-name: argocd-image-updater
+name: image-updater
 version: 1.0.0
 dependencies:
   - name: argocd-image-updater
