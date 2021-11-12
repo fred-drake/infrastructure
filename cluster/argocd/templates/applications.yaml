@@ -6,7 +6,7 @@ apiVersion: {{ $app.apiVersion | default "argoproj.io/v1alpha1" }}
 kind: {{ $app.kind | default "Application" }}
 metadata:
   name: {{ $app.name }}
-  namespace: {{ $app.app_namespace | default "argocd" }}
+  namespace: {{ $app.app_namespace | default "argo-cd" }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   {{- if $app.annotations }}
