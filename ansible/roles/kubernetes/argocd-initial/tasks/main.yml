@@ -3,7 +3,7 @@
     state: present
     api_version: v1
     kind: Namespace
-    name: argocd
+    name: argo-cd
 
 - name: create sops gpg secret
   k8s:
@@ -13,7 +13,7 @@
       kind: Secret
       metadata:
           name: sops
-          namespace: argocd
+          namespace: argo-cd
       data:
           sops.asc: "{{ secret.argocd.gpg_key }}"
 
@@ -26,7 +26,7 @@
   kubernetes.core.helm:
     name: argocd
     chart_ref: "{{ playbook_dir }}/../../../cluster/argocd"
-    release_namespace: argocd
+    release_namespace: argo-cd
     values:
       domain: "{{ secret.domain }}"
       argo-cd:
