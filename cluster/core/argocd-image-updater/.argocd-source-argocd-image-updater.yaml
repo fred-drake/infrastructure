@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: image.name
+    value: argoprojlabs/argocd-image-updater
+    forcestring: true
+  - name: image.tag
+    value: v0.11.0
+    forcestring: true
