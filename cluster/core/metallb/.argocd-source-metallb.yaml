@@ -4,7 +4,7 @@ helm:
     value: quay.io/metallb/speaker
     forcestring: true
   - name: speaker.image.tag
-    value: v0.11
+    value: v0.11.0
     forcestring: true
   - name: controller.image.name
     value: quay.io/metallb/controller
