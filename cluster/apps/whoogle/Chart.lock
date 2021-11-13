@@ -1,0 +1,6 @@
+dependencies:
+- name: whoogle
+  repository: https://k8s-at-home.com/charts/
+  version: 3.0.1
+digest: sha256:c3aeb1a95473156b95ed8e1944fac28a1a5bc52f292a94c3437b7a861ebd7c18
+generated: "2021-11-13T12:19:43.677468-05:00"
