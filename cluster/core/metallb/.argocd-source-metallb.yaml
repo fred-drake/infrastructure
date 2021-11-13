@@ -4,11 +4,11 @@ helm:
     value: quay.io/metallb/speaker
     forcestring: true
   - name: metallb.speaker.image.tag
-    value: v0.11.0
+    value: v0.11
     forcestring: true
   - name: metallb.controller.image.name
     value: quay.io/metallb/controller
     forcestring: true
   - name: metallb.controller.image.tag
-    value: v0.11.0
+    value: v0.11
     forcestring: true
