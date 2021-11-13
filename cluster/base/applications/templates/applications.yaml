@@ -25,9 +25,9 @@ spec:
     targetRevision: {{ $app.targetRevision | default "master" }}
     path: {{ $app.path }}
     {{- if $app.hasSecretsFile }}
-    # helm:
-    #   valueFiles:
-    #     - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
+    helm:
+      valueFiles:
+        - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
     {{- end }}
   syncPolicy:
     automated:
