@@ -20,9 +20,9 @@ applications:
     path: cluster/core/metallb
     annotations:
       argocd-image-updater.argoproj.io/image-list: speaker=quay.io/metallb/speaker:0.x, controller=quay.io/metallb/controller:0.x
-      argocd-image-updater.argoproj.io/speaker.helm.image-name: metallb.speaker.image.name
+      argocd-image-updater.argoproj.io/speaker.helm.image-name: metallb.speaker.image.repository
       argocd-image-updater.argoproj.io/speaker.helm.image-tag: metallb.speaker.image.tag
-      argocd-image-updater.argoproj.io/controller.helm.image-name: metallb.controller.image.name
+      argocd-image-updater.argoproj.io/controller.helm.image-name: metallb.controller.image.repository
       argocd-image-updater.argoproj.io/controller.helm.image-tag: metallb.controller.image.tag
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
