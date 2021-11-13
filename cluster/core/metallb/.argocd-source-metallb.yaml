@@ -1,14 +1,14 @@
 helm:
   parameters:
-  - name: speaker.image.name
+  - name: metallb.speaker.image.name
     value: quay.io/metallb/speaker
     forcestring: true
-  - name: speaker.image.tag
+  - name: metallb.speaker.image.tag
     value: v0.11.0
     forcestring: true
-  - name: controller.image.name
+  - name: metallb.controller.image.name
     value: quay.io/metallb/controller
     forcestring: true
-  - name: controller.image.tag
+  - name: metallb.controller.image.tag
     value: v0.11.0
     forcestring: true
