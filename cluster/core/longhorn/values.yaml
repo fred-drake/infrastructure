@@ -1,0 +1,15 @@
+longhorn:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    tls: true
+    tlsSecret: longhorn-tls
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  defaultSettings:
+    backupTargetCredentialSecret: minio-secret
