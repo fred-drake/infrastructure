@@ -43,7 +43,7 @@ applications:
     prune: true
     selfHeal: true
   - name: cert-manager
-    namespace: argo-cd
+    namespace: cert-manager
     path: cluster/core/cert-manager
     annotations:
       argocd.argoproj.io/sync-wave: "-3"
