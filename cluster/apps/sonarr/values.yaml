@@ -1,4 +1,4 @@
-readarr:
+sonarr:
   image:
     repository: linuxserver/sonarr
     tag: 0.6.1373
