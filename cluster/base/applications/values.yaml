@@ -19,12 +19,6 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
-  - name: traefik
-    namespace: traefik
-    path: cluster/core/traefik
-    hasSecretsFile: false
-    prune: true
-    selfHeal: true
   - name: cert-manager
     namespace: cert-manager
     path: cluster/core/cert-manager
@@ -39,6 +33,12 @@ applications:
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
+    prune: true
+    selfHeal: true
+  - name: traefik
+    namespace: traefik
+    path: cluster/core/traefik
+    hasSecretsFile: false
     prune: true
     selfHeal: true
   # - name: readarr
