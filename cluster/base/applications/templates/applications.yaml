@@ -1,5 +1,5 @@
 {{- if .Values.applications -}}
-{{- range $index, $app := .Values.applications -}}
+{{- range $index, $app := .Values.applications }}
 ---
 apiVersion: {{ $app.apiVersion | default "argoproj.io/v1alpha1" }}
 kind: {{ $app.kind | default "Application" }}
@@ -34,5 +34,5 @@ spec:
       selfHeal: {{ $app.selfHeal }}
     syncOptions:
       - CreateNamespace=true
-{{- end -}}
+{{ end }}
 {{- end -}}
