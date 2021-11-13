@@ -10,5 +10,5 @@ helm:
     value: quay.io/metallb/controller
     forcestring: true
   - name: metallb.controller.image.tag
-    value: v0.11
+    value: v0.11.0
     forcestring: true
