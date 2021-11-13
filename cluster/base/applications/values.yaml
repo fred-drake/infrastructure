@@ -37,11 +37,11 @@ applications:
     annotations:
       argocd.argoproj.io/sync-wave: "-2"
       argocd-image-updater.argoproj.io/image-list: cainjector=quay.io/jetstack/cert-manager-cainjector:1.x, mgr=quay.io/jetstack/cert-manager-controller:v1.x, webhook=quay.io/jetstack/cert-manager-webhook:1.x
-      argocd-image-updater.argoproj.io/cainjector.helm.image-name: cert-manager.cainjector.image.name
+      argocd-image-updater.argoproj.io/cainjector.helm.image-name: cert-manager.cainjector.image.repository
       argocd-image-updater.argoproj.io/cainjector.helm.image-tag: cert-manager.cainjector.image.tag
-      argocd-image-updater.argoproj.io/mgr.helm.image-name: cert-manager.image.name
+      argocd-image-updater.argoproj.io/mgr.helm.image-name: cert-manager.image.repository
       argocd-image-updater.argoproj.io/mgr.helm.image-tag: cert-manager.image.tag
-      argocd-image-updater.argoproj.io/webhook.helm.image-name: cert-manager.webhook.image.name
+      argocd-image-updater.argoproj.io/webhook.helm.image-name: cert-manager.webhook.image.repository
       argocd-image-updater.argoproj.io/webhook.helm.image-tag: cert-manager.webhook.image.tag
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
@@ -95,7 +95,7 @@ applications:
     path: cluster/core/argocd-image-updater
     annotations:
       argocd-image-updater.argoproj.io/image-list: argocd-image-updater=argoprojlabs/argocd-image-updater
-      argocd-image-updater.argoproj.io/argocd-image-updater.helm.image-name: argocd-image-updater.image.name
+      argocd-image-updater.argoproj.io/argocd-image-updater.helm.image-name: argocd-image-updater.image.repository
       argocd-image-updater.argoproj.io/argocd-image-updater.helm.image-tag: argocd-image-updater.image.tag
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
@@ -107,7 +107,7 @@ applications:
     path: cluster/apps/whoogle
     annotations:
       argocd-image-updater.argoproj.io/image-list: whoogle=benbusby/whoogle-search
-      argocd-image-updater.argoproj.io/whoogle.helm.image-name: whoogle.image.name
+      argocd-image-updater.argoproj.io/whoogle.helm.image-name: whoogle.image.repository
       argocd-image-updater.argoproj.io/whoogle.helm.image-tag: whoogle.image.tag
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
@@ -119,7 +119,7 @@ applications:
     path: cluster/apps/cyberchef
     annotations:
       argocd-image-updater.argoproj.io/image-list: cyberchef=mpepping/cyberchef
-      argocd-image-updater.argoproj.io/readarr.helm.image-name: cyberchef.image.name
+      argocd-image-updater.argoproj.io/readarr.helm.image-name: cyberchef.image.repository
       argocd-image-updater.argoproj.io/readarr.helm.image-tag: cyberchef.image.tag
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
@@ -131,7 +131,7 @@ applications:
     path: cluster/apps/readarr
     annotations:
       argocd-image-updater.argoproj.io/image-list: readarr=linuxserver/readarr:1.x
-      argocd-image-updater.argoproj.io/readarr.helm.image-name: readarr.image.name
+      argocd-image-updater.argoproj.io/readarr.helm.image-name: readarr.image.repository
       argocd-image-updater.argoproj.io/readarr.helm.image-tag: readarr.image.tag
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
@@ -143,7 +143,7 @@ applications:
     path: cluster/apps/prowlarr
     annotations:
       argocd-image-updater.argoproj.io/image-list: linuxserver/prowlarr:1.x
-      argocd-image-updater.argoproj.io/helm.image-name: prowlarr.image.name
+      argocd-image-updater.argoproj.io/helm.image-name: prowlarr.image.repository
       argocd-image-updater.argoproj.io/helm.image-tag: prowlarr.image.tag
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
@@ -155,7 +155,7 @@ applications:
     path: cluster/apps/sonarr
     annotations:
       argocd-image-updater.argoproj.io/image-list: linuxserver/sonarr:0.x
-      argocd-image-updater.argoproj.io/helm.image-name: sonarr.image.name
+      argocd-image-updater.argoproj.io/helm.image-name: sonarr.image.repository
       argocd-image-updater.argoproj.io/helm.image-tag: sonarr.image.tag
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
