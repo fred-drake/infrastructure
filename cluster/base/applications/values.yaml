@@ -3,6 +3,7 @@ applications:
     namespace: argo-cd
     path: cluster/argocd
     annotations:
+      argocd.argoproj.io/sync-wave: "-3"
       argocd-image-updater.argoproj.io/image-list: controller=quay.io/argoproj/argocd:2.x, dex=ghcr.io/dexidp/dex:2.x, redis=redis:6.x.x-alpine
       argocd-image-updater.argoproj.io/dex.helm.image-name: argo-cd.dex.image.repository
       argocd-image-updater.argoproj.io/dex.helm.image-tag: argo-cd.dex.image.tag
@@ -19,6 +20,7 @@ applications:
     namespace: metallb-system
     path: cluster/core/metallb
     annotations:
+      argocd.argoproj.io/sync-wave: "-2"
       # argocd-image-updater.argoproj.io/image-list: speaker=quay.io/metallb/speaker:0.x, controller=quay.io/metallb/controller:0.x
       # argocd-image-updater.argoproj.io/speaker.helm.image-name: metallb.speaker.image.repository
       # argocd-image-updater.argoproj.io/speaker.helm.image-tag: metallb.speaker.image.tag
@@ -33,6 +35,7 @@ applications:
     namespace: cert-manager
     path: cluster/core/cert-manager
     annotations:
+      argocd.argoproj.io/sync-wave: "-2"
       argocd-image-updater.argoproj.io/image-list: cainjector=quay.io/jetstack/cert-manager-cainjector:1.x, mgr=quay.io/jetstack/cert-manager-controller:v1.x, webhook=quay.io/jetstack/cert-manager-webhook:1.x
       argocd-image-updater.argoproj.io/cainjector.helm.image-name: cert-manager.cainjector.image.name
       argocd-image-updater.argoproj.io/cainjector.helm.image-tag: cert-manager.cainjector.image.tag
@@ -49,6 +52,7 @@ applications:
     namespace: traefik
     path: cluster/core/traefik
     annotations:
+      argocd.argoproj.io/sync-wave: "-2"
       argocd-image-updater.argoproj.io/image-list: traefik=traefik:1.x
       argocd-image-updater.argoproj.io/traefik.helm.image-name: traefik.image.name
       argocd-image-updater.argoproj.io/traefik.helm.image-tag: traefik.image.tag
@@ -57,34 +61,35 @@ applications:
     hasSecretsFile: false
     prune: true
     selfHeal: true
-  # - name: longhorn
-  #   namespace: longhorn-system
-  #   path: cluster/core/longhorn
-  #   annotations:
-  #     argocd-image-updater.argoproj.io/image-list: engine=longhornio/longhorn-engine:1.x, manager=longhornio/longhorn-manager:1.x, ui=longhornio/longhorn-ui:1.x, instanceManager=longhornio/longhorn-instance-manager:1_x, shareManager=longhornio/longhorn-share-manager:1_x, backingImageManager=longhornio/longhorn-backing-image-manager:2_x
-  #     argocd-image-updater.argoproj.io/engine.helm.image-name: longhorn.image.longhorn.engine.repository
-  #     argocd-image-updater.argoproj.io/engine.helm.image-tag: longhorn.image.longhorn.engine.tag
-  #     argocd-image-updater.argoproj.io/manager.helm.image-name: longhorn.image.longhorn.manager.repository
-  #     argocd-image-updater.argoproj.io/manager.helm.image-tag: longhorn.image.longhorn.manager.tag
-  #     argocd-image-updater.argoproj.io/ui.helm.image-name: longhorn.image.longhorn.ui.repository
-  #     argocd-image-updater.argoproj.io/ui.helm.image-tag: longhorn.image.longhorn.ui.tag
-  #     argocd-image-updater.argoproj.io/instanceManager.helm.image-name: longhorn.image.longhorn.instanceManager.repository
-  #     argocd-image-updater.argoproj.io/instanceManager.helm.image-tag: longhorn.image.longhorn.instanceManager.tag
-  #     argocd-image-updater.argoproj.io/instanceManager.update-strategy: name
-  #     argocd-image-updater.argoproj.io/instanceManager.allow-tags: regexp:^[0-9]+_[0-9]+$
-  #     argocd-image-updater.argoproj.io/shareManager.helm.image-name: longhorn.image.longhorn.shareManager.repository
-  #     argocd-image-updater.argoproj.io/shareManager.helm.image-tag: longhorn.image.longhorn.shareManager.tag
-  #     argocd-image-updater.argoproj.io/shareManager.update-strategy: name
-  #     argocd-image-updater.argoproj.io/shareManager.allow-tags: regexp:^[0-9]+_[0-9]+$
-  #     argocd-image-updater.argoproj.io/backingImageManager.helm.image-name: longhorn.image.longhorn.backingImageManager.repository
-  #     argocd-image-updater.argoproj.io/backingImageManager.helm.image-tag: longhorn.image.longhorn.backingImageManager.tag
-  #     argocd-image-updater.argoproj.io/backingImageManager.update-strategy: name
-  #     argocd-image-updater.argoproj.io/backingImageManager.allow-tags: regexp:^[0-9]+_[0-9]+$
-  #     argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
-  #     argocd-image-updater.argoproj.io/git-branch: master
-  #   hasSecretsFile: true
-  #   prune: true
-  #   selfHeal: true
+  - name: longhorn
+    namespace: longhorn-system
+    path: cluster/core/longhorn
+    annotations:
+      argocd.argoproj.io/sync-wave: "-1"
+      argocd-image-updater.argoproj.io/image-list: engine=longhornio/longhorn-engine:1.x, manager=longhornio/longhorn-manager:1.x, ui=longhornio/longhorn-ui:1.x, instanceManager=longhornio/longhorn-instance-manager:1_x, shareManager=longhornio/longhorn-share-manager:1_x, backingImageManager=longhornio/longhorn-backing-image-manager:2_x
+      argocd-image-updater.argoproj.io/engine.helm.image-name: longhorn.image.longhorn.engine.repository
+      argocd-image-updater.argoproj.io/engine.helm.image-tag: longhorn.image.longhorn.engine.tag
+      argocd-image-updater.argoproj.io/manager.helm.image-name: longhorn.image.longhorn.manager.repository
+      argocd-image-updater.argoproj.io/manager.helm.image-tag: longhorn.image.longhorn.manager.tag
+      argocd-image-updater.argoproj.io/ui.helm.image-name: longhorn.image.longhorn.ui.repository
+      argocd-image-updater.argoproj.io/ui.helm.image-tag: longhorn.image.longhorn.ui.tag
+      argocd-image-updater.argoproj.io/instanceManager.helm.image-name: longhorn.image.longhorn.instanceManager.repository
+      argocd-image-updater.argoproj.io/instanceManager.helm.image-tag: longhorn.image.longhorn.instanceManager.tag
+      argocd-image-updater.argoproj.io/instanceManager.update-strategy: name
+      argocd-image-updater.argoproj.io/instanceManager.allow-tags: regexp:^[0-9]+_[0-9]+$
+      argocd-image-updater.argoproj.io/shareManager.helm.image-name: longhorn.image.longhorn.shareManager.repository
+      argocd-image-updater.argoproj.io/shareManager.helm.image-tag: longhorn.image.longhorn.shareManager.tag
+      argocd-image-updater.argoproj.io/shareManager.update-strategy: name
+      argocd-image-updater.argoproj.io/shareManager.allow-tags: regexp:^[0-9]+_[0-9]+$
+      argocd-image-updater.argoproj.io/backingImageManager.helm.image-name: longhorn.image.longhorn.backingImageManager.repository
+      argocd-image-updater.argoproj.io/backingImageManager.helm.image-tag: longhorn.image.longhorn.backingImageManager.tag
+      argocd-image-updater.argoproj.io/backingImageManager.update-strategy: name
+      argocd-image-updater.argoproj.io/backingImageManager.allow-tags: regexp:^[0-9]+_[0-9]+$
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/git-branch: master
+    hasSecretsFile: true
+    prune: true
+    selfHeal: true
   - name: argocd-image-updater
     namespace: argo-cd
     path: cluster/core/argocd-image-updater
@@ -109,18 +114,18 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
-  # - name: readarr
-  #   namespace: readarr
-  #   path: cluster/apps/readarr
-  #   annotations:
-  #     argocd-image-updater.argoproj.io/image-list: readarr=linuxserver/readarr:1.x
-  #     argocd-image-updater.argoproj.io/readarr.helm.image-name: readarr.image.name
-  #     argocd-image-updater.argoproj.io/readarr.helm.image-tag: readarr.image.tag
-  #     argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
-  #     argocd-image-updater.argoproj.io/git-branch: master
-  #   hasSecretsFile: true
-  #   prune: true
-  #   selfHeal: true
+  - name: readarr
+    namespace: readarr
+    path: cluster/apps/readarr
+    annotations:
+      argocd-image-updater.argoproj.io/image-list: readarr=linuxserver/readarr:1.x
+      argocd-image-updater.argoproj.io/readarr.helm.image-name: readarr.image.name
+      argocd-image-updater.argoproj.io/readarr.helm.image-tag: readarr.image.tag
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/git-branch: master
+    hasSecretsFile: true
+    prune: true
+    selfHeal: true
   - name: cyberchef
     namespace: cyberchef
     path: cluster/apps/cyberchef
