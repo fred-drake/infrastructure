@@ -8,7 +8,7 @@ applications:
     #   argocd-image-updater.argoproj.io/readarr.helm.image-tag: readarr.image.tag
     #   argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
     #   argocd-image-updater.argoproj.io/git-branch: master
-      argocd.argoproj.io/sync-wave: "-6"
+      # argocd.argoproj.io/sync-wave: "-6"
     hasSecretsFile: true
     prune: true
     selfHeal: true
@@ -23,7 +23,7 @@ applications:
       argocd-image-updater.argoproj.io/controller.helm.image-tag: controller.image.tag
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
-      argocd.argoproj.io/sync-wave: "-5"
+      # argocd.argoproj.io/sync-wave: "-5"
     hasSecretsFile: true
     prune: true
     selfHeal: true
@@ -38,7 +38,7 @@ applications:
     #   argocd-image-updater.argoproj.io/controller.helm.image-tag: controller.image.tag
     #   argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
     #   argocd-image-updater.argoproj.io/git-branch: master
-      argocd.argoproj.io/sync-wave: "-4"
+      # argocd.argoproj.io/sync-wave: "-4"
     hasSecretsFile: false
     prune: true
     selfHeal: true
@@ -46,7 +46,7 @@ applications:
     namespace: argo-cd
     path: cluster/core/cert-manager
     annotations:
-      argocd.argoproj.io/sync-wave: "-3"
+      # argocd.argoproj.io/sync-wave: "-3"
       argocd-image-updater.argoproj.io/image-list: cainjector=quay.io/jetstack/cert-manager-cainjector:1.x, mgr=quay.io/jetstack/cert-manager-controller:v1.x, webhook=quay.io/jetstack/cert-manager-webhook:1.x
       argocd-image-updater.argoproj.io/cainjector.helm.image-name: cert-manager.cainjector.image.name
       argocd-image-updater.argoproj.io/cainjector.helm.image-tag: cert-manager.cainjector.image.tag
