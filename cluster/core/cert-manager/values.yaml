@@ -4,7 +4,7 @@ cert-manager:
       keel.sh/approvals: "1"
       keel.sh/trigger: poll
       keel.sh/pollSchedule: '@every 12h'
-  installCRDs: false
+  installCRDs: true
   webhook:
       enabled: true
   extraArgs:
