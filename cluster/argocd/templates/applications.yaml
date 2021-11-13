@@ -14,9 +14,9 @@ spec:
     repoURL: "https://github.com/fred-drake/infrastructure.git"
     targetRevision: "master"
     path: cluster/base/applications
-    helm:
-      valueFiles:
-        - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
+    # helm:
+    #   valueFiles:
+    #     - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
   syncPolicy:
     automated:
       prune: false
