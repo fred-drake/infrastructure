@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: sonarr-videos
+    annotations:
+        velero.io/exclude-from-backup: "true"
+spec:
+    storageClassName: ""
+    capacity:
+        storage: 20Ti
+    accessModes:
+        - ReadWriteMany
+    persistentVolumeReclaimPolicy: Retain
+    flexVolume:
+        driver: fstab/cifs
+        fsType: cifs
+        secretRef:
+            name: cifs-secret
+        options:
+            networkPath: "//{{ .Values.cifs_server }}/videos"
+            mountOptions: file_mode=0777,dir_mode=0777,vers=3.0,gid=100,uid=99
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: sonarr-torrent
+    annotations:
+        velero.io/exclude-from-backup: "true"
+spec:
+    storageClassName: ""
+    capacity:
+        storage: 20Ti
+    accessModes:
+        - ReadWriteMany
+    persistentVolumeReclaimPolicy: Retain
+    flexVolume:
+        driver: fstab/cifs
+        fsType: cifs
+        secretRef:
+            name: cifs-secret
+        options:
+            networkPath: "//{{ .Values.cifs_server }}/torrent"
+            mountOptions: file_mode=0777,dir_mode=0777,vers=3.0,gid=100,uid=99
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: sonarr-videos
+    namespace: sonarr
+spec:
+    storageClassName: ""
+    volumeName: sonarr-videos
+    accessModes:
+        - ReadWriteMany
+    resources:
+        requests:
+            storage: 20Ti
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: sonarr-torrent
+    namespace: sonarr
+spec:
+    storageClassName: ""
+    volumeName: sonarr-torrent
+    accessModes:
+        - ReadWriteMany
+    resources:
+        requests:
+            storage: 20Ti
