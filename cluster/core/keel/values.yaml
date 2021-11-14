@@ -5,7 +5,7 @@ keel:
     version: v3
   image:
     repository: keelhq/keel
-    tag: 0.16.1
+    tag: latest
   resources:
     requests:
       cpu: 100m
