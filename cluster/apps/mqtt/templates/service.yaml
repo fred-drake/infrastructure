@@ -7,8 +7,9 @@ spec:
     type: LoadBalancer
     loadBalancerIP: {{ .Values.loadBalancerIP }}
     selector:
-        app: mqtt
+        app: {{ .Release.Name }}
     ports:
         - port: 1883
           targetPort: 1883
           name: mqtt
+          protocol: TCP
