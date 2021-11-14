@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: {{ .Release.Name }}
+    namespace: {{ .Release.Namespace }}
+    annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    labels:
+        app.kubernetes.io/instance: office-touchpad
+        app.kubernetes.io/name: office-touchpad
+spec:
+    ingressClassName: traefik
+    rules:
+        - host: "office-touchpad.{{ .Values.domain }}"
+          http:
+            paths:
+                - pathType: Prefix
+                  path: /
+                  backend:
+                    service:
+                        name: office-touchpad
+                        port:
+                            number: 80
+    tls:
+        - hosts:
+            - "office-touchpad.{{ .Values.domain }}"
+          secretName: office-touchpad-app-tls

@@ -286,3 +286,9 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
+  - name: office-touchpad
+    namespace: office-touchpad
+    path: cluster/apps/office-touchpad
+    hasSecretsFile: true
+    prune: true
+    selfHeal: true

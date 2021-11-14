@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: environment-secret
+    namespace: {{ .Release.Namespace }}
+type: Opaque
+stringData:
+    nodeRedUrlPrefix: {{ .Values.nodeRedUrlPrefix }}
+    scannerUrlPrefix: {{ .Values.scannerUrlPrefix }}

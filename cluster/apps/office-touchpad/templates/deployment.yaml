@@ -1,28 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: office-touchpad
-    namespace: office-touchpad
-    annotations:
-        keel.sh/policy: minor
-        keel.sh/approvals: "1"
-        keel.sh/trigger: poll
-        keel.sh/pollSchedule: '@every 1h'
+    name: {{ .Release.Name }}
+    namespace: {{ .Release.Namespace }}
 spec:
     replicas: 1
     selector:
         matchLabels:
-            app: office-touchpad
+            app: {{ .Release.Name }}
     template:
         metadata:
             labels:
-                app: office-touchpad
+                app: {{ .Release.Name }}
         spec:
             nodeSelector:
                 kubernetes.io/arch: arm64
             containers:
-                - name: office-touchpad
-                  image: fdrake/office-touchpad:0.0.1
+                - name: {{ .Release.Name }}
+                  image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
                   resources:
                     requests:
                         cpu: 100m
