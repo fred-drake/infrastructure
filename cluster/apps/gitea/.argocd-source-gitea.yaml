@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: gitea.image.repository
+    value: gitea/gitea
+    forcestring: true
+  - name: gitea.image.tag
+    value: 1.15.6
+    forcestring: true
