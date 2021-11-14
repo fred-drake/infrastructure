@@ -1,0 +1,26 @@
+grafana:
+  image:
+      tag: 8.2.2
+  controller:
+      annotations:
+          keel.sh/policy: major
+          keel.sh/approvals: "1"
+          keel.sh/trigger: poll
+          keel.sh/pollSchedule: '@every 12h'
+  resource:
+      requests:
+          cpu: 100m
+          memory: 128Mi
+  env:
+      TZ: America/New_York
+      GF_PANELS_DISABLE_SANITIZE_HTML: "true"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+  persistence:
+      enabled: true
+      existingClaim: grafana-config
+  ingress:
+      enabled: true
+      ingressClassName: traefik
+      annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure

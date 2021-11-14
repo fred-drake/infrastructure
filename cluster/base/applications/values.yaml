@@ -246,3 +246,15 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
+  - name: grafana
+    namespace: grafana
+    path: cluster/apps/grafana
+    annotations:
+      argocd-image-updater.argoproj.io/image-list: grafana=grafana/grafana:8.x
+      argocd-image-updater.argoproj.io/grafana.helm.image-name: grafana.image.repository
+      argocd-image-updater.argoproj.io/grafana.helm.image-tag: grafana.image.tag
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/git-branch: master
+    hasSecretsFile: true
+    prune: true
+    selfHeal: true
