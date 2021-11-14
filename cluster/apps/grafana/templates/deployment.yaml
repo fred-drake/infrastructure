@@ -31,9 +31,12 @@ spec:
               name: http-grafana
               protocol: TCP
           env:
-            TZ: America/New_York
-            GF_PANELS_DISABLE_SANITIZE_HTML: "true"
-            GF_AUTH_ANONYMOUS_ENABLED: "true"
+            - name: TZ
+              value: America/New_York
+            - name: GF_PANELS_DISABLE_SANITIZE_HTML
+              value: "true"
+            - name: GF_AUTH_ANONYMOUS_ENABLED
+              value: "true"
           readinessProbe:
             failureThreshold: 3
             httpGet:
