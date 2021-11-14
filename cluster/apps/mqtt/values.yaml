@@ -13,7 +13,8 @@ mosquitto:
             cpu: 100m
             memory: 128Mi
     service:
-        type: ClusterIP
+        main: 
+            type: ClusterIP
     env:
         TZ: America/New_York
     monitoring:
