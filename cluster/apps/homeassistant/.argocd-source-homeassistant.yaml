@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: home-assistant.image.repository
+    value: homeassistant/home-assistant
+    forcestring: true
+  - name: home-assistant.image.tag
+    value: 2021.9.7
+    forcestring: true
