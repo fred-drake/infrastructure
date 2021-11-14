@@ -1,8 +1,8 @@
 kind: Service
 apiVersion: v1
 metadata:
-    name: mqtt
-    namespace: mqtt
+    name: {{ .Release.Name }}
+    namespace: {{ .Release.Namespace }}
 spec:
     type: LoadBalancer
     loadBalancerIP: {{ .Values.loadBalancerIP }}
@@ -12,6 +12,3 @@ spec:
         - port: 1883
           targetPort: 1883
           name: mqtt
-        - port: 9001
-          targetPort: 9001
-          name: websockets

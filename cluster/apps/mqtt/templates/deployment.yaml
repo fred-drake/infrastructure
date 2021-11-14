@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mqtt
+  name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
   annotations:
     keel.sh/policy: major
@@ -12,14 +12,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mqtt
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: mqtt
+        app: {{ .Release.Name }}
     spec:
       containers:
-        - name: mqtt
+        - name: {{ .Release.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           resources:
             requests:
