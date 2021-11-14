@@ -14,7 +14,7 @@ mosquitto:
             memory: 128Mi
     service:
         main: 
-            type: ClusterIP
+            type: LoadBalancer
     env:
         TZ: America/New_York
     monitoring:
