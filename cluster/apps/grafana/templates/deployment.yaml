@@ -24,7 +24,7 @@ spec:
           - 0
       containers:
         - name: grafana
-          image: "{{ .Values.image.repository }}/{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
