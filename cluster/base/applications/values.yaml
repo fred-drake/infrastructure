@@ -53,7 +53,7 @@ applications:
     path: cluster/core/traefik
     annotations:
       argocd.argoproj.io/sync-wave: "-2"
-      argocd-image-updater.argoproj.io/image-list: traefik=traefik:1.x
+      argocd-image-updater.argoproj.io/image-list: traefik=traefik:2.x
       argocd-image-updater.argoproj.io/traefik.helm.image-name: traefik.image.name
       argocd-image-updater.argoproj.io/traefik.helm.image-tag: traefik.image.tag
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
