@@ -1,0 +1,9 @@
+calibre:
+  image:
+    repository: linuxserver/calibre
+    tag: 5.31.1
+
+calibre-web:
+  image:
+    repository: linuxserver/calibre-web
+    tag: 5.31.1

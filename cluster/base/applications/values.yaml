@@ -220,3 +220,17 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
+  - name: calibre
+    namespace: calibre
+    path: cluster/apps/calibre
+    annotations:
+      argocd-image-updater.argoproj.io/image-list: calibre=linuxserver/calibre, calibre-web=linuxserver/calibre
+      argocd-image-updater.argoproj.io/calibre.helm.image-name: calibre.image.repository
+      argocd-image-updater.argoproj.io/calibre.helm.image-tag: calibre.image.tag
+      argocd-image-updater.argoproj.io/calibre-web.helm.image-name: calibre-web.image.repository
+      argocd-image-updater.argoproj.io/calibre-web.helm.image-tag: calibre-web.image.tag
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/git-branch: master
+    hasSecretsFile: true
+    prune: true
+    selfHeal: true

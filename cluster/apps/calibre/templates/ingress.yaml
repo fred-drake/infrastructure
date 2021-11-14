@@ -1,0 +1,50 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: calibre
+    namespace: calibre
+    annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    labels:
+        app.kubernetes.io/instance: calibre
+        app.kubernetes.io/name: calibre
+spec:
+    ingressClassName: traefik
+    rules:
+        - host: "calibre-server.{{ .Values.domain }}"
+          http:
+            paths:
+                - pathType: Prefix
+                  path: /
+                  backend:
+                    service:
+                        name: calibre
+                        port:
+                            number: 8080
+        - host: "calibre.{{ .Values.domain }}"
+          http:
+            paths:
+                - pathType: Prefix
+                  path: /
+                  backend:
+                    service:
+                        name: calibre
+                        port:
+                            number: 8083
+        - host: "calibre-sharing.{{ .Values.domain }}"
+          http:
+            paths:
+                - pathType: Prefix
+                  path: /
+                  backend:
+                    service:
+                        name: calibre
+                        port:
+                            number: 9900
+    tls:
+        - hosts:
+            - "calibre.{{ .Values.domain }}"
+            - "calibre-server.{{ .Values.domain }}"
+            - "calibre-sharing.{{ .Values.domain }}"
+          secretName: calibre-tls
