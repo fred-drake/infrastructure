@@ -2,12 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mqtt
-  namespace: mqtt
+  namespace: {{ .Release.Namespace }}
   annotations:
-    keel.sh/policy: minor
+    keel.sh/policy: major
     keel.sh/approvals: "1"
     keel.sh/trigger: poll
-    keel.sh/pollSchedule: '@every 1h'
+    keel.sh/pollSchedule: '@every 12h'
 spec:
   replicas: 1
   selector:
@@ -20,8 +20,7 @@ spec:
     spec:
       containers:
         - name: mqtt
-          image: eclipse-mosquitto
-          imagePullPolicy: Always
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           resources:
             requests:
                 cpu: 100m
