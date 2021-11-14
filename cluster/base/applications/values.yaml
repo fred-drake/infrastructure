@@ -106,6 +106,24 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
+  - name: prometheus
+    namespace: prometheus
+    path: cluster/core/prometheus
+    annotations:
+      argocd-image-updater.argoproj.io/image-list: alertmanager=quay.io/prometheus/alertmanager:0.x, nodeExporter=quay.io/prometheus/node-exporter:1.x, server=quay.io/prometheus/prometheus:2.x, pushgateway=prom/pushgateway:1.x
+      argocd-image-updater.argoproj.io/alertmanager.image-name: alertmanager.image.repository
+      argocd-image-updater.argoproj.io/alertmanager.helm.image-tag: alertmanager.image.tag
+      argocd-image-updater.argoproj.io/nodeExporter.image-name: nodeExporter.image.repository
+      argocd-image-updater.argoproj.io/nodeExporter.helm.image-tag: nodeExporter.image.tag
+      argocd-image-updater.argoproj.io/server.image-name: server.image.repository
+      argocd-image-updater.argoproj.io/server.helm.image-tag: server.image.tag
+      argocd-image-updater.argoproj.io/pushgateway.image-name: pushgateway.image.repository
+      argocd-image-updater.argoproj.io/pushgateway.helm.image-tag: pushgateway.image.tag
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/git-branch: master
+    hasSecretsFile: true
+    prune: true
+    selfHeal: true
   - name: argocd-image-updater
     namespace: argo-cd
     path: cluster/core/argocd-image-updater
