@@ -15,13 +15,3 @@ keel:
     botName: keel
     channel: general
     approvalsChannel: app-updates
-  service:
-    enabled: true
-    type: ClusterIP
-    externalPort: 80
-  ingress:
-    enabled: true
-    ingressClassName: traefik
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-production
-      traefik.ingress.kubernetes.io/router.entrypoints: websecure
