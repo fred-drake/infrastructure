@@ -1,8 +1,8 @@
 helm:
   parameters:
-  - name: readarr.image.name
+  - name: readarr.image.repository
     value: linuxserver/readarr
     forcestring: true
   - name: readarr.image.tag
-    value: 1.0.1024
+    value: 1.0.1028
     forcestring: true
