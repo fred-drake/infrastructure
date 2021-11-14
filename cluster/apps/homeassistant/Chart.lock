@@ -1,6 +1,6 @@
 dependencies:
-- name: sonarr
+- name: home-assistant
   repository: https://k8s-at-home.com/charts/
-  version: 15.1.0
-digest: sha256:c0a2d51fe8207de7bb85052d7450134e9198fb05ece632a8d71280328200a5a2
-generated: "2021-11-14T01:08:02.599417-05:00"
+  version: 11.0.5
+digest: sha256:06bf9fda0fb883fc11b1009cc4c0cb8e5f7cc7f68403024715531e8d9f004314
+generated: "2021-11-14T01:19:08.422249-05:00"
