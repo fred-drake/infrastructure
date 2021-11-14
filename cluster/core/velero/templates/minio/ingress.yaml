@@ -32,8 +32,8 @@ spec:
                 name: minio
                 port:
                   number: 9001
-    tls:
-      - hosts:
-        - "minio-backup.{{ .Values.domain }}"
-        - "minio-backup-ui.{{ .Values.domain }}"
-      secretName: velero-tls
+  tls:
+    - hosts:
+      - "minio-backup.{{ .Values.domain }}"
+      - "minio-backup-ui.{{ .Values.domain }}"
+    secretName: velero-tls
