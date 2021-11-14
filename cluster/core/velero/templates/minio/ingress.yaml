@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio
+  namespace: velero
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+  labels:
+    app.kubernetes.io/instance: minio-dashboard
+    app.kubernetes.io/name: minio-dashboard
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: "minio-backup.{{ .Values.domain }}"
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: minio
+                port:
+                  number: 9000
+    - host: "minio-backup-ui.{{ .Values.domain }}"
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: minio
+                port:
+                  number: 9001
+    tls:
+      - hosts:
+        - "minio-backup.{{ .Values.domain }}"
+        - "minio-backup-ui.{{ .Values.domain }}"
+      secretName: velero-tls
