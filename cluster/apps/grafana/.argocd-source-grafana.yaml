@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: grafana.image.repository
+    value: grafana/grafana
+    forcestring: true
+  - name: grafana.image.tag
+    value: 8.2.3
+    forcestring: true
