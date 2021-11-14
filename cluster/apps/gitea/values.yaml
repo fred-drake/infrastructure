@@ -2,6 +2,9 @@ gitea:
   memcached:
     nodeSelector:
       kubernetes.io/arch: amd64
+  mariadb:
+    nodeSelector:
+      kubernetes.io/arch: amd64
   service:
     annotations:
       keel.sh/policy: major
