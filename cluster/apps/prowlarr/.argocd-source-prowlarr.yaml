@@ -1,8 +1,8 @@
 helm:
   parameters:
-  - name: image.name
+  - name: prowlarr.image.repository
     value: linuxserver/prowlarr
     forcestring: true
-  - name: image.tag
+  - name: prowlarr.image.tag
     value: 1.2.1060
     forcestring: true
