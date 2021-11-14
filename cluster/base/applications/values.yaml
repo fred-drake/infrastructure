@@ -102,6 +102,18 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
+  - name: keel
+    namespace: kube-system
+    path: cluster/core/keel
+    annotations:
+      argocd-image-updater.argoproj.io/image-list: keel=keelhq/keel
+      argocd-image-updater.argoproj.io/keel.helm.image-name: keel.image.repository
+      argocd-image-updater.argoproj.io/keel.helm.image-tag: keel.image.tag
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/git-branch: master
+    hasSecretsFile: true
+    prune: true
+    selfHeal: true
   - name: whoogle
     namespace: whoogle
     path: cluster/apps/whoogle

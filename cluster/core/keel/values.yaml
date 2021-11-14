@@ -1,0 +1,27 @@
+keel:
+  nodeSelector:
+    kubernetes.io/arch: amd64
+  helmProvider:
+    version: v3
+  image:
+    repository: keelhq/keel
+    tag: 0.16.1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  slack:
+    enabled: true
+    botName: keel
+    channel: general
+    approvalsChannel: app-updates
+  service:
+    enabled: true
+    type: ClusterIP
+    externalPort: 80
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
