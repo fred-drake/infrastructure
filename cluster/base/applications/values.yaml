@@ -238,7 +238,7 @@ applications:
     namespace: gitea
     path: cluster/apps/gitea
     annotations:
-      argocd-image-updater.argoproj.io/image-list: gitea=gitea/gitea
+      argocd-image-updater.argoproj.io/image-list: gitea=gitea/gitea:1.x
       argocd-image-updater.argoproj.io/gitea.helm.image-name: gitea.image.repository
       argocd-image-updater.argoproj.io/gitea.helm.image-tag: gitea.image.tag
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
