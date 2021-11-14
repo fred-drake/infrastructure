@@ -1,0 +1,14 @@
+helm:
+  parameters:
+  - name: calibre.image.repository
+    value: linuxserver/calibre
+    forcestring: true
+  - name: calibre.image.tag
+    value: 5.32.0
+    forcestring: true
+  - name: calibre-web.image.repository
+    value: linuxserver/calibre
+    forcestring: true
+  - name: calibre-web.image.tag
+    value: 5.32.0
+    forcestring: true
