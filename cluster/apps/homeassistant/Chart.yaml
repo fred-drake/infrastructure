@@ -1,0 +1,7 @@
+apiVersion: v2
+name: homeassistant
+version: 1.0.0
+dependencies:
+  - name: home-assistant
+    version: 11.0.5
+    repository: https://k8s-at-home.com/charts/
