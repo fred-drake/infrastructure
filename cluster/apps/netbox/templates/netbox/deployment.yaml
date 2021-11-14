@@ -2,13 +2,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: netbox
-  namespace: netbox
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
   annotations:
-    keel.sh/policy: minor
+    keel.sh/policy: major
     keel.sh/approvals: "1"
     keel.sh/trigger: poll
-    keel.sh/pollSchedule: '@every 1h'
+    keel.sh/pollSchedule: '@every 12h'
 spec:
   selector:
     matchLabels:
@@ -20,8 +20,7 @@ spec:
     spec:
       containers:
         - name: netbox
-          image: linuxserver/netbox:latest
-          imagePullPolicy: Always
+          image: "{{ .Values.netbox.image.repository }}:{{ .Values.netbox.image.tag }}"
           resources:
             requests:
               cpu: 100m

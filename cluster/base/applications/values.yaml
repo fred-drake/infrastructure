@@ -270,3 +270,19 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
+  - name: netbox
+    namespace: netbox
+    path: cluster/apps/netbox
+    annotations:
+      argocd-image-updater.argoproj.io/image-list: netbox=linuxserver/netbox:3.x, postgres=postgres:14.x, redis=redis:6.x
+      argocd-image-updater.argoproj.io/netbox.helm.image-name: netbox.image.repository
+      argocd-image-updater.argoproj.io/netbox.helm.image-tag: netbox.image.tag
+      argocd-image-updater.argoproj.io/postgres.helm.image-name: postgres.image.repository
+      argocd-image-updater.argoproj.io/postgres.helm.image-tag: postgres.image.tag
+      argocd-image-updater.argoproj.io/redis.helm.image-name: redis.image.repository
+      argocd-image-updater.argoproj.io/redis.helm.image-tag: redis.image.tag
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/git-branch: master
+    hasSecretsFile: true
+    prune: true
+    selfHeal: true
