@@ -1,7 +1,4 @@
 gitea:
-  memecached:
-    nodeSelector:
-      kubernetes.io/arch: amd64
   service:
     annotations:
       keel.sh/policy: major
@@ -37,3 +34,7 @@ gitea:
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-production
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
+
+memecached:
+  nodeSelector:
+    kubernetes.io/arch: amd64
