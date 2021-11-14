@@ -1,4 +1,4 @@
-image-updater:
+argocd-image-updater:
   nodeSelector:
     kubernetes.io/arch: amd64
   config:
