@@ -59,10 +59,10 @@ spec:
             requests:
               cpu: 100m
               memory: 128Mi
-          volumeMounts:
-            - mountPath: /var/lib/grafana
-              name: grafana-config
-      volumes:
-        - name: grafana-config
-          persistentVolumeClaim:
-            claimName: grafana-config
+      #     volumeMounts:
+      #       - mountPath: /var/lib/grafana
+      #         name: grafana-config
+      # volumes:
+      #   - name: grafana-config
+      #     persistentVolumeClaim:
+      #       claimName: grafana-config
