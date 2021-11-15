@@ -1,0 +1,38 @@
+tautulli:
+  image:
+      repository: tautulli/tautulli
+      tag: v2.7.7
+  controller:
+      annotations:
+          keel.sh/policy: major
+          keel.sh/approvals: "1"
+          keel.sh/trigger: poll
+          keel.sh/pollSchedule: '@every 12h'
+  resource:
+      requests:
+          cpu: 100m
+          memory: 128Mi
+  env:
+      TZ: America/New_York
+  ingress:
+      main:
+          enabled: true
+          ingressClassName: traefik
+          annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-production
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          hosts:
+              - host: tautulli.internal.freddrake.com
+                paths:
+                  - path: /
+                    pathType: Prefix
+          tls:
+              - hosts:
+                  - tautulli.internal.freddrake.com
+                secretName: tautulli-tls
+  persistence:
+      config:
+          enabled: true
+          existingClaim: config
+  monitoring:
+      enabled: false
