@@ -1,8 +1,8 @@
 helm:
   parameters:
-  - name: grafana.image.repository
+  - name: image.repository
     value: grafana/grafana
     forcestring: true
-  - name: grafana.image.tag
-    value: 8.2.3
+  - name: image.tag
+    value: 8.2.4
     forcestring: true
