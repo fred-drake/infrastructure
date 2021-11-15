@@ -6,6 +6,12 @@ helm:
   - name: netbox.image.tag
     value: 3.0.10
     forcestring: true
+  - name: postgres.image.repository
+    value: postgres
+    forcestring: true
+  - name: postgres.image.tag
+    value: "14.1"
+    forcestring: true
   - name: redis.image.repository
     value: redis
     forcestring: true
