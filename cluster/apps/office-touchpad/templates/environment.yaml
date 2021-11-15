@@ -7,3 +7,13 @@ type: Opaque
 stringData:
     nodeRedUrlPrefix: {{ .Values.nodeRedUrlPrefix }}
     scannerUrlPrefix: {{ .Values.scannerUrlPrefix }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: environment-map
+  namespace: {{ .Release.Namespace }}
+data:
+  .env: |
+    NODERED_URL_PREFIX={{ .Values.nodeRedUrlPrefix }}
+    SCANNER_URL_PREFIX={{ .Values.scannerUrlPrefix }}

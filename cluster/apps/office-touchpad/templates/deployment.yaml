@@ -1,37 +1,45 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: {{ .Release.Name }}
-    namespace: {{ .Release.Namespace }}
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
 spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app: {{ .Release.Name }}
-    template:
-        metadata:
-            labels:
-                app: {{ .Release.Name }}
-        spec:
-            nodeSelector:
-                kubernetes.io/arch: arm64
-            containers:
-                - name: {{ .Release.Name }}
-                  image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-                  resources:
-                    requests:
-                        cpu: 100m
-                        memory: 128Mi
-                  env:
-                    - name: TZ
-                      value: America/New_York
-                    - name: NODERED_URL_PREFIX
-                      valueFrom:
-                        secretKeyRef:
-                            name: environment-secret
-                            key: nodeRedUrlPrefix
-                    - name: SCANNER_URL_PREFIX
-                      valueFrom:
-                        secretKeyRef:
-                            name: environment-secret
-                            key: scannerUrlPrefix
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      volumes:
+        - name: environment-map
+          configMap:
+            name: environment-map
+      nodeSelector:
+        kubernetes.io/arch: arm64
+      containers:
+        - name: {{ .Release.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          env:
+            - name: TZ
+              value: America/New_York
+            - name: NODERED_URL_PREFIX
+              valueFrom:
+                secretKeyRef:
+                  name: environment-secret
+                  key: nodeRedUrlPrefix
+            - name: SCANNER_URL_PREFIX
+              valueFrom:
+                secretKeyRef:
+                  name: environment-secret
+                  key: scannerUrlPrefix
+          volumeMounts:
+          - name: environment-map
+            mountPath: /work/.env
+            subPath: .env
