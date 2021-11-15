@@ -29,6 +29,8 @@ spec:
           env:
             - name: TZ
               value: America/New_York
+            - name: REACT_APP_FOO
+              value: bar
           volumeMounts:
           - name: environment-map
             mountPath: /work/config.json
