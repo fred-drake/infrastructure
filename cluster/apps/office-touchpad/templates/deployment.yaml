@@ -41,5 +41,5 @@ spec:
                   key: scannerUrlPrefix
           volumeMounts:
           - name: environment-map
-            mountPath: /work/.env
-            subPath: .env
+            mountPath: /work/config.json
+            subPath: config.json

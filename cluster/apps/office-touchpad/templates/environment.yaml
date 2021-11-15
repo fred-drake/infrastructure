@@ -1,19 +1,11 @@
 apiVersion: v1
-kind: Secret
-metadata:
-    name: environment-secret
-    namespace: {{ .Release.Namespace }}
-type: Opaque
-stringData:
-    nodeRedUrlPrefix: {{ .Values.nodeRedUrlPrefix }}
-    scannerUrlPrefix: {{ .Values.scannerUrlPrefix }}
----
-apiVersion: v1
 kind: ConfigMap
 metadata:
   name: environment-map
   namespace: {{ .Release.Namespace }}
 data:
-  .env: |
-    REACT_APP_NODERED_URL_PREFIX={{ .Values.nodeRedUrlPrefix }}
-    REACT_APP_SCANNER_URL_PREFIX={{ .Values.scannerUrlPrefix }}
+  config.json: |
+    {
+        "nodeRedUrlPrefix": {{ .Values.nodeRedUrlPrefix }},
+        "scannerUrlPrefix": {{ .Values.scannerUrlPrefix }}
+    }
