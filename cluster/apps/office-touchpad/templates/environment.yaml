@@ -4,8 +4,8 @@ metadata:
   name: environment-map
   namespace: {{ .Release.Namespace }}
 data:
-  config.json: |
-    {
-        "nodeRedUrlPrefix": "{{ .Values.nodeRedUrlPrefix }}",
-        "scannerUrlPrefix": "{{ .Values.scannerUrlPrefix }}"
+  runtime-config.js: |
+    window['runConfig'] = {
+        nodeRedUrlPrefix: '{{ .Values.nodeRedUrlPrefix }}',
+        scannerUrlPrefix: '{{ .Values.scannerUrlPrefix }}'
     }

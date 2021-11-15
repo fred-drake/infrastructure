@@ -31,5 +31,5 @@ spec:
               value: America/New_York
           volumeMounts:
           - name: environment-map
-            mountPath: /work/src/config.json
-            subPath: config.json
+            mountPath: /work/build/runtime-config.js
+            subPath: runtime-config.js
