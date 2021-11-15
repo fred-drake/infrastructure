@@ -6,6 +6,6 @@ metadata:
 data:
   config.json: |
     {
-        "nodeRedUrlPrefix": {{ .Values.nodeRedUrlPrefix }},
-        "scannerUrlPrefix": {{ .Values.scannerUrlPrefix }}
+        "nodeRedUrlPrefix": "{{ .Values.nodeRedUrlPrefix }}",
+        "scannerUrlPrefix": "{{ .Values.scannerUrlPrefix }}"
     }
