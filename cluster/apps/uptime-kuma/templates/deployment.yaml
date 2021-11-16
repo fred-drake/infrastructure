@@ -4,10 +4,10 @@ metadata:
   name: uptime-kuma
   namespace: uptime-kuma
   annotations:
-    keel.sh/policy: minor
+    keel.sh/policy: major
     keel.sh/approvals: "1"
     keel.sh/trigger: poll
-    keel.sh/pollSchedule: '@every 1h'
+    keel.sh/pollSchedule: '@every 12h'
 spec:
   replicas: 1
   selector:
@@ -24,7 +24,7 @@ spec:
             claimName: uptime-kuma-data
       containers:
         - name: uptime-kuma
-          image: louislam/uptime-kuma:1.10.0
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           resources:
             requests:
               cpu: 100m
