@@ -50,6 +50,12 @@ prometheus:
       keel.sh/approvals: "1"
       keel.sh/trigger: poll
       keel.sh/pollSchedule: "@every 12h"
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
   pushgateway:
     image:
       tag: v1.4.2
