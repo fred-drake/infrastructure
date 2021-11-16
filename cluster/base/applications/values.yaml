@@ -304,6 +304,18 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
+  - name: radarr
+    namespace: radarr
+    path: cluster/apps/radarr
+    annotations:
+      argocd-image-updater.argoproj.io/image-list: radarr=linuxserver/radarr:0.x
+      argocd-image-updater.argoproj.io/radarr.helm.image-name: radarr.image.repository
+      argocd-image-updater.argoproj.io/radarr.helm.image-tag: radarr.image.tag
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/git-branch: master
+    hasSecretsFile: true
+    prune: true
+    selfHeal: true
   - name: tautulli
     namespace: tautulli
     path: cluster/apps/tautulli
