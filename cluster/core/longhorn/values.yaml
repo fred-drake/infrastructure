@@ -13,3 +13,6 @@ longhorn:
       memory: 128Mi
   defaultSettings:
     backupTargetCredentialSecret: minio-secret
+  service:
+    manager:
+      type: NodePort
