@@ -1,7 +1,7 @@
 traefik:
   image: 
       name: ghcr.io/k8s-at-home/traefik
-      tag: 2.5.3
+      tag: 2.5.4
   deployment:
       annotations:
           keel.sh/policy: major
