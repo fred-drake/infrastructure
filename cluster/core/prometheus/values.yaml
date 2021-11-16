@@ -38,6 +38,11 @@ prometheus:
       keel.sh/approvals: "1"
       keel.sh/trigger: poll
       keel.sh/pollSchedule: "@every 12h"
+    tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
   alertmanager:
     image:
       tag: v0.23.0
