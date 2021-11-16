@@ -3,6 +3,9 @@ helm:
   - name: image.name
     value: prom/pushgateway
     forcestring: true
+  - name: alertmanager.image.tag
+    value: v0.23.0
+    forcestring: true
   - name: nodeExporter.image.tag
     value: v1.2.2
     forcestring: true
