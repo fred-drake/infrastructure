@@ -59,11 +59,11 @@ spec:
                   name: paperless-secret
                   key: secretKey
           volumeMounts:
-            - mountPath: /data/media
+            - mountPath: /usr/src/paperless/media
               name: paperless-documents
-            - mountPath: /data/consume
+            - mountPath: /usr/src/paperless/consume
               name: paperless-scanner
-            - mountPath: /config
+            - mountPath: /usr/src/paperless/data
               name: paperless-data
         # - name: test
         #   image: ubuntu:latest
