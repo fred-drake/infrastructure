@@ -1,32 +1,32 @@
 csi-driver-smb:
   controller:
-    resources:
-      csiProvisioner:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-      livenessProbe:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-      smb:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-      csiResizer:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-  node:
-      livenessProbe:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-      nodeDriverRegistrar:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-      smb:
-        requests:
-          cpu: 100m
-          memory: 128Mi
+  #   resources:
+  #     csiProvisioner:
+  #       requests:
+  #         cpu: 100m
+  #         memory: 128Mi
+  #     livenessProbe:
+  #       requests:
+  #         cpu: 100m
+  #         memory: 128Mi
+  #     smb:
+  #       requests:
+  #         cpu: 100m
+  #         memory: 128Mi
+  #     csiResizer:
+  #       requests:
+  #         cpu: 100m
+  #         memory: 128Mi
+  # node:
+  #     livenessProbe:
+  #       requests:
+  #         cpu: 100m
+  #         memory: 128Mi
+  #     nodeDriverRegistrar:
+  #       requests:
+  #         cpu: 100m
+  #         memory: 128Mi
+  #     smb:
+  #       requests:
+  #         cpu: 100m
+  #         memory: 128Mi
