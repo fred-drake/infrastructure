@@ -14,7 +14,7 @@ spec:
     mountOptions:
         - hard
     nfs:
-        path: /paperless
+        path: /mnt/user/paperless
         server: "larussa-50.{{ .Values.domain }}"
 ---
 apiVersion: v1
@@ -47,7 +47,7 @@ spec:
     mountOptions:
         - hard
     nfs:
-        path: /paperless
+        path: /mnt/user/paperless
         server: "larussa-50.{{ .Values.domain }}"
 ---
 apiVersion: v1
