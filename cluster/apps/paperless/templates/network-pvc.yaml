@@ -63,7 +63,7 @@ spec:
     csi:
         driver: smb.csi.k8s.io
         readOnly: false
-        volumeHandle: paperless-documents-volume
+        volumeHandle: paperless-scanner-volume
         volumeAttributes:
             source: "//larussa-50.{{ .Values.domain }}/ScannerIncoming"
         nodeStageSecretRef:
