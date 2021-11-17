@@ -12,20 +12,11 @@ spec:
         - ReadWriteMany
     persistentVolumeReclaimPolicy: Retain
     mountOptions:
-        - dir_mode=0777
-        - file_mode=0777
-        - gid=1000
-        - uid=1000
-        - vers=3.0
-    csi:
-        driver: smb.csi.k8s.io
-        readOnly: false
-        volumeHandle: paperless-documents-volume
-        volumeAttributes:
-            source: "//larussa-50.{{ .Values.domain }}/paperless"
-        nodeStageSecretRef:
-            name: cifs-secret
-            namespace: paperless
+        - hard
+        - nfsvers=4.1
+    nfs:
+        path: /paperless
+        server: "larussa-50.{{ .Values.domain }}"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -55,20 +46,11 @@ spec:
         - ReadWriteMany
     persistentVolumeReclaimPolicy: Retain
     mountOptions:
-        - dir_mode=0777
-        - file_mode=0777
-        - gid=1000
-        - uid=1000
-        - vers=3.0
-    csi:
-        driver: smb.csi.k8s.io
-        readOnly: false
-        volumeHandle: paperless-scanner-volume
-        volumeAttributes:
-            source: "//larussa-50.{{ .Values.domain }}/ScannerIncoming"
-        nodeStageSecretRef:
-            name: cifs-secret
-            namespace: paperless
+        - hard
+        - nfsvers=4.1
+    nfs:
+        path: /paperless
+        server: "larussa-50.{{ .Values.domain }}"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
