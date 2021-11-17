@@ -13,7 +13,6 @@ spec:
     persistentVolumeReclaimPolicy: Retain
     mountOptions:
         - hard
-        - nfsvers=4.1
     nfs:
         path: /paperless
         server: "larussa-50.{{ .Values.domain }}"
@@ -47,7 +46,6 @@ spec:
     persistentVolumeReclaimPolicy: Retain
     mountOptions:
         - hard
-        - nfsvers=4.1
     nfs:
         path: /paperless
         server: "larussa-50.{{ .Values.domain }}"
