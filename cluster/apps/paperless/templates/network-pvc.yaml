@@ -47,7 +47,7 @@ spec:
     mountOptions:
         - hard
     nfs:
-        path: /mnt/user/paperless
+        path: /mnt/user/ScannerIncoming
         server: "larussa-50.{{ .Values.domain }}"
 ---
 apiVersion: v1
