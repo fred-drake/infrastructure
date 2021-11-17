@@ -6,9 +6,6 @@ helm:
   - name: alertmanager.image.tag
     value: v0.23.0
     forcestring: true
-  - name: nodeExporter.image.tag
-    value: v1.2.2
-    forcestring: true
   - name: server.image.tag
     value: v2.31.1
     forcestring: true
