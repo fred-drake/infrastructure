@@ -63,18 +63,18 @@ spec:
               name: paperless-scanner
             - mountPath: /usr/src/paperless/data
               name: paperless-data
-        # - name: test
-        #   image: ubuntu:latest
-        #   resources:
-        #     requests:
-        #       cpu: 100m
-        #       memory: 128Mi
-        #   command: [ "/bin/bash", "-c", "--" ]
-        #   args: [ "while true; do sleep 30; done;" ]
-        #   volumeMounts:
-        #     - mountPath: /media
-        #       name: paperless-documents
-        #     - mountPath: /consume
-        #       name: paperless-scanner
-        #     - mountPath: /data
-        #       name: paperless-data
+        - name: test
+          image: ubuntu:latest
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          command: [ "/bin/bash", "-c", "--" ]
+          args: [ "while true; do sleep 30; done;" ]
+          volumeMounts:
+            - mountPath: /media
+              name: paperless-documents
+            - mountPath: /consume
+              name: paperless-scanner
+            - mountPath: /data
+              name: paperless-data
