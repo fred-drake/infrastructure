@@ -39,11 +39,11 @@ spec:
             - name: TZ
               value: America/New_York
             - name: PUID
-              value: "99"
+              value: "1000"
             - name: PGID
-              value: "100"
-            - name: PAPERLESS_REDIS
-              value: "redis://paperless-db.{{ .Values.domain }}:6379"
+              value: "1000"
+            # - name: PAPERLESS_REDIS
+            #   value: "redis://paperless-db.{{ .Values.domain }}:6379"
               # value: redis://redis.paperless.svc.cluster.local:6379
             - name: PAPERLESS_OCR_LANGUAGE
               value: eng
@@ -57,11 +57,11 @@ spec:
                   name: paperless-secret
                   key: secretKey
           volumeMounts:
-            - mountPath: /usr/src/paperless/media
+            - mountPath: /data/media
               name: paperless-documents
-            - mountPath: /usr/src/paperless/consume
+            - mountPath: /data/consume
               name: paperless-scanner
-            - mountPath: /usr/src/paperless/data
+            - mountPath: /config
               name: paperless-data
         # - name: test
         #   image: ubuntu:latest

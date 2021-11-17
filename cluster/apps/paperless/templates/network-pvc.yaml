@@ -18,7 +18,7 @@ spec:
             name: cifs-secret
         options:
             networkPath: "//larussa-50.{{ .Values.domain }}/paperless"
-            mountOptions: file_mode=0777,dir_mode=0777,vers=3.0,gid=100,uid=99
+            mountOptions: file_mode=0777,dir_mode=0777,vers=3.0,gid=1000,uid=1000
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -54,7 +54,7 @@ spec:
             name: cifs-secret
         options:
             networkPath: "//larussa-50.{{ .Values.domain }}/ScannerIncoming"
-            mountOptions: file_mode=0777,dir_mode=0777,vers=3.0,gid=100,uid=99
+            mountOptions: file_mode=0777,dir_mode=0777,vers=3.0,gid=1000,uid=1000
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
