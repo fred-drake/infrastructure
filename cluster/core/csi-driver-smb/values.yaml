@@ -1,5 +1,7 @@
 csi-driver-smb:
   controller:
+    nodeSelector:
+      kubernetes.io/arch: amd64
   #   resources:
   #     csiProvisioner:
   #       requests:
@@ -17,7 +19,9 @@ csi-driver-smb:
   #       requests:
   #         cpu: 100m
   #         memory: 128Mi
-  # node:
+  node:
+    nodeSelector:
+      kubernetes.io/arch: amd64
   #     livenessProbe:
   #       requests:
   #         cpu: 100m
