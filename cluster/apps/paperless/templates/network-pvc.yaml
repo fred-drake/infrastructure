@@ -11,14 +11,21 @@ spec:
     accessModes:
         - ReadWriteMany
     persistentVolumeReclaimPolicy: Retain
-    flexVolume:
-        driver: fstab/cifs
-        fsType: cifs
-        secretRef:
+    mountOptions:
+        - dir_mode=0777
+        - file_mode=0777
+        - gid=1000
+        - uid=1000
+        - vers=3.0
+    csi:
+        driver: smb.csi.k8s.io
+        readOnly: false
+        volumeHandle: paperless-documents-volume
+        volumeAttributes:
+            source: "//larussa-50.{{ .Values.domain }}/paperless"
+        nodeStageSecretRef:
             name: cifs-secret
-        options:
-            networkPath: "//larussa-50.{{ .Values.domain }}/paperless"
-            mountOptions: file_mode=0777,dir_mode=0777,vers=3.0,gid=1000,uid=1000
+            namespace: paperless
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -47,14 +54,21 @@ spec:
     accessModes:
         - ReadWriteMany
     persistentVolumeReclaimPolicy: Retain
-    flexVolume:
-        driver: fstab/cifs
-        fsType: cifs
-        secretRef:
+    mountOptions:
+        - dir_mode=0777
+        - file_mode=0777
+        - gid=1000
+        - uid=1000
+        - vers=3.0
+    csi:
+        driver: smb.csi.k8s.io
+        readOnly: false
+        volumeHandle: paperless-documents-volume
+        volumeAttributes:
+            source: "//larussa-50.{{ .Values.domain }}/ScannerIncoming"
+        nodeStageSecretRef:
             name: cifs-secret
-        options:
-            networkPath: "//larussa-50.{{ .Values.domain }}/ScannerIncoming"
-            mountOptions: file_mode=0777,dir_mode=0777,vers=3.0,gid=1000,uid=1000
+            namespace: paperless
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
