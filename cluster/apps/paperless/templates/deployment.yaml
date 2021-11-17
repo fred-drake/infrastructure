@@ -43,8 +43,8 @@ spec:
             - name: PGID
               value: "1000"
             - name: PAPERLESS_REDIS
-              # value: "redis://paperless-db.{{ .Values.domain }}:6379"
-              value: redis://redis.paperless.svc.cluster.local:6379
+              value: "redis://paperless-db.{{ .Values.domain }}:6379"
+              # value: redis://redis.paperless.svc.cluster.local:6379
             - name: PAPERLESS_OCR_LANGUAGE
               value: eng
             - name: PAPERLESS_FILE_FORMAT
