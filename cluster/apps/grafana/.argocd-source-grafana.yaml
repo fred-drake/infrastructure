@@ -4,5 +4,5 @@ helm:
     value: grafana/grafana
     forcestring: true
   - name: image.tag
-    value: 8.2.4
+    value: 8.2.5
     forcestring: true
