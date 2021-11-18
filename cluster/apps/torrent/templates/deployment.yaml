@@ -48,7 +48,7 @@ spec:
             - name: OPENVPN_PROVIDER
               value: {{ .Values.openvpnProvider }}
             - name: LOCAL_NETWORK
-              values: {{ .Values.localNetwork }}
+              value: {{ .Values.localNetwork }}
             - name: TRANSMISSION_RPC_USERNAME
               value: {{ .Values.transmissionRpcUsername }}
             - name: TRANSMISSION_RPC_PASSWORD
