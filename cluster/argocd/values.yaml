@@ -8,7 +8,7 @@ argo-cd:
         cpu: 100m
         memory: 128Mi
       limits:
-        cpu: 500m
+        cpu: 1000m
     env:
       - name: XDG_CONFIG_HOME
         value: /.config
