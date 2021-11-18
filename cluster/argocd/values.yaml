@@ -3,6 +3,12 @@ argo-cd:
     nodeSelector:
       kubernetes.io/arch: amd64
   repoServer:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
     env:
       - name: XDG_CONFIG_HOME
         value: /.config
