@@ -3,6 +3,7 @@ argo-cd:
     nodeSelector:
       kubernetes.io/arch: amd64
   repoServer:
+    replicas: 3
     resources:
       requests:
         cpu: 100m
