@@ -13,7 +13,8 @@ whoogle:
       cpu: 100m
       memory: 128Mi
   service:
-    type: NodePort
+    main:
+      type: NodePort
   env:
     TZ: America/New_York
   ingress:
