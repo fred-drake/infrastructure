@@ -1,0 +1,7 @@
+- hosts: k8s_cluster
+  gather_facts: false
+  become: true
+  tasks:
+    - name: reboot
+      reboot:
+      throttle: 1
