@@ -12,6 +12,8 @@ whoogle:
     requests:
       cpu: 100m
       memory: 128Mi
+  service:
+    type: NodePort
   env:
     TZ: America/New_York
   ingress:
