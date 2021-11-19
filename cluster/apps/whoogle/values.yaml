@@ -12,9 +12,6 @@ whoogle:
     requests:
       cpu: 100m
       memory: 128Mi
-  service:
-    main:
-      type: LoadBalancer
   env:
     TZ: America/New_York
   ingress:
