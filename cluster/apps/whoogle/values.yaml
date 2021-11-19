@@ -14,7 +14,7 @@ whoogle:
       memory: 128Mi
   service:
     main:
-      type: NodePort
+      type: LoadBalancer
   env:
     TZ: America/New_York
   ingress:
