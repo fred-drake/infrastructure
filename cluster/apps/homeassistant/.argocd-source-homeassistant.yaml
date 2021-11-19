@@ -4,5 +4,5 @@ helm:
     value: homeassistant/home-assistant
     forcestring: true
   - name: home-assistant.image.tag
-    value: 2021.11.4
+    value: 2021.11.5
     forcestring: true
