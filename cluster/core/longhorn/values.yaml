@@ -17,8 +17,8 @@ longhorn:
     manager:
       type: NodePort
   longhornManager:
-    nodeSelector: 
-      persistent-storage: 'true'
+    # nodeSelector: 
+    #   persistent-storage: 'true'
     tolerations:
       - effect: NoSchedule
         key: persistent-storage
