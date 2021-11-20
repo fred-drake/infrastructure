@@ -66,27 +66,6 @@ applications:
     path: cluster/core/longhorn
     annotations:
       argocd.argoproj.io/sync-wave: "-1"
-      argocd-image-updater.argoproj.io/image-list: engine=longhornio/longhorn-engine:1.x, manager=longhornio/longhorn-manager:1.x, ui=longhornio/longhorn-ui:1.x, instanceManager=longhornio/longhorn-instance-manager:1_x, shareManager=longhornio/longhorn-share-manager:1_x, backingImageManager=longhornio/longhorn-backing-image-manager:2_x
-      argocd-image-updater.argoproj.io/engine.helm.image-name: longhorn.image.longhorn.engine.repository
-      argocd-image-updater.argoproj.io/engine.helm.image-tag: longhorn.image.longhorn.engine.tag
-      argocd-image-updater.argoproj.io/manager.helm.image-name: longhorn.image.longhorn.manager.repository
-      argocd-image-updater.argoproj.io/manager.helm.image-tag: longhorn.image.longhorn.manager.tag
-      argocd-image-updater.argoproj.io/ui.helm.image-name: longhorn.image.longhorn.ui.repository
-      argocd-image-updater.argoproj.io/ui.helm.image-tag: longhorn.image.longhorn.ui.tag
-      argocd-image-updater.argoproj.io/instanceManager.helm.image-name: longhorn.image.longhorn.instanceManager.repository
-      argocd-image-updater.argoproj.io/instanceManager.helm.image-tag: longhorn.image.longhorn.instanceManager.tag
-      argocd-image-updater.argoproj.io/instanceManager.update-strategy: name
-      argocd-image-updater.argoproj.io/instanceManager.allow-tags: regexp:^[0-9]+_[0-9]+$
-      argocd-image-updater.argoproj.io/shareManager.helm.image-name: longhorn.image.longhorn.shareManager.repository
-      argocd-image-updater.argoproj.io/shareManager.helm.image-tag: longhorn.image.longhorn.shareManager.tag
-      argocd-image-updater.argoproj.io/shareManager.update-strategy: name
-      argocd-image-updater.argoproj.io/shareManager.allow-tags: regexp:^[0-9]+_[0-9]+$
-      argocd-image-updater.argoproj.io/backingImageManager.helm.image-name: longhorn.image.longhorn.backingImageManager.repository
-      argocd-image-updater.argoproj.io/backingImageManager.helm.image-tag: longhorn.image.longhorn.backingImageManager.tag
-      argocd-image-updater.argoproj.io/backingImageManager.update-strategy: name
-      argocd-image-updater.argoproj.io/backingImageManager.allow-tags: regexp:^[0-9]+_[0-9]+$
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
-      argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
     selfHeal: true
