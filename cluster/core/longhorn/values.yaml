@@ -11,10 +11,23 @@ longhorn:
     requests:
       cpu: 100m
       memory: 128Mi
-    limits:
-      cpu: 500m
   defaultSettings:
     backupTargetCredentialSecret: minio-secret
   service:
     manager:
       type: NodePort
+  longhornManager:
+    nodeSelector: 
+      persistent-storage: 'true'
+    tolerations:
+      - effect: NoSchedule
+        key: persistent-storage
+  longhornDriver:
+    nodeSelector: 
+      persistent-storage: 'true'
+    tolerations:
+      - effect: NoSchedule
+        key: persistent-storage
+  # longhornUI:
+  #   nodeSelector: 
+  #     persistent-storage: 'true'

@@ -1,0 +1,15 @@
+{{- if .Values.storageNodes -}}
+{{- range .Values.storageNodes }}
+---
+apiVersion: v1
+kind: Node
+metadata:
+  name: {{ . }}
+  labels:
+    persistent-storage: 'true'
+spec:
+  taints:
+    - effect: NoSchedule
+      key: persistent-storage
+{{ end }}
+{{- end -}}
