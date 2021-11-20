@@ -65,7 +65,7 @@ applications:
     namespace: longhorn-system
     path: cluster/core/longhorn
     annotations:
-      argocd.argoproj.io/sync-wave: "-1"
+      argocd.argoproj.io/sync-wave: "-3"
     hasSecretsFile: true
     prune: true
     selfHeal: true
