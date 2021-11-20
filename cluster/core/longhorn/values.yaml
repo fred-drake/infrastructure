@@ -12,8 +12,8 @@ longhorn:
       cpu: 100m
       memory: 128Mi
   defaultSettings:
+    backupTarget: s3://longhorn@default/
     backupTargetCredentialSecret: minio-secret
-    taintToleration: storage=longhorn:NoExecute
   service:
     manager:
       type: NodePort
