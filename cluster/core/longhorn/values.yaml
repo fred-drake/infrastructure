@@ -13,19 +13,15 @@ longhorn:
       memory: 128Mi
   defaultSettings:
     backupTargetCredentialSecret: minio-secret
-    taintToleration: persistent-storage:NoSchedule
+    taintToleration: storage=longhorn:NoExecute
   service:
     manager:
       type: NodePort
   longhornManager:
-    nodeSelector: 
-      persistent-storage: 'true'
     tolerations:
       - effect: NoSchedule
         key: persistent-storage
   longhornDriver:
-    # nodeSelector: 
-    #   persistent-storage: 'true'
     tolerations:
       - effect: NoSchedule
         key: persistent-storage
@@ -33,5 +29,3 @@ longhorn:
     tolerations:
       - effect: NoSchedule
         key: persistent-storage
-  #   nodeSelector: 
-  #     persistent-storage: 'true'

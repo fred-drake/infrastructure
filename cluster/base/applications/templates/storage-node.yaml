@@ -5,11 +5,10 @@ apiVersion: v1
 kind: Node
 metadata:
   name: {{ . }}
-  labels:
-    persistent-storage: 'true'
 spec:
   taints:
-    - effect: NoSchedule
-      key: persistent-storage
+    - effect: NoExecute
+      key: storage
+      value: longhorn
 {{ end }}
 {{- end -}}
