@@ -5,7 +5,7 @@ apiVersion: v1
 kind: Node
 metadata:
   name: {{ . }}
-  labels:
+  annotations:
     persistent-storage: 'true'
 spec:
   taints:
