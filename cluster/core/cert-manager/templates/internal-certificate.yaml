@@ -6,6 +6,7 @@ metadata:
 spec:
     dnsNames:
         - "*.{{ .Values.domain }}"
+        - "*.{{ .Values.testDomain }}"
     secretName: internal-certificate-tls
     issuerRef:
         kind: ClusterIssuer
