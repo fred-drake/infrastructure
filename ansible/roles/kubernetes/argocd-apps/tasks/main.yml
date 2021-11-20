@@ -1,5 +1,0 @@
-- name: implement the app of apps helm file
-  kubernetes.core.helm:
-    name: applications
-    chart_ref: "{{ playbook_dir }}/../../../cluster/base/applications"
-    release_namespace: argo-cd

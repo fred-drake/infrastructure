@@ -1,24 +1,166 @@
-- name: create argocd wave 2 for cluster
+- name: create argocd namespace
+  k8s:
+    state: present
+    api_version: v1
+    kind: Namespace
+    name: argo-cd
+
+- name: create sops gpg secret
   k8s:
     state: present
     definition:
-      apiVersion: argoproj.io/v1alpha1
-      kind: Application
+      apiVersion: v1
+      kind: Secret
       metadata:
-        name: argo-wave2-application
-        namespace: argocd
-      spec:
-        project: default
+          name: sops
+          namespace: argo-cd
+      data:
+          sops.asc: "{{ secret.argocd.gpg_key }}"
 
-        source:
-          repoURL: https://github.com/fred-drake/infrastructure.git
-          targetRevision: HEAD
-          path: cluster/base/argo-applications/wave2
-        destination:
-          server: https://kubernetes.default.svc
-          namespace: kube-system
+# - name: argocd helm repo
+#   kubernetes.core.helm_repository:
+#     name: argo
+#     repo_url: https://argoproj.github.io/argo-helm
 
-        syncPolicy:
-          automated:
-            prune: false
-            selfHeal: true
+- name: argocd helm
+  kubernetes.core.helm:
+    name: argocd
+    chart_ref: "{{ playbook_dir }}/../../../cluster/argocd"
+    release_namespace: argo-cd
+    values:
+      domain: "{{ secret.domain }}"
+      argo-cd:
+        server:
+          ingress:
+            hosts:
+              - "argocd.{{ secret.domain }}"
+            tls:
+              - hosts:
+                  - "argocd.{{ secret.domain }}"
+                secretName: argocd-tls
+
+
+# - name: argocd helm
+#   kubernetes.core.helm:
+#     name: argocd
+#     chart_ref: argo/argo-cd
+#     chart_version: 3.26.3
+#     release_namespace: argocd
+#     create_namespace: true
+#     values:
+#       controller:
+#         nodeSelector:
+#           kubernetes.io/arch: amd64
+#       repoServer:
+#         env:
+#           - name: XDG_CONFIG_HOME
+#             value: /.config
+#           - name: HELM_PLUGINS
+#             value: /custom-tools/helm-plugins/
+#           - name: HELM_SECRETS_SOPS_PATH
+#             value: /custom-tools/sops
+#           - name: HELM_SECRETS_KUBECTL_PATH
+#             value: /custom-tools/kubectl
+#         nodeSelector:
+#           kubernetes.io/arch: amd64
+#         volumeMounts:
+#           - mountPath: /usr/local/bin/kustomize
+#             name: custom-tools
+#             subPath: kustomize
+#           - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
+#             name: custom-tools
+#             subPath: ksops
+#           - mountPath: /home/argocd/.gnupg
+#             name: gnupg
+#           - mountPath: /sops
+#             name: sops
+#           - mountPath: /custom-tools
+#             name: custom-tools
+#         volumes:
+#           - name: custom-tools
+#             emptyDir: {}
+#           - name: sops
+#             secret:
+#               secretName: sops
+#           - name: gnupg
+#             emptyDir: {}
+#         initContainers:
+#           - name: install-ksops
+#             image: viaductoss/ksops:v3.0.1
+#             command: ["/bin/sh", "-c"]
+#             env:
+#               - name: HELM_SECRETS_VERSION
+#                 value: "3.10.0"
+#               - name: SOPS_VERSION
+#                 value: "3.7.1"
+#               - name: KUBECTL_VERSION
+#                 value: "1.22.0"
+#             args:
+#               - echo "Installing KSOPS...";
+#                 mv ksops /custom-tools/;
+#                 mv $GOPATH/bin/kustomize /custom-tools/;
+#                 gpg --import /sops/sops.asc;
+#                 chown -R 999:999 /root/.gnupg;
+#                 echo "Installing Helm Secrets...";
+#                 mkdir -p /custom-tools/helm-plugins;
+#                 wget -qO- https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/helm-secrets.tar.gz | tar -C /custom-tools/helm-plugins -xzf-;
+#                 wget -qO /custom-tools/sops https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux;
+#                 wget -qO /custom-tools/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl;
+#                 chmod +x /custom-tools/*;
+#                 echo "Done.";
+#             volumeMounts:
+#               - mountPath: /custom-tools
+#                 name: custom-tools
+#               - mountPath: /sops
+#                 name: sops
+#               - mountPath: /root/.gnupg
+#                 name: gnupg
+#       dex:
+#         nodeSelector:
+#           kubernetes.io/arch: amd64
+#       server:
+#         config:
+#           kustomize.buildOptions: "--enable-alpha-plugins"
+#         nodeSelector:
+#           kubernetes.io/arch: amd64
+#         extraArgs:
+#           - --insecure
+#         ingress:
+#           enabled: true
+#           ingressClassName: "traefik"
+#           annotations:
+#             cert-manager.io/cluster-issuer: letsencrypt-production
+#             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+#           hosts:
+#             - "argocd.{{ secret.domain }}"
+#           paths: 
+#             - "/"            
+#           tls:
+#             - hosts:
+#               - "argocd.{{ secret.domain }}"
+#               secretName: "argocd-tls"
+
+# - name: create argocd wave 1 for cluster
+#   k8s:
+#     state: present
+#     definition:
+#       apiVersion: argoproj.io/v1alpha1
+#       kind: Application
+#       metadata:
+#         name: argo-wave1-application
+#         namespace: argocd
+#       spec:
+#         project: default
+
+#         source:
+#           repoURL: https://github.com/fred-drake/infrastructure.git
+#           targetRevision: HEAD
+#           path: cluster/base/argo-applications/wave1
+#         destination:
+#           server: https://kubernetes.default.svc
+#           namespace: kube-system
+
+#         syncPolicy:
+#           automated:
+#             prune: false
+#             selfHeal: true
