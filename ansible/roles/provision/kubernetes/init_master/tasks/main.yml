@@ -24,7 +24,7 @@
       --user={{ ansible_user }} 
       --k3s-version={{ k8s.k3s.version }} 
       --cluster
-      --k3s-extra-args="--disable servicelb --disable traefik --disable metrics-server"
+      --k3s-extra-args="--disable servicelb --disable traefik --disable metrics-server --disable flannel --disable local-storage"
   when: not k3s_check_installed.stat.exists and inventory_hostname == k8s.initial_master_node_hostname
   tags: k8s_setup
 
