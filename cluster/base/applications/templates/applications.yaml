@@ -1,8 +1,9 @@
-{{ define "applicationList "-}}
+{{- define "applicationList "-}}
 {{- if eq .Values.applicationType "core" -}}
 {{- .Values.applications.core -}}
 {{- else -}}
 {{- .Values.applications.service -}}
+{{- end -}}
 {{- end -}}
 
 {{- range $index, $app := include "applicationList" . }}
