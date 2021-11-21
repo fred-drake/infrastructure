@@ -1,12 +1,5 @@
-{{ define "applicationList "}}
 {{- if eq .Values.applicationType "core" -}}
-{{- .Values.applications.core -}}
-{{- else -}}
-{{- .Values.applications.service -}}
-{{- end -}}
-{{- end -}}
-
-{{- range $index, $app := include "applicationList" . }}
+{{- range $index, $app := .Values.applications.core }}
 ---
 apiVersion: {{ $app.apiVersion | default "argoproj.io/v1alpha1" }}
 kind: {{ $app.kind | default "Application" }}
@@ -42,3 +35,42 @@ spec:
     syncOptions:
       - CreateNamespace=true
 {{ end }}
+{{- end -}}
+{{- if eq .Values.applicationType "service" -}}
+{{- range $index, $app := .Values.applications.service }}
+---
+apiVersion: {{ $app.apiVersion | default "argoproj.io/v1alpha1" }}
+kind: {{ $app.kind | default "Application" }}
+metadata:
+  name: {{ $app.name }}
+  namespace: {{ $app.app_namespace | default "argocd" }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  {{- if $app.annotations }}
+  annotations:
+  {{- range $key, $value := $app.annotations }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+  {{- end }}
+spec:
+  destination:
+    namespace: {{ $app.namespace }}
+    server: {{ $app.destination_server | default "https://kubernetes.default.svc" }}
+  project: {{ $app.default_project | default "default" }}
+  source:
+    repoURL: {{ $app.repoURL | default "https://github.com/fred-drake/infrastructure.git" }}
+    targetRevision: {{ $app.targetRevision | default "master" }}
+    path: {{ $app.path }}
+    {{- if $app.hasSecretsFile }}
+    helm:
+      valueFiles:
+        - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
+    {{- end }}
+  syncPolicy:
+    automated:
+      prune: {{ $app.prune }}
+      selfHeal: {{ $app.selfHeal }}
+    syncOptions:
+      - CreateNamespace=true
+{{ end }}
+{{- end -}}
