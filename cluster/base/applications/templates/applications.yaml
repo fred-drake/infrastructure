@@ -1,4 +1,4 @@
-{{- define "applicationList "-}}
+{{ define "applicationList "}}
 {{- if eq .Values.applicationType "core" -}}
 {{- .Values.applications.core -}}
 {{- else -}}
