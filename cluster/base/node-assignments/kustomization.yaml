@@ -1,7 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - taint-masters.yaml
-  - backup-label.yaml
-  # - ceph-storage-nodes.yaml
-  # - longhorn-taints.yaml
