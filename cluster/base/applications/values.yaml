@@ -5,7 +5,7 @@
 
 applications:
   - name: argocd
-    namespace: argo-cd
+    namespace: argocd
     path: cluster/argocd
     annotations:
       argocd.argoproj.io/sync-wave: "-3"
@@ -31,7 +31,7 @@ applications:
       # argocd-image-updater.argoproj.io/speaker.helm.image-tag: metallb.speaker.image.tag
       # argocd-image-updater.argoproj.io/controller.helm.image-name: metallb.controller.image.repository
       # argocd-image-updater.argoproj.io/controller.helm.image-tag: metallb.controller.image.tag
-      # argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      # argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       # argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -48,7 +48,7 @@ applications:
       argocd-image-updater.argoproj.io/mgr.helm.image-tag: cert-manager.image.tag
       argocd-image-updater.argoproj.io/webhook.helm.image-name: cert-manager.webhook.image.repository
       argocd-image-updater.argoproj.io/webhook.helm.image-tag: cert-manager.webhook.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -61,7 +61,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: traefik=traefik/traefik:2.x
       argocd-image-updater.argoproj.io/traefik.helm.image-name: traefik.image.name
       argocd-image-updater.argoproj.io/traefik.helm.image-tag: traefik.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: false
     prune: true
@@ -85,7 +85,7 @@ applications:
       argocd-image-updater.argoproj.io/minio.helm.image-tag: minio.image.tag
       argocd-image-updater.argoproj.io/minio.update-strategy: name
       argocd-image-updater.argoproj.io/minio.allow-tags: "regexp:^RELEASE.[0-9]{4}-[0-9]{2}[0-9]{2}T.*?"
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -103,19 +103,19 @@ applications:
       argocd-image-updater.argoproj.io/server.helm.image-tag: server.image.tag
       argocd-image-updater.argoproj.io/pushgateway.image-name: pushgateway.image.repository
       argocd-image-updater.argoproj.io/pushgateway.helm.image-tag: pushgateway.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
     selfHeal: true
   - name: argocd-image-updater
-    namespace: argo-cd
+    namespace: argocd
     path: cluster/core/argocd-image-updater
     annotations:
       argocd-image-updater.argoproj.io/image-list: argocd-image-updater=argoprojlabs/argocd-image-updater
       argocd-image-updater.argoproj.io/argocd-image-updater.helm.image-name: argocd-image-updater.image.repository
       argocd-image-updater.argoproj.io/argocd-image-updater.helm.image-tag: argocd-image-updater.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -127,7 +127,7 @@ applications:
       # argocd-image-updater.argoproj.io/image-list: keel=keelhq/keel:latest
       # argocd-image-updater.argoproj.io/keel.helm.image-name: keel.image.repository
       # argocd-image-updater.argoproj.io/keel.helm.image-tag: keel.image.tag
-      # argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      # argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       # argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -139,7 +139,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: whoogle=benbusby/whoogle-search
       argocd-image-updater.argoproj.io/whoogle.helm.image-name: whoogle.image.repository
       argocd-image-updater.argoproj.io/whoogle.helm.image-tag: whoogle.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -151,7 +151,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: cyberchef=mpepping/cyberchef
       argocd-image-updater.argoproj.io/readarr.helm.image-name: cyberchef.image.repository
       argocd-image-updater.argoproj.io/readarr.helm.image-tag: cyberchef.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -163,7 +163,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: readarr=linuxserver/readarr:1.x
       argocd-image-updater.argoproj.io/readarr.helm.image-name: readarr.image.repository
       argocd-image-updater.argoproj.io/readarr.helm.image-tag: readarr.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -175,7 +175,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: prowlarr=linuxserver/prowlarr:1.x
       argocd-image-updater.argoproj.io/prowlarr.helm.image-name: prowlarr.image.repository
       argocd-image-updater.argoproj.io/prowlarr.helm.image-tag: prowlarr.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -187,7 +187,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: sonarr=linuxserver/sonarr:0.x
       argocd-image-updater.argoproj.io/sonarr.helm.image-name: sonarr.image.repository
       argocd-image-updater.argoproj.io/sonarr.helm.image-tag: sonarr.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -199,7 +199,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: homeassistant=homeassistant/home-assistant
       argocd-image-updater.argoproj.io/homeassistant.helm.image-name: home-assistant.image.repository
       argocd-image-updater.argoproj.io/homeassistant.helm.image-tag: home-assistant.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -213,7 +213,7 @@ applications:
       argocd-image-updater.argoproj.io/calibre.helm.image-tag: calibre.image.tag
       argocd-image-updater.argoproj.io/calibre-web.helm.image-name: calibre-web.image.repository
       argocd-image-updater.argoproj.io/calibre-web.helm.image-tag: calibre-web.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -225,7 +225,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: gitea=gitea/gitea:1.x
       argocd-image-updater.argoproj.io/gitea.helm.image-name: gitea.image.repository
       argocd-image-updater.argoproj.io/gitea.helm.image-tag: gitea.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -237,7 +237,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: grafana=grafana/grafana:8.x
       argocd-image-updater.argoproj.io/grafana.helm.image-name: image.repository
       argocd-image-updater.argoproj.io/grafana.helm.image-tag: image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -249,7 +249,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: mqtt=eclipse-mosquitto:2.x
       argocd-image-updater.argoproj.io/mqtt.helm.image-name: mosquitto.image.repository
       argocd-image-updater.argoproj.io/mqtt.helm.image-tag: mosquitto.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -265,7 +265,7 @@ applications:
       argocd-image-updater.argoproj.io/postgres.helm.image-tag: postgres.image.tag
       argocd-image-updater.argoproj.io/redis.helm.image-name: redis.image.repository
       argocd-image-updater.argoproj.io/redis.helm.image-tag: redis.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -283,7 +283,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: paperless=jonaswinkler/paperless-ng:1.x
       argocd-image-updater.argoproj.io/paperless.helm.image-name: image.repository
       argocd-image-updater.argoproj.io/paperless.helm.image-tag: image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -295,7 +295,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: radarr=linuxserver/radarr:0.x
       argocd-image-updater.argoproj.io/radarr.helm.image-name: radarr.image.repository
       argocd-image-updater.argoproj.io/radarr.helm.image-tag: radarr.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -307,7 +307,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: tautulli=tautulli/tautulli:2.x
       argocd-image-updater.argoproj.io/tautulli.helm.image-name: tautulli.image.repository
       argocd-image-updater.argoproj.io/tautulli.helm.image-tag: tautulli.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -319,7 +319,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: torrent=haugene/transmission-openvpn:4.x
       argocd-image-updater.argoproj.io/torrent.helm.image-name: image.repository
       argocd-image-updater.argoproj.io/torrent.helm.image-tag: image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
@@ -331,7 +331,7 @@ applications:
       argocd-image-updater.argoproj.io/image-list: uptime-kuma=louislam/uptime-kuma:1.x
       argocd-image-updater.argoproj.io/uptime-kuma.helm.image-name: image.repository
       argocd-image-updater.argoproj.io/uptime-kuma.helm.image-tag: image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argo-cd/git-creds
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
     prune: true
