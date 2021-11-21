@@ -8,7 +8,7 @@ applications:
     namespace: argocd
     path: cluster/argocd
     annotations:
-      argocd.argoproj.io/sync-wave: "-1"
+      # argocd.argoproj.io/sync-wave: "-1"
       argocd-image-updater.argoproj.io/image-list: controller=quay.io/argoproj/argocd:2.x, dex=ghcr.io/dexidp/dex:2.x, redis=redis:6.x.x-alpine
       argocd-image-updater.argoproj.io/dex.helm.image-name: argo-cd.dex.image.repository
       argocd-image-updater.argoproj.io/dex.helm.image-tag: argo-cd.dex.image.tag
