@@ -1,4 +1,4 @@
-{{- if eq .Values.applications -}}
+{{- if .Values.applications -}}
 {{- range $index, $app := .Values.applications }}
 ---
 apiVersion: {{ $app.apiVersion | default "argoproj.io/v1alpha1" }}
