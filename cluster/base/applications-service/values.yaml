@@ -1,4 +1,11 @@
 applications:
+  - name: applications-service
+    namespace: prometheus
+    path: cluster/base/applications-service
+    annotations:
+    hasSecretsFile: false
+    prune: true
+    selfHeal: true
   - name: prometheus
     namespace: prometheus
     path: cluster/core/prometheus
