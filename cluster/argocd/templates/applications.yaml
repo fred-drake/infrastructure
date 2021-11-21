@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: applications
+  name: applications-core
   namespace: {{ .Release.Namespace }}
   # finalizers:
   #   - resources-finalizer.argocd.argoproj.io
@@ -15,11 +15,7 @@ spec:
   source:
     repoURL: https://github.com/fred-drake/infrastructure.git
     targetRevision: master
-    path: cluster/base/applications
-    helm:
-      parameters:
-        - name: applicationType
-          value: core
+    path: cluster/base/applications-core
   syncPolicy:
     automated:
       prune: true
