@@ -1,9 +1,9 @@
 {{- if eq .Values.applicationType "core" -}}
-    {{- define "apps.applicationList" -}}
+    {{- define "applicationList" -}}
         {{- .Values.applications.core -}}
     {{- end -}}
 {{- else -}}
-    {{- define "apps.applicationList" -}}
+    {{- define "applicationList" -}}
         {{- .Values.applications.service -}}
     {{- end -}}
 {{- end -}}

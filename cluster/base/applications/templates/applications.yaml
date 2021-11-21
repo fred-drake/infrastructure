@@ -1,5 +1,5 @@
-{{- if apps.applicationList -}}
-{{- range $index, $app := apps.applicationList }}
+{{- if applicationList -}}
+{{- range $index, $app := applicationList }}
 ---
 apiVersion: {{ $app.apiVersion | default "argoproj.io/v1alpha1" }}
 kind: {{ $app.kind | default "Application" }}
