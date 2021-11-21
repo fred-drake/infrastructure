@@ -16,6 +16,10 @@ spec:
     repoURL: https://github.com/fred-drake/infrastructure.git
     targetRevision: master
     path: cluster/base/applications
+    helm:
+      parameters:
+        - name: applicationType
+          value: core
   syncPolicy:
     automated:
       prune: true
