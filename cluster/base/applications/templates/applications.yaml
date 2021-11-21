@@ -1,4 +1,8 @@
-{{- if .applicationList -}}
+{{- if eq .Values.applicationType "core" -}}
+    {{- $applicationList := .Values.applications.core -}}
+{{- else -}}
+    {{- $applicationList := .Values.applications.service -}}
+{{- end -}}
 {{- range $index, $app := $applicationList }}
 ---
 apiVersion: {{ $app.apiVersion | default "argoproj.io/v1alpha1" }}
