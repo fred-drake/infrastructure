@@ -8,7 +8,7 @@ applications:
     namespace: argocd
     path: cluster/argocd
     annotations:
-      argocd.argoproj.io/sync-wave: "-3"
+      argocd.argoproj.io/sync-wave: "-1"
       argocd-image-updater.argoproj.io/image-list: controller=quay.io/argoproj/argocd:2.x, dex=ghcr.io/dexidp/dex:2.x, redis=redis:6.x.x-alpine
       argocd-image-updater.argoproj.io/dex.helm.image-name: argo-cd.dex.image.repository
       argocd-image-updater.argoproj.io/dex.helm.image-tag: argo-cd.dex.image.tag
@@ -25,7 +25,7 @@ applications:
     namespace: metallb-system
     path: cluster/core/metallb
     annotations:
-      argocd.argoproj.io/sync-wave: "-2"
+      argocd.argoproj.io/sync-wave: "-1"
       # argocd-image-updater.argoproj.io/image-list: speaker=quay.io/metallb/speaker:0.x, controller=quay.io/metallb/controller:0.x
       # argocd-image-updater.argoproj.io/speaker.helm.image-name: metallb.speaker.image.repository
       # argocd-image-updater.argoproj.io/speaker.helm.image-tag: metallb.speaker.image.tag
@@ -40,7 +40,7 @@ applications:
     namespace: cert-manager
     path: cluster/core/cert-manager
     annotations:
-      argocd.argoproj.io/sync-wave: "-2"
+      argocd.argoproj.io/sync-wave: "-1"
       argocd-image-updater.argoproj.io/image-list: cainjector=quay.io/jetstack/cert-manager-cainjector:1.x, mgr=quay.io/jetstack/cert-manager-controller:v1.x, webhook=quay.io/jetstack/cert-manager-webhook:1.x
       argocd-image-updater.argoproj.io/cainjector.helm.image-name: cert-manager.cainjector.image.repository
       argocd-image-updater.argoproj.io/cainjector.helm.image-tag: cert-manager.cainjector.image.tag
@@ -57,7 +57,7 @@ applications:
     namespace: traefik
     path: cluster/core/traefik
     annotations:
-      argocd.argoproj.io/sync-wave: "-2"
+      argocd.argoproj.io/sync-wave: "-1"
       argocd-image-updater.argoproj.io/image-list: traefik=traefik/traefik:2.x
       argocd-image-updater.argoproj.io/traefik.helm.image-name: traefik.image.name
       argocd-image-updater.argoproj.io/traefik.helm.image-tag: traefik.image.tag
@@ -70,7 +70,7 @@ applications:
     namespace: longhorn-system
     path: cluster/core/longhorn
     annotations:
-      argocd.argoproj.io/sync-wave: "-3"
+      argocd.argoproj.io/sync-wave: "-1"
     hasSecretsFile: true
     prune: true
     selfHeal: true
