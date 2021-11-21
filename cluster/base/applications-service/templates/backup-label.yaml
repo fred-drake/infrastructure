@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: Node
-metadata:
-  name: kworker07
-  labels:
-    backup_storage: 'true'
