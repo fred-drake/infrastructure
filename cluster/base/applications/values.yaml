@@ -25,7 +25,7 @@ applications:
     namespace: metallb-system
     path: cluster/core/metallb
     annotations:
-      argocd.argoproj.io/sync-wave: "-1"
+      # argocd.argoproj.io/sync-wave: "-1"
       # argocd-image-updater.argoproj.io/image-list: speaker=quay.io/metallb/speaker:0.x, controller=quay.io/metallb/controller:0.x
       # argocd-image-updater.argoproj.io/speaker.helm.image-name: metallb.speaker.image.repository
       # argocd-image-updater.argoproj.io/speaker.helm.image-tag: metallb.speaker.image.tag
@@ -40,7 +40,7 @@ applications:
     namespace: cert-manager
     path: cluster/core/cert-manager
     annotations:
-      argocd.argoproj.io/sync-wave: "-1"
+      # argocd.argoproj.io/sync-wave: "-1"
       argocd-image-updater.argoproj.io/image-list: cainjector=quay.io/jetstack/cert-manager-cainjector:1.x, mgr=quay.io/jetstack/cert-manager-controller:v1.x, webhook=quay.io/jetstack/cert-manager-webhook:1.x
       argocd-image-updater.argoproj.io/cainjector.helm.image-name: cert-manager.cainjector.image.repository
       argocd-image-updater.argoproj.io/cainjector.helm.image-tag: cert-manager.cainjector.image.tag
@@ -57,7 +57,7 @@ applications:
     namespace: traefik
     path: cluster/core/traefik
     annotations:
-      argocd.argoproj.io/sync-wave: "-1"
+      # argocd.argoproj.io/sync-wave: "-1"
       argocd-image-updater.argoproj.io/image-list: traefik=traefik/traefik:2.x
       argocd-image-updater.argoproj.io/traefik.helm.image-name: traefik.image.name
       argocd-image-updater.argoproj.io/traefik.helm.image-tag: traefik.image.tag
@@ -94,6 +94,7 @@ applications:
     namespace: prometheus
     path: cluster/core/prometheus
     annotations:
+      argocd.argoproj.io/sync-wave: "1"
       argocd-image-updater.argoproj.io/image-list: alertmanager=quay.io/prometheus/alertmanager:0.x, nodeExporter=quay.io/prometheus/node-exporter:1.x, server=quay.io/prometheus/prometheus:2.x, pushgateway=prom/pushgateway:1.x
       argocd-image-updater.argoproj.io/alertmanager.image-name: alertmanager.image.repository
       argocd-image-updater.argoproj.io/alertmanager.helm.image-tag: alertmanager.image.tag
@@ -160,6 +161,7 @@ applications:
     namespace: readarr
     path: cluster/apps/readarr
     annotations:
+      argocd.argoproj.io/sync-wave: "1"
       argocd-image-updater.argoproj.io/image-list: readarr=linuxserver/readarr:1.x
       argocd-image-updater.argoproj.io/readarr.helm.image-name: readarr.image.repository
       argocd-image-updater.argoproj.io/readarr.helm.image-tag: readarr.image.tag
@@ -172,6 +174,7 @@ applications:
     namespace: prowlarr
     path: cluster/apps/prowlarr
     annotations:
+      argocd.argoproj.io/sync-wave: "1"
       argocd-image-updater.argoproj.io/image-list: prowlarr=linuxserver/prowlarr:1.x
       argocd-image-updater.argoproj.io/prowlarr.helm.image-name: prowlarr.image.repository
       argocd-image-updater.argoproj.io/prowlarr.helm.image-tag: prowlarr.image.tag
@@ -184,6 +187,7 @@ applications:
     namespace: sonarr
     path: cluster/apps/sonarr
     annotations:
+      argocd.argoproj.io/sync-wave: "1"
       argocd-image-updater.argoproj.io/image-list: sonarr=linuxserver/sonarr:0.x
       argocd-image-updater.argoproj.io/sonarr.helm.image-name: sonarr.image.repository
       argocd-image-updater.argoproj.io/sonarr.helm.image-tag: sonarr.image.tag
@@ -196,6 +200,7 @@ applications:
     namespace: homeassistant
     path: cluster/apps/homeassistant
     annotations:
+      argocd.argoproj.io/sync-wave: "1"
       argocd-image-updater.argoproj.io/image-list: homeassistant=homeassistant/home-assistant
       argocd-image-updater.argoproj.io/homeassistant.helm.image-name: home-assistant.image.repository
       argocd-image-updater.argoproj.io/homeassistant.helm.image-tag: home-assistant.image.tag
@@ -208,6 +213,7 @@ applications:
     namespace: calibre
     path: cluster/apps/calibre
     annotations:
+      argocd.argoproj.io/sync-wave: "1"
       argocd-image-updater.argoproj.io/image-list: calibre=linuxserver/calibre, calibre-web=linuxserver/calibre
       argocd-image-updater.argoproj.io/calibre.helm.image-name: calibre.image.repository
       argocd-image-updater.argoproj.io/calibre.helm.image-tag: calibre.image.tag
@@ -222,6 +228,7 @@ applications:
     namespace: gitea
     path: cluster/apps/gitea
     annotations:
+      argocd.argoproj.io/sync-wave: "1"
       argocd-image-updater.argoproj.io/image-list: gitea=gitea/gitea:1.x
       argocd-image-updater.argoproj.io/gitea.helm.image-name: gitea.image.repository
       argocd-image-updater.argoproj.io/gitea.helm.image-tag: gitea.image.tag
@@ -234,6 +241,7 @@ applications:
     namespace: grafana
     path: cluster/apps/grafana
     annotations:
+      argocd.argoproj.io/sync-wave: "1"
       argocd-image-updater.argoproj.io/image-list: grafana=grafana/grafana:8.x
       argocd-image-updater.argoproj.io/grafana.helm.image-name: image.repository
       argocd-image-updater.argoproj.io/grafana.helm.image-tag: image.tag
@@ -258,6 +266,7 @@ applications:
     namespace: netbox
     path: cluster/apps/netbox
     annotations:
+      argocd.argoproj.io/sync-wave: "1"
       argocd-image-updater.argoproj.io/image-list: netbox=linuxserver/netbox:3.x, postgres=postgres:14.x, redis=redis:6.x
       argocd-image-updater.argoproj.io/netbox.helm.image-name: netbox.image.repository
       argocd-image-updater.argoproj.io/netbox.helm.image-tag: netbox.image.tag
@@ -292,6 +301,7 @@ applications:
     namespace: radarr
     path: cluster/apps/radarr
     annotations:
+      argocd.argoproj.io/sync-wave: "1"
       argocd-image-updater.argoproj.io/image-list: radarr=linuxserver/radarr:0.x
       argocd-image-updater.argoproj.io/radarr.helm.image-name: radarr.image.repository
       argocd-image-updater.argoproj.io/radarr.helm.image-tag: radarr.image.tag
@@ -304,6 +314,7 @@ applications:
     namespace: tautulli
     path: cluster/apps/tautulli
     annotations:
+      argocd.argoproj.io/sync-wave: "1"
       argocd-image-updater.argoproj.io/image-list: tautulli=tautulli/tautulli:2.x
       argocd-image-updater.argoproj.io/tautulli.helm.image-name: tautulli.image.repository
       argocd-image-updater.argoproj.io/tautulli.helm.image-tag: tautulli.image.tag
@@ -316,6 +327,7 @@ applications:
     namespace: torrent
     path: cluster/apps/torrent
     annotations:
+      argocd.argoproj.io/sync-wave: "1"
       argocd-image-updater.argoproj.io/image-list: torrent=haugene/transmission-openvpn:4.x
       argocd-image-updater.argoproj.io/torrent.helm.image-name: image.repository
       argocd-image-updater.argoproj.io/torrent.helm.image-tag: image.tag
@@ -328,6 +340,7 @@ applications:
     namespace: uptime-kuma
     path: cluster/apps/uptime-kuma
     annotations:
+      argocd.argoproj.io/sync-wave: "1"
       argocd-image-updater.argoproj.io/image-list: uptime-kuma=louislam/uptime-kuma:1.x
       argocd-image-updater.argoproj.io/uptime-kuma.helm.image-name: image.repository
       argocd-image-updater.argoproj.io/uptime-kuma.helm.image-tag: image.tag
