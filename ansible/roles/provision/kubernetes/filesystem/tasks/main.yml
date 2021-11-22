@@ -56,3 +56,12 @@
   loop:
     - swap
     - none
+
+- name: Update multipath to not interfere
+  blockinfile:
+    path: /etc/multipath.conf
+    block: |
+      blacklist {
+          devnode "^sd[a-z0-9]+"
+      }
+  notify: restart multipathd
