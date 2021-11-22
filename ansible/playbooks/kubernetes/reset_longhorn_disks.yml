@@ -1,6 +1,6 @@
 - hosts: k8s_storage
   become: true
-  gather_facts: true
+  gather_facts: false
   any_errors_fatal: true
   pre_tasks:
     - name: Pausing for 5 seconds...
@@ -29,3 +29,13 @@
         src: /dev/sda1
         state: mounted
         fstype: ext4
+
+- hosts: 'k8s_cluster:!k8s_storage'
+  become: true
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+    - name: Delete longhorn content directory
+      file:
+        state: absent
+        path: /var/lib/longhorn
