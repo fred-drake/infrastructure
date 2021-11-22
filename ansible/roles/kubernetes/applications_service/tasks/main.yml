@@ -1,0 +1,5 @@
+- name: service applications helm
+  kubernetes.core.helm:
+    name: applications-service
+    chart_ref: "{{ playbook_dir }}/../../../cluster/base/applications-service"
+    release_namespace: argocd

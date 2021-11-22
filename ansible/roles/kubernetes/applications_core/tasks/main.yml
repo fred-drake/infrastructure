@@ -1,0 +1,35 @@
+- name: create argocd namespace
+  k8s:
+    state: present
+    api_version: v1
+    kind: Namespace
+    name: argocd
+
+- name: create sops gpg secret
+  k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+          name: sops
+          namespace: argocd
+      data:
+          sops.asc: "{{ secret.argocd.gpg_key }}"
+
+- name: argocd helm
+  kubernetes.core.helm:
+    name: argocd
+    chart_ref: "{{ playbook_dir }}/../../../cluster/argocd"
+    release_namespace: argocd
+    values:
+      domain: "{{ secret.domain }}"
+      argo-cd:
+        server:
+          ingress:
+            hosts:
+              - "argocd.{{ secret.domain }}"
+            tls:
+              - hosts:
+                  - "argocd.{{ secret.domain }}"
+                secretName: argocd-tls

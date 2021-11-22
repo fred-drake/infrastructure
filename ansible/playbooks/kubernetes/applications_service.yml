@@ -1,0 +1,5 @@
+- hosts: localhost
+  gather_facts: false
+  become: false
+  roles:
+    - kubernetes/applications_service
