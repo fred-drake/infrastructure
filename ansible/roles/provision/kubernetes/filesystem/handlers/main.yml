@@ -1,0 +1,5 @@
+---
+- name: restart multipathd
+  systemd:
+    state: restarted
+    name: multipathd
