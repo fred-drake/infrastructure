@@ -4,5 +4,5 @@ helm:
     value: linuxserver/prowlarr
     forcestring: true
   - name: prowlarr.image.tag
-    value: 1.4.1133
+    value: 1.4.1137
     forcestring: true
