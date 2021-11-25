@@ -96,6 +96,18 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
+  - name: sabnzbd
+    namespace: sabnzbd
+    path: cluster/apps/sabnzbd
+    annotations:
+      argocd-image-updater.argoproj.io/image-list: sabnzbd=linuxserver/sabnzbd:3.x
+      argocd-image-updater.argoproj.io/sabnzbd.helm.image-name: sabnzbd.image.repository
+      argocd-image-updater.argoproj.io/sabnzbd.helm.image-tag: sabnzbd.image.tag
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+      argocd-image-updater.argoproj.io/git-branch: master
+    hasSecretsFile: true
+    prune: true
+    selfHeal: true
   - name: sonarr
     namespace: sonarr
     path: cluster/apps/sonarr

@@ -1,0 +1,34 @@
+sabnzbd:
+  image:
+    repository: linuxserver/sabnzbd
+    tag: 3.5.0
+  resource:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  env:
+    TZ: America/New_York
+    PUID: "99"
+    PGID: "100"
+  ingress:
+    main:
+      enabled: true
+      ingressClassName: traefik
+      annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+  persistence:
+    config:
+      enabled: true
+      existingClaim: sabnzbd-config
+      mountPath: /config
+    downloads:
+      enabled: true
+      existingClaim: sabnzbd-downloads
+      mountPath: /downloads
+    incomplete:
+      enabled: true
+      existingClaim: sabnzbd-incomplete
+      mountPath: /incomplete-downloads
+  monitoring:
+    enabled: false

@@ -1,0 +1,6 @@
+dependencies:
+- name: sabnzbd
+  repository: https://k8s-at-home.com/charts/
+  version: 9.1.0
+digest: sha256:fb56422436f3ea053ea4bf1631053175fe671a460bacc16079b18d69722cf8a6
+generated: "2021-11-25T18:45:50.933244-05:00"
