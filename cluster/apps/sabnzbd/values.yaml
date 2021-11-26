@@ -22,6 +22,11 @@ sabnzbd:
       enabled: true
       existingClaim: sabnzbd-config
       mountPath: /config
+    inifile:
+      enabled: true
+      type: configMap
+      mountPath: /config/sabnzbd.ini
+      subPath: sabnzbd.ini
     downloads:
       enabled: true
       existingClaim: sabnzbd-downloads
