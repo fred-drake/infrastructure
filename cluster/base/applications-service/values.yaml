@@ -84,6 +84,18 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
+  - name: portainer
+    namespace: portainer
+    path: cluster/apps/portainer
+    annotations:
+      argocd-image-updater.argoproj.io/image-list: portainer=portainer/portainer-ce:2.x
+      argocd-image-updater.argoproj.io/portainer.helm.image-name: portainer.image.repository
+      argocd-image-updater.argoproj.io/portainer.helm.image-tag: portainer.image.tag
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+      argocd-image-updater.argoproj.io/git-branch: master
+    hasSecretsFile: true
+    prune: true
+    selfHeal: true
   - name: prowlarr
     namespace: prowlarr
     path: cluster/apps/prowlarr

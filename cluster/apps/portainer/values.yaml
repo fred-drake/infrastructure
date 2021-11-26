@@ -1,0 +1,19 @@
+portainer:
+  image:
+    repository: portainer/portainer-ce
+    tag: 2.9.3
+  resource:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+  persistence:
+    enabled: true
+    existingClaim: portainer-config
