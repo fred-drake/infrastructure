@@ -25,6 +25,7 @@ sabnzbd:
     inifile:
       enabled: true
       type: configMap
+      name: sabnzbd-configmap
       mountPath: /config/sabnzbd.ini
       subPath: sabnzbd.ini
     downloads:
