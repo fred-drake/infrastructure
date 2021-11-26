@@ -22,10 +22,6 @@ sabnzbd:
       enabled: true
       existingClaim: sabnzbd-config
       mountPath: /config
-    inifile:
-      enabled: true
-      type: configMap
-      name: sabnzbd-configmap
     downloads:
       enabled: true
       existingClaim: sabnzbd-downloads
@@ -34,18 +30,5 @@ sabnzbd:
       enabled: true
       existingClaim: sabnzbd-incomplete
       mountPath: /incomplete-downloads
-  initContainers:
-    init-config:
-      image: busybox:1.34
-      command:
-        - sh
-        - -c
-        - cp -f /ini/sabnzbd.ini /config
-      volumeMounts:
-      - name: sabnzbd-config
-        mountPath: /config
-      - name: sabnzbd-configmap
-        mountPath: /ini/sabnzbd.ini
-        subPath: sabnzbd.ini
   monitoring:
     enabled: false
