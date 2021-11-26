@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: portainer
+    namespace: {{ .Release.Namespace }}
+    annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    labels:
+        app.kubernetes.io/instance: portainer
+        app.kubernetes.io/name: portainer
+spec:
+    ingressClassName: traefik
+    rules:
+        - host: "portainer.{{ .Values.domain }}"
+          http:
+            paths:
+                - pathType: Prefix
+                  path: /
+                  backend:
+                    service:
+                        name: portainer
+                        port:
+                            number: 9000
+    tls:
+        - hosts:
+            - "portainer.{{ .Values.domain }}"
+          secretName: portainer-tls
