@@ -7,7 +7,7 @@ metadata:
 spec:
     storageClassName: ""
     capacity:
-        storage: 20Ti
+        storage: 10Ti
     accessModes:
         - ReadWriteMany
     persistentVolumeReclaimPolicy: Retain
@@ -26,7 +26,7 @@ metadata:
 spec:
     storageClassName: ""
     capacity:
-        storage: 20Ti
+        storage: 10Ti
     accessModes:
         - ReadWriteMany
     persistentVolumeReclaimPolicy: Retain
@@ -48,7 +48,7 @@ spec:
         - ReadWriteMany
     resources:
         requests:
-            storage: 20Ti
+            storage: 10Ti
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -62,4 +62,4 @@ spec:
         - ReadWriteMany
     resources:
         requests:
-            storage: 20Ti
+            storage: 10Ti
