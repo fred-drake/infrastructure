@@ -22,5 +22,8 @@ node-red:
       enabled: true
       existingClaim: nodered-config
       mountPath: /data
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
   monitoring:
     enabled: false
