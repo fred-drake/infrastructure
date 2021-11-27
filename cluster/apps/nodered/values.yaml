@@ -8,8 +8,6 @@ node-red:
       memory: 128Mi
   env:
     TZ: America/New_York
-    PUID: "1000"
-    PGID: "1000"
   ingress:
     main:
       enabled: true
@@ -23,7 +21,7 @@ node-red:
       existingClaim: nodered-config
       mountPath: /data
   securityContext:
-    runAsUser: 1000
-    runAsGroup: 1000
+    runAsUser: 0
+    runAsGroup: 0
   monitoring:
     enabled: false
