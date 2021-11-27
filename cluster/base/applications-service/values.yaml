@@ -210,6 +210,18 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
+  - name: node-red
+    namespace: node-red
+    path: cluster/apps/nodered
+    annotations:
+      argocd-image-updater.argoproj.io/image-list: node-red=nodered/node-red:2.x
+      argocd-image-updater.argoproj.io/node-red.helm.image-name: node-red.image.repository
+      argocd-image-updater.argoproj.io/node-red.helm.image-tag: node-red.image.tag
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+      argocd-image-updater.argoproj.io/git-branch: master
+    hasSecretsFile: true
+    prune: true
+    selfHeal: true
   - name: office-touchpad
     namespace: office-touchpad
     path: cluster/apps/office-touchpad
