@@ -1,3 +1,7 @@
+postgres:
+  image:
+    repository: postgres
+    tag: 14.1
 node-red:
   image:
     repository: nodered/node-red
