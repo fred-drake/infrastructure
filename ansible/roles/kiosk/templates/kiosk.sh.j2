@@ -7,7 +7,7 @@ sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' /home/pi/.config/chromi
 sed -i 's/"exit_type":"Crashed"/"exit_type":"Normal"/' /home/pi/.config/chromium/Default/Preferences
 /usr/bin/chromium-browser --noerrdialogs --disable-infobars --check-for-update-interval=31536000 \
     --enable-features=OverlayScrollbar --kiosk \
-    "https://grafana.{{ secret.domain }}/d/JAJWih4Mk/kiosk-master-view?orgId=1&from=now-24h&to=now&refresh=10s&kiosk" &
+    "https://grafana.{{ secret.domain }}/d/JAJWih4Mk/kiosk-master-view?orgId=1&from=now-24h&to=now&refresh=30s&kiosk" &
 
 while true; do
       xdotool keydown ctrl+Tab; xdotool keyup ctrl+Tab;

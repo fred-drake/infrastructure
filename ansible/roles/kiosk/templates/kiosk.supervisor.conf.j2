@@ -1,0 +1,6 @@
+[program:kiosk]
+command=/bin/bash /home/{{ ansible_user }}/kiosk.sh
+autostart=true
+autorestart=true
+environment=DISPLAY=":0.0",XAUTHORITY="/home/{{ ansible_user }}/.Xauthority"
+user={{ ansible_user }}

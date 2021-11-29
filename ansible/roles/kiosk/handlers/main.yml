@@ -6,3 +6,8 @@
   systemd:
     name: kiosk
     state: restarted
+
+- name: restart supervisor
+  systemd:
+    name: supervisor
+    state: restarted

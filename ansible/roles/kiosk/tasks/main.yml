@@ -29,6 +29,7 @@
       - xdotool
       - unclutter
       - sed
+      - supervisor
     state: present
 
 - name: copy kiosk script
@@ -38,20 +39,35 @@
     mode: '0755'
     owner: "{{ ansible_user }}"
     group: "{{ ansible_group }}"
+  notify: restart supervisor
 
-- name: copy kiosk service file
+# - name: copy kiosk service file
+#   template:
+#     src: kiosk.service.j2
+#     dest: /lib/systemd/system/kiosk.service
+#     mode: '0644'
+#   notify: restart kiosk service
+
+# - name: restart service if necessary
+#   meta: flush_handlers
+
+- name: configure supervisor
+  blockinfile:
+    state: present
+    path: /etc/supervisor/supervisord.conf
+    block: "{{ lookup('file', 'supervisord-block.conf') }}"
+  notify: restart supervisor
+
+- name: apply supervisor configuration
   template:
-    src: kiosk.service.j2
-    dest: /lib/systemd/system/kiosk.service
+    src: kiosk.supervisor.conf.j2
+    dest: /etc/supervisor/conf.d/kiosk.conf
     mode: '0644'
-  notify: restart kiosk service
+  notify: restart supervisor
 
-- name: restart service if necessary
-  meta: flush_handlers
-
-- name: enable kiosk service
-  systemd:
-    name: kiosk
-    enabled: true
-    masked: false
-    state: started
+# - name: enable kiosk service
+#   systemd:
+#     name: kiosk
+#     enabled: true
+#     masked: false
+#     state: started
