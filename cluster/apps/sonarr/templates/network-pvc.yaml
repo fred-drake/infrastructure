@@ -11,14 +11,11 @@ spec:
     accessModes:
         - ReadWriteMany
     persistentVolumeReclaimPolicy: Retain
-    flexVolume:
-        driver: fstab/cifs
-        fsType: cifs
-        secretRef:
-            name: cifs-secret
-        options:
-            networkPath: "//{{ .Values.cifs_server }}/videos"
-            mountOptions: file_mode=0777,dir_mode=0777,vers=3.0,gid=100,uid=99
+    mountOptions:
+        - hard
+    nfs:
+        path: /mnt/user/videos
+        server: "larussa-50.{{ .Values.domain }}"
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -33,14 +30,11 @@ spec:
     accessModes:
         - ReadWriteMany
     persistentVolumeReclaimPolicy: Retain
-    flexVolume:
-        driver: fstab/cifs
-        fsType: cifs
-        secretRef:
-            name: cifs-secret
-        options:
-            networkPath: "//{{ .Values.cifs_server }}/torrent"
-            mountOptions: file_mode=0777,dir_mode=0777,vers=3.0,gid=100,uid=99
+    mountOptions:
+        - hard
+    nfs:
+        path: /mnt/user/torrent
+        server: "larussa-50.{{ .Values.domain }}"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
