@@ -1,0 +1,14 @@
+helm:
+  parameters:
+  - name: postgres.image.repository
+    value: postgres
+    forcestring: true
+  - name: postgres.image.tag
+    value: "14.1"
+    forcestring: true
+  - name: node-red.image.repository
+    value: nodered/node-red
+    forcestring: true
+  - name: node-red.image.tag
+    value: 2.1.4
+    forcestring: true
