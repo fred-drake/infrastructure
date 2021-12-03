@@ -4,5 +4,5 @@ helm:
     value: linuxserver/readarr
     forcestring: true
   - name: readarr.image.tag
-    value: 1.0.1081
+    value: 1.0.1082
     forcestring: true
