@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "localhost:5432:{{ pg_database }}:{{ pg_user }}:{{ pg_password }}" > /root/.pgpass
+chmod 600 /root/.pgpass
+pg_dump --username {{ pg_user }} --host localhost {{ pg_database }} > /root/{{ backup_file }}

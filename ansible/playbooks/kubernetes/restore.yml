@@ -1,0 +1,81 @@
+- hosts: localhost
+  gather_facts: false
+  become: false
+  vars:
+    backup_root_directory: "/Users/fdrake/Downloads/autobackup5"
+  roles:
+    # Grafana
+    - role: kubernetes/restore/standard_volume
+      vars:
+        k8s_namespace: grafana
+        container_directory: /var/lib
+        backup_directory: grafana
+        container_name: grafana
+      tags: grafana
+
+    # Home Assistant
+    - role: kubernetes/restore/standard_volume
+      vars:
+        k8s_namespace: homeassistant
+        container_directory: /
+        backup_directory: config
+        container_name: homeassistant-home-assistant
+      tags: homeassistant
+
+    # Netbox
+    - role: kubernetes/restore/postgres
+      vars:
+        k8s_namespace: netbox
+        pg_podname: postgres-0
+        pg_database: netbox
+        pg_user: "{{ secret.netbox.postgres.user }}"
+        pg_password: "{{ secret.netbox.postgres.password }}"
+        backup_file: netbox.sql
+      tags: netbox
+
+    # Prometheus
+    - role: kubernetes/restore/prometheus
+      vars:
+        k8s_namespace: prometheus
+        backup_directory: prometheus
+      tags: prometheus
+
+    # Node Red
+    - role: kubernetes/restore/standard_volume
+      vars:
+        k8s_namespace: node-red
+        container_directory: /
+        backup_directory: data
+        container_name: node-red
+      tags: node-red
+
+    # Paperless data
+    - name: paperless data volume
+      role: kubernetes/restore/standard_volume
+      vars:
+        k8s_namespace: paperless
+        container_directory: /usr/src/paperless
+        backup_directory: data
+        container_name: paperless
+        # bounce_pod: false
+      tags: paperless
+
+    # Sabnzbd
+    - role: kubernetes/restore/standard_volume
+      vars:
+        k8s_namespace: sabnzbd
+        container_directory: /
+        backup_directory: config
+        container_name: sabnzbd
+        k8s_user: "99"
+        k8s_group: "100"
+      tags: sabnzbd
+
+    # Uptime-Kuma
+    - role: kubernetes/restore/standard_volume
+      vars:
+        k8s_namespace: uptime-kuma
+        container_directory: /app
+        backup_directory: data
+        container_name: uptime-kuma
+      tags: uptime-kuma

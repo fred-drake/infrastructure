@@ -1,0 +1,11 @@
+- name: "{{ k8s_namespace }}-{{ backup_directory }} / create backup directory"
+  file:
+    path: "{{ backup_root_directory }}/{{ backup_directory }}"
+    state: directory
+    mode: '0755'
+
+- name: "{{ k8s_namespace }}-{{ backup_directory }} / backing up volume"
+  shell: >
+    kubectl cp -n {{ k8s_namespace }}
+    `kubectl get pod -n {{ k8s_namespace }} -o json | jq ".items[0].metadata.name" | tr -d \"`:{{ container_directory }}
+    {{ backup_root_directory }}/{{ k8s_namespace }}/{{ backup_directory }} -c {{ container_name }}

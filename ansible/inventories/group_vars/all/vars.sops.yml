@@ -134,9 +134,7 @@ secret:
         password: ENC[AES256_GCM,data:ajaPC1m50/kugQ==,iv:oZKJF9h3DkV0+1CTLMwBXvS4sEjfVKTuBrTgy/AxDHQ=,tag:GfXgCfwYiXhfoNFmxbnP7Q==,type:str]
         postgres:
             user: ENC[AES256_GCM,data:jdvrfu1M,iv:B8ZJ+1DygKnr2q5lmyGya0FyxjHhw6ZWBEYO7XsVTV4=,tag:Kny9sAyOMDQ3tS/TBAuATg==,type:str]
-            password: ENC[AES256_GCM,data:XTX2frfxvQTr9zQm,iv:9Cl/CllU+u5PSIWDdF2jDvE1WfdSrx+Cpf/2K+QZSk8=,tag:2LwVdYl/M8IrLoix+/qSww==,type:str]
-            superuser_password: ENC[AES256_GCM,data:7GKyrUbo+r2DFYTL,iv:2VIKKt9uwr0qF8/0bUTpoIaq7qdeheLyJGMGDfWUa+M=,tag:/npm1A+NJlx1xy8k1Asw6w==,type:str]
-            replication_password: ENC[AES256_GCM,data:r7ubujvu4wFcMuBu,iv:19lIPJNuUWbrq1VHE4WGYzIU4xEcEieeYowZR5M2wHw=,tag:hyVrU15xoq42KJNqYn+Y3g==,type:str]
+            password: ENC[AES256_GCM,data:MaNjnBnQASW5OOx3,iv:jsXXX6q3UOyykTNg5X3s8S7MQX2i2RwUjSNnfT9wgGo=,tag:yVf5EWGouNN8zkOzUhF2Vg==,type:str]
         token: ENC[AES256_GCM,data:rthaGsKRNG9Z6jQSfQT6QHua/Ui6mtKa7ZJrFDjOGrGtY1GVaFdVkQ==,iv:eWsFmvglwZsRNiLDo7699kKI94yI28Dbmc1sfQMXpsM=,tag:W10URrcIxeCii/Wp3QuMjQ==,type:str]
     gitea:
         admin:
@@ -282,8 +280,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-30T22:04:11Z"
-    mac: ENC[AES256_GCM,data:VWnxO0xjIWACoTN3OGE9EcFTptmONPx4j+mKBZzvlVEM7s4p7H74+fEnhovHwcIlLYJO1so++ZRx9TdnKhb4dGP3lS0AR3rhR7mQBppEWlqYzKjssgZPe+XVDAUGzOejyfy/bSsQKd/GjlXgKAf3D/JejkdHMYEILv5Nv64TAlQ=,iv:+vrtpSL3q6sV6/gbUp2uxz+tAC5254A+x5IDuz5clzw=,tag:z1xlB9ixBA0B+10c/t3EWA==,type:str]
+    lastmodified: "2021-12-04T03:26:54Z"
+    mac: ENC[AES256_GCM,data:/OZPgEK/Fme534f6HJvtqflXqDx3SwudkbQIsLzW6NSAWINHDeALU3dtHIaEPiRDPddKRxJbuxsJw2bEXezDN2z2Vv7bv2PEspA0SLgI5oFk3EK64JtFlkY89JO01ccfgvQekFKaI0gXLOzhZduW1akKO1MXGdcgZF5rzDIFWRY=,iv:4EHT7KGum530VTsWfhIV0XO36of/I2+IUUFxyptGm5s=,tag:S//5BFYjVnTBmdCGNQQo5A==,type:str]
     pgp:
         - created_at: "2021-10-30T18:28:12Z"
           enc: |

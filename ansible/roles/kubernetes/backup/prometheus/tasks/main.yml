@@ -1,0 +1,20 @@
+- name: "{{ k8s_namespace }} / create backup directory"
+  file:
+    path: "{{ backup_root_directory }}/{{ backup_directory }}"
+    state: directory
+    mode: '0755'
+
+- name: "{{ k8s_namespace }} / removing old prometheus snapshots"
+  shell: >
+    kubectl exec -i -n {{ k8s_namespace }} prometheus-server-0 -c prometheus-server -- rm -rf /data/snapshots
+
+- name: "{{ k8s_namespace }} / creating prometheus snapshot"
+  shell: >
+    curl -XPOST https://prometheus.internal.freddrake.com/api/v1/admin/tsdb/snapshot
+
+- name: "{{ k8s_namespace }} / backing up prometheus snapshot"
+  shell: >
+    kubectl cp -n {{ k8s_namespace }} prometheus-server-0:/data/snapshots/ {{ backup_root_directory }}/{{ backup_directory }} -c prometheus-server
+
+- name: "{{ k8s_namespace }} / prepping snapshot directory"
+  shell: "mv {{ backup_root_directory}}/{{ backup_directory }}/* {{ backup_root_directory}}/{{ backup_directory }}/data"

@@ -1,0 +1,38 @@
+- name: create backup directory
+  file:
+    path: "{{ backup_root_directory }}/{{ backup_directory }}"
+    state: directory
+    mode: '0755'
+
+- name: create temp file
+  tempfile:
+    state: file
+  register: backup_script
+
+- name: make backup script
+  template:
+    src: backup.sh.j2
+    dest: "{{ backup_script.path }}"
+    mode: '0700'
+
+- name: store pgpass
+  shell: "kubectl cp -n {{ k8s_namespace }} {{ backup_script.path }} {{ pg_podname }}:/root/backup.sh"
+
+- name: delete temp file
+  file:
+    path: "{{ backup_script.path }}"
+    state: absent
+
+- name: postgres dump to file
+  shell: "kubectl exec -n {{ k8s_namespace}} -i {{ pg_podname }} -- /root/backup.sh"
+
+- name: copy postgres backup from pod
+  shell: >
+    kubectl cp -n {{ k8s_namespace }}
+    {{ pg_podname }}:/root/{{ backup_file }} {{ backup_root_directory }}/{{ k8s_namespace }}
+
+- name: remove backup script
+  shell: "kubectl exec -n {{ k8s_namespace}} -i {{ pg_podname }} -- rm -f /root/restore.sh"
+
+- name: remove backup file
+  shell: "kubectl exec -n {{ k8s_namespace}} -i {{ pg_podname }} -- rm -f /root/{{ backup_file }}"

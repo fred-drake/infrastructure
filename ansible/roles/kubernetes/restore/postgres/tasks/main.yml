@@ -1,0 +1,32 @@
+- name: "{{ k8s_namespace ))-postgres / create temp file"
+  tempfile:
+    state: file
+  register: restore_script
+
+- name: "{{ k8s_namespace ))-postgres / make restore script"
+  template:
+    src: restore.sh.j2
+    dest: "{{ restore_script.path }}"
+    mode: '0700'
+
+- name: "{{ k8s_namespace ))-postgres / store pgpass"
+  shell: "kubectl cp -n {{ k8s_namespace }} {{ restore_script.path }} {{ pg_podname }}:/root/restore.sh"
+
+- name: "{{ k8s_namespace ))-postgres / delete temp file"
+  file:
+    path: "{{ restore_script.path }}"
+    state: absent
+
+- name: "{{ k8s_namespace ))-postgres / copy postgres backup to pod"
+  shell: >
+    kubectl cp -n {{ k8s_namespace }}
+    {{ backup_root_directory }}/{{ k8s_namespace }}/{{ backup_file }} {{ pg_podname }}:/root
+
+- name: "{{ k8s_namespace ))-postgres / postgres restore"
+  shell: "kubectl exec -n {{ k8s_namespace}} -i {{ pg_podname }} -- /root/restore.sh"
+
+- name: "{{ k8s_namespace ))-postgres / remove backup script"
+  shell: "kubectl exec -n {{ k8s_namespace}} -i {{ pg_podname }} -- rm -f /root/restore.sh"
+
+- name: "{{ k8s_namespace ))-postgres / remove backup file"
+  shell: "kubectl exec -n {{ k8s_namespace}} -i {{ pg_podname }} -- rm -f /root/{{ backup_file }}"

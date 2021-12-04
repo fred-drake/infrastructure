@@ -1,0 +1,8 @@
+- name: "{{ k8s_namespace }} / restoring prometheus snapshot"
+  shell: >
+    kubectl cp -n {{ k8s_namespace }} {{ backup_root_directory }}/{{ backup_directory }}/data prometheus-server-0:/ -c prometheus-server
+  
+- name: "{{ k8s_namespace }} / bouncing prometheus server pod"
+  shell: >
+    kubectl -n {{ k8s_namespace }} delete pod prometheus-server-0
+  when: bounce_pod | default(true)
