@@ -2,7 +2,7 @@
   gather_facts: false
   become: false
   vars:
-    backup_root_directory: "/Users/fdrake/Downloads/autobackup5"
+    backup_root_directory: "/mnt/backup"
   roles:
     # Grafana
     - role: kubernetes/restore/standard_volume

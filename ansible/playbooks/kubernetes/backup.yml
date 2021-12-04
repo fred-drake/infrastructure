@@ -2,16 +2,16 @@
   gather_facts: false
   become: false
   vars:
-    backup_root_directory: "/Users/fdrake/Downloads/autobackup5"
+    backup_root_directory: "/mnt/backup"
   roles:
-    # # Calibre
-    # - role: kubernetes/backup/standard_volume
-    #   vars:
-    #     k8s_namespace: calibre
-    #     container_directory: /books/calibre
-    #     backup_directory: calibre
-    #     container_name: calibre
-    #   tags: calibre
+    # Calibre
+    - role: kubernetes/backup/standard_volume
+      vars:
+        k8s_namespace: calibre
+        container_directory: /books/calibre
+        backup_directory: calibre
+        container_name: calibre
+      tags: calibre
 
     # Grafana
     - role: kubernetes/backup/standard_volume
