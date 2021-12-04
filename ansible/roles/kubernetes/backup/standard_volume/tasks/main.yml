@@ -1,6 +1,6 @@
 - name: "{{ k8s_namespace }}-{{ backup_directory }} / create backup directory"
   file:
-    path: "{{ backup_root_directory }}/{{ backup_directory }}"
+    path: "{{ backup_root_directory }}/{{ k8s_namespace }}"
     state: directory
     mode: '0755'
 
