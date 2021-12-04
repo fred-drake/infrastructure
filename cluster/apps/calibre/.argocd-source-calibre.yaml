@@ -4,11 +4,11 @@ helm:
     value: linuxserver/calibre
     forcestring: true
   - name: calibre.image.tag
-    value: 5.32.0
+    value: 5.33.2
     forcestring: true
   - name: calibre-web.image.repository
     value: linuxserver/calibre
     forcestring: true
   - name: calibre-web.image.tag
-    value: 5.32.0
+    value: 5.33.2
     forcestring: true
