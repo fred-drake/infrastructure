@@ -33,7 +33,7 @@ spec:
         command:
           - sh
           - -c
-          - 'while true; sleep 100000; done'
+          - 'while true; do sleep 100000; done'
         volumeMounts:
         - mountPath: /data
           name: test-vol01
