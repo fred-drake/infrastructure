@@ -5,3 +5,4 @@ image:
   repository: fdrake/backup
   tag: latest
 gpg_secret_dir: /mnt/gpg
+backup_schedule: "* 2 * * *"

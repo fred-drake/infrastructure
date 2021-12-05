@@ -1,58 +1,57 @@
 apiVersion: batch/v1
-kind: Job
+kind: CronJob
 metadata:
   name: backup
   namespace: {{ .Release.Namespace }}
 spec:
-  backoffLimit: 4
-  template:
-    metadata:
-      labels:
-        app: backup
+  schedule: {{ .Values.backup_schedule }}
+  jobTemplate:  
     spec:
-      serviceAccountName: backup-role
-      restartPolicy: Never
-      volumes:
-        - name: data-vol
-          persistentVolumeClaim:
-            claimName: backup-staging
-        - name: gpg-secret
-          secret:
-            secretName: gpg-secret
-            defaultMode: 0400
-      containers:
-        - name: backup
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          resources:
-            requests:
-              cpu: 100m
-              memory: 128Mi
-          env:
-            - name: TZ
-              value: America/New_York
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: minio-secret
-                  key: user
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: minio-secret
-                  key: password
-            - name: RESTIC_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: backup-secret
-                  key: resticPassword
-            - name: RESTIC_REPOSITORY
-              value: "s3:https://minio-backup.{{ .Values.domain }}/restic"
-            - name: GPG_KEY_FILE
-              value: "{{ .Values.gpg_secret_dir }}/gpg.key"
-            - name: BACKUP_SOURCE
-              value: /backup/k8s
-          volumeMounts:
-            - mountPath: /backup
-              name: data-vol
+      template:
+        spec:
+          serviceAccountName: backup-role
+          restartPolicy: Never
+          volumes:
+            - name: data-vol
+              persistentVolumeClaim:
+                claimName: backup-staging
             - name: gpg-secret
-              mountPath: "{{ .Values.gpg_secret_dir }}"
+              secret:
+                secretName: gpg-secret
+                defaultMode: 0400
+          containers:
+            - name: backup
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+              env:
+                - name: TZ
+                  value: America/New_York
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: minio-secret
+                      key: user
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: minio-secret
+                      key: password
+                - name: RESTIC_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-secret
+                      key: resticPassword
+                - name: RESTIC_REPOSITORY
+                  value: "s3:https://minio-backup.{{ .Values.domain }}/restic"
+                - name: GPG_KEY_FILE
+                  value: "{{ .Values.gpg_secret_dir }}/gpg.key"
+                - name: BACKUP_SOURCE
+                  value: /backup/k8s
+              volumeMounts:
+                - mountPath: /backup
+                  name: data-vol
+                - name: gpg-secret
+                  mountPath: "{{ .Values.gpg_secret_dir }}"
