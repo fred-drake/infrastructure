@@ -7,10 +7,11 @@ spec:
   schedule: "{{ .Values.backup_schedule }}"
   jobTemplate:
     spec:
+      backoffLimit: 5
       template:
         spec:
           serviceAccountName: backup-role
-          restartPolicy: OnFailure
+          restartPolicy: Never
           volumes:
             - name: data-vol
               persistentVolumeClaim:
