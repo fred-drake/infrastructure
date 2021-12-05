@@ -10,7 +10,7 @@ spec:
       template:
         spec:
           serviceAccountName: backup-role
-          restartPolicy: Never
+          restartPolicy: OnFailure
           volumes:
             - name: data-vol
               persistentVolumeClaim:
