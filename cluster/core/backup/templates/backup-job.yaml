@@ -4,15 +4,13 @@ metadata:
   name: backup
   namespace: {{ .Release.Namespace }}
 spec:
-  selector:
-    matchLabels:
-      app: backup
   template:
     metadata:
       labels:
         app: backup
     spec:
       serviceAccountName: backup-role
+      restartPolicy: Never
       volumes:
         - name: data-vol
           persistentVolumeClaim:
