@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backup
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backup
+  template:
+    metadata:
+      labels:
+        app: backup
+    spec:
+      serviceAccountName: backup-role
+      volumes:
+        - name: data-vol
+          persistentVolumeClaim:
+            claimName: backup-staging
+      - name: gpg-vol
+        secret:
+            secretName: gpg-secret
+      containers:
+      - name: minio
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        env:
+          - name: TZ
+            value: America/New_York
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: minio-secret
+                key: user
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: minio-secret
+                key: password
+          - name: RESTIC_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: backup-secret
+                key: resticPassword
+          - name: RESTIC_REPOSITORY
+            value: "s3:https://minio-backup.{{ .Values.domain }}/restic"
+          - name: GPG_KEY_FILE
+            value: "{{ .Values.gpg_key_file }}"
+        volumeMounts:
+          - mountPath: /backup
+            name: data-vol
+          - name: gpg-vol
+            mountPath: "{{ .Values.gpg_key_file }}"
+            subPath: gpg.key
