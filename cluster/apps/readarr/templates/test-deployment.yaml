@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testing
+  namespace: {{ .Release.Namespace }}
+spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: name
+                operator: In
+                values:
+                  - readarr
+          topologyKey: "kubernetes.io/hostname"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testing
+  template:
+    metadata:
+      labels:
+        app: testing
+    spec:
+      volumes:
+      - name: test-vol01
+        persistentVolumeClaim:
+          claimName: readarr-config
+      containers:
+      - name: testing
+        image: debian:11
+        command:
+          - sh
+          - -c
+          - 'while true; sleep 100000; done'
+        volumeMounts:
+        - mountPath: /data
+          name: test-vol01
