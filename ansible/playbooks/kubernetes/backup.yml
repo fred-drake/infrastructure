@@ -60,14 +60,14 @@
         container_name: paperless
       tags: paperless
 
-    # Paperless media
-    - role: kubernetes/backup/standard_volume
-      vars:
-        k8s_namespace: paperless
-        container_directory: /usr/src/paperless/media
-        backup_directory: media
-        container_name: paperless
-      tags: paperless
+    # # Paperless media
+    # - role: kubernetes/backup/standard_volume
+    #   vars:
+    #     k8s_namespace: paperless
+    #     container_directory: /usr/src/paperless/media
+    #     backup_directory: media
+    #     container_name: paperless
+    #   tags: paperless
 
     # Prometheus
     - role: kubernetes/backup/prometheus
