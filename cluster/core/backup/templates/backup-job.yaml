@@ -10,15 +10,16 @@ spec:
       labels:
         app: backup
     spec:
-      # serviceAccountName: backup-role
+      serviceAccountName: backup-role
       restartPolicy: Never
       volumes:
         - name: data-vol
           persistentVolumeClaim:
             claimName: backup-staging
         - name: gpg-secret
-          configMap:
-            name: gpg-secret
+          secret:
+            secretName: gpg-secret
+            defaultMode: 0400
       containers:
         - name: backup
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
