@@ -18,7 +18,7 @@ spec:
             claimName: backup-staging
         - name: gpg-vol
           secret:
-              secretName: gpg-secret
+            secretName: gpg-secret
       containers:
         - name: backup
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -47,11 +47,11 @@ spec:
             - name: RESTIC_REPOSITORY
               value: "s3:https://minio-backup.{{ .Values.domain }}/restic"
             - name: GPG_KEY_FILE
-              value: "{{ .Values.gpg_key_file }}"
+              value: "{{ .Values.gpg_secret_dir }}/gpg.key"
             - name: BACKUP_SOURCE
               value: /backup/k8s
           volumeMounts:
             - mountPath: /backup
               name: data-vol
             - name: gpg-vol
-              mountPath: "{{ .Values.gpg_key_file }}"
+              mountPath: "{{ .Values.gpg_secret_dir }}"
