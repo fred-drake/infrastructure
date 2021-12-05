@@ -36,4 +36,4 @@ spec:
     - hosts:
         - "minio-backup.{{ .Values.domain }}"
         - "minio-backup-ui.{{ .Values.domain }}"
-      secretName: velero-tls
+      secretName: backup-tls
