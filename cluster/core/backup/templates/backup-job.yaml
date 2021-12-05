@@ -18,7 +18,7 @@ spec:
             claimName: backup-staging
         - name: gpg-vol
           secret:
-            secretName: gpg-foo
+            secretName: gpg-secret
       containers:
         - name: backup
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
