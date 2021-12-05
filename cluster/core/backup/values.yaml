@@ -4,4 +4,4 @@ minio:
 image:
   repository: fdrake/backup
   tag: latest
-gpg_key_file: /mnt/secret/gpg.key
+gpg_secret_dir: /mnt/gpg
