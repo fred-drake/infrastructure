@@ -2,7 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: minio
-  namespace: velero
+  namespace: {{ .Release.Namespace }}
 spec:
   type: NodePort
   selector:
