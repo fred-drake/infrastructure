@@ -1,10 +1,9 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: backup
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: backup
@@ -50,6 +49,8 @@ spec:
               value: "s3:https://minio-backup.{{ .Values.domain }}/restic"
             - name: GPG_KEY_FILE
               value: "{{ .Values.gpg_key_file }}"
+            - name: BACKUP_SOURCE
+              value: /backup/k8s
           volumeMounts:
             - mountPath: /backup
               name: data-vol
