@@ -4,16 +4,6 @@ metadata:
   name: testing
   namespace: {{ .Release.Namespace }}
 spec:
-  affinity:
-    podAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-              - key: name
-                operator: In
-                values:
-                  - readarr
-          topologyKey: "kubernetes.io/hostname"
   replicas: 1
   selector:
     matchLabels:
@@ -23,6 +13,16 @@ spec:
       labels:
         app: testing
     spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - readarr
+              topologyKey: "kubernetes.io/hostname"
       volumes:
       - name: test-vol01
         persistentVolumeClaim:
