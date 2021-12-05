@@ -4,6 +4,7 @@ metadata:
   name: backup
   namespace: {{ .Release.Namespace }}
 spec:
+  backoffLimit: 4
   template:
     metadata:
       labels:
@@ -11,7 +12,6 @@ spec:
     spec:
       serviceAccountName: backup-role
       restartPolicy: Never
-      backoffLimit: 4
       volumes:
         - name: data-vol
           persistentVolumeClaim:
