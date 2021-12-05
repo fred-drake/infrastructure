@@ -1,42 +1,61 @@
 # Infrastructure
-This repository contains everything I use to run my home infrastructure.  I put it on github in case others would like to learn.
+
+This repository contains everything I use to run my home infrastructure.  I put it on github in case others would like to learn.  At a high level, it uses the following technologies:
+
+* Ansible for server provisioning and initial kubernetes deployment
+* SOPS for secret storage
+* K3S for Kubernetes cluster across several servers
+* Docker for container needs that are not condusive to the Kubernetes distributed model
+* ArgoCD for Kubernetes cluster GitOps deployment
+* Helm Secrets for using SOPS secrets inside the Kubernetes cluster
 
 ## Requirements
+
 * Python 3
 * SSH installed on each machine
 * `ansible` installed on the system
+* The private GPG key stored on the machine
 
 ## Setup
-The vault password must be defined in `ansible/.vault_pass`.
-
-Install ansible and requirements through `scripts/setup.sh`.
 
 Environment variables needed to operate both `ansible` and `kubectl` are set in `.envrc`.  It is recommended that you install the [direnv](https://github.com/direnv/direnv) application, which automatically sets these when you are in the repository's directory.
 
 ## Ansible
 
-### Vault Management
-`scripts/encdec.sh` will encrypt or decrypt every `vault.yml` file, as well as all files listed in `encrypted_files.txt`, using your defined `.vault_pass`.  If a line in the text file is a directory, every file underneath that directory will be encrypted.
+### Secrets Management
 
-* `scripts/encdec.sh encrypt`
-
-* `scripts/encdec.sh decrypt`
+All secrets are managed by SOPS, through a private GPG key.  It's recommended that you use the SOPS plugin for Visual Studio Code, as it will automatically encrypt and decrypt for ease of use.
 
 ### Executing
 
-`scripts/deploy.sh` is a simple wrapper around `ansible-playbook` which also adds the vault password file for convenience.  All `ansible-playbook` command line parameters can be added as parameters to this script.
+All non-automatic execution is handled through ansible playbooks.
 
 ### Playbooks
 
-`everything.yml` is designed to execute the kitchen sink, and calls all other playbooks:
+Playbooks are found in the ansible/playbooks directory.
 
-* `linux.yml`: Basic initialization of a clean linux installation, including pushing of public keys, hostname setup, library installations and upgrade to latest packages.  You'll probably need to execute with the `-kK` options and enter your password if executing this for the first time on a clean linux installation.
-* `raspberry_pi.yml`: Setup routines that are specific to Raspberry Pi machines, including overclocking if they are in the proper group in the hosts file.
-* `avahi.yml`: Avahi service installation and setup for broadcast repeating between subnets.
-* `docker.yml`: Installs docker, all docker containers and their respective networks and fileshares.
-* `k8s.yml`: Installs kubernetes (using k3s) onto my Raspberry Pi cluster and mounts a drive used for storing backups.
+#### Docker
 
-`k8s_wipe.yml`: Destroys the k3s cluster.  It does not touch the mounted backup drive.
+`critical_apps_primary.yml` and `critical_apps_secondary.yml` contain containers that are not particularly suited for kubernetes and run mission critical services that are needed for my home, such as DHCP and DNS.  See "Netbox Integration" below for more information on how these are used.
+
+#### Kubernetes
+
+`k8s_install.yml` will install K3S onto all members of the Kubernetes cluster
+
+`k8s_nuke.yml` will delete K3S on all members of the Kubernetes cluster
+
+`reset_longhorn_disks.yml` will wipe longhorn disk information on all members of the Kubernetes cluster.  This is typically ran if you run a cluster-wide execution of `k8s_nuke.yml` for a fully clean slate.
+
+`applications_core.yml` applies the GPG key and all of the core applications onto the Kubernetes cluster, such as ArgoCD, traefik, metallb, and longhorn.
+
+`applications_service.yml` applies all of the service applications onto the Kubernetes cluster.  When re-building the cluster, I will wait for `applications_core.yml` to finish deployments before executing this.
+
+`backup.yml` is currently experimental.  See the Backups section below.
+#### Others
+
+`dhcp_update.yml` and `dns_update.yml` are run to sync DHCP and DNS with Netbox.  See the Netbox Integration section below for more.
+
+`provision.yml` is the one-stop-shop which provisions servers end-to-end.  Actions are idempotent so you can run it across all servers whenever you wish.  One action that will often change is a system update of packages.  It is important to note that it will NOT reboot even if a system update requires it.  This is to prevent unwanted consequences in the Kubernetes cluster.  You can run a `rolling-reboot.yml` to reboot the cluster (experimental) or when creating the cluster iteself, `k8s_install.yml` will check if it should be rebooted before installing K3S.
 
 ### Tags
 
@@ -46,27 +65,26 @@ Generally, tags are set up so that you can call either a specific docker contain
 * `docker_update` will update every non-critical container with the latest from the remote repository.
 * `docker_critical_update` will update containers critical to keeping our network running smoothly.
 
-## Kubernetes
-The cluster is ran through the [k8s-at-home](https://github.com/k8s-at-home/template-cluster-k3s) template structure which, generally speaking, operates in the following way:
+### Netbox Integration
 
-* Rather than deploy on-demand through ansible, Flux watches the git repository and applies changes as they are pushed.  This makes the git repository the de facto source of truth.
-* Kubernetes secrets are stored using SOPS through a GPG key instead of the ansible vault
+I utilize the Netbox application as my documented source of truth for all of my connected devices.  In particular, I use it to generate the configurations for DHCP and DNS services.  Each time `dhcp_update.yml` or `dns_update.yml` are called, it will pull a data structure of relevant information from Netbox, then apply it to a template that recreates the configuration for their respective services.
 
-There are a number of `k8s_*` roles still defined.  Those are no longer used and in the process of conversion to the k8s-at-home pattern.
+Some additional notes on this:
 
-## Segregation of Functions
+* Netbox does not support host aliases, so I created tags (e.g. `dnsalias:www`, `dnsalias:plex`) and associated those tags with the IP address stored in Netbox.
+* To build the DHCP static reservations, the following are required for each IP address configured in Netbox:
+  * The IP address has a status of `Reserved`.  All IPs without this status are skipped.
+  * The IP address has a DNS hostname defined.  If a qualifying IP address entry doesn't have this, the entire task will fail.
+  * The IP address has a device and interface associated, and that interface has a MAC address defined.  If the MAC is not defined or the IP address entry has no device and interface associated, the entire task will fail.
 
-My infrastructure's functions are in two categories: critical and non-critical.  Critical functions are those that would cripple normal use of our network and internet without manual intervention, such as DHCP, DNS or VPN.  If I can't watch a movie on Plex, or my home automation sensors aren't recording data to Influx, it is not a huge deal.  However, if my wife can't use the internet and is due to give a work presentation there will be hell to pay, and I'm simply too young to die.  With that in mind, I segregate these critical functions to their own physical servers and think of them as "life-support" in both the metaphorical and (potentially) literal sense.  These servers are in their own defined host group in the ansible inventory, so you could use the parameter `--limit '!critical'` to ensure that all playbooks are skipping machines that you really don't want to be touched on a routine basis.
+### Backups
 
-## Notes
-* My internal DNS host list and DHCP static reservations are built dynamically using data from my internal Netbox instance, which is my source of truth for all information around my home network (IP address assignments, switch ports, VLANs, etc).
-	* Netbox does not support host aliases, so I created tags (e.g. `dnsalias:www`, `dnsalias:plex`) and associated those tags with the IP address stored in Netbox.
-	* To build the DHCP static reservations, the following are required for each IP address configured in Netbox:
-		* The IP address has a status of `Reserved`.  All IPs without this status are skipped.
-		* The IP address has a DNS hostname defined.  If a qualifying IP address entry doesn't have this, the entire task will fail.
-		* The IP address has a device and interface associated, and that interface has a MAC address defined.  If the MAC is not defined or the IP address entry has no device and interface associated, the entire task will fail.
+Backups in its current form are experimental.  I originally used Velero but that was more than I needed because all I really need to save is the persistent storage data.  I have no need to back up the declarative Kubernetes information because that can be automatically regenerated.  Additionally, I have some services that are best to be backed up differently.  For instance, Netbox's data is all stored in Postgres, and I'd be better off saving a Postgres dump than to back up the data volume.  Services that use SQLite can also be very finnicky if you back up their data through the volume.  And when it comes to backups, I need 100% confidence, so I'd rather run something that is not as smooth but will give me exactly what I want.
+
+At the moment I'm using the `backup.yml` and `restore.yml` playbooks inside the `ansible/playbooks/kubernetes` folder.  The backups runs as a CronJob, and I can restore either holistically or per-namespace through tags.
 
 ## VLANs
+
 My network is separated into the following VLANs:
 
 * **1 - Administrative**: Critical servers, switches and other backbone-level equipment
