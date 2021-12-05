@@ -11,6 +11,7 @@ spec:
     spec:
       serviceAccountName: backup-role
       restartPolicy: Never
+      backoffLimit: 4
       volumes:
         - name: data-vol
           persistentVolumeClaim:
