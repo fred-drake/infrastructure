@@ -53,5 +53,5 @@ spec:
           volumeMounts:
             - mountPath: /backup
               name: data-vol
-            - name: gpg-vol
-              mountPath: "{{ .Values.gpg_secret_dir }}"
+            # - name: gpg-vol
+            #   mountPath: "{{ .Values.gpg_secret_dir }}"
