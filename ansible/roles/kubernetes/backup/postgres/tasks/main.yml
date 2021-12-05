@@ -29,7 +29,7 @@
 - name: copy postgres backup from pod
   shell: >
     kubectl cp -n {{ k8s_namespace }}
-    {{ pg_podname }}:/root/{{ backup_file }} {{ backup_root_directory }}/{{ k8s_namespace }}
+    {{ pg_podname }}:/root/{{ backup_file }} {{ backup_root_directory }}/{{ k8s_namespace }}/{{ backup_file }}
 
 - name: remove backup script
   shell: "kubectl exec -n {{ k8s_namespace}} -i {{ pg_podname }} -- rm -f /root/restore.sh"
