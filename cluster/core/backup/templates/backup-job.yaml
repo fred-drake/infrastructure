@@ -17,9 +17,8 @@ spec:
           persistentVolumeClaim:
             claimName: backup-staging
         - name: gpg-secret
-          secret:
-            secretName: gpg-secret
-            defaultMode: 0400
+          configMap:
+            name: gpg-secret
       containers:
         - name: backup
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
