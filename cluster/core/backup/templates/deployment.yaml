@@ -22,7 +22,7 @@ spec:
           secret:
               secretName: gpg-secret
       containers:
-        - name: minio
+        - name: backup
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           resources:
             requests:
