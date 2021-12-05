@@ -55,4 +55,3 @@ spec:
               name: data-vol
             - name: gpg-vol
               mountPath: "{{ .Values.gpg_key_file }}"
-              subPath: gpg.key
