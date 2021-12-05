@@ -10,7 +10,7 @@ spec:
       labels:
         app: backup
     spec:
-      serviceAccountName: backup-role
+      # serviceAccountName: backup-role
       restartPolicy: Never
       volumes:
         - name: data-vol
