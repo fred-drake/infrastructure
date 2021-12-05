@@ -64,17 +64,17 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
-  - name: backup
-    namespace: backup
-    path: cluster/core/backup
-    annotations:
-      argocd-image-updater.argoproj.io/image-list: minio=minio/minio
-      argocd-image-updater.argoproj.io/minio.image-name: minio.image.repository
-      argocd-image-updater.argoproj.io/minio.helm.image-tag: minio.image.tag
-      argocd-image-updater.argoproj.io/minio.update-strategy: name
-      argocd-image-updater.argoproj.io/minio.allow-tags: "regexp:^RELEASE.[0-9]{4}-[0-9]{2}[0-9]{2}T.*?"
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
-      argocd-image-updater.argoproj.io/git-branch: master
-    hasSecretsFile: true
-    prune: true
-    selfHeal: true
+  # - name: backup
+  #   namespace: backup
+  #   path: cluster/core/backup
+  #   annotations:
+  #     argocd-image-updater.argoproj.io/image-list: minio=minio/minio
+  #     argocd-image-updater.argoproj.io/minio.image-name: minio.image.repository
+  #     argocd-image-updater.argoproj.io/minio.helm.image-tag: minio.image.tag
+  #     argocd-image-updater.argoproj.io/minio.update-strategy: name
+  #     argocd-image-updater.argoproj.io/minio.allow-tags: "regexp:^RELEASE.[0-9]{4}-[0-9]{2}[0-9]{2}T.*?"
+  #     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+  #     argocd-image-updater.argoproj.io/git-branch: master
+  #   hasSecretsFile: true
+  #   prune: true
+  #   selfHeal: true
