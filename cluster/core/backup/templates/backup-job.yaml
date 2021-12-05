@@ -4,8 +4,8 @@ metadata:
   name: backup
   namespace: {{ .Release.Namespace }}
 spec:
-  schedule: {{ .Values.backup_schedule }}
-  jobTemplate:  
+  schedule: "{{ .Values.backup_schedule }}"
+  jobTemplate:
     spec:
       template:
         spec:
