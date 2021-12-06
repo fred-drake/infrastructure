@@ -59,7 +59,7 @@ spec:
             - name: RESTIC_REPOSITORY
               value: "{{ .Values.backup.restic.repository }}"
             - name: BACKUP_DIRECTORY
-              value: "{{ default "/backup/$.Release.Namespace" .Values.backup.restic.backup_dir }}"
+              value: "{{ default /backup/.Release.Namespace .Values.backup.restic.backup_dir }}"
           volumeMounts:
             - mountPath: /backup
               name: backup-vol
