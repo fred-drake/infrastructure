@@ -24,15 +24,14 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: app.kubernetes.io/name
+                  - key: {{ .Values.backup.affinity.key }}
                     operator: In
-                    values:
-                      - readarr
+                    values: {{ .Values.backup.affinity.values }}
               topologyKey: "kubernetes.io/hostname"
       volumes:
       - name: backup-vol
         persistentVolumeClaim:
-          claimName: readarr-config
+          claimName: {{ .Values.claimName }}
       containers:
         - name: backup
           image: "{{ .Values.backup.image.repository }}:{{ .Values.backup.image.tag }}"
@@ -67,6 +66,6 @@ spec:
             - name: BACKUP_DIRECTORY
               value: "{{ $backup_dir }}"
           volumeMounts:
-            - mountPath: "{{ printf "/backup/%s" .Release.Namespace }}"
+            - mountPath: "{{ $backup_root_dir }}"
               name: backup-vol
 {{- end }}
