@@ -27,16 +27,6 @@ spec:
       - name: backup-vol
         persistentVolumeClaim:
           claimName: readarr-config
-      # containers:
-      # - name: testing
-      #   image: debian:11
-      #   command:
-      #     - sh
-      #     - -c
-      #     - 'while true; do sleep 100000; done'
-      #   volumeMounts:
-      #   - mountPath: /data
-      #     name: test-vol01
       containers:
         - name: backup
           image: "{{ .Values.backup.image.repository }}:{{ .Values.backup.image.tag }}"
@@ -67,9 +57,9 @@ spec:
                   name: backup-secret
                   key: resticPassword
             - name: RESTIC_REPOSITORY
-              value: "s3:http://minio.backup.svc.cluster.local:9000/restic"
+              value: "{{ .Values.restic.repository }}"
             - name: BACKUP_DIRECTORY
-              value: /backup/Backups/scheduled
+              value: "{{ default "/backup/{{ .Release.Namespace }}" .Values.backup.restic.backup_dir }}"
           volumeMounts:
             - mountPath: /backup
               name: backup-vol
