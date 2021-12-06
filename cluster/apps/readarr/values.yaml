@@ -29,5 +29,5 @@ readarr:
       enabled: false
 backup:
   image:
-    repository: fdrake/backup
-    tag: 0.0.1
+    repository: fdrake/k8s-backup
+    tag: latest
