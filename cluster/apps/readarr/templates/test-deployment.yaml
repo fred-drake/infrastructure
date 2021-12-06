@@ -57,7 +57,7 @@ spec:
                   name: backup-secret
                   key: resticPassword
             - name: RESTIC_REPOSITORY
-              value: "{{ .Values.restic.repository }}"
+              value: "{{ .Values.backup.restic.repository }}"
             - name: BACKUP_DIRECTORY
               value: "{{ default "/backup/{{ .Release.Namespace }}" .Values.backup.restic.backup_dir }}"
           volumeMounts:
