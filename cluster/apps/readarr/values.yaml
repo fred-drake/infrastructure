@@ -34,3 +34,8 @@ backup:
   restic:
     repository: "s3:http://minio.backup.svc.cluster.local:9000/restic"
   subdir: /Backups/scheduled
+  claimName: readarr-config
+  affinity:
+    key: app.kubernetes.io/name
+    values:
+      - readarr
