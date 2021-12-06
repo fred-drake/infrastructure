@@ -1,9 +1,23 @@
+# Repository image information
 repository:
   image: fdrake/k8s-backup
   tag: latest
+
+# The S3 repository that we connect to for storage
 restic:
   repository: "s3:http://minio.backup.svc.cluster.local:9000/restic"
-claimName: ""
-affinity:
-  key: ""
-  values: []
+
+# REQUIRED: The PVC claim name that this pod will connect to and backup
+# claimName: "service-config"
+
+# REQUIRED: This backup pod must run on the same node in order to connect to the same
+# PVC.  Set the key and values to match the pod who is using the PVC.
+# affinity:
+#  key: app.kubernetes.io/name
+#  values:
+#    - my-application
+
+# Sets a subdirectory to back up.  In the below example, restic will only back up
+# the /backup/my-application/foo/bar directory.  If this is not set, it will back up
+# /backup/my-application.
+# subdir: /foo/bar

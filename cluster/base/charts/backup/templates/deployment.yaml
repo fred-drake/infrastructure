@@ -6,31 +6,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backup
+  name: {{ default "backup" .Values.deploymentName }}
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: backup
+      app: {{ default "backup" .Values.deploymentName }}
   template:
     metadata:
       labels:
-        app: backup
+        app: {{ default "backup" .Values.deploymentName }}
     spec:
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: {{ .Values.affinity.key }}
-                    operator: In
-                    values: {{ .Values.affinity.values }}
+                  - key: {{ required "a valid .Values.affinity.key entry required!" .Values.affinity.key }}
+                    operator: {{ default "In" .Values.affinity.operator }}
+                    values: {{ required "a valid .Values.affinity.values list required!" .Values.affinity.values }}
               topologyKey: "kubernetes.io/hostname"
       volumes:
       - name: backup-vol
         persistentVolumeClaim:
-          claimName: {{ .Values.claimName }}
+          claimName: {{ required "a valid .Values.claimName entry required!" .Values.claimName }}
       containers:
         - name: backup
           image: "{{ .Values.repository.image }}:{{ .Values.repository.tag }}"
@@ -40,7 +40,7 @@ spec:
               memory: 128Mi
           env:
             - name: TZ
-              value: America/New_York
+              value: {{ default "America/New_York" .Values.timezone }}
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
