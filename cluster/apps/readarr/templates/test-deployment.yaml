@@ -1,6 +1,8 @@
-{{- $backup_dir := printf "/backup/%s" .Release.Namespace -}}
+{{- if .Values.backup }}
+{{- $backup_root_dir := printf "/backup/%s" .Release.Namespace -}}
+{{- $backup_dir := $backup_root_dir -}}
 {{- if .Values.backup.subdir }}
-  {{- $backup_dir = printf "/backup/%s/%s" .Release.Namespace .Values.backup.subdir -}}
+  {{- $backup_dir = printf "%s/%s" $backup_root_dir .Values.backup.subdir -}}
 {{ end }}
 apiVersion: apps/v1
 kind: Deployment
@@ -67,3 +69,4 @@ spec:
           volumeMounts:
             - mountPath: "{{ printf "/backup/%s" .Release.Namespace }}"
               name: backup-vol
+{{- end }}
