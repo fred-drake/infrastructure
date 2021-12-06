@@ -23,11 +23,18 @@ spec:
     repoURL: {{ $app.repoURL | default "https://github.com/fred-drake/infrastructure.git" }}
     targetRevision: {{ $app.targetRevision | default "master" }}
     path: {{ $app.path }}
-    {{- if $app.hasSecretsFile }}
     helm:
+      {{- if or $app.hasSecretsFile $app.hasBackup }}
       valueFiles:
+      {{- else }}
+      valueFiles: []
+      {{- end }}
+      {{- if $app.hasSecretsFile }}
         - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
-    {{- end }}
+      {{- end }}
+      {{- if $app.hasBackup }}
+        - secrets+gpg-import:///sops/sops.asc?../../base/charts/backup/secret-values.sops.yaml
+      {{- end }}
   syncPolicy:
     automated:
       prune: {{ $app.prune }}
