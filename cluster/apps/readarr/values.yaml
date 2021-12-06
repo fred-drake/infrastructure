@@ -30,4 +30,4 @@ readarr:
 backup:
   image:
     repository: fdrake/backup
-    tag: latest
+    tag: 0.0.1
