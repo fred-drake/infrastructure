@@ -1,6 +1,5 @@
+{{- $backup_dir := printf "/backup/%s" .Release.Namespace -}}
 {{- if .Values.backup.subdir }}
-  {{- $backup_dir := printf "/backup/%s" .Release.Namespace -}}
-{{ else }}
   {{- $backup_dir := printf "/backup/%s/%s" .Release.Namespace .Values.backup.subdir -}}
 {{ end }}
 apiVersion: apps/v1
