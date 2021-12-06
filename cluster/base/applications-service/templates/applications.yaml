@@ -27,11 +27,11 @@ spec:
     helm:
       valueFiles:
     {{- end }}
-      {{- if $app.hasSecretsFile }}
-        - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
-      {{- end }}
       {{- if $app.hasBackup }}
         - secrets+gpg-import:///sops/sops.asc?../../base/charts/backup/secret-values.sops.yaml
+      {{- end }}
+      {{- if $app.hasSecretsFile }}
+        - secrets+gpg-import:///sops/sops.asc?secret-values.sops.yaml
       {{- end }}
   syncPolicy:
     automated:
