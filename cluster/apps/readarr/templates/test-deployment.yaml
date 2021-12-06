@@ -1,3 +1,4 @@
+{{- $default_backup := printf "/backup/%s" .Release.Namespace -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -59,7 +60,6 @@ spec:
             - name: RESTIC_REPOSITORY
               value: "{{ .Values.backup.restic.repository }}"
             - name: BACKUP_DIRECTORY
-              {{- $default_backup := printf "%s-%s" "/backup/" .Release.Namespace -}}
               value: "{{ default $default_backup .Values.backup.restic.backup_dir }}"
           volumeMounts:
             - mountPath: /backup
