@@ -27,3 +27,7 @@ readarr:
           existingClaim: readarr-config
   monitoring:
       enabled: false
+backup:
+  image:
+    repository: fdrake/backup
+    tag: latest

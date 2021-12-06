@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: testing
+  name: backup
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: testing
+      app: backup
   template:
     metadata:
       labels:
-        app: testing
+        app: backup
     spec:
       affinity:
         podAffinity:
@@ -24,16 +24,52 @@ spec:
                       - readarr
               topologyKey: "kubernetes.io/hostname"
       volumes:
-      - name: test-vol01
+      - name: backup-vol
         persistentVolumeClaim:
           claimName: readarr-config
+      # containers:
+      # - name: testing
+      #   image: debian:11
+      #   command:
+      #     - sh
+      #     - -c
+      #     - 'while true; do sleep 100000; done'
+      #   volumeMounts:
+      #   - mountPath: /data
+      #     name: test-vol01
       containers:
-      - name: testing
-        image: debian:11
-        command:
-          - sh
-          - -c
-          - 'while true; do sleep 100000; done'
-        volumeMounts:
-        - mountPath: /data
-          name: test-vol01
+        - name: backup
+          image: "{{ .Values.backup.image.repository }}:{{ .Values.backup.image.tag }}"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          env:
+            - name: TZ
+              value: America/New_York
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: backup-secret
+                  key: s3User
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backup-secret
+                  key: s3Password
+            - name: RESTIC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backup-secret
+                  key: resticPassword
+            - name: RESTIC_REPOSITORY
+              value: "s3:http://minio.backup.svc.cluster.local:9000/restic"
+            - name: BACKUP_DIRECTORY
+              value: /backup/Backups/scheduled
+          volumeMounts:
+            - mountPath: /backup
+              name: backup-vol
