@@ -1,0 +1,7 @@
+apiVersion: v2
+name: readarr
+version: 1.0.0
+dependencies:
+  - name: readarr
+    version: 6.0.1
+    repository: https://k8s-at-home.com/charts/

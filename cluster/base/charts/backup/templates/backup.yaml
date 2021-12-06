@@ -1,8 +1,7 @@
-{{- if .Values.backup }}
 {{- $backup_root_dir := printf "/backup/%s" .Release.Namespace -}}
 {{- $backup_dir := $backup_root_dir -}}
-{{- if .Values.backup.subdir }}
-  {{- $backup_dir = printf "%s/%s" $backup_root_dir .Values.backup.subdir -}}
+{{- if .Values.subdir }}
+  {{- $backup_dir = printf "%s/%s" $backup_root_dir .Values.subdir -}}
 {{ end }}
 apiVersion: apps/v1
 kind: Deployment
@@ -24,17 +23,17 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: {{ .Values.backup.affinity.key }}
+                  - key: {{ .Values.affinity.key }}
                     operator: In
-                    values: {{ .Values.backup.affinity.values }}
+                    values: {{ .Values.affinity.values }}
               topologyKey: "kubernetes.io/hostname"
       volumes:
       - name: backup-vol
         persistentVolumeClaim:
-          claimName: {{ .Values.backup.claimName }}
+          claimName: {{ .Values.claimName }}
       containers:
         - name: backup
-          image: "{{ .Values.backup.image.repository }}:{{ .Values.backup.image.tag }}"
+          image: "{{ .Values.repository.image }}:{{ .Values.repository.tag }}"
           resources:
             requests:
               cpu: 100m
@@ -62,10 +61,9 @@ spec:
                   name: backup-secret
                   key: resticPassword
             - name: RESTIC_REPOSITORY
-              value: "{{ .Values.backup.restic.repository }}"
+              value: "{{ .Values.restic.repository }}"
             - name: BACKUP_DIRECTORY
               value: "{{ $backup_dir }}"
           volumeMounts:
             - mountPath: "{{ $backup_root_dir }}"
               name: backup-vol
-{{- end }}
