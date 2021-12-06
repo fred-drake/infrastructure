@@ -33,4 +33,4 @@ backup:
     tag: latest
   restic:
     repository: "s3:http://minio.backup.svc.cluster.local:9000/restic"
-    # backup_dir: /backup/readarr/Backups/scheduled
+  subdir: /Backups/scheduled
