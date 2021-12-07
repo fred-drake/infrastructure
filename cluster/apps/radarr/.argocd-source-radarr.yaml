@@ -4,5 +4,5 @@ helm:
     value: linuxserver/radarr
     forcestring: true
   - name: radarr.image.tag
-    value: 0.0.5559
+    value: 0.0.5563
     forcestring: true
