@@ -31,6 +31,7 @@ spec:
       - name: backup-vol
         persistentVolumeClaim:
           claimName: {{ required "a valid .Values.claimName entry required!" .Values.claimName }}
+      hostname: backup
       containers:
         - name: backup
           image: "{{ .Values.repository.image }}:{{ .Values.repository.tag }}"
