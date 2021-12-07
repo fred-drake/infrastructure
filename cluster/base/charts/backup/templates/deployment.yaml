@@ -64,6 +64,8 @@ spec:
               value: "{{ .Values.restic.repository }}"
             - name: BACKUP_DIRECTORY
               value: "{{ $backup_dir }}"
+            - name: BACKUP_TYPE
+              value: {{ default "volume" .Values.backupType }}
           volumeMounts:
             - mountPath: "{{ $backup_root_dir }}"
               name: backup-vol

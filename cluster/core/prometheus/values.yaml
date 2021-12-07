@@ -73,3 +73,10 @@ snmpExporter:
   image:
     repository: prom/snmp-exporter
     tag: v0.20.0
+
+backup:
+  affinity:
+    key: statefulset.kubernetes.io/pod-name
+    values:
+      - prometheus-server-0
+  backupType: prometheus
