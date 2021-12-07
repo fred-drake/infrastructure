@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: portainer.image.repository
+    value: portainer/portainer-ce
+    forcestring: true
+  - name: portainer.image.tag
+    value: 2.11.0
+    forcestring: true
