@@ -30,8 +30,7 @@ prowlarr:
 
 backup:
   subdir: /Backups/scheduled
-  claims:
-    - name: prowlarr-config
+  claimName: prowlarr-config
   affinity:
     key: app.kubernetes.io/name
     values:

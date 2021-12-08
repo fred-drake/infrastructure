@@ -33,8 +33,7 @@ sonarr:
 
 backup:
   subdir: /Backups/scheduled
-  claims:
-    - name: sonarr-config
+  claimName: sonarr-config
   affinity:
     key: app.kubernetes.io/name
     values:

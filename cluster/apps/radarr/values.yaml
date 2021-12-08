@@ -39,8 +39,7 @@ radarr:
 
 backup:
   subdir: /Backups/scheduled
-  claims:
-    - name: radarr-config
+  claimName: radarr-config
   affinity:
     key: app.kubernetes.io/name
     values:

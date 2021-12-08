@@ -30,8 +30,7 @@ readarr:
 
 backup:
   subdir: /Backups/scheduled
-  claims:
-    - name: readarr-config
+  claimName: readarr-config
   affinity:
     key: app.kubernetes.io/name
     values:
