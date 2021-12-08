@@ -29,3 +29,10 @@ node-red:
     runAsGroup: 0
   monitoring:
     enabled: false
+
+backup:
+  claimName: nodered-config
+  affinity:
+    key: app.kubernetes.io/name
+    values:
+      - node-red
