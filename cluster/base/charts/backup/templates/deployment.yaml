@@ -89,3 +89,4 @@ spec:
           {{- if .Values.claimName }}
             - mountPath: {{ quote $backup_root_dir }}
               name: backup-vol
+          {{- end }}
