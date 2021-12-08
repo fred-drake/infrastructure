@@ -1,11 +1,11 @@
 {{- if and .Values.claims .Values.claimName -}}
-  {{ fail "Cannot define both .Values.claims and .Values.claimName"}}
+  {{- fail "Cannot define both .Values.claims and .Values.claimName" -}}
 {{- end -}}
 {{- $backup_root_dir := printf "/backup/%s" .Release.Namespace -}}
 {{- $backup_dir := $backup_root_dir -}}
-{{- if .Values.subdir }}
+{{- if .Values.subdir -}}
   {{- $backup_dir = printf "%s/%s" $backup_root_dir .Values.subdir -}}
-{{ end }}
+{{- end -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -29,20 +29,20 @@ spec:
                 matchExpressions:
                 {{- if not .Values.affinity -}}
                   {{- fail ".Values.affinity is required for backing up pods" -}}
-                {{- end -}}
+                {{- end }}
                   - key: {{ required "a valid .Values.affinity.key entry required!" .Values.affinity.key }}
                     operator: {{ default "In" .Values.affinity.operator }}
                     values: {{ required "a valid .Values.affinity.values list required!" .Values.affinity.values }}
               topologyKey: "kubernetes.io/hostname"
-      {{- end }}
-      {{- if .Values.claims }}
+      {{- end -}}
+      {{- if .Values.claims -}}
       {{- range .Values.claims }}
       volumes:
         - name: "backup-vol-{{ required "a valid .Values.claims[].name entry required!" .name }}"
           persistentVolumeClaim:
             claimName: {{ .name }}
-      {{- end }}
-      {{- end }}
+      {{- end -}}
+      {{- end -}}
       {{- if .Values.claimName }}
       volumes:
         - name: backup-vol
