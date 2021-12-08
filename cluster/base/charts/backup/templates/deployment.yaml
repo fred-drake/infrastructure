@@ -1,10 +1,10 @@
-{{- if and .Values.claims .Values.claimName -}}
-  {{- fail "Cannot define both .Values.claims and .Values.claimName" -}}
-{{- end -}}
-{{- $backup_root_dir := printf "/backup/%s" .Release.Namespace -}}
-{{- $backup_dir := $backup_root_dir -}}
-{{- if .Values.subdir -}}
-  {{- $backup_dir = printf "%s/%s" $backup_root_dir .Values.subdir -}}
+{{- if and .Values.claims .Values.claimName }}
+  {{- fail "Cannot define both .Values.claims and .Values.claimName" }}
+{{- end }}
+{{- $backup_root_dir := printf "/backup/%s" .Release.Namespace }}
+{{- $backup_dir := $backup_root_dir }}
+{{- if .Values.subdir }}
+  {{- $backup_dir = printf "%s/%s" $backup_root_dir .Values.subdir }}
 {{- end -}}
 apiVersion: apps/v1
 kind: Deployment
