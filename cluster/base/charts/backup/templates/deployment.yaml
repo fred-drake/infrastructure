@@ -1,3 +1,6 @@
+{{- if or (and .Values.claims .Values.claimName) (and (not .Values.claims) (not .Values.claimName)) -}}
+  {{ fail "Exactly one of .Values.claims or .Values.claimName must be defined."}}
+{{- end -}}
 {{- $backup_root_dir := printf "/backup/%s" .Release.Namespace -}}
 {{- $backup_dir := $backup_root_dir -}}
 {{- if .Values.subdir }}
