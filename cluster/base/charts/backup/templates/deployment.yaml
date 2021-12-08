@@ -31,10 +31,17 @@ spec:
                     values: {{ required "a valid .Values.affinity.values list required!" .Values.affinity.values }}
               topologyKey: "kubernetes.io/hostname"
       volumes:
-      {{- range (required "a valid .Values.claims list required!" .Values.claims) }}
+      {{- if .Values.claims }}
+      {{- range .Values.claims }}
         - name: "backup-vol-{{ required "a valid .Values.claims[].name entry required!" .name }}"
           persistentVolumeClaim:
             claimName: {{ .name }}
+      {{- end }}
+      {{- end }}
+      {{- if .Values.claimName }}
+        - name: backup-vol
+          persistentVolumeClaim:
+            claimName: {{ .Values.claimName }}
       {{- end }}
       hostname: backup
       containers:
@@ -73,7 +80,12 @@ spec:
             - name: BACKUP_TYPE
               value: {{ default "volume" .Values.backupType }}
           volumeMounts:
+          {{- if .Values.claims }}
           {{- range .Values.claims }}
-            - mountPath: {{ printf "%s/%s" $backup_root_dir (required "a valid .Values.claims[].subPath entry required!" .subPath) }}
+            - mountPath: {{ quote (printf "%s/%s" $backup_root_dir (required "a valid .Values.claims[].subPath entry required!" .subPath)) }}
               name: "backup-vol-{{ .name }}"
           {{- end }}
+          {{- end }}
+          {{- if .Values.claimName }}
+            - mountPath: {{ quote $backup_root_dir }}
+              name: backup-vol
