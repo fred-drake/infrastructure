@@ -14,3 +14,6 @@ redis:
 backup:
   backupTypes: 
     - postgresql
+  postgresql:
+    host: postgres.netbox
+    backupFile: netbox.sql
