@@ -21,7 +21,7 @@ spec:
       labels:
         app: {{ default "backup" .Values.deploymentName }}
     spec:
-      {{- if or .Values.claimName .Values.claims }}
+      {{- if .Values.claimName }}
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
