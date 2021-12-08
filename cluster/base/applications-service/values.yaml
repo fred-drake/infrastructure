@@ -108,6 +108,7 @@ applications:
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
+    hasBackup: true
     prune: true
     selfHeal: true
   - name: sabnzbd
@@ -120,6 +121,7 @@ applications:
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
+    hasBackup: true
     prune: true
     selfHeal: true
   - name: sonarr
@@ -132,6 +134,7 @@ applications:
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
+    hasBackup: true
     prune: true
     selfHeal: true
   - name: homeassistant
@@ -144,6 +147,7 @@ applications:
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
+    hasBackup: true
     prune: true
     selfHeal: true
   - name: calibre
@@ -158,6 +162,7 @@ applications:
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
+    hasBackup: true
     prune: true
     selfHeal: true
   - name: gitea
@@ -182,6 +187,7 @@ applications:
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
+    hasBackup: true
     prune: true
     selfHeal: true
   - name: mqtt
@@ -224,6 +230,7 @@ applications:
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
+    hasBackup: true
     prune: true
     selfHeal: true
   - name: office-touchpad
@@ -242,6 +249,7 @@ applications:
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
+    hasBackup: true
     prune: true
     selfHeal: true
   - name: radarr
@@ -254,6 +262,7 @@ applications:
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
+    hasBackup: true
     prune: true
     selfHeal: true
   - name: tautulli
@@ -278,6 +287,7 @@ applications:
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
+    hasBackup: true
     prune: true
     selfHeal: true
   - name: uptime-kuma
@@ -290,5 +300,6 @@ applications:
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
+    hasBackup: true
     prune: true
     selfHeal: true
