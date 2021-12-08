@@ -2,5 +2,8 @@ dependencies:
 - name: home-assistant
   repository: https://k8s-at-home.com/charts/
   version: 11.0.5
-digest: sha256:06bf9fda0fb883fc11b1009cc4c0cb8e5f7cc7f68403024715531e8d9f004314
-generated: "2021-11-14T01:19:08.422249-05:00"
+- name: backup
+  repository: file://../../base/charts/backup
+  version: 1.0.0
+digest: sha256:6113826336eb1ec1b6a4a27db0e856bf249327b7c5613aaeb62e3cbf48915bfc
+generated: "2021-12-07T19:10:19.877971-05:00"

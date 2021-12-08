@@ -1,3 +1,10 @@
 image:
   repository: louislam/uptime-kuma
   tag: 1.10.0
+
+backup:
+  claimName: uptime-kuma-data
+  affinity:
+    key: app
+    values:
+      - uptime-kuma

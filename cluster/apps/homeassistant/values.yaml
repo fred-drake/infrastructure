@@ -22,3 +22,10 @@ home-assistant:
       existingClaim: home-assistant-config
   monitoring:
     enabled: false
+
+backup:
+  claimName: home-assistant-config
+  affinity:
+    key: app.kubernetes.io/name
+    values:
+      - home-assistant

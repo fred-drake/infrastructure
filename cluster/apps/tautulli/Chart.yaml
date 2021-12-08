@@ -5,3 +5,6 @@ dependencies:
   - name: tautulli
     version: 11.0.1
     repository: https://k8s-at-home.com/charts/
+  - name: backup
+    version: 1.0.0
+    repository: "file://../../base/charts/backup"

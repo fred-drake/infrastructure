@@ -36,3 +36,10 @@ tautulli:
           existingClaim: config
   monitoring:
       enabled: false
+
+backup:
+  claimName: config
+  affinity:
+    key: app.kubernetes.io/name
+    values:
+      - tautulli

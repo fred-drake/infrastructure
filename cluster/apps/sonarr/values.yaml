@@ -30,3 +30,12 @@ sonarr:
       mountPath: /downloads
   monitoring:
     enabled: false
+
+backup:
+  subdir: /Backups/scheduled
+  claims:
+    - name: sonarr-config
+  affinity:
+    key: app.kubernetes.io/name
+    values:
+      - sonarr

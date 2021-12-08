@@ -2,5 +2,8 @@ dependencies:
 - name: prowlarr
   repository: https://k8s-at-home.com/charts/
   version: 4.0.1
-digest: sha256:08594fbf6c1a81e39ad6aaf44b4b2c80085bee7a71c791e6dba7cae8759e5098
-generated: "2021-11-13T18:01:20.375057-05:00"
+- name: backup
+  repository: file://../../base/charts/backup
+  version: 1.0.0
+digest: sha256:6f1733c55a63e9f605d273866975942ba4801fceb53173d67fa6d77b91e32e78
+generated: "2021-12-07T19:11:12.30674-05:00"

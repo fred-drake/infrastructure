@@ -1,0 +1,9 @@
+dependencies:
+- name: radarr
+  repository: https://k8s-at-home.com/charts/
+  version: 15.0.3
+- name: backup
+  repository: file://../../base/charts/backup
+  version: 1.0.0
+digest: sha256:f17773a8c91ce9110ef63789fd6d57a0eeabd728b4fd7ab480cf135630600bd0
+generated: "2021-12-07T19:11:24.020718-05:00"

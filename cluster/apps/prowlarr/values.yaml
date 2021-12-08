@@ -27,3 +27,12 @@ prowlarr:
       existingClaim: prowlarr-config
   monitoring:
     enabled: false
+
+backup:
+  subdir: /Backups/scheduled
+  claims:
+    - name: prowlarr-config
+  affinity:
+    key: app.kubernetes.io/name
+    values:
+      - prowlarr

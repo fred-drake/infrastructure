@@ -32,3 +32,10 @@ sabnzbd:
       mountPath: /incomplete-downloads
   monitoring:
     enabled: false
+
+backup:
+  claimName: sabnzbd-config
+  affinity:
+    key: app.kubernetes.io/name
+    values:
+      - sabnzbd

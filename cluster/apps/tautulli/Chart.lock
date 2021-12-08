@@ -2,5 +2,8 @@ dependencies:
 - name: tautulli
   repository: https://k8s-at-home.com/charts/
   version: 11.0.1
-digest: sha256:c2f82c2646ea06b7bcf0e3de2a814a269acfdf68416dd94e709ca8c5cb9ccafe
-generated: "2021-11-15T19:13:44.896433-05:00"
+- name: backup
+  repository: file://../../base/charts/backup
+  version: 1.0.0
+digest: sha256:0a1841262be088bd27c8f2c9f1764baf8918ab14c8d1becc4797abe49a1fa427
+generated: "2021-12-07T19:12:04.665194-05:00"

@@ -5,3 +5,14 @@ redis:
   image:
     repository: redis
     tag: 6.2.6
+
+backup:
+  claims:
+    - name: paperless-documents
+      subPath: documents
+    - name: paperless-data
+      subPath: data
+  affinity:
+    key: app
+    values:
+      - paperless

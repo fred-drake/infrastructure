@@ -36,3 +36,12 @@ radarr:
           mountPath: /downloads
   monitoring:
       enabled: false
+
+backup:
+  subdir: /Backups/scheduled
+  claims:
+    - name: radarr-config
+  affinity:
+    key: app.kubernetes.io/name
+    values:
+      - radarr
