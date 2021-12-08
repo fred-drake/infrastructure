@@ -21,7 +21,7 @@ spec:
       labels:
         app: {{ default "backup" .Values.deploymentName }}
     spec:
-      {{- if or .Values.claimName .Values.claims }}
+      {{- if (or .Values.claimName .Values.claims) }}
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -43,6 +43,12 @@ spec:
             claimName: {{ .name }}
       {{- end -}}
       {{- end -}}
+      {{- if .Values.claimName }}
+      volumes:
+        - name: backup-vol
+          persistentVolumeClaim:
+            claimName: {{ .Values.claimName }}
+      {{- end }}
       hostname: backup
       containers:
         - name: backup
