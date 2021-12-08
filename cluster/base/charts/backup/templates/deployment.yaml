@@ -26,6 +26,9 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
+                {{- if not .Values.affinity -}}
+                  {{- fail ".Values.affinity is required for backing up pods" -}}
+                {{- end -}}
                   - key: {{ required "a valid .Values.affinity.key entry required!" .Values.affinity.key }}
                     operator: {{ default "In" .Values.affinity.operator }}
                     values: {{ required "a valid .Values.affinity.values list required!" .Values.affinity.values }}
