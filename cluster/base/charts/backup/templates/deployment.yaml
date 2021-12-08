@@ -84,8 +84,8 @@ spec:
             - name: BACKUP_DIRECTORY
               value: "{{ $backup_dir }}"
             - name: BACKUP_TYPE
-              value: {{ default "volume" .Values.backupType }}
-            {{- if has "postgresql" .Values.backupType }}
+              value: {{ default "volume" .Values.backupTypes }}
+            {{- if has "postgresql" .Values.backupTypes }}
             - name: PG_HOST
               value: {{ required "If backupType is postgresql, .Values.postgresql.user must be set!" .Values.postgresql.user }}
             - name: PG_DATABASE
