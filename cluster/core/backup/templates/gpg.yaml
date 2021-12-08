@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-    name: gpg-secret
-    namespace: {{ .Release.Namespace }}
-data:
-    gpg.key: {{ .Values.gpg_key }}
