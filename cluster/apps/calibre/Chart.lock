@@ -1,0 +1,6 @@
+dependencies:
+- name: backup
+  repository: file://../../base/charts/backup
+  version: 1.0.0
+digest: sha256:6d399ba8c2d903ed5e6b0d5386d20a8f74d61a94b2013c1d2e9d4b632a0ae43e
+generated: "2021-12-07T19:09:44.717439-05:00"

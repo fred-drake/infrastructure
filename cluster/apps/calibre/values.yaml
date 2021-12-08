@@ -7,3 +7,16 @@ calibre-web:
   image:
     repository: linuxserver/calibre-web
     tag: 5.31.1
+
+backup:
+  claims:
+    - name: calibre-config
+      subPath: config
+    - name: calibre-books
+      subPath: books
+    - name: calibre-web-config
+      subPath: web-config
+  affinity:
+    key: app
+    values:
+      - calibre
