@@ -4,5 +4,5 @@ helm:
     value: louislam/uptime-kuma
     forcestring: true
   - name: image.tag
-    value: 1.11.0
+    value: 1.11.1
     forcestring: true
