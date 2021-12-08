@@ -76,6 +76,7 @@ snmpExporter:
 
 backup:
   subdir: /snapshots/snapshot
+  claimName: storage-volume-prometheus-server-0
   claims:
     - name: storage-volume-prometheus-server-0
   affinity:
