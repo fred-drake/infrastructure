@@ -74,6 +74,6 @@ spec:
               value: {{ default "volume" .Values.backupType }}
           volumeMounts:
           {{- range .Values.claims }}
-            - mountPath: {{ printf "%s/%s" $backup_root_dir (default "" .subPath) }}
+            - mountPath: {{ printf "%s/%s" $backup_root_dir (required "a valid .Values.claims[].subPath entry required!" .subPath) }}
               name: "backup-vol-{{ .name }}"
           {{- end }}
