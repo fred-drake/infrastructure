@@ -48,7 +48,7 @@ spec:
         - name: backup-vol
           persistentVolumeClaim:
             claimName: {{ .Values.claimName }}
-      {{- end }}
+      {{- end -}}
       hostname: backup
       containers:
         - name: backup
