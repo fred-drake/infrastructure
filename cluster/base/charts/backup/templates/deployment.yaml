@@ -21,6 +21,7 @@ spec:
       labels:
         app: {{ default "backup" .Values.deploymentName }}
     spec:
+      {{- if or .Values.claimName .Values.claims }}
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -33,6 +34,7 @@ spec:
                     operator: {{ default "In" .Values.affinity.operator }}
                     values: {{ required "a valid .Values.affinity.values list required!" .Values.affinity.values }}
               topologyKey: "kubernetes.io/hostname"
+      {{- end }}
       {{- if .Values.claims }}
       {{- range .Values.claims }}
       volumes:
@@ -83,7 +85,7 @@ spec:
               value: "{{ $backup_dir }}"
             - name: BACKUP_TYPE
               value: {{ default "volume" .Values.backupType }}
-            {{- if eq .Values.backupType "postgresql" }}
+            {{- if has "postgresql" .Values.backupType }}
             - name: PG_HOST
               value: {{ required "If backupType is postgresql, .Values.postgresql.user must be set!" .Values.postgresql.user }}
             - name: PG_DATABASE
