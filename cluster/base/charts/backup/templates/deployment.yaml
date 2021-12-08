@@ -21,7 +21,7 @@ spec:
       labels:
         app: {{ default "backup" .Values.deploymentName }}
     spec:
-      {{- if .Values.claimName }}
+      {{- if or .Values.claimName .Values.claims }}
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -48,7 +48,7 @@ spec:
         - name: backup-vol
           persistentVolumeClaim:
             claimName: {{ .Values.claimName }}
-      {{- end -}}
+      {{- end }}
       hostname: backup
       containers:
         - name: backup
@@ -86,9 +86,9 @@ spec:
             - name: BACKUP_TYPE
               value: {{ default "volume" .Values.backupTypes }}
             {{- if has "postgresql" .Values.backupTypes }}
-            {{- if not .Values.postgresql -}}
-              {{ fail "If backupTypes contains postgresql, .Values.postgresql struct must be set!" }}
-            {{- end -}}
+            {{- if not .Values.postgresql }}
+              {{- fail "If backupTypes contains postgresql, .Values.postgresql struct must be set!" }}
+            {{- end }}
             - name: PG_HOST
               value: {{ required "If backupTypes contains postgresql, .Values.postgresql.host must be set!" .Values.postgresql.host }}
             - name: PG_DATABASE
