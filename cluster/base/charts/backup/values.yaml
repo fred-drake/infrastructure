@@ -7,8 +7,19 @@ repository:
 restic:
   repository: "s3:http://minio.backup.svc.cluster.local:9000/restic"
 
-# REQUIRED: The PVC claim name that this pod will connect to and backup
-# claimName: "service-config"
+# REQUIRED: Exactly one of "claimName" or "claims":
+#
+# The PVC claim name that this pod will connect to and backup
+# claimName: service-config
+#
+# A list of claims that this pod will connect to and backup, separated by sub-path 
+# directories.  The below example will backup to /backup/NAMESPACE/config and
+# /backup/NAMESPACE/data.
+# claims:
+#   - name: service-config
+#     subPath: config
+#   - name: service-data
+#     subPath: data
 
 # REQUIRED: This backup pod must run on the same node in order to connect to the same
 # PVC.  Set the key and values to match the pod who is using the PVC.
