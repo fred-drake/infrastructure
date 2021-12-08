@@ -34,21 +34,21 @@ spec:
                     operator: {{ default "In" .Values.affinity.operator }}
                     values: {{ required "a valid .Values.affinity.values list required!" .Values.affinity.values }}
               topologyKey: "kubernetes.io/hostname"
-      {{- end }}
-      {{- if .Values.claims }}
+      {{- end -}}
+      {{- if .Values.claims -}}
       {{- range .Values.claims }}
       volumes:
         - name: "backup-vol-{{ required "a valid .Values.claims[].name entry required!" .name }}"
           persistentVolumeClaim:
             claimName: {{ .name }}
-      {{- end }}
-      {{- end }}
+      {{- end -}}
+      {{- end -}}
       {{- if .Values.claimName }}
       volumes:
         - name: backup-vol
           persistentVolumeClaim:
             claimName: {{ .Values.claimName }}
-      {{- end }}
+      {{ end }}
       hostname: backup
       containers:
         - name: backup
