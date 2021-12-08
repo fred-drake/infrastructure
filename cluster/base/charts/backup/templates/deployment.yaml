@@ -21,7 +21,6 @@ spec:
       labels:
         app: {{ default "backup" .Values.deploymentName }}
     spec:
-      {{- if (or .Values.claimName .Values.claims) -}}
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -34,7 +33,6 @@ spec:
                     operator: {{ default "In" .Values.affinity.operator }}
                     values: {{ required "a valid .Values.affinity.values list required!" .Values.affinity.values }}
               topologyKey: "kubernetes.io/hostname"
-      {{- end }}
       {{- if .Values.claims }}
       {{- range .Values.claims }}
       volumes:
