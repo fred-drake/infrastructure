@@ -83,8 +83,8 @@ spec:
               value: "{{ .Values.restic.repository }}"
             - name: BACKUP_DIRECTORY
               value: "{{ $backup_dir }}"
-            - name: BACKUP_TYPE
-              value: {{ default "volume" .Values.backupTypes }}
+            - name: BACKUP_TYPES
+              value: {{ default "volume" (join "," .Values.backupTypes) }}
             {{- if has "postgresql" .Values.backupTypes }}
             {{- if not .Values.postgresql }}
               {{- fail "If backupTypes contains postgresql, .Values.postgresql struct must be set!" }}
