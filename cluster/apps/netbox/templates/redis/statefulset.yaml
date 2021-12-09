@@ -9,14 +9,6 @@ metadata:
     keel.sh/trigger: poll
     keel.sh/pollSchedule: '@every 12h'
 spec:
-  affinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-        - matchExpressions:
-          - key: kubernetes.io/node
-            operator: NotIn
-            values:
-              - kworker11
   serviceName: redis
   replicas: 1
   selector:
@@ -42,6 +34,14 @@ spec:
       labels:
         app: redis
     spec:
+      affinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/node
+                operator: NotIn
+                values:
+                  - kworker11
       volumes:
         - name: config-map
           configMap:
