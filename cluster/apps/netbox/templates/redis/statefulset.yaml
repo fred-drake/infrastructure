@@ -41,7 +41,8 @@ spec:
                 matchExpressions:
                   - key: kubernetes.io/hostname
                     operator: NotIn
-                    values: kworker11
+                    values: 
+                      - kworker11
               topologyKey: "kubernetes.io/hostname"
       volumes:
         - name: config-map
