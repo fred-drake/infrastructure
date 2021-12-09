@@ -35,12 +35,12 @@ spec:
         app: redis
     spec:
       affinity:
-        podAffinity:
+        podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
+            - podAffinityTerm:
               - matchExpressions:
                 - key: kubernetes.io/hostname
-                  operator: NotIn
+                  operator: In
                   values:
                     - kworker11
       volumes:
