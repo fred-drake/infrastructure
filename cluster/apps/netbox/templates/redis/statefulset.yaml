@@ -42,7 +42,7 @@ spec:
                 labelSelector:
                   matchExpressions:
                   - key: kubernetes.io/hostname
-                    operator: In
+                    operator: NotIn
                     values:
                       - kworker11
                 topologyKey: kubernetes.io/hostname
