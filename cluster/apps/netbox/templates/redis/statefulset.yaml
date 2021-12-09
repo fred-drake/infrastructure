@@ -35,13 +35,14 @@ spec:
         app: redis
     spec:
       affinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/node
-                operator: NotIn
-                values:
-                  - kworker11
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: NotIn
+                  values:
+                    - kworker11
       volumes:
         - name: config-map
           configMap:
