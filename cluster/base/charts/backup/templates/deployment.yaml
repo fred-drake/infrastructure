@@ -36,8 +36,8 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       {{- end }}
       {{- if .Values.claims }}
-      {{- range .Values.claims }}
       volumes:
+      {{- range .Values.claims }}
         - name: "backup-vol-{{ required "a valid .Values.claims[].name entry required!" .name }}"
           persistentVolumeClaim:
             claimName: {{ .name }}
