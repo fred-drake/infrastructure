@@ -35,17 +35,14 @@ spec:
         app: redis
     spec:
       affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
                   - key: kubernetes.io/hostname
                     operator: NotIn
-                    values:
-                      - kworker11
-                topologyKey: kubernetes.io/hostname
+                    values: kworker11
+              topologyKey: "kubernetes.io/hostname"
       volumes:
         - name: config-map
           configMap:
