@@ -5,6 +5,6 @@ dependencies:
   - name: redis
     version: 0.0.2
     repository: https://charts.pascaliske.dev
-  # - name: backup
-  #   version: 1.0.0
-  #   repository: "file://../../base/charts/backup"
+  - name: backup
+    version: 1.0.0
+    repository: "file://../../base/charts/backup"
