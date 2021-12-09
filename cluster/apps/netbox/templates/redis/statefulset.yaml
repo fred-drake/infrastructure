@@ -43,6 +43,7 @@ spec:
                   operator: In
                   values:
                     - kworker11
+              topologyKey: kubernetes.io/hostname
       volumes:
         - name: config-map
           configMap:
