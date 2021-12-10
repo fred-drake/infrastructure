@@ -1,6 +1,6 @@
 # Repository image information
-repository:
-  image: fdrake/k8s-backup
+image:
+  repository: fdrake/k8s-backup
   tag: latest
 
 # The S3 repository that we connect to for storage

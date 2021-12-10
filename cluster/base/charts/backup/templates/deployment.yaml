@@ -52,7 +52,7 @@ spec:
       hostname: backup
       containers:
         - name: backup
-          image: "{{ .Values.repository.image }}:{{ .Values.repository.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           resources:
             requests:
               cpu: 100m
