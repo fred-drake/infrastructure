@@ -4,5 +4,11 @@ helm:
     value: grafana/grafana
     forcestring: true
   - name: image.tag
-    value: 8.3.1
+    value: 8.3.2
+    forcestring: true
+  - name: backup.image.repository
+    value: fdrake/k8s-backup
+    forcestring: true
+  - name: backup.image.tag
+    value: 0.1.0
     forcestring: true
