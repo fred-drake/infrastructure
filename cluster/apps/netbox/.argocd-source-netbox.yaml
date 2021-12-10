@@ -18,3 +18,9 @@ helm:
   - name: redis.image.tag
     value: 6.2.6
     forcestring: true
+  - name: backup.image.repository
+    value: fdrake/k8s-backup
+    forcestring: true
+  - name: backup.image.tag
+    value: 0.1.0
+    forcestring: true
