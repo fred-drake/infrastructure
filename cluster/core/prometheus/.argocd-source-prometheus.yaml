@@ -15,3 +15,9 @@ helm:
   - name: pushgateway.image.tag
     value: v1.4.2
     forcestring: true
+  - name: backup.image.repository
+    value: fdrake/k8s-backup
+    forcestring: true
+  - name: backup.image.tag
+    value: 0.1.0
+    forcestring: true
