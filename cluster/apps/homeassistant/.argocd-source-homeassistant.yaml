@@ -4,5 +4,11 @@ helm:
     value: homeassistant/home-assistant
     forcestring: true
   - name: home-assistant.image.tag
-    value: 2021.11.5
+    value: 2021.12.0
+    forcestring: true
+  - name: backup.image.repository
+    value: fdrake/k8s-backup
+    forcestring: true
+  - name: backup.image.tag
+    value: 0.1.0
     forcestring: true
