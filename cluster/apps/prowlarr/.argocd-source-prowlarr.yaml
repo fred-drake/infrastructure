@@ -6,3 +6,9 @@ helm:
   - name: prowlarr.image.tag
     value: 1.8.1232
     forcestring: true
+  - name: backup.image.repository
+    value: fdrake/k8s-backup
+    forcestring: true
+  - name: backup.image.tag
+    value: 0.1.1
+    forcestring: true
