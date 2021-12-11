@@ -4,7 +4,7 @@ helm:
     value: linuxserver/prowlarr
     forcestring: true
   - name: prowlarr.image.tag
-    value: 1.8.1232
+    value: 1.8.1234
     forcestring: true
   - name: backup.image.repository
     value: fdrake/k8s-backup
