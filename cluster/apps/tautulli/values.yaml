@@ -30,16 +30,6 @@ tautulli:
               - hosts:
                   - tautulli.internal.freddrake.com
                 secretName: tautulli-tls
-  affinity:
-    podAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: NotIn
-                values: 
-                  - kworker13
-          topologyKey: "kubernetes.io/hostname"
 
   persistence:
       config:
