@@ -12,7 +12,7 @@
 
 - name: checkout nhl scoreboard
   git:
-    repo: "https://gitea.{{ secret.domain }}/fdrake/led-scoreboard-temp"
+    repo: "https://github.com/fred-drake/nhl-led-scoreboard"
     # repo: https://github.com/riffnshred/nhl-led-scoreboard
     dest: /opt/nhl-led-scoreboard
     depth: "1"

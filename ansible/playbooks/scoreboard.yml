@@ -1,0 +1,5 @@
+- hosts: scoreboard
+  gather_facts: false
+  become: true
+  roles:
+    - scoreboard

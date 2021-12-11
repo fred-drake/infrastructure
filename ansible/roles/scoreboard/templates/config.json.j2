@@ -12,8 +12,7 @@
         ],
         "sog_display_frequency": 4,
         "goal_animations": {
-            "pref_team_only": true,
-            "goal_webhook_url": "https://nodered.{{ secret.domain }}/goal-light"
+            "pref_team_only": true
         }
     },
     "states": {
@@ -118,6 +117,17 @@
             "display_halt": true,
             "state_triggered1": "weather",
             "state_triggered1_process": ""
+        }
+    },
+    "mqtt": {
+        "enabled": true,
+        "server": "mqtt.{{ secret.domain }}",
+        "port": 1883,
+        "events": {
+            "pref_team_scores": {
+                "enabled": true,
+                "topic": "nhl/pref_team_scores"
+            }
         }
     }
 }
