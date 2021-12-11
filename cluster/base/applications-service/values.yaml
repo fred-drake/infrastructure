@@ -183,7 +183,7 @@ applications:
     namespace: grafana
     path: cluster/apps/grafana
     annotations:
-      argocd-image-updater.argoproj.io/image-list: grafana=grafana/grafana:8.x-ubuntu, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: grafana=grafana/grafana:8.x-0, backup=fdrake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/grafana.helm.image-name: image.repository
