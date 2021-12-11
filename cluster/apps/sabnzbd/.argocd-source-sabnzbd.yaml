@@ -1,0 +1,14 @@
+helm:
+  parameters:
+  - name: sabnzbd.image.repository
+    value: linuxserver/sabnzbd
+    forcestring: true
+  - name: sabnzbd.image.tag
+    value: 3.5.0
+    forcestring: true
+  - name: backup.image.repository
+    value: fdrake/k8s-backup
+    forcestring: true
+  - name: backup.image.tag
+    value: 0.1.1
+    forcestring: true
