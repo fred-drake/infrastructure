@@ -22,6 +22,11 @@ home-assistant:
       existingClaim: home-assistant-config
   monitoring:
     enabled: false
+  service:
+    main:
+      type: NodePort
+      ports:
+        nodePort: 31303
 
 backup:
   claimName: home-assistant-config
