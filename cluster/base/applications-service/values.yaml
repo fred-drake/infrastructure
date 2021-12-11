@@ -278,21 +278,21 @@ applications:
     hasBackup: true
     prune: true
     selfHeal: true
-  - name: tautulli
-    namespace: tautulli
-    path: cluster/apps/tautulli
-    annotations:
-      argocd-image-updater.argoproj.io/image-list: tautulli=tautulli/tautulli:2.x, backup=fdrake/k8s-backup:0.x
-      argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
-      argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
-      argocd-image-updater.argoproj.io/tautulli.helm.image-name: tautulli.image.repository
-      argocd-image-updater.argoproj.io/tautulli.helm.image-tag: tautulli.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
-      argocd-image-updater.argoproj.io/git-branch: master
-    hasSecretsFile: true
-    hasBackup: true
-    prune: true
-    selfHeal: true
+  # - name: tautulli
+  #   namespace: tautulli
+  #   path: cluster/apps/tautulli
+  #   annotations:
+  #     argocd-image-updater.argoproj.io/image-list: tautulli=tautulli/tautulli:2.x, backup=fdrake/k8s-backup:0.x
+  #     argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
+  #     argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
+  #     argocd-image-updater.argoproj.io/tautulli.helm.image-name: tautulli.image.repository
+  #     argocd-image-updater.argoproj.io/tautulli.helm.image-tag: tautulli.image.tag
+  #     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+  #     argocd-image-updater.argoproj.io/git-branch: master
+  #   hasSecretsFile: true
+  #   hasBackup: true
+  #   prune: true
+  #   selfHeal: true
   - name: torrent
     namespace: torrent
     path: cluster/apps/torrent
