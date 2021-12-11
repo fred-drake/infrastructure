@@ -1,0 +1,14 @@
+helm:
+  parameters:
+  - name: tautulli.image.repository
+    value: tautulli/tautulli
+    forcestring: true
+  - name: tautulli.image.tag
+    value: v2.7.7
+    forcestring: true
+  - name: backup.image.repository
+    value: fdrake/k8s-backup
+    forcestring: true
+  - name: backup.image.tag
+    value: 0.1.1
+    forcestring: true
