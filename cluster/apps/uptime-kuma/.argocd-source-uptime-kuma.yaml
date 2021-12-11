@@ -6,3 +6,9 @@ helm:
   - name: image.tag
     value: 1.11.1
     forcestring: true
+  - name: backup.image.repository
+    value: fdrake/k8s-backup
+    forcestring: true
+  - name: backup.image.tag
+    value: 0.1.1
+    forcestring: true
