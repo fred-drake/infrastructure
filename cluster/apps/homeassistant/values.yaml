@@ -26,7 +26,7 @@ home-assistant:
     main:
       type: NodePort
       ports:
-        http:
+        external:
           port: 8123
           targetPort: 80
           protocol: TCP
