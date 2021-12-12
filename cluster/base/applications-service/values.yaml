@@ -139,12 +139,13 @@ applications:
     namespace: homeassistant
     path: cluster/apps/homeassistant
     annotations:
-      argocd-image-updater.argoproj.io/image-list: backup=fdrake/k8s-backup:0.x
-      # argocd-image-updater.argoproj.io/image-list: homeassistant=homeassistant/home-assistant, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: homeassistant=homeassistant/home-assistant, backup=fdrake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
-      # argocd-image-updater.argoproj.io/homeassistant.helm.image-name: home-assistant.image.repository
-      # argocd-image-updater.argoproj.io/homeassistant.helm.image-tag: home-assistant.image.tag
+      argocd-image-updater.argoproj.io/homeassistant.helm.image-name: home-assistant.image.repository
+      argocd-image-updater.argoproj.io/homeassistant.helm.image-tag: home-assistant.image.tag
+      argocd-image-updater.argoproj.io/homeassistant.update-strategy: name
+      argocd-image-updater.argoproj.io/homeassistant.allow-tags: regexp:^[0-9]{4}.[0-9]+.[0-9]+$
       argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
       argocd-image-updater.argoproj.io/git-branch: master
     hasSecretsFile: true
