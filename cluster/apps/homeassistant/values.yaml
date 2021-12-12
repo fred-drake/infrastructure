@@ -28,7 +28,7 @@ home-assistant:
       ports:
         http:
           port: 8123
-          targetPort: http
+          targetPort: 80
           protocol: TCP
           nodePort: 31303
 
