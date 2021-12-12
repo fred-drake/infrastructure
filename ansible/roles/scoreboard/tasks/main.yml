@@ -4,11 +4,23 @@
       - git
       - supervisor
     state: present
+  tags:
+    - reinstall
+
+- name: wipe current implementation for a reinstall
+  file:
+    path: /opt/nhl-led-scoreboard
+    state: absent
+  tags:
+    - never
+    - reinstall
 
 - name: determine if nhl scoreboard is already installed
   stat:
     path: /opt/nhl-led-scoreboard
   register: nhl_scoreboard_dir
+  tags:
+    - reinstall
 
 - name: checkout nhl scoreboard
   git:
@@ -16,17 +28,24 @@
     # repo: https://github.com/riffnshred/nhl-led-scoreboard
     dest: /opt/nhl-led-scoreboard
     depth: "1"
+    version: mqtt
   when: not nhl_scoreboard_dir.stat.exists
+  tags:
+    - reinstall
 
 - name: compile nhl scoreboard
   shell: cd /opt/nhl-led-scoreboard; ./scripts/install.sh
   when: not nhl_scoreboard_dir.stat.exists
+  tags:
+    - reinstall
 
 - name: apply scoreboard configuration
   template:
     src: config.json.j2
     dest: /opt/nhl-led-scoreboard/config/config.json
     mode: '0644'
+  tags:
+    - reinstall
 
 - name: configure audio config flag
   replace:
@@ -34,6 +53,8 @@
     regexp: '^dtparam=audio=on$'
     replace: 'dtparam=audio=off'
   notify: reboot system
+  tags:
+    - reinstall
 
 - name: configure supervisor
   blockinfile:
@@ -41,6 +62,8 @@
     path: /etc/supervisor/supervisord.conf
     block: "{{ lookup('file', 'supervisord-block.conf') }}"
   notify: restart supervisor
+  tags:
+    - reinstall
 
 - name: apply scoreboard configuration
   copy:
@@ -48,3 +71,5 @@
     dest: /etc/supervisor/conf.d/scoreboard.conf
     mode: '0644'
   notify: restart supervisor
+  tags:
+    - reinstall
