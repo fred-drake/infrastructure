@@ -22,14 +22,14 @@ home-assistant:
       existingClaim: home-assistant-config
   monitoring:
     enabled: false
-  service:
-    main:
-      type: NodePort
-      ports:
-        http:
-          port: 8123
-          targetPort: 80
-          nodePort: 31303
+  # service:
+  #   main:
+  #     type: NodePort
+  #     ports:
+  #       http:
+  #         port: 8123
+  #         targetPort: 80
+  #         nodePort: 31303
 
 backup:
   claimName: home-assistant-config
