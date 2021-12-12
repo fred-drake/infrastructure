@@ -26,7 +26,8 @@ home-assistant:
     main:
       type: NodePort
       ports:
-        - port: 8123
+        http:
+          port: 8123
           targetPort: 80
           nodePort: 31303
 
