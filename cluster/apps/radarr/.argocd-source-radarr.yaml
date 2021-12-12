@@ -4,7 +4,7 @@ helm:
     value: linuxserver/radarr
     forcestring: true
   - name: radarr.image.tag
-    value: 0.0.5580
+    value: 0.0.5587
     forcestring: true
   - name: backup.image.repository
     value: fdrake/k8s-backup
