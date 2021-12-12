@@ -4,7 +4,7 @@ helm:
     value: linuxserver/readarr
     forcestring: true
   - name: readarr.image.tag
-    value: 1.0.1095
+    value: 1.0.1117
     forcestring: true
   - name: backup.image.repository
     value: fdrake/k8s-backup
