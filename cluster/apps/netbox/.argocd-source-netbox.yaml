@@ -4,7 +4,7 @@ helm:
     value: linuxserver/netbox
     forcestring: true
   - name: netbox.image.tag
-    value: 3.1.0
+    value: 3.1.1
     forcestring: true
   - name: postgres.image.repository
     value: postgres
