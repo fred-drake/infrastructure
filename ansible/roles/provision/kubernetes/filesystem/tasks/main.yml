@@ -18,6 +18,7 @@
   service:
     name: iscsid
     state: started
+    enabled: true
 
 - name: add fstab/cifs directory
   file:
