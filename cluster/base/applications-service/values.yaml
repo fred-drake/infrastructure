@@ -139,7 +139,7 @@ applications:
     namespace: homeassistant
     path: cluster/apps/homeassistant
     annotations:
-      argocd-image-updater.argoproj.io/image-list: homeassistant=lscr.io/linuxserver/homeassistant, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: homeassistant=ghcr.io/linuxserver/homeassistant, backup=fdrake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/homeassistant.helm.image-name: home-assistant.image.repository

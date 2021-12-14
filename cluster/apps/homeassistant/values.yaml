@@ -1,6 +1,6 @@
 home-assistant:
   image:
-    repository: lscr.io/linuxserver/homeassistant
+    repository: ghcr.io/linuxserver/homeassistant
     tag: 2021.11.5
   controller:
     annotations:

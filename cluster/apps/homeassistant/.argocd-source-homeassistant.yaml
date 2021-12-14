@@ -1,7 +1,7 @@
 helm:
   parameters:
   - name: home-assistant.image.repository
-    value: lscr.io/linuxserver/homeassistant
+    value: ghcr.io/linuxserver/homeassistant
     forcestring: true
   - name: home-assistant.image.tag
     value: 2021.11.5
