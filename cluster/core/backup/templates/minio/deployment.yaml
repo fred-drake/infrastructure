@@ -13,17 +13,10 @@ spec:
       labels:
         app: minio
     spec:
-      nodeSelector:
-        backup_storage: "true"
       volumes:
-        - name: config-vol
-          hostPath:
-            path: /mnt/backup/minio/config
-            type: DirectoryOrCreate
-        - name: data-vol
-          hostPath:
-            path: /mnt/backup/minio/data
-            type: DirectoryOrCreate
+        - name: backup-data
+          persistentVolumeClaim:
+            claimName: backup-data
       containers:
       - name: minio
         image: "{{ .Values.minio.repository }}:{{ .Values.minio.tag }}"
@@ -46,7 +39,5 @@ spec:
                 name: minio-secret
                 key: password
         volumeMounts:
-          - mountPath: /root/.minio
-            name: config-vol
           - mountPath: /data
-            name: data-vol
+            name: backup-data
