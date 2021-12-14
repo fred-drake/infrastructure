@@ -50,7 +50,6 @@ Playbooks are found in the ansible/playbooks directory.
 
 `applications_service.yml` applies all of the service applications onto the Kubernetes cluster.  When re-building the cluster, I will wait for `applications_core.yml` to finish deployments before executing this.
 
-`backup.yml` is currently experimental.  See the Backups section below.
 #### Others
 
 `dhcp_update.yml` and `dns_update.yml` are run to sync DHCP and DNS with Netbox.  See the Netbox Integration section below for more.
@@ -79,9 +78,9 @@ Some additional notes on this:
 
 ### Backups
 
-Backups in its current form are experimental.  I originally used Velero but that was more than I needed because all I really need to save is the persistent storage data.  I have no need to back up the declarative Kubernetes information because that can be automatically regenerated.  Additionally, I have some services that are best to be backed up differently.  For instance, Netbox's data is all stored in Postgres, and I'd be better off saving a Postgres dump than to back up the data volume.  Services that use SQLite can also be very finnicky if you back up their data through the volume.  And when it comes to backups, I need 100% confidence, so I'd rather run something that is not as smooth but will give me exactly what I want.
+Backups in its current form are experimental.  I originally used Velero but that was more than I needed because all I really need to save is the persistent storage data on a per-application basis, not a holistic disaster recovery system.  I have no need to back up the declarative Kubernetes information because that can be automatically regenerated.  Additionally, I have some services that are best to be backed up differently.  For instance, Netbox's data is all stored in Postgres, and I'd be better off saving a Postgres dump than to back up the data volume.  Services that use SQLite can also be very finnicky if you back up their data through the volume.  And when it comes to backups, I need 100% confidence, so I'd rather run something that is not as smooth but will give me exactly what I want.
 
-At the moment I'm using the `backup.yml` and `restore.yml` playbooks inside the `ansible/playbooks/kubernetes` folder.  The backups runs as a CronJob, and I can restore either holistically or per-namespace through tags.
+I have a simple container `ghcr.io/fred-drake/k8s-backup` which runs on each namespace that needs it.  It ties into the persistent volume claim and uses restic to back up to a Minio S3 instance.
 
 ## VLANs
 
