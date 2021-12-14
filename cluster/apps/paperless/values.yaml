@@ -9,7 +9,7 @@ redis:
 backup:
   claims:
     - name: paperless-documents
-      subPath: documents
+      subPath: media
     - name: paperless-data
       subPath: data
   affinity:
