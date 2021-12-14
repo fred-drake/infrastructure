@@ -26,10 +26,7 @@ home-assistant:
     main:
       type: NodePort
       ports:
-        external:
-          port: 8123
-          targetPort: 80
-          protocol: TCP
+        http:
           nodePort: 31303
 
 backup:
