@@ -9,6 +9,9 @@ helm:
   - name: nodeExporter.image.tag
     value: v1.3.1
     forcestring: true
+  - name: server.image.tag
+    value: v2.32.0
+    forcestring: true
   - name: pushgateway.image.tag
     value: v1.4.2
     forcestring: true
