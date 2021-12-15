@@ -75,6 +75,12 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
+  - name: external-static
+    namespace: external-static
+    path: cluster/apps/external-static
+    hasSecretsFile: true
+    prune: true
+    selfHeal: true
   - name: readarr
     namespace: readarr
     path: cluster/apps/readarr
