@@ -57,7 +57,7 @@ applications:
     hasSecretsFile: false
     prune: true
     selfHeal: true
-  - name: traefik
+  - name: traefik-external
     namespace: traefik-external
     path: cluster/core/traefik
     annotations:
