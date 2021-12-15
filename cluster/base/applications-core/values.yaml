@@ -59,7 +59,7 @@ applications:
     selfHeal: true
   - name: traefik-external
     namespace: traefik-external
-    path: cluster/core/traefik
+    path: cluster/core/traefik-external
     annotations:
       argocd-image-updater.argoproj.io/image-list: traefik=traefik/traefik:2.x
       argocd-image-updater.argoproj.io/traefik.helm.image-name: traefik.image.name
