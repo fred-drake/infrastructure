@@ -4,7 +4,7 @@ helm:
     value: linuxserver/sonarr
     forcestring: true
   - name: sonarr.image.tag
-    value: 0.6.1401
+    value: 0.6.1402
     forcestring: true
   - name: backup.image.repository
     value: fdrake/k8s-backup
