@@ -1,9 +1,9 @@
 ---
-- hosts: k8s_backup
-  gather_facts: false
-  become: true
-  roles:
-    - provision/kubernetes/backup
+# - hosts: k8s_backup
+#   gather_facts: false
+#   become: true
+#   roles:
+#     - provision/kubernetes/backup
 
 - hosts: k8s_masters
   gather_facts: false
