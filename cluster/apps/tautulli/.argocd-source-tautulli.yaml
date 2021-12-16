@@ -4,7 +4,7 @@ helm:
     value: tautulli/tautulli
     forcestring: true
   - name: tautulli.image.tag
-    value: v2.7.7
+    value: v2.8.0
     forcestring: true
   - name: backup.image.repository
     value: fdrake/k8s-backup
