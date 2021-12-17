@@ -4,13 +4,13 @@ helm:
     value: linuxserver/calibre
     forcestring: true
   - name: calibre.image.tag
-    value: 5.33.2
+    value: 5.34.0
     forcestring: true
   - name: calibre-web.image.repository
     value: linuxserver/calibre
     forcestring: true
   - name: calibre-web.image.tag
-    value: 5.33.2
+    value: 5.34.0
     forcestring: true
   - name: backup.image.repository
     value: fdrake/k8s-backup
