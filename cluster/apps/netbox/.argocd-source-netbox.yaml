@@ -1,5 +1,17 @@
 helm:
   parameters:
+  - name: netbox.image.repository
+    value: linuxserver/netbox
+    forcestring: true
+  - name: netbox.image.tag
+    value: 3.1.1
+    forcestring: true
+  - name: postgres.image.repository
+    value: postgres
+    forcestring: true
+  - name: postgres.image.tag
+    value: "14.1"
+    forcestring: true
   - name: redis.image.repository
     value: redis
     forcestring: true
