@@ -1,7 +1,7 @@
 helm:
   parameters:
   - name: image.name
-    value: prom/pushgateway
+    value: quay.io/prometheus/prometheus
     forcestring: true
   - name: alertmanager.image.tag
     value: v0.23.0
@@ -11,9 +11,6 @@ helm:
     forcestring: true
   - name: server.image.tag
     value: v2.32.1
-    forcestring: true
-  - name: pushgateway.image.tag
-    value: v1.4.2
     forcestring: true
   - name: backup.image.repository
     value: fdrake/k8s-backup
