@@ -293,21 +293,21 @@ applications:
     hasBackup: true
     prune: true
     selfHeal: true
-  - name: torrent
-    namespace: torrent
-    path: cluster/apps/torrent
-    annotations:
-      argocd-image-updater.argoproj.io/image-list: torrent=haugene/transmission-openvpn:4.x, backup=fdrake/k8s-backup:0.x
-      argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
-      argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
-      argocd-image-updater.argoproj.io/torrent.helm.image-name: image.repository
-      argocd-image-updater.argoproj.io/torrent.helm.image-tag: image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
-      argocd-image-updater.argoproj.io/git-branch: master
-    hasSecretsFile: true
-    hasBackup: true
-    prune: true
-    selfHeal: true
+  # - name: torrent
+  #   namespace: torrent
+  #   path: cluster/apps/torrent
+  #   annotations:
+  #     argocd-image-updater.argoproj.io/image-list: torrent=haugene/transmission-openvpn:4.x, backup=fdrake/k8s-backup:0.x
+  #     argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
+  #     argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
+  #     argocd-image-updater.argoproj.io/torrent.helm.image-name: image.repository
+  #     argocd-image-updater.argoproj.io/torrent.helm.image-tag: image.tag
+  #     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+  #     argocd-image-updater.argoproj.io/git-branch: master
+  #   hasSecretsFile: true
+  #   hasBackup: true
+  #   prune: true
+  #   selfHeal: true
   - name: uptime-kuma
     namespace: uptime-kuma
     path: cluster/apps/uptime-kuma
