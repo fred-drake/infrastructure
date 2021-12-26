@@ -57,18 +57,18 @@ applications:
     hasSecretsFile: false
     prune: true
     selfHeal: true
-  - name: traefik-external
-    namespace: traefik-external
-    path: cluster/core/traefik-external
-    annotations:
-      argocd-image-updater.argoproj.io/image-list: traefik=traefik/traefik:2.x
-      argocd-image-updater.argoproj.io/traefik.helm.image-name: traefik.image.name
-      argocd-image-updater.argoproj.io/traefik.helm.image-tag: traefik.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
-      argocd-image-updater.argoproj.io/git-branch: master
-    hasSecretsFile: false
-    prune: true
-    selfHeal: true
+  # - name: traefik-external
+  #   namespace: traefik-external
+  #   path: cluster/core/traefik-external
+  #   annotations:
+  #     argocd-image-updater.argoproj.io/image-list: traefik=traefik/traefik:2.x
+  #     argocd-image-updater.argoproj.io/traefik.helm.image-name: traefik.image.name
+  #     argocd-image-updater.argoproj.io/traefik.helm.image-tag: traefik.image.tag
+  #     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+  #     argocd-image-updater.argoproj.io/git-branch: master
+  #   hasSecretsFile: false
+  #   prune: true
+  #   selfHeal: true
   - name: longhorn
     namespace: longhorn-system
     path: cluster/core/longhorn
