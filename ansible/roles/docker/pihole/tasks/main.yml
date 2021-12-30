@@ -2,14 +2,14 @@
 - name: create pihole container
   community.docker.docker_container:
     name: "{{ pihole_id }}"
-    image: "jacklul/pihole"
-    # image: "pihole/pihole"
+    # image: "jacklul/pihole"
+    image: "pihole/pihole:2021.11"
     pull: "{{ container_pull }}"
     hostname: "{{ secret.pihole[pihole_id].hostname }}"
     env:
       TZ: "{{ default_timezone }}"
       WEBPASSWORD: ""
-      DNS1: "8.8.8.8"
+      PIHOLE_DNS1: "8.8.8.8"
     volumes:
       - "{{ appdata_dir }}/{{ secret.pihole[pihole_id].hostname }}/etc/pihole:/etc/pihole"
       - "{{ appdata_dir }}/{{ secret.pihole[pihole_id].hostname }}/etc/pihole-updatelists:/etc/pihole-updatelists"
@@ -30,6 +30,7 @@
     - deep prune docker
   tags:
     - pihole
+    - pihole_only
 
 - name: generate pihole hosts from netbox
   connection: local
