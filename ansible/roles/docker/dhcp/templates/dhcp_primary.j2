@@ -14,6 +14,8 @@ failover peer "dhcp-failover" {
     load balance max seconds 3;
     mclt 1800;
     split 128;
+    next-server "192.168.50.15"
+    filename "netboot.xyz.kpxe"
 }
 
 {% for t in secret.dhcp.nets | dict2items %}
