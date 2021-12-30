@@ -7,7 +7,7 @@ helm:
     value: 2021.12.7
     forcestring: true
   - name: backup.image.repository
-    value: fdrake/k8s-backup
+    value: ghcr.io/fred-drake/k8s-backup
     forcestring: true
   - name: backup.image.tag
     value: 0.1.1
