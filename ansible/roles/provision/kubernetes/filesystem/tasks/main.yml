@@ -8,6 +8,8 @@
       - coreutils
       - open-iscsi
       - nfs-common
+      - multipath-tools
+      - multipath-tools-boot
     state: present
     update_cache: true
   tags: 
