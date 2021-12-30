@@ -1,6 +1,6 @@
 # Repository image information
 image:
-  repository: gchr.io/fred-drake/k8s-backup
+  repository: ghcr.io/fred-drake/k8s-backup
   tag: 0.2.0
 
 # The S3 repository that we connect to for storage
