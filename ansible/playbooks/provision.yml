@@ -47,10 +47,10 @@
     - provision/kubernetes/network
     - provision/kubernetes/filesystem
 
-- hosts: k8s_storage
-  gather_facts: false
-  become: true
-  roles:
-    - provision/kubernetes/longhorn_storage
+# - hosts: k8s_storage
+#   gather_facts: false
+#   become: true
+#   roles:
+#     - provision/kubernetes/longhorn_storage
 
 - import_playbook: kubernetes/k8s_install.yml
