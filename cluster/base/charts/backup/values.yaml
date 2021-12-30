@@ -1,7 +1,7 @@
 # Repository image information
 image:
   repository: fdrake/k8s-backup
-  tag: 0.1.0
+  tag: 0.2.0
 
 # The S3 repository that we connect to for storage
 restic:
