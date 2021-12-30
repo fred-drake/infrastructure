@@ -17,6 +17,3 @@ backup:
   postgresql:
     host: postgres.netbox
     backupFile: netbox.sql
-  image:
-    repository: fdrake/k8s-backup
-    tag: latest
