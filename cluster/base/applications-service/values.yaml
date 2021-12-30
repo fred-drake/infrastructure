@@ -10,7 +10,7 @@ applications:
     namespace: prometheus
     path: cluster/core/prometheus
     annotations:
-      argocd-image-updater.argoproj.io/image-list: alertmanager=quay.io/prometheus/alertmanager:0.x, nodeExporter=quay.io/prometheus/node-exporter:1.x, server=quay.io/prometheus/prometheus:2.x, pushgateway=prom/pushgateway:1.x, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: alertmanager=quay.io/prometheus/alertmanager:0.x, nodeExporter=quay.io/prometheus/node-exporter:1.x, server=quay.io/prometheus/prometheus:2.x, pushgateway=prom/pushgateway:1.x, backup=ghcr.io/fred-drake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/alertmanager.image-name: alertmanager.image.repository
@@ -79,7 +79,7 @@ applications:
     namespace: readarr
     path: cluster/apps/readarr
     annotations:
-      argocd-image-updater.argoproj.io/image-list: readarr=linuxserver/readarr:1.x, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: readarr=linuxserver/readarr:1.x, backup=ghcr.io/fred-drake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/readarr.helm.image-name: readarr.image.repository
@@ -94,7 +94,7 @@ applications:
     namespace: prowlarr
     path: cluster/apps/prowlarr
     annotations:
-      argocd-image-updater.argoproj.io/image-list: prowlarr=linuxserver/prowlarr:1.x, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: prowlarr=linuxserver/prowlarr:1.x, backup=ghcr.io/fred-drake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/prowlarr.helm.image-name: prowlarr.image.repository
@@ -109,7 +109,7 @@ applications:
     namespace: sabnzbd
     path: cluster/apps/sabnzbd
     annotations:
-      argocd-image-updater.argoproj.io/image-list: sabnzbd=linuxserver/sabnzbd:3.x, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: sabnzbd=linuxserver/sabnzbd:3.x, backup=ghcr.io/fred-drake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/sabnzbd.helm.image-name: sabnzbd.image.repository
@@ -124,7 +124,7 @@ applications:
     namespace: sonarr
     path: cluster/apps/sonarr
     annotations:
-      argocd-image-updater.argoproj.io/image-list: sonarr=linuxserver/sonarr:0.x, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: sonarr=linuxserver/sonarr:0.x, backup=ghcr.io/fred-drake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/sonarr.helm.image-name: sonarr.image.repository
@@ -139,7 +139,7 @@ applications:
     namespace: homeassistant
     path: cluster/apps/homeassistant
     annotations:
-      argocd-image-updater.argoproj.io/image-list: homeassistant=ghcr.io/linuxserver/homeassistant, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: homeassistant=ghcr.io/linuxserver/homeassistant, backup=ghcr.io/fred-drake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/homeassistant.helm.image-name: home-assistant.image.repository
@@ -154,7 +154,7 @@ applications:
     namespace: calibre
     path: cluster/apps/calibre
     annotations:
-      argocd-image-updater.argoproj.io/image-list: calibre=linuxserver/calibre, calibre-web=linuxserver/calibre, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: calibre=linuxserver/calibre, calibre-web=linuxserver/calibre, backup=ghcr.io/fred-drake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/calibre.helm.image-name: calibre.image.repository
@@ -183,7 +183,7 @@ applications:
     namespace: grafana
     path: cluster/apps/grafana
     annotations:
-      argocd-image-updater.argoproj.io/image-list: grafana=grafana/grafana:8.x-0, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: grafana=grafana/grafana:8.x-0, backup=ghcr.io/fred-drake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/grafana.helm.image-name: image.repository
@@ -210,7 +210,7 @@ applications:
     namespace: netbox
     path: cluster/apps/netbox
     annotations:
-      argocd-image-updater.argoproj.io/image-list: netbox=linuxserver/netbox:3.x, postgres=postgres:14.x, redis=redis:6.x, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: netbox=linuxserver/netbox:3.x, postgres=postgres:14.x, redis=redis:6.x, backup=ghcr.io/fred-drake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/netbox.helm.image-name: netbox.image.repository
@@ -229,7 +229,7 @@ applications:
     namespace: node-red
     path: cluster/apps/nodered
     annotations:
-      argocd-image-updater.argoproj.io/image-list: postgres=postgres:14.x, node-red=nodered/node-red:2.x, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: postgres=postgres:14.x, node-red=nodered/node-red:2.x, backup=ghcr.io/fred-drake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/node-red.helm.image-name: node-red.image.repository
@@ -252,7 +252,7 @@ applications:
     namespace: paperless
     path: cluster/apps/paperless
     annotations:
-      argocd-image-updater.argoproj.io/image-list: paperless=jonaswinkler/paperless-ng:1.x, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: paperless=jonaswinkler/paperless-ng:1.x, backup=ghcr.io/fred-drake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/paperless.helm.image-name: image.repository
@@ -267,7 +267,7 @@ applications:
     namespace: radarr
     path: cluster/apps/radarr
     annotations:
-      argocd-image-updater.argoproj.io/image-list: radarr=linuxserver/radarr:0.x, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: radarr=linuxserver/radarr:0.x, backup=ghcr.io/fred-drake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/radarr.helm.image-name: radarr.image.repository
@@ -282,7 +282,7 @@ applications:
     namespace: tautulli
     path: cluster/apps/tautulli
     annotations:
-      argocd-image-updater.argoproj.io/image-list: tautulli=tautulli/tautulli:2.x, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: tautulli=tautulli/tautulli:2.x, backup=ghcr.io/fred-drake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/tautulli.helm.image-name: tautulli.image.repository
@@ -297,7 +297,7 @@ applications:
   #   namespace: torrent
   #   path: cluster/apps/torrent
   #   annotations:
-  #     argocd-image-updater.argoproj.io/image-list: torrent=haugene/transmission-openvpn:4.x, backup=fdrake/k8s-backup:0.x
+  #     argocd-image-updater.argoproj.io/image-list: torrent=haugene/transmission-openvpn:4.x, backup=ghcr.io/fred-drake/k8s-backup:0.x
   #     argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
   #     argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
   #     argocd-image-updater.argoproj.io/torrent.helm.image-name: image.repository
@@ -312,7 +312,7 @@ applications:
     namespace: uptime-kuma
     path: cluster/apps/uptime-kuma
     annotations:
-      argocd-image-updater.argoproj.io/image-list: uptime-kuma=louislam/uptime-kuma:1.x, backup=fdrake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: uptime-kuma=louislam/uptime-kuma:1.x, backup=ghcr.io/fred-drake/k8s-backup:0.x
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/uptime-kuma.helm.image-name: image.repository
