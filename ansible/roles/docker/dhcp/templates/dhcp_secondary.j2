@@ -12,8 +12,6 @@ failover peer "dhcp-failover" {
     max-response-delay 30;
     max-unacked-updates 10;
     load balance max seconds 3;
-    next-server "192.168.50.15"
-    filename "netboot.xyz.kpxe"
 }
 
 {% for t in secret.dhcp.nets | dict2items %}

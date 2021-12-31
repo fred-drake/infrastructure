@@ -6,6 +6,8 @@ subnet {{ t.value.subnet }} netmask {{ t.value.netmask }} {
     option domain-name-servers {{ t.value.dns1 }}, {{ t.value.dns2 }};
     default-lease-time 7200;
     max-lease-time 7200;
+    next-server 192.168.50.15;
+    filename "netboot.xyz.kpxe";
     pool {
         deny dynamic bootp clients;
         failover peer "dhcp-failover";
