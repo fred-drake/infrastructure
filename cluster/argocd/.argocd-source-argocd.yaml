@@ -4,7 +4,7 @@ helm:
     value: quay.io/argoproj/argocd
     forcestring: true
   - name: argo-cd.global.image.tag
-    value: v2.2.1
+    value: v2.2.2
     forcestring: true
   - name: argo-cd.dex.image.repository
     value: ghcr.io/dexidp/dex
