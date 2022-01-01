@@ -1,3 +1,7 @@
+# My office touchpad uses an ipad mini which is so old that it doesn't recognize
+# letsencrypt out of the box anymore.  When this happens, access the following
+# to install the PEM onto the device:
+# https://letsencrypt.org/certs/isrgrootx1.pem
 image:
   repository: fdrake/office-touchpad
   tag: 0.0.3
