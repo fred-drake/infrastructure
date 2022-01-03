@@ -17,8 +17,8 @@ spec:
         - name: environment-map
           configMap:
             name: environment-map
-      nodeSelector:
-        kubernetes.io/arch: arm64
+      # nodeSelector:
+      #   kubernetes.io/arch: arm64
       containers:
         - name: {{ .Release.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
