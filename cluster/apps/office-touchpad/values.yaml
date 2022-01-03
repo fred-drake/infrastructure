@@ -4,4 +4,4 @@
 # https://letsencrypt.org/certs/isrgrootx1.pem
 image:
   repository: ghcr.io/fred-drake/office-touchpad
-  tag: latest
+  tag: 0.2.0
