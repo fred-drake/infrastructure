@@ -1,0 +1,58 @@
+- name: install apt dependencies
+  apt:
+    name:
+      - libqt5widgets5
+      - libusb-1.0-0
+
+- name: make bundle cache directory
+  file:
+    path: "{{ root_scanner_dir }}/bundle"
+    state: directory
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_group }}"
+
+- name: check if epsonscan bundle is already downloaded
+  stat:
+    path: "{{ root_scanner_dir }}/bundle/{{ epson.bundle_tar_file }}"
+  register: bundle_data
+
+- name: Download epson scan deb package
+  get_url:
+    url: "{{ epson.download_url }}/{{ epson.bundle_tar_file }}"
+    dest: "{{ root_scanner_dir }}/bundle"
+    mode: '0644'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_group }}"
+  when: not bundle_data.stat.exists
+
+- name: create temp dir to expand archive
+  tempfile:
+    state: directory
+  register: tempdir
+  changed_when: false
+
+- name: unarchive to directory
+  unarchive:
+    src: "{{ root_scanner_dir }}/bundle/{{ epson.bundle_tar_file }}"
+    remote_src: true
+    dest: "{{ tempdir.path }}"
+    extra_opts:
+      - --strip-components=1
+  changed_when: false
+
+- name: install epsonscan2 core deb
+  apt:
+    deb: "{{ tempdir.path }}/core/{{ epson.core_deb }}"
+
+- name: install epsonscan2 plugins deb
+  apt:
+    deb: "{{ tempdir.path }}/plugins/{{ epson.plugins_deb }}"
+
+- name: copy scanner settings
+  template:
+    src: UserSettings.SF2.j2
+    dest: "{{ root_scanner_dir }}/UserSettings.SF2"
+    mode: '0644'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_group }}"

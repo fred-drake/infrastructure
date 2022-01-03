@@ -1,0 +1,7 @@
+root_scanner_dir: /opt/scanner
+epson:
+  bundle_tar_file: epsonscan2-bundle-raspbian-6.6.40.0.armv7l.deb.tar.gz
+  download_url: https://download2.ebz.epson.net/epsonscan2/common/deb/arm
+  core_deb: epsonscan2_6.6.40.0-1_armhf.deb
+  plugins_deb: epsonscan2-non-free-plugin_1.0.0.5-1_armhf.deb
+

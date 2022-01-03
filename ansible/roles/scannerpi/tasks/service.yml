@@ -1,0 +1,50 @@
+- name: install curl apt
+  apt:
+    name: 
+      - curl
+      - supervisor
+
+- name: check if node repository is already installed
+  shell: grep -rhE ^deb /etc/apt/sources.list* | grep deb.nodesource.com | wc -l
+  register: nodesource
+  changed_when: false
+
+- name: install node repository
+  shell: curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+  when: nodesource.stdout == '0'
+
+- name: install nodejs apt
+  apt:
+    name: nodejs
+
+- name: copy node files
+  copy:
+    src: node
+    dest: /opt/scanner
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_group }}"
+  notify: restart supervisor
+
+- name: install node supervisor globally
+  community.general.npm:
+    name: supervisor
+    global: true
+
+- name: install npm packages
+  community.general.npm:
+    path: "{{ root_scanner_dir }}/node"
+  notify: restart supervisor
+
+- name: configure supervisor
+  blockinfile:
+    state: present
+    path: /etc/supervisor/supervisord.conf
+    block: "{{ lookup('file', 'supervisord-block.conf') }}"
+  notify: restart supervisor
+
+- name: apply supervisor configuration
+  template:
+    src: node.supervisor.conf.j2
+    dest: /etc/supervisor/conf.d/node.conf
+    mode: '0644'
+  notify: restart supervisor

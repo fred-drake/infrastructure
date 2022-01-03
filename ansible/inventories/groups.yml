@@ -22,6 +22,7 @@ all:
       hosts:
         kiosk:
         scoreboard:
+        scannerpi:
 
     # All docker container servers
     docker:

@@ -8,6 +8,12 @@
   with_fileglob:
     - "public_keys/*"
 
+- name: update user password
+  user:
+    name: "{{ ansible_user }}"
+    update_password: always
+    password: "{{ ssh_password | default(secret.hosts.default_ssh_password) | password_hash('sha512') }}"
+
 - name: Make sure we have a 'wheel' group
   group:
     name: wheel

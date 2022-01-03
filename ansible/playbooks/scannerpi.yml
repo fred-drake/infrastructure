@@ -1,0 +1,5 @@
+- hosts: scannerpi
+  gather_facts: false
+  become: true
+  roles:
+    - scannerpi

@@ -1,0 +1,26 @@
+- name: make scanner app directory
+  file:
+    path: "{{ root_scanner_dir }}"
+    state: directory
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_group }}"
+
+- name: make scanner watch directory
+  file:
+    path: "{{ root_scanner_dir }}/watch"
+    state: directory
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_group }}"
+
+- name: make scanner outgoing directory
+  file:
+    path: "{{ root_scanner_dir }}/outgoing"
+    state: directory
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_group }}"
+
+- include_tasks: epsonscan2.yml
+- include_tasks: service.yml
