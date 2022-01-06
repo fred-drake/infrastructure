@@ -25,9 +25,9 @@ spec:
             requests:
                 cpu: 100m
                 memory: 128Mi
-        env:
-        - name: ALLOW_EMPTY_PASSWORD
-          value: "yes"
-        ports:
-          - name: redis
-            containerPort: 6379
+          env:
+          - name: ALLOW_EMPTY_PASSWORD
+            value: "yes"
+          ports:
+            - name: redis
+              containerPort: 6379
