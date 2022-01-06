@@ -14,6 +14,7 @@ longhorn:
   defaultSettings:
     backupTarget: s3://longhorn@default/
     backupTargetCredentialSecret: minio-secret
+    createDefaultDiskLabeledNodes: true
   service:
     manager:
       type: NodePort

@@ -1,3 +1,8 @@
+storageNodes:
+  - kworker02
+  - kworker03
+  - kworker04
+
 applications:
   - name: argocd
     namespace: argocd

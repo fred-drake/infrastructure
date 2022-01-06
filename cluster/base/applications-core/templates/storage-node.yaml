@@ -5,10 +5,7 @@ apiVersion: v1
 kind: Node
 metadata:
   name: {{ . }}
-spec:
-  taints:
-    - effect: NoExecute
-      key: storage
-      value: longhorn
+  labels:
+    node.longhorn.io/create-default-disk: 'true'
 {{ end }}
 {{- end -}}
