@@ -44,10 +44,10 @@ spec:
                     values: 
                       - kworker02
               topologyKey: "kubernetes.io/hostname"
-      volumes:
-        - name: config-map
-          configMap:
-            name: redis
+      # volumes:
+      #   - name: config-map
+      #     configMap:
+      #       name: redis
       containers:
       - name: redis
         image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
