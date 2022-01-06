@@ -210,7 +210,7 @@ applications:
     namespace: netbox
     path: cluster/apps/netbox
     annotations:
-      argocd-image-updater.argoproj.io/image-list: postgres=postgres:14.x, redis=redis:6.x, backup=ghcr.io/fred-drake/k8s-backup:0.x
+      argocd-image-updater.argoproj.io/image-list: postgres=postgres:14.x, redis=redis:6.x, backup=ghcr.io/fred-drake/k8s-backup:latest
       argocd-image-updater.argoproj.io/backup.helm.image-name: backup.image.repository
       argocd-image-updater.argoproj.io/backup.helm.image-tag: backup.image.tag
       argocd-image-updater.argoproj.io/netbox.helm.image-name: netbox.image.repository

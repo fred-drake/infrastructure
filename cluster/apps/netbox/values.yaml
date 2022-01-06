@@ -16,5 +16,5 @@ backup:
     - postgresql
   postgresql:
     host: postgres.netbox
-    port: "30177"
+    pg_port: "30177"
     backupFile: netbox.sql
