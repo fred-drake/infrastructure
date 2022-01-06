@@ -42,7 +42,7 @@ spec:
                   - key: kubernetes.io/hostname
                     operator: NotIn
                     values: 
-                      - kworker11
+                      - kworker02
               topologyKey: "kubernetes.io/hostname"
       volumes:
         - name: config-map
