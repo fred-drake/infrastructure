@@ -94,7 +94,7 @@ spec:
             - name: PG_DATABASE
               value: {{ required "If backupTypes contains postgresql, .Values.postgresql.database must be set!" .Values.postgresql.database }}
             - name: PG_PORT
-              value: "30177"
+              value: "{{ .Values.postgresql.pg_port }}"
             - name: PG_USER
               value: {{ required "If backupTypes contains postgresql, .Values.postgresql.user must be set!" .Values.postgresql.user }}
             - name: PG_PASSWORD
