@@ -61,4 +61,4 @@ restic:
 #   database: myservice
 #   backupFile: my-service.sql
 postgresql:
-  pg_port: "5432"
+  port: "5432"
