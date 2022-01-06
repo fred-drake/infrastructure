@@ -35,12 +35,12 @@ spec:
         app: redis
     spec:
       affinity:
-        podAffinity:
+        podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
                   - key: kubernetes.io/hostname
-                    operator: NotIn
+                    operator: In
                     values: 
                       - kworker02
               topologyKey: "kubernetes.io/hostname"
