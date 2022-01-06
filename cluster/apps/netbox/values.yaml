@@ -12,8 +12,6 @@ redis:
     tag: 6.2.6
 
 backup:
-  image:
-    tag: latest
   backupTypes: 
     - postgresql
   postgresql:
