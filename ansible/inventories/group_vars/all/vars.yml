@@ -10,7 +10,7 @@ k8s:
     cluster_issuer: letsencrypt-production
   initial_master_node_hostname: kmaster01
   k3s: # k3s install version
-    version: v1.22.4+k3s1
+    version: v1.22.5+k3s1
   kubegres: # scalable postgres for kubernetes
       version: 1.9
   resources: # kubernetes resources
