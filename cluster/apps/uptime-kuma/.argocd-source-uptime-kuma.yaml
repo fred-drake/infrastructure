@@ -4,7 +4,7 @@ helm:
     value: louislam/uptime-kuma
     forcestring: true
   - name: image.tag
-    value: 1.11.2
+    value: 1.11.3
     forcestring: true
   - name: backup.image.repository
     value: ghcr.io/fred-drake/k8s-backup
