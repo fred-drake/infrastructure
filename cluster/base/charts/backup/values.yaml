@@ -60,3 +60,5 @@ restic:
 #   password: supersecretpassword
 #   database: myservice
 #   backupFile: my-service.sql
+postgresql:
+  port: "5432"
