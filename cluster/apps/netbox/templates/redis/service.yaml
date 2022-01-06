@@ -13,4 +13,3 @@ spec:
     targetPort: redis
   selector:
     app: redis
-    statefulset.kubernetes.io/pod-name: redis-0
