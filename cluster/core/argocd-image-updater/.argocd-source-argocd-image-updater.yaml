@@ -1,8 +1,8 @@
 helm:
   parameters:
-  - name: argocd-image-updater.image.name
+  - name: argocd-image-updater.image.repository
     value: argoprojlabs/argocd-image-updater
     forcestring: true
   - name: argocd-image-updater.image.tag
-    value: v0.11.0
+    value: v0.11.1
     forcestring: true
