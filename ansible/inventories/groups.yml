@@ -16,7 +16,7 @@ all:
         docker[1:2]:
         docker5:
         kmaster[01:02]:
-        kworker[01:12]:
+        kworker[01:13]:
 
     raspbian: # all raspbian servers
       hosts:
@@ -69,7 +69,7 @@ all:
         kmaster[01:02]:
     k8s_workers: # worker nodes
       hosts:
-        kworker[01:12]:
+        kworker[01:13]:
     k8s_backup: # node managing backup with specially attached storage
       hosts:
         kworker07:
