@@ -54,3 +54,5 @@
 #     - provision/kubernetes/longhorn_storage
 
 - import_playbook: kubernetes/k8s_install.yml
+
+- import_playbook: scannerpi.yml

@@ -3,6 +3,10 @@ secret:
     external_domain: ENC[AES256_GCM,data:hZ25zQujviLENLmddA==,iv:W2I1aHbybPq5mPkEfovL5ZoEjgWwH9KozmeynaaSIqc=,tag:44EwGpDMbJzkUABTIaJaBg==,type:str]
     hosts:
         default_ssh_password: ENC[AES256_GCM,data:5mdqAUO9Hp/8jYsy,iv:xpTaj0u+uex3281FcFs4I6P6HgEJzqDI9UQ63zhElLU=,tag:xeZ/W/0YtwjqyZmD2ufv8A==,type:str]
+    wireless:
+        iot:
+            ssid: ENC[AES256_GCM,data:0sdJ/NORkKUXSnnTrkkcn9nFTQ==,iv:g4g7jmu4DzZ7gSPEawMoAnA2Y1wCtxp+ywmt98kEoIA=,tag:69jwLiUtGqiZBsgHfwneqw==,type:str]
+            password: ENC[AES256_GCM,data:R3/BNJkF4i6J9yES,iv:IxioPKeQboSgSxZHhIHPrNfRr5RNZorJgbh1FAmNlnk=,tag:PgYKuNx5yuEQNE29pCwRTQ==,type:str]
     network:
         admin:
             gateway: ENC[AES256_GCM,data:tt1A1F+nOMK6YhZBRg==,iv:k/OsgysFkckbkpjh2HHuLZ6EZV+1vtKFBEc64fBwfAg=,tag:K7nyFsoS6yGW10URE9RAtg==,type:str]
@@ -286,8 +290,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-12-05T16:21:36Z"
-    mac: ENC[AES256_GCM,data:l2tf+zoEPCQuDRW7v7+9zH/Vp/4kUnh4Mlcp+nR/h9Q+wGiK0Sv7wwEQS8oCXV0QAW4N5POYEbB4/sIk3duRZd1bbHSGCIX3WewlHhzC7HafB1fi77mrL4oSmEIL+NYrO/844XOMYVvYSVTW5Q8P40VUPrUnzRz0pI6jUafpbaw=,iv:pCwpNYepRKGgISsDjkPDQ37r4ev83cA7JVfiIG47LQ8=,tag:4nxudLQsFoRXj/XYs9COcg==,type:str]
+    lastmodified: "2022-01-07T19:45:41Z"
+    mac: ENC[AES256_GCM,data:hX2T3VjJjG93tMUIXDG2HzFsQ6p5BXSRsTyJoX/jXWYpNq95g4f9LEa/SgoaDYH3WgLtK4PJjxbyliFofzJl06YMXS8ark1WoiO5fZspJSSE1tvVciwXwJlDEnUnEO8dM+lVBQ/wwqSy1ZLrbMdQi7R8NNfEiNJdq27PRChj21Q=,iv:kSdKd9QLz4gb/YCyATnjW/SDxwqcuU/cDAcVAfIVWrc=,tag:8neWs2XnABSGE5ysvfTFDw==,type:str]
     pgp:
         - created_at: "2021-10-30T18:28:12Z"
           enc: |
