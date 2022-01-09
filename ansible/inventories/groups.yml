@@ -45,10 +45,14 @@ all:
     critical_docker_primary:
       hosts:
         docker5:
+          pihole_id: pihole1
+          dhcp_id: dhcp1
     # Identifies the secondary server for critical services
     critical_docker_secondary:
       hosts:
         docker2:
+          pihole_id: pihole2
+          dhcp_id: dhcp2
 
     avahi: # Host for avahi daemon
       hosts:

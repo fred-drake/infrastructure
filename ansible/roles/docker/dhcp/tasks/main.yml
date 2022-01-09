@@ -11,6 +11,7 @@
     - dhcp
     - update
     - dhcp_update
+  run_once: true
 
 - name: create data directory
   file:
@@ -25,6 +26,7 @@
     src: "dhcp_{{ secret.dhcp.machines[dhcp_id].type }}.j2"
     dest: "{{ appdata_dir }}/{{ dhcp_id }}/data/dhcpd.conf"
     mode: "0644"
+    backup: true
   notify:
     - restart dhcp
   tags:

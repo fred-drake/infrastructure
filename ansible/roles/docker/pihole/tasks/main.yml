@@ -39,6 +39,7 @@
     netbox_api_prefix: "https://netbox.{{ secret.domain }}"
     netbox_token: "{{ secret.netbox.token }}"
   register: hostlist_results
+  run_once: true
   tags:
     - pihole
     - dns_update
@@ -48,6 +49,7 @@
     src: hostlist.j2
     dest: "{{ appdata_dir }}/{{ secret.pihole[pihole_id].hostname }}/etc/pihole/custom.list"
     mode: "0644"
+    backup: true
   notify:
     - restart DNS
   tags:
