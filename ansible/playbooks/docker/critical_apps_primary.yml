@@ -10,3 +10,4 @@
       vars:
         pihole_id: pihole1
     - docker/avahi
+    - docker/backup_client

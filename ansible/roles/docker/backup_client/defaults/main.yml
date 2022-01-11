@@ -1,0 +1,2 @@
+volumes:
+  - "/var/lib/docker/mnt/appdata:/backup/{{ ansible_host.split('.')[0] }}/appdata"

@@ -16,3 +16,4 @@
     - docker/smtp
     - docker/syncthing
     - docker/teslamate
+    - docker/backup_client
