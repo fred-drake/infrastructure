@@ -4,5 +4,5 @@ helm:
     value: argoprojlabs/argocd-image-updater
     forcestring: true
   - name: argocd-image-updater.image.tag
-    value: v0.11.1
+    value: v0.11.2
     forcestring: true
