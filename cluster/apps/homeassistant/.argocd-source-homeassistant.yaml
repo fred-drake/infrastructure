@@ -4,7 +4,7 @@ helm:
     value: ghcr.io/linuxserver/homeassistant
     forcestring: true
   - name: home-assistant.image.tag
-    value: 2021.12.8
+    value: 2021.12.9
     forcestring: true
   - name: backup.image.repository
     value: ghcr.io/fred-drake/k8s-backup
