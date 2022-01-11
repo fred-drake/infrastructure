@@ -2,43 +2,43 @@
 - name: install apt dependencies
   apt:
     name:
-      - cifs-utils
+      # - cifs-utils
       - jq
       - util-linux
       - coreutils
-      - open-iscsi
+      # - open-iscsi
       - nfs-common
-      - multipath-tools
-      - multipath-tools-boot
+      # - multipath-tools
+      # - multipath-tools-boot
     state: present
     update_cache: true
   tags: 
     - cifs
     - k8s_setup
 
-- name: start iscsid service
-  service:
-    name: iscsid
-    state: started
-    enabled: true
+# - name: start iscsid service
+#   service:
+#     name: iscsid
+#     state: started
+#     enabled: true
 
-- name: add fstab/cifs directory
-  file:
-    path: /usr/libexec/kubernetes/kubelet-plugins/volume/exec/fstab~cifs
-    state: directory
-    mode: '0755'
-  tags: 
-    - cifs
-    - k8s_setup
+# - name: add fstab/cifs directory
+#   file:
+#     path: /usr/libexec/kubernetes/kubelet-plugins/volume/exec/fstab~cifs
+#     state: directory
+#     mode: '0755'
+#   tags: 
+#     - cifs
+#     - k8s_setup
 
-- name: install k8s cifs driver
-  copy:
-    src: cifs
-    dest: /usr/libexec/kubernetes/kubelet-plugins/volume/exec/fstab~cifs/cifs
-    mode: '0755'
-  tags:
-    - cifs
-    - k8s_setup
+# - name: install k8s cifs driver
+#   copy:
+#     src: cifs
+#     dest: /usr/libexec/kubernetes/kubelet-plugins/volume/exec/fstab~cifs/cifs
+#     mode: '0755'
+#   tags:
+#     - cifs
+#     - k8s_setup
 
 - name: Update max_user_watches
   ansible.posix.sysctl:
@@ -60,11 +60,11 @@
     - swap
     - none
 
-- name: Update multipath to not interfere
-  blockinfile:
-    path: /etc/multipath.conf
-    block: |
-      blacklist {
-          devnode "^sd[a-z0-9]+"
-      }
-  notify: restart multipathd
+# - name: Update multipath to not interfere
+#   blockinfile:
+#     path: /etc/multipath.conf
+#     block: |
+#       blacklist {
+#           devnode "^sd[a-z0-9]+"
+#       }
+#   notify: restart multipathd
