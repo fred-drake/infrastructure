@@ -75,7 +75,9 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: paperless-secret
-                  key: dbPassword            
+                  key: dbPassword
+            - name: PAPERLESS_DBSSLMODE
+              value: disable            
           volumeMounts:
             - mountPath: /usr/src/paperless/media
               name: paperless-documents
