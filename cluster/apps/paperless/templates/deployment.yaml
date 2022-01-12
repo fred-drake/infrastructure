@@ -56,6 +56,26 @@ spec:
                 secretKeyRef:
                   name: paperless-secret
                   key: secretKey
+            - name: PAPERLESS_CORS_ALLOWED_HOSTS
+              value: "https://paperless.{{ .Values.domain }}"
+            - name: PAPERLESS_ADMIN_USER
+              value: "{{ .Values.admin.username }}"
+            - name: PAPERLESS_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-secret
+                  key: adminPassword
+            - name: PAPERLESS_DBHOST
+              value: "{{ .Values.db.host }}"
+            - name: PAPERLESS_DBPORT
+              value: "{{ .Values.db.port }}"
+            - name: PAPERLESS_DBNAME
+              value: "{{ .Values.db.dbName }}"
+            - name: PAPERLESS_DBPASS
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-secret
+                  key: dbPassword            
           volumeMounts:
             - mountPath: /usr/src/paperless/media
               name: paperless-documents
