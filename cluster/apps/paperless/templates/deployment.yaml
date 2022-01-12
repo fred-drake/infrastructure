@@ -73,13 +73,13 @@ spec:
               value: "{{ .Values.db.port }}"
             - name: PAPERLESS_DBNAME
               value: "{{ .Values.db.dbName }}"
+            - name: PAPERLESS_DBUSER
+              value: "{{ .Values.db.username }}"
             - name: PAPERLESS_DBPASS
               valueFrom:
                 secretKeyRef:
                   name: paperless-secret
                   key: dbPassword
-            - name: PAPERLESS_DBSSLMODE
-              value: disable            
           volumeMounts:
             - mountPath: /usr/src/paperless/media
               name: paperless-documents
