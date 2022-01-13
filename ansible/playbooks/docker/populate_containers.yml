@@ -17,3 +17,33 @@
     - docker/syncthing
     - docker/teslamate
     - docker/backup_client
+
+- hosts: docker3
+  gather_facts: false
+  become: true
+  roles:
+    - docker/base
+    - role: docker/backup_client
+      vars:
+        backup_namespace: netbox
+        env:
+          NAMESPACE: netbox
+          RESTIC_REPOSITORY: "s3:http://minio-backup-app.{{ secret.domain }}:9000/restic"
+          BACKUP_TYPES: postgresql
+          PG_HOST: "{{ secret.services.netbox.postgres.ip }}"
+          PG_DATABASE: "{{ secret.services.netbox.postgres.database }}"
+          PG_PORT: "{{ secret.services.netbox.postgres.port }}"
+          PG_USER: "{{ secret.services.netbox.postgres.user }}"
+          PG_PASSWORD: "{{ secret.services.netbox.postgres.password }}"
+          PG_BACKUP_FILE: "netbox.sql"
+        volumes:
+          # - "{{ appdata_dir }}/appdata/netbox:/backup/netbox"
+    - docker/netbox
+    - docker/whoogle
+
+- hosts: larussa
+  gather_facts: false
+  become: true
+  roles:
+    - docker/base
+    - docker/backup_database

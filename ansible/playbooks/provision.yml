@@ -34,6 +34,12 @@
   roles:
     - provision/raspberry_pi/pi4_raspbian
 
+- hosts: intel_nucs
+  gather_facts: false
+  become: true
+  roles:
+    - provision/intel_nuc
+
 - hosts: docker
   gather_facts: false
   become: true

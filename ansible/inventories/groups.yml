@@ -13,7 +13,7 @@ all:
 
     ubuntu: # all ubuntu servers
       hosts:
-        docker[1:2]:
+        docker[1:3]:
         docker5:
         kmaster[01:02]:
         kworker[01:13]:
@@ -34,6 +34,7 @@ all:
     docker_services:
       hosts:
         docker1:
+        docker3:
 
     # Docker container servers who run critical services
     critical_docker_services:
@@ -53,6 +54,11 @@ all:
         docker2:
           pihole_id: pihole2
           dhcp_id: dhcp2
+
+    # Unraid server
+    unraid:
+      hosts:
+        larussa:
 
     avahi: # Host for avahi daemon
       hosts:
@@ -76,6 +82,11 @@ all:
     # k8s_storage: # nodes with SSD cluster-level storage
     #   hosts:
     #     kworker[02:04]:
+
+    # Intel NUC servers
+    intel_nucs:
+      hosts:
+        docker3:
 
     # Raspberry Pi servers
     raspberry_pi: # all raspberry pi machines

@@ -1,2 +1,11 @@
+backup_namespace: "{{ ansible_host.split('.')[0] }}"
 volumes:
-  - "/var/lib/docker/mnt/appdata:/backup/{{ ansible_host.split('.')[0] }}/appdata"
+  # - "{{ appdata_dir }}:/backup/{{ ansible_host.split('.')[0] }}/appdata"
+default_env:
+  TZ: "{{ default_timezone }}"
+  AWS_ACCESS_KEY_ID: "{{ secret.backup.keyId }}"
+  AWS_SECRET_ACCESS_KEY: "{{ secret.backup.keySecret }}"
+  RESTIC_REPOSITORY: "{{ secret.backup.restic.repository }}"
+  RESTIC_PASSWORD: "{{ secret.backup.restic.password }}"
+  # BACKUP_DIRECTORY: "/backup/{{ ansible_host.split('.')[0] }}"
+  NAMESPACE: "{{ backup_namespace }}"
