@@ -9,6 +9,7 @@
   become: true
   roles:
     - provision/ubuntu
+    - netplan
 
 - hosts: raspbian
   gather_facts: true
@@ -34,11 +35,11 @@
   roles:
     - provision/raspberry_pi/pi4_raspbian
 
-- hosts: intel_nucs
-  gather_facts: false
-  become: true
-  roles:
-    - provision/intel_nuc
+# - hosts: intel_nucs
+#   gather_facts: false
+#   become: true
+#   roles:
+#     - provision/intel_nuc
 
 - hosts: docker
   gather_facts: false
@@ -62,3 +63,13 @@
 - import_playbook: kubernetes/k8s_install.yml
 
 - import_playbook: scannerpi.yml
+
+- hosts: kvm
+  gather_facts: false
+  become: true
+  roles:
+    - tinypilot
+
+- import_playbook: docker/critical_apps_primary.yml
+- import_playbook: docker/critical_apps_secondary.yml
+- import_playbook: docker/populate_containers.yml

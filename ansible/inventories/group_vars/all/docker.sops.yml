@@ -1,16 +1,16 @@
 docker_secret:
     #ENC[AES256_GCM,data:cjzesvJ1e41KsPR01dLDXBftlhTxZWw3yfs6XbrTaA==,iv:6gKRFodOkUlJMt+LsdaaNVrTiAEj96SONpdFyXnppSc=,tag:wOSDkbVU1QPdK3hAhYngnw==,type:comment]
     vault_appdata_dir: ENC[AES256_GCM,data:3djKlpx9KKHmf5j+y2Zd8D+Fv2O+ogxQJfnB,iv:TcXCJsl3paiLj7Z35MxgX//5o1m+UaZaQNQ67p+iOGo=,tag:VsQMpjBda2nTTKf9KLj1mA==,type:str]
-    vault_cifs_docker_mount_options: ENC[AES256_GCM,data:V8d0/R349IOLP5BXOPCotd8vuL6j4Bbxy6/QCs8rYN86PcSUDcxpb2jO2JyFcLnNDE8vNmrCf7b92LA79lFsovxGjhLssR+5JpO5WJ1gD8f48/9AP/thn2Ccf1xL+o8=,iv:7m4DBAFnnaZs1DinDnaoyGIeyrEo5rcVA+lHwAPGg/c=,tag:JQXa8Gwi0AWnvtZO3nYLSg==,type:str]
-    vault_cifs_server: ENC[AES256_GCM,data:eA7NEkKduQ==,iv:NTb4nXlAorQhSwX5Ueo9sqwquVPOsQ3iSLC/cxj6D64=,tag:cLXKnoN5jH4B+Jxpdp+/3Q==,type:str]
+    vault_cifs_docker_mount_options: ENC[AES256_GCM,data:f4/rvUsQwDKlq7EgUS83fRkKL5EJCJI1VSdW8OuFnhBt/roWiwDG/GePfY99wCDLmFx8P6XVzc6EOlzyywV1Xpe4Z1WGn1jFYoH9kQ==,iv:tE0opHRE5GR6ZNyI8F+6JlkWAcTMRoHifjx9YBGtQ7c=,tag:aZcbCTXJTZA3s0sbAGT7/Q==,type:str]
+    vault_cifs_server: ENC[AES256_GCM,data:Z+KkUgwPQ0ahvpKh2Q==,iv:11QJt1SmtWD3jvGyBzz2up4MAz/gh9fjl6qCd5Ow41U=,tag:ipIxAPbwRwEa6+aAxPWCVQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-30T18:27:23Z"
-    mac: ENC[AES256_GCM,data:HQA5e3paIQvT9tKH48iD9rC+GtvFVqvx2SQ9jnxFxlE8URYboPwZEvRh8SlZITDCDyaa2Lo8kT3AoXNqni/ErAJSYn6Re3xpDa7BBU93oh9tq26K5+4f2MH5pBUnRZBPmRsQdAIRBDA/ys8N7AfCSaJr6IeFzB4jlGRdw3w2boE=,iv:2nom5jAfP0ioOB1ssa5jyRMaUtWeiEr/EEzu9j1y9EA=,tag:qE6I9i8TQiY9WvlLgqNBMg==,type:str]
+    lastmodified: "2022-01-18T23:46:32Z"
+    mac: ENC[AES256_GCM,data:m8KME3Tsu7vm+lISYs/rPyHyYXcxJcW81F9bpXSIekiAUvcajdCBlcZb+bmzrlmMEimxkZANtaX4EZMuivhv8xlx2DPO9STQv0FV/MU0bCO7elqr3GENWAZq62hQXld2pTantI7ohf39JizBvU5gEoM3xUqUwxDZ3TVYMM/DuyM=,iv:7iwaJqwmaqDUWivvORXMUl1uBrKEbyvqR5T2fMujeZ0=,tag:cEL9hySIp0aTbjqmFmCSpw==,type:str]
     pgp:
         - created_at: "2021-10-30T18:27:22Z"
           enc: |

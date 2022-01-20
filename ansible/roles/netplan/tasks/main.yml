@@ -1,0 +1,13 @@
+- name: apply netplan for machine containing dns server
+  template:
+    src: netplan-config-dns-server.yml.j2
+    dest: /etc/netplan/00-installer-config.yaml
+  notify: netplan apply
+  when: "'critical_docker_services' in group_names"
+
+- name: apply netplan for docker services machine
+  template:
+    src: netplan-config-docker-service.yml.j2
+    dest: /etc/netplan/00-installer-config.yaml
+  notify: netplan apply
+  when: "'docker_services' in group_names"

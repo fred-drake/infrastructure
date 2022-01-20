@@ -1,0 +1,39 @@
+network:
+  ethernets:
+    {{ interface_208 }}:
+      addresses:
+      - {{ address_208 }}/24
+      gateway4: 192.168.208.1
+      nameservers:
+        addresses:
+        - 8.8.8.8
+        - 8.8.4.4
+        search: []
+    {{ interface_50 }}:
+      addresses:
+      - {{ address_50 }}/24
+      gateway4: 192.168.50.1
+      nameservers:
+        addresses:
+        - 8.8.8.8
+        - 8.8.4.4
+        search: []
+    {{ interface_40 }}:
+      addresses:
+      - {{ address_40 }}/24
+      gateway4: 192.168.40.1
+      nameservers:
+        addresses:
+        - 8.8.8.8
+        - 8.8.4.4
+        search: []
+    {{ interface_30 }}:
+      addresses:
+      - {{ address_30 }}/24
+      gateway4: 192.168.30.1
+      nameservers:
+        addresses:
+        - 8.8.8.8
+        - 8.8.4.4
+        search: []
+  version: 2

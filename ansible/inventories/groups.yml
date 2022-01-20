@@ -23,6 +23,7 @@ all:
         kiosk:
         scoreboard:
         scannerpi:
+        kvm:
 
     # All docker container servers
     docker:

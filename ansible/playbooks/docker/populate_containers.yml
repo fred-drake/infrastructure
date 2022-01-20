@@ -22,24 +22,213 @@
   gather_facts: false
   become: true
   roles:
-    - docker/base
+    - test
+    ### Whoogle ###
+    - role: docker/container
+      vars:
+        container:
+          name: whoogle
+          repository: benbusby/whoogle-search
+          tag: "{{ special_tags.whoogle.tag | default('latest') }}"
+          ip: "{{ secret.services.whoogle.ip }}"
+    ### Prowlarr ###
+    - role: docker/container
+      vars:
+        container:
+          name: prowlarr
+          repository: linuxserver/prowlarr
+          tag: 0.1.10-nightly
+          ip: "{{ secret.services.prowlarr.ip }}"
+          env:
+            PUID: "99"
+            PGID: "100"
+          volumes:
+            - "{{ appdata_dir }}/prowlarr/config:/config"
     - role: docker/backup_client
       vars:
-        backup_namespace: netbox
+        backup_namespace: prowlarr
         env:
-          NAMESPACE: netbox
-          RESTIC_REPOSITORY: "s3:http://minio-backup-app.{{ secret.domain }}:9000/restic"
-          BACKUP_TYPES: postgresql
-          PG_HOST: "{{ secret.services.netbox.postgres.ip }}"
-          PG_DATABASE: "{{ secret.services.netbox.postgres.database }}"
-          PG_PORT: "{{ secret.services.netbox.postgres.port }}"
-          PG_USER: "{{ secret.services.netbox.postgres.user }}"
-          PG_PASSWORD: "{{ secret.services.netbox.postgres.password }}"
-          PG_BACKUP_FILE: "netbox.sql"
+          NAMESPACE: "{{ backup_namespace }}"
         volumes:
-          # - "{{ appdata_dir }}/appdata/netbox:/backup/netbox"
-    - docker/netbox
-    - docker/whoogle
+          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+
+    ### Radarr ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: videos
+          container: radarr
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+    - role: docker/volume
+      vars:
+        volume:
+          name: movies
+          container: radarr
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+    - role: docker/volume
+      vars:
+        volume:
+          name: torrent
+          container: radarr
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+    - role: docker/container
+      vars:
+        container:
+          name: radarr
+          repository: linuxserver/radarr
+          tag: 0.0.5597
+          ip: "{{ secret.services.radarr.ip }}"
+          env:
+            PUID: "99"
+            PGID: "100"
+          volumes:
+            - "{{ appdata_dir }}/radarr/config:/config"
+          mounts:
+            - source: radarr_videos
+              target: /videos
+            - source: radarr_torrent
+              target: /downloads
+    - role: docker/backup_client
+      vars:
+        backup_namespace: radarr
+        env:
+          NAMESPACE: "{{ backup_namespace }}"
+        volumes:
+          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+
+    ### Netbox ###
+    - role: docker/container
+      vars:
+        container:
+          name: netbox-db-postgres
+          repository: postgres
+          tag: "12"
+          ip: "{{ secret.services.netbox.postgres.ip }}"
+          env:
+            POSTGRES_USER: "{{ secret.services.netbox.postgres.user }}"
+            POSTGRES_PASSWORD: "{{ secret.services.netbox.postgres.password }}"
+            POSTGRES_DB: "{{ secret.services.netbox.postgres.database }}"
+          volumes:
+            - "{{ appdata_dir }}/netbox-db-postgres:/var/lib/postgresql/data"
+    - role: docker/container
+      vars:
+        container:
+          name: netbox-db-redis
+          repository: redis
+          tag: latest
+          ip: "{{ secret.services.netbox.redis.ip }}"
+    - role: docker/container
+      vars:
+        container:
+          name: netbox
+          repository: linuxserver/netbox
+          tag: latest
+          ip: "{{ secret.services.netbox.ip }}"
+          env:
+            PUID: "99"
+            PGID: "100"
+            SUPERUSER_EMAIL: "{{ secret.services.netbox.superuser.email }}"
+            SUPERUSER_PASSWORD: "{{ secret.services.netbox.superuser.password }}"
+            ALLOWED_HOST: "{{ secret.services.netbox.allowed_host }}"
+            DB_NAME: "{{ secret.services.netbox.postgres.database }}"
+            DB_USER: "{{ secret.services.netbox.postgres.user }}"
+            DB_PASSWORD: "{{ secret.services.netbox.postgres.password }}"
+            DB_HOST: "{{ secret.services.netbox.postgres.ip }}"
+            DB_PORT: "{{ secret.services.netbox.postgres.port }}"
+            REDIS_HOST: "{{ secret.services.netbox.redis.ip }}"
+            REDIS_PORT: "{{ secret.services.netbox.redis.port }}"
+          volumes:
+            - "{{ appdata_dir }}/netbox/config:/config"
+    - role: docker/container
+      vars:
+        container: 
+          name: backup-netbox
+          repository: ghcr.io/fred-drake/k8s-backup
+          tag: latest
+          ip: "{{ secret.services.netbox.backup_ip }}"
+          env:
+            AWS_ACCESS_KEY_ID: "{{ secret.backup.keyId }}"
+            AWS_SECRET_ACCESS_KEY: "{{ secret.backup.keySecret }}"
+            RESTIC_REPOSITORY: "s3:http://minio-backup-app.{{ secret.domain }}:9000/restic"
+            RESTIC_PASSWORD: "{{ secret.backup.restic.password }}"
+            NAMESPACE: netbox
+            BACKUP_TYPES: postgresql
+            PG_HOST: "{{ secret.services.netbox.postgres.ip }}"
+            PG_DATABASE: "{{ secret.services.netbox.postgres.database }}"
+            PG_PORT: "{{ secret.services.netbox.postgres.port }}"
+            PG_USER: "{{ secret.services.netbox.postgres.user }}"
+            PG_PASSWORD: "{{ secret.services.netbox.postgres.password }}"
+            PG_BACKUP_FILE: "netbox.sql"
+    
+    ### Home Assistant ###
+    - role: docker/container
+      vars:
+        container:
+          name: homeassistant
+          repository: ghcr.io/linuxserver/homeassistant
+          tag: 2021.11.5
+          ip: "{{ secret.services.homeassistant.ip }}"
+          env:
+            PUID: "99"
+            PGID: "100"
+            UMASK: "022"
+          volumes:
+            - "{{ appdata_dir }}/homeassistant/config:/config"
+    - role: docker/backup_client
+      vars:
+        backup_namespace: homeassistant
+        env:
+          NAMESPACE: "{{ backup_namespace }}"
+        volumes:
+          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+
+    ### Node Red ###
+    - role: docker/container
+      vars:
+        container:
+          name: node-red-postgres
+          repository: postgres
+          tag: 14.1
+          ip: "{{ secret.services.node_red.postgres.ip }}"
+          env:
+            POSTGRES_USER: "{{ secret.services.node_red.postgres.user }}"
+            POSTGRES_PASSWORD: "{{ secret.services.node_red.postgres.password }}"
+            POSTGRES_DB: "{{ secret.services.node_red.postgres.database }}"
+          volumes:
+            - "{{ appdata_dir }}/node-red-postgres:/var/lib/postgresql/data"
+    - role: docker/container
+      vars:
+        container:
+          name: "node-red"
+          repository: "nodered/node-red"
+          tag: 2.1.3
+          ip: "{{ secret.services.node_red.ip }}"
+          env:
+            NODE_RED_ENABLE_SAFE_MODE: "false"
+          volumes:
+            - "{{ appdata_dir }}/node-red/data:/data"
+    - role: docker/backup_client
+      vars:
+        backup_namespace: "node-red"
+        env:
+          NAMESPACE: "{{ backup_namespace }}"
+        volumes:
+          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+
+    ### MQTT ###
+    - role: docker/container
+      vars:
+        container:
+          name: mqtt
+          repository: eclipse-mosquitto
+          tag: 2.0.14
+          ip: "{{ secret.services.mqtt.ip }}"
+          volumes:
+            - "{{ appdata_dir }}/mqtt/config:/mosquitto/config"
+            - "{{ appdata_dir }}/mqtt/data:/mosquitto/data"
 
 - hosts: larussa
   gather_facts: false
@@ -47,3 +236,24 @@
   roles:
     - docker/base
     - docker/backup_database
+    - role: docker/container
+      vars:
+        container:
+          name: netbootxyz
+          repository: lscr.io/linuxserver/netbootxyz
+          tag: latest
+          networks:
+            - name: "{{ secret.docker.network.container }}"
+              ipv4_address: "{{ secret.services.netboot.ip_50 }}"
+            - name: "{{ secret.docker.network.admin }}"
+              ipv4_address: "{{ secret.services.netboot.ip_208 }}"
+          env:
+            MENU_VERSION: 1.9.9
+            PORT_RANGE: 30000:30010
+            SUBFOLDER: /
+            PUID: "99"
+            PGID: "100"
+            UMASK: "022"
+          volumes:
+            - /mnt/user/appdata/netbootxyz:/config
+            - /mnt/user/netboot:/assets

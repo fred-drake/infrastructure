@@ -53,15 +53,15 @@
 
 - name: install initial libraries
   apt:
-    name: "{{ item }}"
+    name:
+      - net-tools
+      - python3-pip
+      - neofetch
+      - figlet
+      - jq
+      - vlan
     state: present
     update_cache: true
-  loop:
-    - net-tools
-    - python3-pip
-    - neofetch
-    - figlet
-    - jq
 
 - name: install glances
   pip:
