@@ -125,7 +125,7 @@ secret:
         keyId: ENC[AES256_GCM,data:VJWEdkqcc2izeKnaqLIwYOm9aRe1,iv:ZhrE2zhLP5dR3b50xG7oR7V/KSZODdHwFqEggWSjcuQ=,tag:5tkueDW+dNjnJRC9q2mlUA==,type:str]
         keySecret: ENC[AES256_GCM,data:JjsrRakuSPNqPHkIC2hWCyAL0tlz,iv:zzqj5SO0PQ6psAmWkR1Y8HTjz6uLeCfj/0QDZl54Pog=,tag:QXVXPIAnKATg11HRfOt6cw==,type:str]
         restic:
-            repository: ENC[AES256_GCM,data:t4SmZppUSRyGEHv5pswU3E1QDRs1qlImGitytllDE1qudFe/J4eNDb8wRRf4xOoRpfh1JKk=,iv:pO2HrToSKUon2CBTeV77FslhsXS++Q0oCaOY//gadPE=,tag:ZtF6oda4J4tK9PnCkzVoGw==,type:str]
+            repository: ENC[AES256_GCM,data:fhsXCZ3jnkX0c4bRB95AtookNs5zZFoZ9TQsWPB6ACCWvWJ9+5gHHYh2xntKXkMholryNwL+hIeA6xkP4g==,iv:zDQUgYKzDsAGO/1/TOIeE52qru7aryHyd1w+9SAKurU=,tag:iiPWQqSRDkVIBbmr9EObyQ==,type:str]
             password: ENC[AES256_GCM,data:LN7AFsW0T6SIb3OU,iv:cjbxm0ztxC5MJAntd6UOVpEb+wa115oeY7oiIJ9C1Zw=,tag:6mv1QKXkGH3C4dF+Y09SSw==,type:str]
     notea:
         minio:
@@ -262,11 +262,20 @@ secret:
                 database: ENC[AES256_GCM,data:qbpId0bkrg==,iv:L8/L80DUmPl2ZJoLcw2jcCsX59K14jWIWvZaqXVMaKE=,tag:fwPUK6Hoxa4oWkb6yx/xeA==,type:str]
                 port: ENC[AES256_GCM,data:Hz82YA==,iv:bUM3Rr7Aiano0dsU2Uk3gpFNbzY+nPemJfoivZD0Emw=,tag:cZ4L+JtRKbuoHEn2LyOAcg==,type:int]
         office_touchpad:
-            ip: ENC[AES256_GCM,data:f4sFjFoD402Rp4fZ5Q==,iv:AD9vYC1oPZ3Bh3pAt0CLKf3w7Uo+x6wvTNuqNRpPZeg=,tag:dwHhcCSPV4aQr4RRMpHM+Q==,type:str]
+            ip: ENC[AES256_GCM,data:+VIv17+tkslrB621fa4=,iv:WyuoWRfXJDEdbbwnEs8sjP7aw0iZTE0ugdkpUEkXxBY=,tag:2hp2Gly5GWw4gWHS0b4REA==,type:str]
         paperless:
             ip: ENC[AES256_GCM,data:nWzE69yJnAyuhNHNkw==,iv:eC5tnKc9pa5hRDh4QjQXY338jL+g2rwGKjbZhj7wLUU=,tag:HQszmik/ElkN22xaU0aTow==,type:str]
-            paperless_redis: ENC[AES256_GCM,data:s4cRU6N0LL8SzaRylasLBQXu0ViVSd3Mjj/6IdmAGpj7HYT2lJZNvxc+prfRmYRk,iv:mLrtjoRlQCFL8GnuWzcJ9lEybG/U8rBRszZW2mN0KXc=,tag:qxEPr98c70ylwxi/KCrvGQ==,type:str]
             paperless_secret_key: ENC[AES256_GCM,data:MJeC5U3z0xtnHpqmZOhKpuHytHUHiJ3N8hQOeDE4hd4rcXXmrrRYy7TOwpNGFZdrsIk=,iv:h6pnQ7WLeTA5UhLwIHKZTmRQT9/yPpuB3ugsuOF0ys4=,tag:YR5TpMNr7Mo0MuFQd2HePQ==,type:str]
+            redis:
+                ip: ENC[AES256_GCM,data:ZkxJuP3ox7/gFVz0MvQ=,iv:1xYhJjhbx4IP8BaKx1NfAHdtsvcBV/22JaHaucy9BNY=,tag:MdOnJmP+/BxwKj92QKZlpw==,type:str]
+                port: ENC[AES256_GCM,data:PpWLxA==,iv:T2QJQ0ZLt4m2XFohQfP9/68d04kPxAYPUvlIBudFwHk=,tag:llJMes1i7RJ9DZoc5PS+Mg==,type:int]
+            postgres:
+                ip: ENC[AES256_GCM,data:IhMabxk9UaiK5X2zhw==,iv:JNsCB3DeBnIhm/PoxjMSVMj0eM6i9y4TdtxT/qMOSsU=,tag:Q+EbuuO5Ro4/2TwmiZnyVg==,type:str]
+                backup_ip: ENC[AES256_GCM,data:kZqwVjXoFX5noVPhd+A=,iv:3FNLkLPlEpIzjc+8qJDnFffGdGLzZAzAUGm7OzHdUoQ=,tag:WmoCWQzgRup2/9qP7b/6jw==,type:str]
+                user: ENC[AES256_GCM,data:4T8Ylv1ySL4=,iv:k9JZBDAGuwMUIJVeKkF2+6u4fyJFPDM2ROmo/Ro/i1g=,tag:RdCLj/JyGlbB1FqvmJcwgw==,type:str]
+                password: ENC[AES256_GCM,data:mDvG5fl+d4HpVx0NXuvA,iv:8QPhP1nq8CT/D4MxJrfmLrfVltoqxqYnPQsvZ2/o0vY=,tag:zL+afPUMVul5h5SUmfDlLA==,type:str]
+                database: ENC[AES256_GCM,data:JaNtzyNUBVyW,iv:syEE+29pybH268bpq2Bx90/mia5Robp8CJH8+1ok+W0=,tag:SFeNstAVGEcxY35YrquImg==,type:str]
+                port: ENC[AES256_GCM,data:G6JzwA==,iv:b6CZL1y/ktG445Go0wGZulMLWRxkqN56B4bC9uWZgCM=,tag:iQXPbVrdhtZRs3aSwx/bLw==,type:int]
         portainer:
             ip: ENC[AES256_GCM,data:9+8DWy/6gr/RtPKKqQ==,iv:MvsF3wOCdSuyHhq7trBoRrggg0D8ROzT8DBTy1Zs+mw=,tag:nhoDm4ZspXd26uVbK2kF0Q==,type:str]
         prowlarr:
@@ -329,8 +338,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-01-20T02:56:04Z"
-    mac: ENC[AES256_GCM,data:EtPEzar5sbFGGoG2cW3hVqt+RKJHzRh7Sz8O7w8uyyKoq5tpQtzry0Bz9SV/Ws2N2bMkppqngiqX/ZbiT5l0kkgvLzkjp0S6FvTzyR+/TovXCG6x8N/z96HbLpuRRCWiLXRcB/tguKV8MihBl8h9FYCW8ohO6a32ytyvBBwr/7g=,iv:a2HMTdSlvEqzioJAI1uqgD8ZOe6oXxD3P9OvFlQLIn0=,tag:yUpjWEqfet3MRGkMb++yWA==,type:str]
+    lastmodified: "2022-01-21T04:17:42Z"
+    mac: ENC[AES256_GCM,data:9yy2gr+09S3pO15B1XQgRIo/veG6XQNtw+mAqcNml2WL7Bh4S1a7tNj/JsKNGXD9bzbjA/MqjPQGgecIMuntw/txyodMKPO8O8yTUjwC26rkOjymdIyCA/0yu7CZNEeocmqCClhdxUbGDC/JYh1jlA6CVQW/BHDI8X9R2dHss7A=,iv:zShfav+L0zjVJffPAG7S448N1EysEdWsXQF+sfIbtNA=,tag:rYWYxa8PpG5ZLoEG1gh0+A==,type:str]
     pgp:
         - created_at: "2021-10-30T18:28:12Z"
           enc: |

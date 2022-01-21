@@ -140,3 +140,14 @@
     mode: "0644"
   notify:
     - restart docker
+
+- name: add a docker group
+  group:
+    name: docker
+    state: present
+
+- name: add ansible user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true

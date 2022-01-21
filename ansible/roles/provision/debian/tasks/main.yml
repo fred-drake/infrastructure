@@ -60,6 +60,8 @@
       - figlet
       - jq
       - vlan
+      - zsh
+      - fontconfig
     state: present
     update_cache: true
 
@@ -68,3 +70,15 @@
     name: "glances[docker]"
   tags:
     - update
+
+- name: set terminal setup user to ansible user
+  set_fact:
+    terminal_root_user: false
+
+- import_tasks: terminal.yml
+
+- name: set terminal setup user to root user
+  set_fact:
+    terminal_root_user: true
+    
+- import_tasks: terminal.yml
