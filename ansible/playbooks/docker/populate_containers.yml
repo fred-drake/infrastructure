@@ -256,24 +256,11 @@
           mount_options: gid=1000,uid=1000,file_mode=0777,dir_mode=0777
     - role: docker/container
       vars:
-        volume:
+        container:
           name: paperless-redis
           repository: redis
           tag: 6.2.6
           ip: "{{ secret.services.paperless.redis.ip }}"
-    - role: docker/container
-      vars:
-        container:
-          name: paperless-postgres
-          repository: postgres
-          tag: 14.1
-          ip: "{{ secret.services.paperless.postgres.ip }}"
-          env:
-            POSTGRES_USER: "{{ secret.services.paperless.postgres.user }}"
-            POSTGRES_PASSWORD: "{{ secret.services.paperless.postgres.password }}"
-            POSTGRES_DB: "{{ secret.services.paperless.postgres.database }}"
-          volumes:
-            - "{{ appdata_dir }}/paperless-postgres:/var/lib/postgresql/data"
     - role: docker/container
       vars:
         container:
@@ -287,44 +274,28 @@
             PAPERLESS_REDIS: "redis://{{ secret.services.paperless.redis.ip }}:{{ secret.services.paperless.redis.port }}"
             PAPERLESS_OCR_LANGUAGE: eng
             PAPERLESSS_FILE_FORMAT: "{created}-{correspondent}-{title}"
-            PAPERLESS_CONSUMER_POLLING: "0"
+            PAPERLESS_CONSUMER_POLLING: "30"
             PAPERLESS_SECRET_KEY: "{{ secret.services.paperless.paperless_secret_key }}"
             PAPERLESS_CORS_ALLOWED_HOSTS: "https://paperless.{{ secret.domain }}"
             PAPERLESS_ADMIN_USER: "{{ secret.services.paperless.user }}"
             PAPERLESS_ADMIN_PASSWORD: "{{ secret.services.paperless.password }}"
-            PAPERLESS_DBHOST: "{{ secret.services.paperless.postgres.ip }}"
-            PAPERLESS_DBPORT: "{{ secret.services.paperless.postgres.port }}"
-            PAPERLESS_DBNAME: "{{ secret.services.paperless.postgres.database }}"
-            PAPERLESS_DBPASS: "{{ secret.services.paperless.postgres.password }}"
           mounts:
             - source: paperless_scanner
-            - target: /usr/src/paperless/consume
+              target: /usr/src/paperless/consume
           volumes:
             - "{{ appdata_dir }}/paperless/media:/usr/src/paperless/media"
             - "{{ appdata_dir }}/paperless/data:/usr/src/paperless/data"
-    - role: docker/container
+            - "{{ appdata_dir }}/paperless/backup:/backup"
+    - role: docker/backup_client
       vars:
-        container: 
-          name: backup-paperless-postgres
-          repository: ghcr.io/fred-drake/k8s-backup
-          tag: latest
-          ip: "{{ secret.services.paperless.postgres.backup_ip }}"
-          env:
-            AWS_ACCESS_KEY_ID: "{{ secret.backup.keyId }}"
-            AWS_SECRET_ACCESS_KEY: "{{ secret.backup.keySecret }}"
-            RESTIC_REPOSITORY: "s3:http://minio-backup-app.{{ secret.domain }}:9000/restic"
-            RESTIC_PASSWORD: "{{ secret.backup.restic.password }}"
-            NAMESPACE: paperless
-            BACKUP_TYPES: postgresql
-            PG_HOST: "{{ secret.services.paperless.postgres.ip }}"
-            PG_DATABASE: "{{ secret.services.paperless.postgres.database }}"
-            PG_PORT: "{{ secret.services.paperless.postgres.port }}"
-            PG_USER: "{{ secret.services.paperless.postgres.user }}"
-            PG_PASSWORD: "{{ secret.services.paperless.postgres.password }}"
-            PG_BACKUP_FILE: "paperless.sql"
+        backup_namespace: paperless
+        env:
+          NAMESPACE: "{{ backup_namespace }}"
+          PRE_COMMAND: /usr/bin/docker exec paperless python3 /usr/src/paperless/src/manage.py document_exporter /backup/
         volumes:
-          - "{{ appdata_dir }}/{{ backup_namespace }}/media:/backup/{{ backup_namespace }}/media"
-          - "{{ appdata_dir }}/{{ backup_namespace }}/data:/backup/{{ backup_namespace }}/data"
+          - /usr/bin/docker:/usr/bin/docker
+          - /var/run/docker.sock:/var/run/docker.sock
+          - "{{ appdata_dir }}/paperless/backup:/backup/paperless"
 
 - hosts: larussa
   gather_facts: false
