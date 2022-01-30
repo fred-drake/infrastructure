@@ -62,6 +62,7 @@
       - vlan
       - zsh
       - fontconfig
+      - git
     state: present
     update_cache: true
 
@@ -82,3 +83,18 @@
     terminal_root_user: true
     
 - import_tasks: terminal.yml
+
+- name: install cifs apt dependencies
+  apt:
+    name:
+      - smbclient
+      - cifs-utils
+      - nfs-common
+  when: "'cifs' in group_names"
+
+- name: set credentials file
+  template:
+    src: cifs_credentials.j2
+    dest: /etc/cifs_credentials
+    mode: '0600'
+  when: "'cifs' in group_names"

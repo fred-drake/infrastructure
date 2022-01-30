@@ -1,15 +1,51 @@
-const chokidar = require('chokidar');
+const fs = require('fs')
 const mv = require('mv');
+const request = require('request')
+const config = require('./config.json')
 
-const watcher = chokidar.watch('../watch', { persistent: true });
+const main = async () => {
+    console.log("Scanning watch directory every few seconds....")
+    const b64auth = Buffer.from(`${config.paperless.username}:${config.paperless.password}`).toString('base64')
+    while(true) {
+        const files = await fs.promises.readdir(`${__dirname}/../../watch`)
+        for(const file of files) {
+            console.log(`Found file to process ${file}`)
+            const now = new Date().toJSON().replace(/:/g, '');
+            const documentTitle = `scan-${now}`
+            console.log(`Pushing to paperless as document ${documentTitle}`)
+            const options = {
+                method: "POST",
+                url: `${config.paperless.apiPrefix}/documents/post_document/`,
+                port: 8000,
+                headers: {
+                    "Authorization": `Basic ${b64auth}`,
+                    "Content-Type": "multipart/form-data"
+                },
+                formData: {
+                    "title": documentTitle,
+                    "document": fs.createReadStream(`${__dirname}/../../watch/${file}`)
+                }
+            }
 
-watcher.on('add', path => {
-    const now = new Date().toJSON().replace(/:/g, '');
-    const renamedTo = `../outgoing/scan-${now}.pdf`;
-    mv(path, renamedTo, err => {
-        if (err) console.log(err);
-        console.log(`Moved file to ${renamedTo}`);
-    });
-});
+            request(options, function(err, res, body) {
+                if (err) console.log(err)
+                if (res) {
+                    console.log(`Response from paperless: ${res.statusCode} (${res.statusMessage})`)
+                } else {
+                    console.log("No response captured from paperless")
+                }
 
-setInterval(function(){}, 1000);
+                mv(`${__dirname}/../../watch/${file}`, `${__dirname}/../../outgoing/${documentTitle}.pdf`, err => {
+                    if (err) console.log(err);
+                    console.log(`Moved file ${file} to outgoing directory as ${documentTitle}.pdf`);
+                })
+        
+            })
+
+        }
+
+        await sleep(2000)
+    }
+}
+
+main().then().catch(e => console.error(`Problem! ${e}`))

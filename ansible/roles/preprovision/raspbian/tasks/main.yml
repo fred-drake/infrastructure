@@ -11,3 +11,8 @@
     src: wpa_supplicant.conf.j2
     dest: "{{ boot_path }}/wpa_supplicant.conf"
   when: enable_wireless is defined and enable_wireless == True
+
+- name: unmount boot path
+  delegate_to: localhost
+  command: "diskutil unmount {{ boot_path }}"
+  when: ansible_distribution == 'MacOSX'

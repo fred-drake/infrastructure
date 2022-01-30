@@ -103,7 +103,7 @@ secret:
                 dns2: ENC[AES256_GCM,data:bo0J82GCdm3a/S9Q,iv:1edo9+Xwo+M5cFx2qgGtLhMWHs3coQujsoxERvwPL3w=,tag:jvvlPAIrcXQnq2m1vHRkww==,type:str]
                 range_start: ENC[AES256_GCM,data:+yJvPz2oNwIGhnG/K1Y=,iv:gkC8j26O7rJvqc+81AZHF5ogLTIAyPzt0aiKJMzuwH0=,tag:orZZfG4GKz05KGVwgI4AgA==,type:str]
                 range_end: ENC[AES256_GCM,data:BYiEblZ0bl0wgIcXRdY=,iv:TQQmyimLHI0HwQKAl7fxiUglTwie7/nTZ7nVmYz0L2c=,tag:2Wpu13nI4OnQVvJ1a+e5hg==,type:str]
-                boot_addr: ENC[AES256_GCM,data:XrBqQTgWMkn3VhQI3A==,iv:UjD73kyP7RivHe/W44jHiEkFp8E8fyXjzkl8qgjNKp4=,tag:md+ETMue5ZyQNao35R+vvQ==,type:str]
+                boot_addr: ENC[AES256_GCM,data:/N0XsJoaMby4/Rdl,iv:CrHo1fPPcncv5OklWpK6E34PWgDh30KeP7GRdiNCOi4=,tag:19OTz0hQJT/sip+j7KXhtA==,type:str]
     avahi:
         networks:
             - name: ENC[AES256_GCM,data:w2EI,iv:SXwzeAXwvq0iGzJWnCoJq8nyDFZYp2KLJcL/UdhNT/Q=,tag:uklK/75mgxEf4BsYSvLXcw==,type:str]
@@ -116,7 +116,7 @@ secret:
               ipv4_address: ENC[AES256_GCM,data:yt1RFQM1DmIP54PAtA==,iv:9SGqS1AGYt6JuZIMprkYBy1sgENxWRFyro39qDOFc7E=,tag:eveySMCHO9aS/XDm8o6C4A==,type:str]
     cifs:
         services_server: ENC[AES256_GCM,data:S5/D2eA3Npj2cafL,iv:E8bWZfz/SfKOoS37/BcOfuFH7+Oy4HKEJcvfgGnGsA0=,tag:FUTKD5MuVxOXwKvoyY7sCQ==,type:str]
-        mount_options: ENC[AES256_GCM,data:oaBiFBbwyysuBLFMYaDHMPxUoihRCTrIrjwipMcEdzwEbHrnIA==,iv:TP9A7u21mvQC7Hf3bFYFHx6vDT+s2tuOkLMk6MfVa9I=,tag:lA7yFI4D9Ks90uHnyIExtA==,type:str]
+        mount_options: ENC[AES256_GCM,data:21hTImkiq+OZl5qgwV0LB0Cgi0p7lCJnYo8LmuSsPyhXx74WSU9Fe1nU2pIKe0R1B4EFUc1uEwIp7sRYMpbc+VZFVV+TAOOXaugzIA==,iv:Lt6JS3cmTTByG4oqk366HAJa+zj/5Gvp3u5KxoOPUvk=,tag:8f34qVBbMASdFqnj2PUo2A==,type:str]
         username: ENC[AES256_GCM,data:F5nupe6nMQ==,iv:vs2n1VXhAyvrimyw8WSuxw4+GZjr8eAOWocDJZLj718=,tag:6rGBi4Ky8ibL+Qs/lD49Ow==,type:str]
         password: ENC[AES256_GCM,data:BhF5gTjjQWbUIXnV,iv:j7Yj9YP5q6HuYqYLr3udYZYzwvs8+2yk7TtUZDk8d+4=,tag:6ZTwqZsj/aXSus2fEOBVDA==,type:str]
     backup:
@@ -231,6 +231,7 @@ secret:
         netboot:
             ip_208: ENC[AES256_GCM,data:nuBb2RIGnSexb+wKRGs=,iv:VAKyhFjSzgkGrkChxF1X3GlFUrPOszMMWF5UBYo/5DM=,tag:SAnIPjIe+KZ/tonlwbwMlA==,type:str]
             ip_50: ENC[AES256_GCM,data:8p9XOl2eWzSxC5YaMQ==,iv:QqcPrA+QcmAF1Ysbl57oRlWlTisyo6Q3MAWEZIv/030=,tag:HTaLLRZl4og2yyq2d6/Acg==,type:str]
+            ip_30: ENC[AES256_GCM,data:MSglg/ArHVknABaK,iv:LfeYCALvp4yeOGa7MaoQo2QsZyJcaSrjc7rRoJRguYs=,tag:4CVh5Q/ZRTIUdckE6XSGbA==,type:str]
         netbox:
             ip: ENC[AES256_GCM,data:WMsTTVevN5ixvfPORA==,iv:WibYZQ6Kl+bhHyht0LrFtZmNNP/FTagwAseZOnsUkHo=,tag:bw+nXzRrB24XBo+aRCZ66A==,type:str]
             backup_ip: ENC[AES256_GCM,data:QA/dVESL1NR2raNKJg==,iv:a5VI/np2h9SY5b0JtGGS6d83PEzqxPBNB/otmiF+iYM=,tag:CI86DYlzPDmERmygFUA2kw==,type:str]
@@ -331,8 +332,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-01-22T19:16:46Z"
-    mac: ENC[AES256_GCM,data:MFHE4oKb6AdLF2j6trKp1hA79yF2kELr6e37WjwoQuh9J7lbY5F8f5MN7592yPyJ+coQmCmMBxP2+Se65J87gtpjzz4hOxuHWJNPO0zBQEYqV4MmQaz9Oj9cCDJgisIB2O5ZRcwZC8HajQ07ElK9rV/Mr2IIVYgXU4R79B7Qy4k=,iv:cGBZVvFPBlO9mOteAqzVDeYev2pp1TIvSpQE18tZz9w=,tag:2vJC4574F1lpYma1P8nUBw==,type:str]
+    lastmodified: "2022-01-27T21:41:47Z"
+    mac: ENC[AES256_GCM,data:PBqpQNbIDm3iNbw/Ak/ab9dbvwM1ZTqZ/Ip0S5Gsv3shGXeKce7br0MOCZpIVf+ZGhF4CVYPFmoMh2wQOAzvhKwnZPGtqB+1A811OU5oVLlWXbgWHvry3hnaOzJX6J29lrQc6qnJC60f0zY3/kvEqwfeOQt/dsKQSBa/VSwqQMU=,iv:40KXgPCfrP+K17YQg6kdl9XnmCGnXgosl60AfrwZOxg=,tag:/+v/0/IDifWN83hkiwzCqw==,type:str]
     pgp:
         - created_at: "2021-10-30T18:28:12Z"
           enc: |

@@ -1,8 +1,10 @@
-- name: install curl apt
+- name: install apt dependencies
   apt:
     name: 
       - curl
       - supervisor
+      - smbclient
+      - cifs-utils
 
 - name: check if node repository is already installed
   shell: grep -rhE ^deb /etc/apt/sources.list* | grep deb.nodesource.com | wc -l
@@ -24,6 +26,16 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_group }}"
   notify: restart supervisor
+  tags: code
+
+- name: copy config file
+  template:
+    src: config.json.j2
+    dest: /opt/scanner/node/src/config.json
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_group }}"
+  notify: restart supervisor
+  tags: code
 
 - name: install node supervisor globally
   community.general.npm:

@@ -14,7 +14,7 @@
 ansible_host: ENC[AES256_GCM,data:Cxdlf27c+zH03VmClpXn9Awysaf2U/y2tLgd1pHAQfc=,iv:v5rJQ7uh5cDuVEZmR5wdGQT4juU0w13y/SqnMwtGud0=,tag:lxZl20Rmn8XXRBY3z9J0sg==,type:str]
 ansible_user: ENC[AES256_GCM,data:oBg=,iv:WG1V+U6DNFOzqsqMUdwf/4T0NR7916QmWBqqAoi8uUw=,tag:mJWarPfR/d7UZotgF9MRxw==,type:str]
 ansible_group: ENC[AES256_GCM,data:VVk=,iv:XUkWo1kkd/DeGsQQdSrYgHlsGVfDw5ZG+xBAVJJqn4I=,tag:GawBAQadkEV/7hNLAU/QpQ==,type:str]
-enable_wireless: ENC[AES256_GCM,data:5MUhBQ==,iv:HNh7Hz44ji5eCXRxzYCun/fc9pbYWTYypM+tLTPIzJc=,tag:mAI55xipsisztrzcfpleYg==,type:bool]
+enable_wireless: ENC[AES256_GCM,data:LaZAog==,iv:46IqOz77bZxKG7lMYtAR4P6MuwczEf0rX3zsSweLtR0=,tag:92byz0W+e6t3ehVWzq52ig==,type:bool]
 #ENC[AES256_GCM,data:+DfGQaA/ow8Qe1lImLQ4reGFmQ3AKHy0GTIUoeDU6g==,iv:EC6940hynuDdyO3nEWCgSPHnE5+P7yWykxrRs0GdNvo=,tag:4iwe1+6hsKnJm6ow+g0/Vg==,type:comment]
 #ENC[AES256_GCM,data:039cHdanzU8LCpdE9jN0sRg6Kr3dU6Zh3ntuRg==,iv:K1qwe2dFHN5NKon5oDYWM2GuRAPSdEIdk4pU5qw5cb4=,tag:iNdCeZ8GaOgwu5WoP449FQ==,type:comment]
 sops:
@@ -23,8 +23,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-01-07T20:00:09Z"
-    mac: ENC[AES256_GCM,data:+Jy+u9HzmvPGAURoE64WHGsgPIlvBVI01ai1mPSqLKPF5I+MHjb9WpFjg8BRi0GhPrmDUzmM62wP6WhyyMSL+TCx6nPv7gm0Yg8Ke4KwgQazuzFvh50EJI6N+NKshrXojGgED8A+XZf03ZvsVQlOl7PLIksgtXRGtTQYlWnEPJM=,iv:3qr22QAy+/5r9oPm7bZtscxIWZvGereoB0nuBS5inq4=,tag:kWe1GnYDyAyZIz5YCKq6nQ==,type:str]
+    lastmodified: "2022-01-28T01:17:33Z"
+    mac: ENC[AES256_GCM,data:2JB6ph3+Z8qCwhPbFu4BZ412o6mMkTDmUiHmq1RKrL/YczwBUuHJZOq+NX4NZkYH/EoIhUcFokJM+q2c+iaFW/ZYJZEo8dFzCvB4aiqxHvX7mY0+XEuVziDRAeKI+bSwc727ZlLr5gAmP9ANqjzH3VssG6wLPXleXRWnXbPEFIE=,iv:4KwjJEQ/Dvr2nMQf+YEh3FtUxEttpvXHzztsxXg7zc8=,tag:LK/grL19mldGA+LU0UERsw==,type:str]
     pgp:
         - created_at: "2021-10-14T00:32:45Z"
           enc: |

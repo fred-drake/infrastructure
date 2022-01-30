@@ -58,6 +58,11 @@ all:
           pihole_id: pihole2
           dhcp_id: dhcp2
 
+    # Servers with CIFS clients
+    cifs:
+      hosts:
+        scannerpi:
+
     # Unraid server
     unraid:
       hosts:

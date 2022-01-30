@@ -314,6 +314,8 @@
               ipv4_address: "{{ secret.services.netboot.ip_50 }}"
             - name: "{{ secret.docker.network.admin }}"
               ipv4_address: "{{ secret.services.netboot.ip_208 }}"
+            - name: "{{ secret.docker.network.workstation }}"
+              ipv4_address: "{{ secret.services.netboot.ip_30 }}"
           env:
             MENU_VERSION: 1.9.9
             PORT_RANGE: 30000:30010
