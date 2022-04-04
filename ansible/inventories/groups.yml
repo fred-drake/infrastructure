@@ -8,10 +8,11 @@ all:
     # Groups by distribution
     debian: # all debian-based servers
       children:
-        ubuntu:
+        ubuntu_server:
+        ubuntu_desktop:
         raspbian:
 
-    ubuntu: # all ubuntu servers
+    ubuntu_server: # all ubuntu servers
       hosts:
         docker[1:3]:
         docker5:
@@ -19,12 +20,20 @@ all:
         kmaster[01:02]:
         kworker[01:13]:
 
+    ubuntu_desktop: # all ubuntu desktops
+      hosts:
+        brynn-desktop-2:
+
     raspbian: # all raspbian servers
       hosts:
         kiosk:
         scoreboard:
         scannerpi:
         kvm:
+
+    cuda: # all hosts with NVidia and CUDA
+      hosts:
+        brynn-desktop-2:
 
     # All docker container servers
     docker:
@@ -38,6 +47,7 @@ all:
         docker1:
         docker3:
         docker7:
+        brynn-desktop-2:
 
     # Docker container servers who run critical services
     critical_docker_services:

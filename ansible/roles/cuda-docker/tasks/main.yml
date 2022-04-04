@@ -1,0 +1,26 @@
+# - name: download cuda repository pin
+#   get_url:
+#     url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+#     dest: /etc/apt/preferences.d/cuda-repository-pin-600
+
+- name: add apt GPG key
+  apt_key:
+    url: https://nvidia.github.io/nvidia-docker/gpgkey
+    state: present
+
+- name: get distribution from system
+  shell: . /etc/os-release;echo $ID$VERSION_ID
+  register: os_id
+  changed_when: False
+
+- name: add nvidia apt sources list
+  get_url:
+    url: "https://nvidia.github.io/nvidia-docker/{{ os_id.stdout }}/nvidia-docker.list"
+    dest: /etc/apt/sources.list.d/nvidia-docker.list
+
+- name: add apt dependencies
+  apt:
+    update_cache: true
+    name:
+      - nvidia-docker2
+  notify: restart docker

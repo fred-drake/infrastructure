@@ -5,7 +5,7 @@ server {
     listen 443 ssl;
     listen [::]:443 ssl;
 
-    server_name docker1-logs.*;
+    server_name docker3-logs.*;
 
     include /config/nginx/ssl.conf;
 
@@ -31,7 +31,7 @@ server {
 
         include /config/nginx/proxy.conf;
         resolver 127.0.0.11 valid=30s;
-        set $upstream_app dozzle-docker1-app.{{ secret.domain }};
+        set $upstream_app dozzle-docker3-app.{{ secret.domain }};
         set $upstream_port 8080;
         set $upstream_proto http;
         proxy_pass $upstream_proto://$upstream_app:$upstream_port;
@@ -42,6 +42,6 @@ server {
 server {
     listen 80;
     listen [::]:80;
-    server_name docker1-logs;
-    return 301 https://docker1-logs.{{ secret.domain }}$request_uri;
+    server_name docker3-logs;
+    return 301 https://docker3-logs.{{ secret.domain }}$request_uri;
 }

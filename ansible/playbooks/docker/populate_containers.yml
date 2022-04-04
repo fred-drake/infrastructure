@@ -3,18 +3,106 @@
   become: true
   roles:
     - docker/base
-    - docker/nexus
+    
+    ### Dozzle - Docker1 ###
+    - role: docker/container
+      vars:
+        container:
+          name: dozzle
+          repository: amir20/dozzle
+          tag: "{{ special_tags.dozzle.tag | default('latest') }}"
+          ip: "{{ secret.services.dozzle.docker1_ip }}"
+          env:
+            DOZZLE_BASE: /
+            DOZZLE_LEVEL: info
+            DOZZLE_TAILSIZE: "300"
+          volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+
+    ### SWAG Internal ###
+    - role: docker/container
+      vars:
+        container:
+          name: swag_internal
+          repository: linuxserver/swag
+          tag: "{{ special_tags.swag.tag | default('latest') }}"
+          ip: "{{ secret.services.swag_internal.ip }}"
+          env:
+            PUID: "99"
+            PGID: "100"
+            EMAIL: "{{ secret.services.swag_internal.email }}"
+            URL: "{{ secret.services.swag_internal.url }}"
+            SUBDOMAINS: "{{ secret.services.swag_internal.subdomains }}"
+            ONLY_SUBDOMAINS: "{{ secret.services.swag_internal.only_subdomains }}"
+            VALIDATION: "{{ secret.services.swag_internal.validation }}"
+            DNSPLUGIN: "{{ secret.services.swag_internal.dnsplugin }}"
+            STAGING: "{{ secret.services.swag_internal.staging }}"
+          volumes:
+            - "{{ appdata_dir }}/swag-internal:/config"
+    # Sync proxy files
     - docker/swag_internal
-    - docker/nginx_static
+
+    ### static.freddrake.com site ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: nginx_static
+          container: nginx_static
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+    - role: docker/container
+      vars:
+        container:
+          name: nginx_static
+          repository: linuxserver/nginx
+          tag: "{{ special_tags.nginx_static.tag | default('latest') }}"
+          ip: "{{ secret.services.nginx_static.ip }}"
+          mounts:
+            - source: nginx_static
+              target: /www
+          volumes:
+            - "{{ appdata_dir }}/NginxStatic:/config"
+          env:
+            PUID: "99"
+            PGID: "100"
+
+    ### NetbootXYZ ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: netboot
+          container: netbootxyz
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777,ro
+    - role: docker/container
+      vars:
+        container:
+          name: netbootxyz
+          repository: lscr.io/linuxserver/netbootxyz
+          tag: latest
+          networks:
+            - name: "{{ secret.docker.network.container }}"
+              ipv4_address: "{{ secret.services.netboot.ip_50 }}"
+            - name: "{{ secret.docker.network.admin }}"
+              ipv4_address: "{{ secret.services.netboot.ip_208 }}"
+            - name: "{{ secret.docker.network.workstation }}"
+              ipv4_address: "{{ secret.services.netboot.ip_30 }}"
+          env:
+            MENU_VERSION: 1.9.9
+            PORT_RANGE: 30000:30010
+            SUBFOLDER: /
+            PUID: "99"
+            PGID: "100"
+            UMASK: "022"
+          mounts:
+            - source: netbootxyz_netboot
+              target: /assets
+          volumes:
+            - "{{ appdata_dir }}/netbootxyz:/config"
+
     - docker/ddns
-    - docker/influxdb
-    - docker/influxdb_wifi
-    - docker/node_red
-    - docker/dozzle
-    - docker/epson_scanner
     - docker/git_hash_updater
-    - docker/smtp
-    - docker/syncthing
+    # - docker/smtp
     - docker/teslamate
     - docker/backup_client
 
@@ -22,7 +110,22 @@
   gather_facts: false
   become: true
   roles:
-    - test
+    
+    ### Dozzle - Docker3 ###
+    - role: docker/container
+      vars:
+        container:
+          name: dozzle
+          repository: amir20/dozzle
+          tag: "{{ special_tags.dozzle.tag | default('latest') }}"
+          ip: "{{ secret.services.dozzle.docker3_ip }}"
+          env:
+            DOZZLE_BASE: /
+            DOZZLE_LEVEL: info
+            DOZZLE_TAILSIZE: "300"
+          volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+
     ### Whoogle ###
     - role: docker/container
       vars:
@@ -245,6 +348,22 @@
   gather_facts: false
   become: true
   roles:
+    
+    ### Dozzle - Docker7 ###
+    - role: docker/container
+      vars:
+        container:
+          name: dozzle
+          repository: amir20/dozzle
+          tag: "{{ special_tags.dozzle.tag | default('latest') }}"
+          ip: "{{ secret.services.dozzle.docker7_ip }}"
+          env:
+            DOZZLE_BASE: /
+            DOZZLE_LEVEL: info
+            DOZZLE_TAILSIZE: "300"
+          volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+
     ### Paperless ###
     - role: docker/volume
       vars:
@@ -297,32 +416,204 @@
           - /var/run/docker.sock:/var/run/docker.sock
           - "{{ appdata_dir }}/paperless/backup:/backup/paperless"
 
-- hosts: larussa
-  gather_facts: false
-  become: true
-  roles:
-    - docker/base
-    - docker/backup_database
+    ### Photoprism ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: pictures
+          container: photoprism
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
     - role: docker/container
       vars:
         container:
-          name: netbootxyz
-          repository: lscr.io/linuxserver/netbootxyz
-          tag: latest
-          networks:
-            - name: "{{ secret.docker.network.container }}"
-              ipv4_address: "{{ secret.services.netboot.ip_50 }}"
-            - name: "{{ secret.docker.network.admin }}"
-              ipv4_address: "{{ secret.services.netboot.ip_208 }}"
-            - name: "{{ secret.docker.network.workstation }}"
-              ipv4_address: "{{ secret.services.netboot.ip_30 }}"
+          name: photoprism-db
+          repository: mariadb
+          tag: "10"
+          ip: "{{ secret.services.photoprism.db.ip }}"
           env:
-            MENU_VERSION: 1.9.9
-            PORT_RANGE: 30000:30010
-            SUBFOLDER: /
-            PUID: "99"
-            PGID: "100"
-            UMASK: "022"
+            MYSQL_ROOT_PASSWORD: "{{ secret.services.photoprism.db.root_password }}"
+            MYSQL_DATABASE: "{{ secret.services.photoprism.db.database }}"
+            MYSQL_USER: "{{ secret.services.photoprism.db.user }}"
+            MYSQL_PASSWORD: "{{ secret.services.photoprism.db.password }}"
           volumes:
-            - /mnt/user/appdata/netbootxyz:/config
-            - /mnt/user/netboot:/assets
+            - "{{ appdata_dir }}/photoprism/database:/var/lib/mysql"
+    - role: docker/volume
+      vars:
+        volume:
+          name: pictures
+          container: photoprism-readonly
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777,ro
+    - role: docker/container
+      vars:
+        container:
+          name: photoprism-readonly
+          repository: photoprism/photoprism
+          tag: latest
+          ip: "{{ secret.services.photoprism.readonly_ip }}"
+          env:
+            PHOTOPRISM_UPLOAD_NSFW: "{{ secret.services.photoprism.allow_nsfw }}"
+            PHOTOPRISM_DETECT_NSFW: "{{ secret.services.photoprism.detect_nsfw }}"
+            PHOTOPRISM_SITE_TITLE: "{{ secret.services.photoprism.title }}"
+            PHOTOPRISM_SITE_CAPTION: "{{ secret.services.photoprism.caption }}"
+            PHOTOPRISM_SITE_URL: "{{ secret.services.photoprism.public_site_url }}"
+            PHOTOPRISM_ADMIN_PASSWORD: "{{ secret.services.photoprism.admin_password }}"
+            PHOTOPRISM_DATABASE_DRIVER: "{{ secret.services.photoprism.db_driver }}"
+            PHOTOPRISM_DATABASE_DSN: "{{ secret.services.photoprism.db_ro_dsn }}"
+            PHOTOPRISM_AUTO_INDEX: "{{ secret.services.photoprism.auto_index_delay }}"
+            PHOTOPRISM_AUTO_IMPORT: "{{ secret.services.photoprism.auto_import_delay }}"
+            PHOTOPRISM_READONLY: "true"
+            PHOTOPRISM_PUBLIC: "true"
+            PHOTOPRISM_DISABLE_SETTINGS: "true"
+          mounts:
+            - source: photoprism_pictures
+              target: /photoprism/originals
+          volumes:
+            - "{{ appdata_dir }}/photoprism/data:/photoprism/storage"
+    - role: docker/container
+      vars:
+        container:
+          name: photoprism
+          repository: photoprism/photoprism
+          tag: latest
+          ip: "{{ secret.services.photoprism.ip }}"
+          env:
+            PHOTOPRISM_UPLOAD_NSFW: "{{ secret.services.photoprism.allow_nsfw }}"
+            PHOTOPRISM_DETECT_NSFW: "{{ secret.services.photoprism.detect_nsfw }}"
+            PHOTOPRISM_SITE_TITLE: "{{ secret.services.photoprism.title }}"
+            PHOTOPRISM_SITE_CAPTION: "{{ secret.services.photoprism.caption }}"
+            PHOTOPRISM_ADMIN_PASSWORD: "{{ secret.services.photoprism.admin_password }}"
+            PHOTOPRISM_DATABASE_DRIVER: "{{ secret.services.photoprism.db_driver }}"
+            PHOTOPRISM_DATABASE_DSN: "{{ secret.services.photoprism.db_dsn }}"
+            PHOTOPRISM_AUTO_INDEX: "{{ secret.services.photoprism.auto_index_delay }}"
+            PHOTOPRISM_AUTO_IMPORT: "{{ secret.services.photoprism.auto_import_delay }}"
+          mounts:
+            - source: photoprism_pictures
+              target: /photoprism/originals
+          volumes:
+            - "{{ appdata_dir }}/photoprism/data:/photoprism/storage"
+
+    ### Photoprism Internal ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: pictures-internal
+          container: photoprism-internal
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+    - role: docker/container
+      vars:
+        container:
+          name: photoprism-internal-db
+          repository: mariadb
+          tag: "10"
+          ip: "{{ secret.services.photoprism.db.internal_ip }}"
+          env:
+            MYSQL_ROOT_PASSWORD: "{{ secret.services.photoprism.db.root_password }}"
+            MYSQL_DATABASE: "{{ secret.services.photoprism.db.database }}"
+            MYSQL_USER: "{{ secret.services.photoprism.db.user }}"
+            MYSQL_PASSWORD: "{{ secret.services.photoprism.db.password }}"
+          volumes:
+            - "{{ appdata_dir }}/photoprism-internal/database:/var/lib/mysql"
+    - role: docker/container
+      vars:
+        container:
+          name: photoprism-internal
+          repository: photoprism/photoprism
+          tag: latest
+          ip: "{{ secret.services.photoprism.internal_ip }}"
+          env:
+            PHOTOPRISM_UPLOAD_NSFW: "{{ secret.services.photoprism.allow_nsfw }}"
+            PHOTOPRISM_DETECT_NSFW: "{{ secret.services.photoprism.detect_nsfw }}"
+            PHOTOPRISM_SITE_TITLE: "{{ secret.services.photoprism.title }}"
+            PHOTOPRISM_SITE_CAPTION: "{{ secret.services.photoprism.caption }}"
+            PHOTOPRISM_ADMIN_PASSWORD: "{{ secret.services.photoprism.admin_password }}"
+            PHOTOPRISM_DATABASE_DRIVER: "{{ secret.services.photoprism.db_driver }}"
+            PHOTOPRISM_DATABASE_DSN: "{{ secret.services.photoprism.internal_db_dsn }}"
+            PHOTOPRISM_AUTO_INDEX: "{{ secret.services.photoprism.auto_index_delay }}"
+            PHOTOPRISM_AUTO_IMPORT: "{{ secret.services.photoprism.auto_import_delay }}"
+          mounts:
+            - source: photoprism-internal_pictures-internal
+              target: /photoprism/originals
+          volumes:
+            - "{{ appdata_dir }}/photoprism-internal/data:/photoprism/storage"
+    - role: docker/container
+      vars:
+        container: 
+          name: backup-photoprism-internal
+          repository: ghcr.io/fred-drake/k8s-backup
+          tag: "0.3"
+          env:
+            AWS_ACCESS_KEY_ID: "{{ secret.backup.keyId }}"
+            AWS_SECRET_ACCESS_KEY: "{{ secret.backup.keySecret }}"
+            RESTIC_REPOSITORY: "s3:http://minio-backup-app.{{ secret.domain }}:9000/restic"
+            RESTIC_PASSWORD: "{{ secret.backup.restic.password }}"
+            NAMESPACE: photoprism-internal
+            BACKUP_TYPES: mysql
+            MYSQL_HOST: "{{ secret.services.photoprism.db.internal_ip }}"
+            MYSQL_DATABASE: "{{ secret.services.photoprism.db.database }}"
+            MYSQL_USER: "{{ secret.services.photoprism.db.user }}"
+            MYSQL_PASSWORD: "{{ secret.services.photoprism.db.password }}"
+            MYSQL_BACKUP_FILE: "photoprism-internal.sql"
+          volumes:
+            - "{{ appdata_dir }}/photoprism-internal/data:/backup/photoprism-internal/data"
+
+- hosts: brynn-desktop-2
+  gather_facts: false
+  become: true
+  roles:
+    - role: docker/container
+      vars:
+        container:
+          name: testing
+          repository: testing
+          tag: latest
+          pull_policy: false
+          runtime: nvidia
+          device_requests:
+            - device_ids: 0
+              driver: nvidia
+              capabilities:
+                - gpu
+                - computer
+                - utility
+          network: bridge
+          volumes:
+            - /home/fdrake/wordle_rl/model:/app/model
+            - /home/fdrake/code/wordle-rl/config.yaml:/app/config.yaml
+            - /home/fdrake/wordle_rl/tensorboard_logs:/app/logs
+    - role: docker/container
+      vars:
+        container:
+          name: tensorboard
+          repository: ghcr.io/fred-drake/tensorboard-viewer
+          tag: latest
+          pull_policy: true
+          network: bridge
+          ports:
+            - "6006:6006"
+          volumes:
+            - /home/fdrake/wordle_rl/tensorboard_logs:/logs
+    - role: docker/container
+      vars:
+        container:
+          name: dozzle
+          repository: amir20/dozzle
+          tag: latest
+          network: bridge
+          volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+          ports:
+            - "8888:8080"
+    - role: docker/container
+      vars:
+        container:
+          name: coverage
+          repository: nginx
+          tag: latest
+          network: bridge
+          volumes:
+            - /home/fdrake/code/wordle-rl/htmlcov:/usr/share/nginx/html
+          ports:
+            - "8080:80"

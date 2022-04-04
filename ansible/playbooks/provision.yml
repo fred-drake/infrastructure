@@ -4,12 +4,18 @@
   roles:
     - provision/debian
 
-- hosts: ubuntu
+- hosts: ubuntu_server
   gather_facts: true
   become: true
   roles:
     - provision/ubuntu
     - netplan
+
+- hosts: ubuntu_desktop
+  gather_facts: true
+  become: true
+  roles:
+    - provision/ubuntu
 
 - hosts: raspbian
   gather_facts: true
@@ -46,6 +52,13 @@
   become: true
   roles:
     - provision/docker
+
+- hosts: cuda
+  gather_facts: true
+  become: true
+  roles:
+    - cuda
+    - cuda-docker
 
 - hosts: k8s_cluster
   gather_facts: true
