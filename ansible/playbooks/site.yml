@@ -1,0 +1,29 @@
+- import_playbook: provision_servers.yml
+
+- import_playbook: dedicated_apps.yml
+
+- hosts: docker
+  gather_facts: false
+  become: true
+  roles:
+    - provision/docker
+
+- hosts: cuda
+  gather_facts: true
+  become: true
+  roles:
+    - cuda
+    - cuda-docker
+
+- import_playbook: docker/critical_apps_primary.yml
+- import_playbook: docker/critical_apps_secondary.yml
+- import_playbook: docker/populate_containers.yml
+
+- import_playbook: kubernetes/k8s_install.yml
+
+- hosts: netboot-assets-bridge
+  gather_facts: false
+  become: false
+  roles:
+    - netboot_config
+  tags: netboot_config

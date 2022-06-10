@@ -1,0 +1,67 @@
+[
+    {"op": "replace", "path": "/machine/token", "value": "{{ secret.talos.join_token }}"},
+    {"op": "replace", "path": "/machine/ca/crt", "value": "{{ secret.talos.ca }}"},
+    {"op": "replace", "path": "/machine/ca/key", "value": "{{ secret.talos.control_plane.key }}"},
+    {"op": "remove", "path": "/machine/network"},
+    {"op": "add", "path": "/machine/network", "value":
+        {
+            "hostname": "{{ inventory_hostname_short }}",
+            "interfaces": [
+                {
+                    "interface": "{{ talos_interface }}",
+                    "dhcp": true,
+                    "mtu": 1500,
+                    "vip": {
+                        "ip": "{{ talos.vip }}"
+                    }
+                }
+            ]
+        }
+    },
+    {"op": "replace", "path": "/machine/install/disk", "value": "{{ talos_disk }}"},
+    {"op": "replace", "path": "/machine/time", "value":
+        {
+          "disabled": false,
+          "servers": [
+            "time.cloudflare.com"
+          ]
+        }
+    },
+    {"op": "add", "path": "/machine/kubelet/extraArgs", "value":
+      {
+        "feature-gates": "MixedProtocolLBService=true",
+        "rotate-server-certificates": true
+      }
+    },
+    {"op": "replace", "path": "/cluster/id", "value": "{{ secret.talos.cluster.id }}"},
+    {"op": "replace", "path": "/cluster/secret", "value": "{{ secret.talos.cluster.secret }}"},
+    {"op": "add", "path": "/cluster/proxy/extraArgs", "value":
+      {
+        "metrics-bind-address": "0.0.0.0:10249"
+      }
+    },
+    {"op": "add", "path": "/cluster/controllerManager/extraArgs", "value":
+      {
+        "bind-address": "0.0.0.0"
+      }
+    },
+    {"op": "add", "path": "/cluster/scheduler/extraArgs", "value":
+      {
+        "bind-address": "0.0.0.0"
+      }
+    },
+    {"op": "replace", "path": "/cluster/extraManifests", "value":[
+      "https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.3.0/deploy/ha-install.yaml",
+      "https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"
+    ]},
+    {"op": "replace", "path": "/cluster/network/podSubnets/0", "value": "{{ talos.pod_subnet }}"},
+    {"op": "replace", "path": "/cluster/network/serviceSubnets/0", "value": "{{ talos.service_subnet }}"},
+    {"op": "replace", "path": "/cluster/token", "value": "{{ secret.talos.cluster.token }}"},
+    {"op": "replace", "path": "/cluster/ca/crt", "value": "{{ secret.talos.cluster.ca.crt }}"},
+    {"op": "replace", "path": "/cluster/ca/key", "value": "{{ secret.talos.cluster.ca.key }}"},
+    {"op": "replace", "path": "/cluster/aggregatorCA/crt", "value": "{{ secret.talos.cluster.aggregator_ca.crt }}"},
+    {"op": "replace", "path": "/cluster/aggregatorCA/key", "value": "{{ secret.talos.cluster.aggregator_ca.key }}"},
+    {"op": "replace", "path": "/cluster/serviceAccount/key", "value": "{{ secret.talos.cluster.service_account.key }}"},
+    {"op": "replace", "path": "/cluster/etcd/ca/crt", "value": "{{ secret.talos.control_plane.cluster.crt }}"},
+    {"op": "replace", "path": "/cluster/etcd/ca/key", "value": "{{ secret.talos.control_plane.cluster.key }}"}  
+]

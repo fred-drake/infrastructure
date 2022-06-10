@@ -1,0 +1,23 @@
+- hosts: scoreboard
+  gather_facts: false
+  become: true
+  roles:
+    - scoreboard
+
+- hosts: kiosk
+  gather_facts: false
+  become: true
+  roles:
+    - kiosk
+
+- hosts: scannerpi
+  gather_facts: false
+  become: true
+  roles:
+    - scannerpi
+
+- hosts: kvm
+  gather_facts: false
+  become: true
+  roles:
+    - tinypilot

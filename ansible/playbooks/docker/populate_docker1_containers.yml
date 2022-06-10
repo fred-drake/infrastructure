@@ -1,0 +1,207 @@
+- hosts: docker1
+  gather_facts: false
+  become: true
+  roles:
+    - docker/base
+    
+    ### Dozzle - Docker1 ###
+    - role: docker/container
+      vars:
+        container:
+          name: dozzle
+          repository: amir20/dozzle
+          tag: "{{ special_tags.dozzle.tag | default('latest') }}"
+          ip: "{{ secret.services.dozzle.docker1_ip }}"
+          env:
+            DOZZLE_BASE: /
+            DOZZLE_LEVEL: info
+            DOZZLE_TAILSIZE: "300"
+          volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+      tags: dozzle
+
+    ### Uptime Kuma ###
+    - role: docker/container
+      vars:
+        container:
+          name: uptime-kuma
+          repository: louislam/uptime-kuma
+          tag: "{{ special_tags.uptime_kuma.tag | default('latest') }}"
+          ip: "{{ secret.services.uptime_kuma.ip }}"
+          volumes:
+           - "{{ appdata_dir }}/uptime-kuma:/app/data"
+    - role: docker/backup_client
+      vars:
+        backup_namespace: "uptime-kuma"
+        env:
+          NAMESPACE: "{{ backup_namespace }}"
+        volumes:
+          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+        tags: uptime-kuma
+
+    ### SWAG Internal ###
+    - role: docker/container
+      vars:
+        container:
+          name: swag_internal
+          repository: linuxserver/swag
+          tag: "{{ special_tags.swag.tag | default('latest') }}"
+          ip: "{{ secret.services.swag_internal.ip }}"
+          env:
+            PUID: "99"
+            PGID: "100"
+            EMAIL: "{{ secret.services.swag_internal.email }}"
+            URL: "{{ secret.services.swag_internal.url }}"
+            SUBDOMAINS: "{{ secret.services.swag_internal.subdomains }}"
+            ONLY_SUBDOMAINS: "{{ secret.services.swag_internal.only_subdomains }}"
+            VALIDATION: "{{ secret.services.swag_internal.validation }}"
+            DNSPLUGIN: "{{ secret.services.swag_internal.dnsplugin }}"
+            STAGING: "{{ secret.services.swag_internal.staging }}"
+          volumes:
+            - "{{ appdata_dir }}/swag-internal:/config"
+      tags: swag_internal
+    # Sync proxy files
+    - role: docker/swag_internal
+      tags:
+        - swag_internal
+        - swag_internal_update
+
+    ### static.freddrake.com site ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: nginx_static
+          container: nginx_static
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+    - role: docker/container
+      vars:
+        container:
+          name: nginx_static
+          repository: linuxserver/nginx
+          tag: "{{ special_tags.nginx_static.tag | default('latest') }}"
+          ip: "{{ secret.services.nginx_static.ip }}"
+          mounts:
+            - source: nginx_static
+              target: /www
+          volumes:
+            - "{{ appdata_dir }}/NginxStatic:/config"
+          env:
+            PUID: "99"
+            PGID: "100"
+
+    ### NetbootXYZ ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: netboot
+          container: netbootxyz
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777,ro
+      tags: netboot
+    - role: docker/container
+      vars:
+        container:
+          name: netbootxyz
+          repository: lscr.io/linuxserver/netbootxyz
+          tag: latest
+          networks:
+            - name: "{{ secret.docker.network.container }}"
+              ipv4_address: "{{ secret.services.netboot.ip_50 }}"
+            - name: "{{ secret.docker.network.admin }}"
+              ipv4_address: "{{ secret.services.netboot.ip_208 }}"
+            - name: "{{ secret.docker.network.workstation }}"
+              ipv4_address: "{{ secret.services.netboot.ip_30 }}"
+          env:
+            MENU_VERSION: 1.9.9
+            PORT_RANGE: 30000:30010
+            SUBFOLDER: /
+            PUID: "99"
+            PGID: "100"
+            UMASK: "022"
+          mounts:
+            - source: netbootxyz_netboot
+              target: /assets
+          volumes:
+            - "{{ appdata_dir }}/netbootxyz:/config"
+      tags: netboot
+
+    ### Prometheus Node Exporter ###
+    - role: docker/container
+      vars:
+        container:
+          name: node-exporter
+          repository: prom/node-exporter
+          tag: latest
+          ip: "{{ secret.services.prometheus.node_exporter.docker1.ip }}"
+          volumes:
+            - /proc:/host/proc:ro
+            - /sys:/host/sys:ro
+            - /:/rootfs:ro
+          command:
+            - '--path.procfs=/host/proc'
+            - '--path.rootfs=/rootfs'
+            - '--path.sysfs=/host/sys'
+            - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    ### SabNZBD ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: incomplete
+          container: sabnzbd
+          mount_name: torrent/incomplete
+          driver: cifs
+      tags: sabnzbd
+    - role: docker/volume
+      vars:
+        volume:
+          name: downloads
+          container: sabnzbd
+          mount_name: torrent/complete
+          driver: cifs
+      tags: sabnzbd
+    - role: docker/container
+      vars:
+        container:
+          name: sabnzbd
+          repository: linuxserver/sabnzbd
+          tag: latest
+          ip: "{{ secret.services.sabnzbd.ip }}"
+          env:
+            PUID: "99"
+            PGID: "100"
+          mounts:
+            - source: sabnzbd_incomplete
+              target: /incomplete-downloads
+            - source: sabnzbd_downloads
+              target: /downloads
+          volumes:
+            - "{{ appdata_dir }}/sabnzbd:/config"
+      tags: sabnzbd
+
+    ### DIUN ###
+    - role: docker/container
+      vars:
+        container:
+          name: diun-docker1
+          repository: crazymax/diun
+          tag: latest
+          ip: "{{ secret.services.diun.docker1_ip }}"
+          env:
+            LOG_LEVEL: info
+            LOG_JSON: "false"
+            DIUN_WATCH_WORKERS: "20"
+            DIUN_WATCH_SCHEDULE: 0 */6 * * *
+            DIUN_PROVIDERS_DOCKER: "true"
+            DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT: "true"
+            DIUN_NOTIF_SLACK_WEBHOOKURL: "{{ secret.services.diun.webhook_url }}"
+          volumes:
+            - "{{ appdata_dir }}/diun/data:/data"
+            - "/var/run/docker.sock:/var/run/docker.sock"
+      tags: diun
+
+    - docker/ddns
+    - docker/git_hash_updater
+    # - docker/smtp
+    - docker/teslamate
+    - docker/backup_client

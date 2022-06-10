@@ -1,0 +1,42 @@
+- hosts: debian
+  gather_facts: true
+  become: true
+  roles:
+    - provision/debian
+
+- hosts: ubuntu_server
+  gather_facts: true
+  become: true
+  roles:
+    - provision/ubuntu
+    - netplan
+
+- hosts: ubuntu_desktop
+  gather_facts: true
+  become: true
+  roles:
+    - provision/ubuntu
+
+- hosts: raspbian
+  gather_facts: true
+  become: true
+  roles:
+    - provision/raspbian
+
+- hosts: raspberry_pi_3:&raspbian
+  gather_facts: true
+  become: true
+  roles:
+    - provision/raspberry_pi/pi3_raspbian
+
+- hosts: raspberry_pi_4:&ubuntu
+  gather_facts: true
+  become: true
+  roles:
+    - provision/raspberry_pi/pi4_ubuntu
+
+- hosts: raspberry_pi_4:&raspbian
+  gather_facts: true
+  become: true
+  roles:
+    - provision/raspberry_pi/pi4_raspbian

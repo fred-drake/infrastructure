@@ -1,0 +1,48 @@
+- hosts: talos_machines
+  connection: local
+  gather_facts: false
+  become: false
+  roles:
+    - talos/servers
+
+- hosts: talos_machines
+  connection: local
+  gather_facts: false
+  become: false
+  run_once: true
+  tasks:
+    - debug:
+        msg: "*** Run with the 'talosconfig' tag to merge contexts into talosconfig ***"
+      when: "'talosconfig' not in ansible_run_tags"
+      tags: always
+  roles:
+    - talos/talosconfig
+  tags:
+    - never
+    - talosconfig
+
+- hosts: talos_workers
+  connection: local
+  gather_facts: false
+  become: false
+  tasks:
+    - debug:
+        msg: "*** Run with the 'nuke' tag to destroy the cluster ***"
+      when: "'nuke' not in ansible_run_tags"
+      tags: always
+  roles:
+    - talos/nuke
+  tags:
+    - never
+    - nuke
+
+- hosts: talos_control_planes
+  connection: local
+  gather_facts: false
+  become: false
+  roles:
+    - talos/nuke
+  tags:
+    - never
+    - nuke
+

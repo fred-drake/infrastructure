@@ -1,0 +1,94 @@
+#cloud-config
+autoinstall:
+  apt:
+    disable_components: []
+    geoip: true
+    preserve_sources_list: false
+    primary:
+    - arches:
+      - amd64
+      - i386
+      uri: http://us.archive.ubuntu.com/ubuntu
+    - arches:
+      - default
+      uri: http://ports.ubuntu.com/ubuntu-ports
+  drivers:
+    install: false
+  identity:
+    hostname: nuc1
+    password: {{ secret.hosts.default_ssh_password_crypt }}
+    realname: Ubuntu
+    username: ubuntu
+  kernel:
+    package: linux-generic
+  keyboard:
+    layout: us
+    toggle: null
+    variant: ''
+  locale: en_US.UTF-8
+  network:
+    ethernets:
+      enp0s25:
+        critical: true
+        dhcp-identifier: mac
+        dhcp4: true
+        nameservers:
+          addresses:
+          - 192.168.40.4
+          - 192.168.40.6
+          search:
+          - {{ secret.domain }}.
+    version: 2
+    wifis: {}
+  ssh:
+    allow-pw: false
+    authorized-keys:
+    - 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7sjvSwPCcdgBGhTXz0hpTkZX5PaaLrQMrNob2Eb+BYvQsYZIWFmnecx7sIClaDsSV48QwvXvLGcR7RUwkpRnsH09nabZiz6zMqn4Ice+fU7ZvexPqcwOvc/8nQmDwi9lJ/58UBgkls1gTSbcAESejomVB3CbX9PaiENTQcWcKe24/1US6/0BZk9AHoD5HFBP8oDKFi2TeLHqme2LQhnZ/Rrdr6AdeQe4VutHHPEFnsBRk/ZzLjPIsJX1LxA/0bbkX1sLCzNe6jtOiw5RfH4e2uOoRNypEPJkt7dQclfUy/iNI7vzQod83BE6TCr3d6KF/eur1utP+V9FRRSzUlFL1
+      fred-drake@github/31059665 # ssh-import-id gh:fred-drake'
+    - ''
+    - 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCb5bB0p0qeX3zZhdNYRgzYRxf6kkWfLA1BlceZFS47oj6YZ0QtRoL9TyQQpMwf8Ettbnnt9A9fDe4eMSlo49ACGQtHNjO4KncXTLKjWQcarEDxSSIdFUbH7D0H3yIEb2Qop3YUwl8FhHWK/nzd1EJTqhyD4VPv6kDID7CSZXg8OAC43scKcUYz+tZ1byg472W51oRQ39G5XYBTypKiYbHejOMOqR4Mkq9/bDZhqdaTysMmYYm91G2I9zQ5g0QB+xWQKdVq5ECYsdZ9TTL4JDToHBeICEmycIiDBcL9QemM5eCkqeOiSFYi47SCF81DpDirgYkC7r2BS+USuDvypRr1
+      fred-drake@github/44334912 # ssh-import-id gh:fred-drake'
+    - ''
+    - 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDfZFkPudvwS4PWUnceZo2d53jRvjpENSVKAPuI+49KTuDARwhzPFGvIa1y0GShWCi3TKshdFHujDGA1/f6FCgdphYRIFF275EmlxKOvAwimVgX7+4LR2I6PxSnSXI4M15k3Oo2Cq1Pm3GFOFZ6mnN+iuixwtlQCZBiHQzxIKorHq8BRasmoZetKDbnesAglais0r40u3pyX4DTuJOL+gNwAkAzfmfb/+HFJjFylRNXMGuQVhlnOfD4T46/P+Uu7LA6ZEfur4CLRYvlh5Ml/AXwJdIsnJoDVewB3um3Y+vn+lvTDUVEqrO4SZDPMgZIQKAMRvkqocEcmA623EiI5eVndA/2dtlUVFr15NOdmKJYeCqYGDrIYUtk5UlYgtB4DQ4ETFhgm2yiwXfZURj+yblL1H3+hobZTVPXUOOx9234kEFpBnQ2t1U1NsXN9bqiR3rA+uKfH5camLmYZScSD2TfdlLjIbt3JpYMByaZzouGHNv/Ka/Dct3rXueWQYGJ9Mc=
+      fred-drake@github/61061119 # ssh-import-id gh:fred-drake'
+    install-server: true
+  storage:
+    config:
+    - ptable: gpt
+      serial: Crucial_CT250MX200SSD1_162112CE6D6C
+      wwn: '0x500a075112ce6d6c'
+      path: /dev/sda
+      wipe: superblock-recursive
+      preserve: false
+      name: ''
+      grub_device: true
+      type: disk
+      id: disk-sda
+    - device: disk-sda
+      size: 1048576
+      flag: bios_grub
+      number: 1
+      preserve: false
+      grub_device: false
+      type: partition
+      id: partition-0
+    - device: disk-sda
+      size: 250056015872
+      wipe: superblock
+      flag: ''
+      number: 2
+      preserve: false
+      grub_device: false
+      type: partition
+      id: partition-1
+    - fstype: ext4
+      volume: partition-1
+      preserve: false
+      type: format
+      id: format-0
+    - path: /
+      device: format-0
+      type: mount
+      id: mount-0
+  updates: security
+  version: 1

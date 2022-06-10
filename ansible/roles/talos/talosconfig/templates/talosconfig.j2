@@ -1,0 +1,7 @@
+context: main
+contexts:
+    main:
+        endpoints: {{ endpoint_ip_addresses }}
+        ca: {{ secret.talos.ca }}
+        crt: {{ secret.talos.crt }}
+        key: {{ secret.talos.key }}

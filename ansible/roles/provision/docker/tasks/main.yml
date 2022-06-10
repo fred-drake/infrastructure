@@ -2,20 +2,19 @@
 
 - name: install libraries
   apt:
-    name: "{{ item }}"
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+      - python3
+      - python3-pip
+      - net-tools
+      - smbclient
+      - cifs-utils
     state: present
     update_cache: true
-  loop:
-    - apt-transport-https
-    - ca-certificates
-    - curl
-    - gnupg
-    - lsb-release
-    - python3
-    - python3-pip
-    - net-tools
-    - smbclient
-    - cifs-utils
 
 - name: install pip libraries
   pip:
@@ -125,7 +124,7 @@
   set_fact:
     dns1: "{{ secret.pihole.pihole1.address }}"
     dns2: "{{ secret.pihole.pihole2.address }}"
-  when: "'docker_services' in group_names"
+  when: "'critical_docker_services' not in group_names"
 
 - name: set DNS variables for critical services containers
   set_fact:

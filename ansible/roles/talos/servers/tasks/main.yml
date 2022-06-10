@@ -1,0 +1,105 @@
+- name: create temp directory for configuration
+  tempfile:
+    state: directory
+    suffix: talos
+  register: config_temp_dir
+  changed_when: false
+
+- name: debug
+  debug:
+    var: config_temp_dir.path
+
+- name: get IP address
+  set_fact:
+    host_ip_addr: "{{ lookup('dig', '{{ inventory_hostname }}.{{ secret.domain }}') }}"
+
+- name: generate controlplane configuration patch
+  template:
+    src: controlplane-patch.json.j2
+    dest: "{{ config_temp_dir.path }}/controlplane-patch.json"
+  changed_when: false
+
+- name: generate worker configuration patch
+  template:
+    src: worker-patch.json.j2
+    dest: "{{ config_temp_dir.path }}/worker-patch.json"
+  changed_when: false
+
+- name: generate storage worker configuration patch
+  template:
+    src: worker-storage-patch.json.j2
+    dest: "{{ config_temp_dir.path }}/worker-storage-patch.json"
+  changed_when: false
+
+- name: generate talos configurations
+  command:
+    chdir: "{{ config_temp_dir.path }}"
+    cmd: >
+      talosctl gen config {{ talos.cluster_name }} https://{{ talos.vip }}:6443 
+      --config-patch-control-plane @controlplane-patch.json 
+      --config-patch-worker @worker-patch.json
+  changed_when: false
+  when: inventory_hostname not in groups['talos_storage_workers']
+
+- name: generate talos configurations (storage node)
+  command:
+    chdir: "{{ config_temp_dir.path }}"
+    cmd: >
+      talosctl gen config {{ talos.cluster_name }} https://{{ talos.vip }}:6443 
+      --config-patch-control-plane @controlplane-patch.json 
+      --config-patch-worker @worker-storage-patch.json
+  changed_when: false
+  when: inventory_hostname in groups['talos_storage_workers']
+
+- name: set config file name for controlplane
+  set_fact:
+    config_file_name: controlplane.yaml
+  when: inventory_hostname in groups['talos_control_planes']
+
+- name: set config file name for worker
+  set_fact:
+    config_file_name: worker.yaml
+  when: inventory_hostname in groups['talos_workers']
+
+- block:
+    - name: apply machine config (this will fail if we're applying for the first time)
+      command: 
+        chdir: "{{ config_temp_dir.path }}"
+        cmd: "talosctl -n {{ host_ip_addr }} apply machineconfig -f {{ config_file_name }}"
+      register: result
+      changed_when: result.stdout != "applied configuration without a reboot"
+  rescue:
+    - name: applying as initial configuration
+      command: 
+        chdir: "{{ config_temp_dir.path }}"
+        cmd: "talosctl apply-config -i -n {{ host_ip_addr }} -f {{ config_file_name }}"
+    - name: call bootstrap on brand new cluster if this is the first node to be initially configured
+      command: "talosctl bootstrap -n {{ host_ip_addr }}"
+      retries: 20
+      delay: 30
+      register: result
+      until: result.rc == 0
+      when: inventory_hostname == groups['talos_control_planes'][0]
+    - name: apply kubeconfig if we are bootstrapping a new cluster
+      command: "talosctl kubeconfig -n {{ host_ip_addr }} -f"
+      retries: 5
+      delay: 30
+      register: result
+      until: result.rc == 0
+      when: inventory_hostname == groups['talos_control_planes'][0]
+  when: inventory_hostname not in groups['netboot_servers']
+
+- name: push network boot config file
+  copy:
+    src: "{{ config_temp_dir.path }}/{{ config_file_name }}"
+    dest: "{{ netboot_assets_path }}/talos/config/talos-{{ inventory_hostname }}.yaml"
+  notify:
+    - reboot node
+  when: inventory_hostname in groups['netboot_servers']
+  
+# - name: push network boot config file
+#   command: >
+#     scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+#     {{ config_temp_dir.path }}/{{ config_file_name }}
+#     pythonssh@netboot-assets-bridge.{{ secret.domain }}:/netboot/talos/config/talos-{{ inventory_hostname }}.yaml
+#   when: inventory_hostname in groups['netboot_servers']

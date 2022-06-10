@@ -8,7 +8,7 @@
     hostname: "{{ secret.pihole[pihole_id].hostname }}"
     env:
       TZ: "{{ default_timezone }}"
-      WEBPASSWORD: ""
+      WEBPASSWORD: "{{ secret.pihole.password }}"
       PIHOLE_DNS1: "8.8.8.8"
     volumes:
       - "{{ appdata_dir }}/{{ secret.pihole[pihole_id].hostname }}/etc/pihole:/etc/pihole"

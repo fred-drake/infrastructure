@@ -5,7 +5,7 @@ const config = require('./config.json')
 
 const main = async () => {
     console.log("Scanning watch directory every few seconds....")
-    const b64auth = Buffer.from(`${config.paperless.username}:${config.paperless.password}`).toString('base64')
+    const authToken = `${config.paperless.token}`
     while(true) {
         const files = await fs.promises.readdir(`${__dirname}/../../watch`)
         for(const file of files) {
@@ -16,9 +16,9 @@ const main = async () => {
             const options = {
                 method: "POST",
                 url: `${config.paperless.apiPrefix}/documents/post_document/`,
-                port: 8000,
+                port: config.paperless.port,
                 headers: {
-                    "Authorization": `Basic ${b64auth}`,
+                    "Authorization": `Token ${authToken}`,
                     "Content-Type": "multipart/form-data"
                 },
                 formData: {

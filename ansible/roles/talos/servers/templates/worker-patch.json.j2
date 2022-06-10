@@ -1,0 +1,37 @@
+[
+    {"op": "replace", "path": "/machine/token", "value": "{{ secret.talos.join_token }}"},
+    {"op": "replace", "path": "/machine/ca/crt", "value": "{{ secret.talos.ca }}"},
+    {"op": "remove", "path": "/machine/network"},
+    {"op": "add", "path": "/machine/network", "value":
+      {
+        "hostname": "{{ inventory_hostname_short }}",
+        "interfaces": [
+          {
+            "interface": "{{ talos_interface }}",
+            "dhcp": true,
+            "mtu": 1500
+          }
+        ]
+      }
+    },
+    {"op": "replace", "path": "/machine/install/disk", "value": "{{ talos_disk }}"},
+    {"op": "replace", "path": "/machine/time", "value":
+      {
+        "disabled": false,
+        "servers": [
+          "time.cloudflare.com"
+        ]
+      }
+    },
+    {"op": "add", "path": "/machine/kubelet/extraArgs", "value":
+      {
+        "rotate-server-certificates": true
+      }
+    },
+    {"op": "replace", "path": "/cluster/id", "value": "{{ secret.talos.cluster.id }}"},
+    {"op": "replace", "path": "/cluster/secret", "value": "{{ secret.talos.cluster.secret }}"},
+    {"op": "replace", "path": "/cluster/network/podSubnets/0", "value": "{{ talos.pod_subnet }}"},
+    {"op": "replace", "path": "/cluster/network/serviceSubnets/0", "value": "{{ talos.service_subnet }}"},
+    {"op": "replace", "path": "/cluster/token", "value": "{{ secret.talos.cluster.token }}"},
+    {"op": "replace", "path": "/cluster/ca/crt", "value": "{{ secret.talos.cluster.ca.crt }}"}
+]

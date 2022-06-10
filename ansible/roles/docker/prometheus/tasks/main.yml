@@ -1,0 +1,7 @@
+- name: Prometheus config
+  template:
+    src: prometheus.yml.j2
+    dest: "{{ appdata_dir }}/prometheus/config/prometheus.yml"
+    mode: "0644"
+  notify:
+    - restart prometheus

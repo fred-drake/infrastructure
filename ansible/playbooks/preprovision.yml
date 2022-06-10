@@ -1,5 +1,0 @@
-- hosts: raspbian
-  gather_facts: false
-  become: false
-  roles:
-    - preprovision/raspbian

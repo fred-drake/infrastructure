@@ -1,0 +1,13 @@
+- name: get IP address
+  set_fact:
+    host_ip_addr: "{{ lookup('dig', '{{ inventory_hostname }}.{{ secret.domain }}') }}"
+
+- name: call reset and reboot netbooted server
+  command: "talosctl reset --graceful=false --reboot -n {{ host_ip_addr }}"
+  when: netboot_server
+
+- name: call reset and reboot server
+  command: >
+    talosctl reset --system-labels-to-wipe STATE --system-labels-to-wipe EPHEMERAL
+    --graceful=false --reboot -n {{ host_ip_addr }}
+  when: not netboot_server

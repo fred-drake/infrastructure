@@ -1,0 +1,389 @@
+- hosts: nuc8
+  gather_facts: false
+  become: true
+  roles:
+    
+    ### Dozzle - NUC8 ###
+    - role: docker/container
+      vars:
+        container:
+          name: dozzle
+          repository: amir20/dozzle
+          tag: "{{ special_tags.dozzle.tag | default('latest') }}"
+          ip: "{{ secret.services.dozzle.nuc8_ip }}"
+          env:
+            DOZZLE_BASE: /
+            DOZZLE_LEVEL: info
+            DOZZLE_TAILSIZE: "300"
+          volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+      tags: dozzle
+
+    ### Paperless ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: scanner
+          container: paperless
+          mount_name: ScannerIncoming
+          driver: cifs
+          mount_options: gid=1000,uid=1000,file_mode=0777,dir_mode=0777
+      tags: paperless
+    - role: docker/container
+      vars:
+        container:
+          name: paperless-redis
+          repository: redis
+          tag: 6.2.6
+          ip: "{{ secret.services.paperless.redis.ip }}"
+      tags: paperless
+    - role: docker/container
+      vars:
+        container:
+          name: paperless
+          repository: linuxserver/paperless-ngx
+          tag: latest
+          ip: "{{ secret.services.paperless.ip }}"
+          env:
+            PUID: "1000"
+            PGID: "1000"
+            PAPERLESS_REDIS: "redis://{{ secret.services.paperless.redis.ip }}:{{ secret.services.paperless.redis.port }}"
+            REDIS_URL: "redis://{{ secret.services.paperless.redis.ip }}:{{ secret.services.paperless.redis.port }}"
+            PAPERLESS_OCR_LANGUAGE: eng
+            PAPERLESSS_FILE_FORMAT: "{created}-{correspondent}-{title}"
+            PAPERLESS_CONSUMER_POLLING: "30"
+            PAPERLESS_SECRET_KEY: "{{ secret.services.paperless.paperless_secret_key }}"
+            PAPERLESS_CORS_ALLOWED_HOSTS: "https://paperless.{{ secret.domain }}"
+            PAPERLESS_ADMIN_USER: "{{ secret.services.paperless.user }}"
+            PAPERLESS_ADMIN_PASSWORD: "{{ secret.services.paperless.password }}"
+            PAPERLESS_URL: "https://paperless.{{ secret.domain }}"
+          # mounts:
+          #   - source: paperless_scanner
+          #     target: /usr/src/paperless/consume
+          volumes:
+            - "{{ appdata_dir }}/paperless/config:/config"
+            - "{{ appdata_dir }}/paperless/data:/data"
+            - "{{ appdata_dir }}/paperless/backup:/backup"
+      tags:
+        - paperless
+    - role: docker/backup_client
+      vars:
+        backup_namespace: paperless
+        env:
+          NAMESPACE: "{{ backup_namespace }}"
+          PRE_COMMAND: /usr/bin/docker exec paperless python3 /usr/src/paperless/src/manage.py document_exporter /backup/
+        volumes:
+          - /usr/bin/docker:/usr/bin/docker
+          - /var/run/docker.sock:/var/run/docker.sock
+          - "{{ appdata_dir }}/paperless/backup:/backup/paperless"
+      tags: paperless
+
+    ### Photoprism ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: pictures
+          container: photoprism
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+      tags: photoprism
+    - role: docker/container
+      vars:
+        container:
+          name: photoprism-db
+          repository: mariadb
+          tag: "10"
+          ip: "{{ secret.services.photoprism.db.ip }}"
+          env:
+            MYSQL_ROOT_PASSWORD: "{{ secret.services.photoprism.db.root_password }}"
+            MYSQL_DATABASE: "{{ secret.services.photoprism.db.database }}"
+            MYSQL_USER: "{{ secret.services.photoprism.db.user }}"
+            MYSQL_PASSWORD: "{{ secret.services.photoprism.db.password }}"
+          volumes:
+            - "{{ appdata_dir }}/photoprism/database:/var/lib/mysql"
+      tags: photoprism
+    - role: docker/volume
+      vars:
+        volume:
+          name: pictures
+          container: photoprism-readonly
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777,ro
+      tags: photoprism
+    - role: docker/container
+      vars:
+        container:
+          name: photoprism-readonly
+          repository: photoprism/photoprism
+          tag: latest
+          ip: "{{ secret.services.photoprism.readonly_ip }}"
+          env:
+            PHOTOPRISM_UPLOAD_NSFW: "{{ secret.services.photoprism.allow_nsfw }}"
+            PHOTOPRISM_DETECT_NSFW: "{{ secret.services.photoprism.detect_nsfw }}"
+            PHOTOPRISM_SITE_TITLE: "{{ secret.services.photoprism.title }}"
+            PHOTOPRISM_SITE_CAPTION: "{{ secret.services.photoprism.caption }}"
+            PHOTOPRISM_SITE_URL: "{{ secret.services.photoprism.public_site_url }}"
+            PHOTOPRISM_ADMIN_PASSWORD: "{{ secret.services.photoprism.admin_password }}"
+            PHOTOPRISM_DATABASE_DRIVER: "{{ secret.services.photoprism.db_driver }}"
+            PHOTOPRISM_DATABASE_DSN: "{{ secret.services.photoprism.db_ro_dsn }}"
+            PHOTOPRISM_AUTO_INDEX: "{{ secret.services.photoprism.auto_index_delay }}"
+            PHOTOPRISM_AUTO_IMPORT: "{{ secret.services.photoprism.auto_import_delay }}"
+            PHOTOPRISM_READONLY: "true"
+            PHOTOPRISM_PUBLIC: "true"
+            PHOTOPRISM_DISABLE_SETTINGS: "true"
+          mounts:
+            - source: photoprism_pictures
+              target: /photoprism/originals
+          volumes:
+            - "{{ appdata_dir }}/photoprism/data:/photoprism/storage"
+      tags: photoprism
+    - role: docker/container
+      vars:
+        container:
+          name: photoprism
+          repository: photoprism/photoprism
+          tag: latest
+          ip: "{{ secret.services.photoprism.ip }}"
+          env:
+            PHOTOPRISM_UPLOAD_NSFW: "{{ secret.services.photoprism.allow_nsfw }}"
+            PHOTOPRISM_DETECT_NSFW: "{{ secret.services.photoprism.detect_nsfw }}"
+            PHOTOPRISM_SITE_TITLE: "{{ secret.services.photoprism.title }}"
+            PHOTOPRISM_SITE_CAPTION: "{{ secret.services.photoprism.caption }}"
+            PHOTOPRISM_ADMIN_PASSWORD: "{{ secret.services.photoprism.admin_password }}"
+            PHOTOPRISM_DATABASE_DRIVER: "{{ secret.services.photoprism.db_driver }}"
+            PHOTOPRISM_DATABASE_DSN: "{{ secret.services.photoprism.db_dsn }}"
+            PHOTOPRISM_AUTO_INDEX: "{{ secret.services.photoprism.auto_index_delay }}"
+            PHOTOPRISM_AUTO_IMPORT: "{{ secret.services.photoprism.auto_import_delay }}"
+          mounts:
+            - source: photoprism_pictures
+              target: /photoprism/originals
+          volumes:
+            - "{{ appdata_dir }}/photoprism/data:/photoprism/storage"
+      tags: photoprism
+
+    ### Photoprism Internal ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: pictures-internal
+          container: photoprism-internal
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+      tags: photoprism
+    - role: docker/container
+      vars:
+        container:
+          name: photoprism-internal-db
+          repository: mariadb
+          tag: "10"
+          ip: "{{ secret.services.photoprism.db.internal_ip }}"
+          env:
+            MYSQL_ROOT_PASSWORD: "{{ secret.services.photoprism.db.root_password }}"
+            MYSQL_DATABASE: "{{ secret.services.photoprism.db.database }}"
+            MYSQL_USER: "{{ secret.services.photoprism.db.user }}"
+            MYSQL_PASSWORD: "{{ secret.services.photoprism.db.password }}"
+          volumes:
+            - "{{ appdata_dir }}/photoprism-internal/database:/var/lib/mysql"
+      tags: photoprism
+    - role: docker/container
+      vars:
+        container:
+          name: photoprism-internal
+          repository: photoprism/photoprism
+          tag: latest
+          ip: "{{ secret.services.photoprism.internal_ip }}"
+          env:
+            PHOTOPRISM_UPLOAD_NSFW: "{{ secret.services.photoprism.allow_nsfw }}"
+            PHOTOPRISM_DETECT_NSFW: "{{ secret.services.photoprism.detect_nsfw }}"
+            PHOTOPRISM_SITE_TITLE: "{{ secret.services.photoprism.title }}"
+            PHOTOPRISM_SITE_CAPTION: "{{ secret.services.photoprism.caption }}"
+            PHOTOPRISM_ADMIN_PASSWORD: "{{ secret.services.photoprism.admin_password }}"
+            PHOTOPRISM_DATABASE_DRIVER: "{{ secret.services.photoprism.db_driver }}"
+            PHOTOPRISM_DATABASE_DSN: "{{ secret.services.photoprism.internal_db_dsn }}"
+            PHOTOPRISM_AUTO_INDEX: "{{ secret.services.photoprism.auto_index_delay }}"
+            PHOTOPRISM_AUTO_IMPORT: "{{ secret.services.photoprism.auto_import_delay }}"
+          mounts:
+            - source: photoprism-internal_pictures-internal
+              target: /photoprism/originals
+          volumes:
+            - "{{ appdata_dir }}/photoprism-internal/data:/photoprism/storage"
+      tags: photoprism
+    - role: docker/container
+      vars:
+        container: 
+          name: backup-photoprism-internal
+          repository: ghcr.io/fred-drake/k8s-backup
+          tag: "0.3"
+          env:
+            AWS_ACCESS_KEY_ID: "{{ secret.backup.keyId }}"
+            AWS_SECRET_ACCESS_KEY: "{{ secret.backup.keySecret }}"
+            RESTIC_REPOSITORY: "s3:http://minio-backup-app.{{ secret.domain }}:9000/restic"
+            RESTIC_PASSWORD: "{{ secret.backup.restic.password }}"
+            NAMESPACE: photoprism-internal
+            BACKUP_TYPES: mysql
+            MYSQL_HOST: "{{ secret.services.photoprism.db.internal_ip }}"
+            MYSQL_DATABASE: "{{ secret.services.photoprism.db.database }}"
+            MYSQL_USER: "{{ secret.services.photoprism.db.user }}"
+            MYSQL_PASSWORD: "{{ secret.services.photoprism.db.password }}"
+            MYSQL_BACKUP_FILE: "photoprism-internal.sql"
+          volumes:
+            - "{{ appdata_dir }}/photoprism-internal/data:/backup/photoprism-internal/data"
+      tags: photoprism
+
+    ### Prometheus Node Exporter ###
+    - role: docker/container
+      vars:
+        container:
+          name: node-exporter
+          repository: prom/node-exporter
+          tag: latest
+          ip: "{{ secret.services.prometheus.node_exporter.nuc8.ip }}"
+          volumes:
+            - /proc:/host/proc:ro
+            - /sys:/host/sys:ro
+            - /:/rootfs:ro
+          command:
+            - '--path.procfs=/host/proc'
+            - '--path.rootfs=/rootfs'
+            - '--path.sysfs=/host/sys'
+            - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+
+    ### Prometheus Pihole Exporter - Pihole1 ###
+    - role: docker/container
+      vars:
+        container:
+          name: pihole-exporter-pihole1
+          repository: ekofr/pihole-exporter
+          tag: latest
+          ip: "{{ secret.services.prometheus.pihole_exporter.pihole1.ip }}"
+          env:
+            PIHOLE_HOSTNAME: "pihole2.{{ secret.domain }}"
+            PIHOLE_API_TOKEN: "{{ secret.pihole.pihole1.api_token }}"
+            INTERVAL: 30s
+            PORT: "9617"
+
+    ### Prometheus Pihole Exporter - Pihole2 ###
+    - role: docker/container
+      vars:
+        container:
+          name: pihole-exporter-pihole2
+          repository: ekofr/pihole-exporter
+          tag: latest
+          ip: "{{ secret.services.prometheus.pihole_exporter.pihole2.ip }}"
+          env:
+            PIHOLE_HOSTNAME: "pihole2.{{ secret.domain }}"
+            PIHOLE_API_TOKEN: "{{ secret.pihole.pihole2.api_token }}"
+            INTERVAL: 30s
+            PORT: "9617"
+
+    ### Grafana ###
+    - role: docker/container
+      vars:
+        container:
+          name: grafana
+          repository: grafana/grafana-oss
+          tag: latest
+          ip: "{{ secret.services.grafana.ip }}"
+          env:
+            GF_PANELS_DISABLE_SANITIZE_HTML: "true"
+            GF_AUTH_ANONYMOUS_ENABLED: "true"
+          volumes:
+            - "{{ appdata_dir }}/grafana:/var/lib/grafana"
+
+    ### Nextcloud ###
+    # - role: docker/volume
+    #   vars:
+    #     volume:
+    #       name: nextcloud
+    #       container: nextcloud
+    #       driver: cifs
+    #       mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: nextcloud-postgres
+    #       repository: postgres
+    #       tag: "14"
+    #       ip: "{{ secret.services.nextcloud.postgres.ip }}"
+    #       env:
+    #         POSTGRES_USER: "{{ secret.services.nextcloud.postgres.user }}"
+    #         POSTGRES_PASSWORD: "{{ secret.services.nextcloud.postgres.password }}"
+    #         POSTGRES_DB: "{{ secret.services.nextcloud.postgres.database }}"
+    #       volumes:
+    #         - "{{ appdata_dir }}/nextcloud/postgres:/var/lib/postgresql/data"
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: nextcloud-redis
+    #       repository: redis
+    #       tag: 6.2.6
+    #       ip: "{{ secret.services.nextcloud.redis.ip }}"
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: nextcloud
+    #       repository: nextcloud
+    #       tag: latest
+    #       ip: "{{ secret.services.nextcloud.ip }}"
+    #       env:
+    #         POSTGRES_DB: "{{ secret.services.nextcloud.postgres.database }}"
+    #         POSTGRES_USER: "{{ secret.services.nextcloud.postgres.user }}"
+    #         POSTGRES_PASSWORD: "{{ secret.services.nextcloud.postgres.password }}"
+    #         POSTGRES_HOST: "{{ secret.services.nextcloud.postgres.ip }}"
+    #         NEXTCLOUD_ADMIN_USER: admin
+    #         NEXTCLOUD_ADMIN_PASSWORD: 6NWgMtm2jL75nAV
+    #         NEXTCLOUD_TRUSTED_DOMAINS: "nextcloud.{{ secret.domain }}"
+    #         REDIS_HOST: "{{ secret.services.nextcloud.redis.ip }}"
+    #         APACHE_DISABLE_REWRITE_IP: "1"
+
+    ### Gitea ###
+    - role: docker/container
+      vars:
+        container:
+          name: gitea-db
+          repository: mariadb
+          tag: "10"
+          ip: "{{ secret.services.gitea.mariadb.ip }}"
+          env:
+            MYSQL_ROOT_PASSWORD: "{{ secret.services.gitea.mariadb.mysql_root_password }}"
+            MYSQL_DATABASE: "{{ secret.services.gitea.mariadb.mysql_name }}"
+            MYSQL_USER: "{{ secret.services.gitea.mariadb.mysql_user }}"
+            MYSQL_PASSWORD: "{{ secret.services.gitea.mariadb.mysql_password }}"
+          volumes:
+            - "{{ appdata_dir }}/gitea/mariadb:/var/lib/mysql"
+      tags: gitea
+    - role: docker/container
+      vars:
+        container:
+          name: gitea
+          repository: gitea/gitea
+          tag: 1.16.7
+          ip: "{{ secret.services.gitea.ip }}"
+          env:
+            GITEA__database__DB_TYPE: mysql
+            GITEA__database__HOST: "{{ secret.services.gitea.mariadb.ip }}"
+            GITEA__database__NAME: "{{ secret.services.gitea.mariadb.mysql_name }}"
+            GITEA__database__USER: "{{ secret.services.gitea.mariadb.mysql_user }}"
+            GITEA__database__PASSWD: "{{ secret.services.gitea.mariadb.mysql_password }}"
+          volumes:
+            - "{{ appdata_dir }}/gitea/data:/data"
+      tags: gitea
+    - role: docker/container
+      vars:
+        container:
+          name: diun-nuc8
+          repository: crazymax/diun
+          tag: latest
+          ip: "{{ secret.services.diun.nuc8_ip }}"
+          env:
+            LOG_LEVEL: info
+            LOG_JSON: "false"
+            DIUN_WATCH_WORKERS: "20"
+            DIUN_WATCH_SCHEDULE: 0 9 * * *
+            DIUN_PROVIDERS_DOCKER: "true"
+            DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT: "true"
+            DIUN_NOTIF_SLACK_WEBHOOKURL: "{{ secret.services.diun.webhook_url }}"
+          volumes:
+            - "{{ appdata_dir }}/diun/data:/data"
+            - "/var/run/docker.sock:/var/run/docker.sock"
+      tags: diun

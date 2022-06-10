@@ -1,0 +1,438 @@
+- hosts: nuc9
+  gather_facts: false
+  become: true
+  roles:
+    
+    ### Dozzle - NUC9 ###
+    - role: docker/container
+      vars:
+        container:
+          name: dozzle
+          repository: amir20/dozzle
+          tag: "{{ special_tags.dozzle.tag | default('latest') }}"
+          ip: "{{ secret.services.dozzle.nuc9_ip }}"
+          env:
+            DOZZLE_BASE: /
+            DOZZLE_LEVEL: info
+            DOZZLE_TAILSIZE: "300"
+          volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+      tags: dozzle
+
+    ### Whoogle ###
+    - role: docker/container
+      vars:
+        container:
+          name: whoogle
+          repository: benbusby/whoogle-search
+          tag: "{{ special_tags.whoogle.tag | default('latest') }}"
+          ip: "{{ secret.services.whoogle.ip }}"
+      tags: whoogle
+
+    ### Prowlarr ###
+    - role: docker/container
+      vars:
+        container:
+          name: prowlarr
+          repository: linuxserver/prowlarr
+          tag: 0.1.10-nightly
+          ip: "{{ secret.services.prowlarr.ip }}"
+          env:
+            PUID: "99"
+            PGID: "100"
+          volumes:
+            - "{{ appdata_dir }}/prowlarr/config:/config"
+      tags: prowlarr
+    - role: docker/backup_client
+      vars:
+        backup_namespace: prowlarr
+        env:
+          NAMESPACE: "{{ backup_namespace }}"
+        volumes:
+          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+      tags: prowlarr
+      
+    ### Radarr ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: videos
+          container: radarr
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+      tags: radarr
+    - role: docker/volume
+      vars:
+        volume:
+          name: movies
+          container: radarr
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+      tags: radarr
+    - role: docker/volume
+      vars:
+        volume:
+          name: torrent
+          container: radarr
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+      tags: radarr
+    - role: docker/container
+      vars:
+        container:
+          name: radarr
+          repository: linuxserver/radarr
+          tag: latest
+          ip: "{{ secret.services.radarr.ip }}"
+          env:
+            PUID: "99"
+            PGID: "100"
+          volumes:
+            - "{{ appdata_dir }}/radarr/config:/config"
+          mounts:
+            - source: radarr_videos
+              target: /videos
+            - source: radarr_torrent
+              target: /downloads
+      tags: radarr
+    - role: docker/backup_client
+      vars:
+        backup_namespace: radarr
+        env:
+          NAMESPACE: "{{ backup_namespace }}"
+        volumes:
+          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+      tags: radarr
+      
+    ### Sonarr ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: videos
+          container: sonarr
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+      tags: sonarr
+    - role: docker/volume
+      vars:
+        volume:
+          name: downloads
+          container: sonarr
+          mount_name: torrent/complete
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+      tags: sonarr
+    - role: docker/container
+      vars:
+        container:
+          name: sonarr
+          repository: linuxserver/sonarr
+          tag: latest
+          ip: "{{ secret.services.sonarr.ip }}"
+          env:
+            PUID: "99"
+            PGID: "100"
+          volumes:
+            - "{{ appdata_dir }}/sonarr/config:/config"
+          mounts:
+            - source: sonarr_videos
+              target: /videos
+            - source: sonarr_downloads
+              target: /downloads
+      tags: sonarr
+    - role: docker/backup_client
+      vars:
+        backup_namespace: sonarr
+        env:
+          NAMESPACE: "{{ backup_namespace }}"
+        volumes:
+          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+      tags: sonarr
+      
+    ### Netbox ###
+    - role: docker/container
+      vars:
+        container:
+          name: netbox-db-postgres
+          repository: postgres
+          tag: "12"
+          ip: "{{ secret.services.netbox.postgres.ip }}"
+          env:
+            POSTGRES_USER: "{{ secret.services.netbox.postgres.user }}"
+            POSTGRES_PASSWORD: "{{ secret.services.netbox.postgres.password }}"
+            POSTGRES_DB: "{{ secret.services.netbox.postgres.database }}"
+          volumes:
+            - "{{ appdata_dir }}/netbox-db-postgres:/var/lib/postgresql/data"
+      tags: netbox
+    - role: docker/container
+      vars:
+        container:
+          name: netbox-db-redis
+          repository: redis
+          tag: latest
+          ip: "{{ secret.services.netbox.redis.ip }}"
+      tags: netbox
+    - role: docker/container
+      vars:
+        container:
+          name: netbox
+          repository: linuxserver/netbox
+          tag: "3.1.11"
+          ip: "{{ secret.services.netbox.ip }}"
+          env:
+            PUID: "99"
+            PGID: "100"
+            SUPERUSER_EMAIL: "{{ secret.services.netbox.superuser.email }}"
+            SUPERUSER_PASSWORD: "{{ secret.services.netbox.superuser.password }}"
+            ALLOWED_HOST: "{{ secret.services.netbox.allowed_host }}"
+            DB_NAME: "{{ secret.services.netbox.postgres.database }}"
+            DB_USER: "{{ secret.services.netbox.postgres.user }}"
+            DB_PASSWORD: "{{ secret.services.netbox.postgres.password }}"
+            DB_HOST: "{{ secret.services.netbox.postgres.ip }}"
+            DB_PORT: "{{ secret.services.netbox.postgres.port }}"
+            REDIS_HOST: "{{ secret.services.netbox.redis.ip }}"
+            REDIS_PORT: "{{ secret.services.netbox.redis.port }}"
+          volumes:
+            - "{{ appdata_dir }}/netbox/config:/config"
+      tags: netbox
+    - role: docker/container
+      vars:
+        container: 
+          name: backup-netbox
+          repository: ghcr.io/fred-drake/k8s-backup
+          tag: latest
+          ip: "{{ secret.services.netbox.backup_ip }}"
+          env:
+            AWS_ACCESS_KEY_ID: "{{ secret.backup.keyId }}"
+            AWS_SECRET_ACCESS_KEY: "{{ secret.backup.keySecret }}"
+            RESTIC_REPOSITORY: "s3:http://minio-backup-app.{{ secret.domain }}:9000/restic"
+            RESTIC_PASSWORD: "{{ secret.backup.restic.password }}"
+            NAMESPACE: netbox
+            BACKUP_TYPES: postgresql
+            PG_HOST: "{{ secret.services.netbox.postgres.ip }}"
+            PG_DATABASE: "{{ secret.services.netbox.postgres.database }}"
+            PG_PORT: "{{ secret.services.netbox.postgres.port }}"
+            PG_USER: "{{ secret.services.netbox.postgres.user }}"
+            PG_PASSWORD: "{{ secret.services.netbox.postgres.password }}"
+            PG_BACKUP_FILE: "netbox.sql"
+      tags: netbox
+          
+    ### Home Assistant ###
+    - role: docker/container
+      vars:
+        container:
+          name: homeassistant
+          repository: ghcr.io/linuxserver/homeassistant
+          tag: 2021.11.5
+          ip: "{{ secret.services.homeassistant.ip }}"
+          env:
+            PUID: "99"
+            PGID: "100"
+            UMASK: "022"
+          volumes:
+            - "{{ appdata_dir }}/homeassistant/config:/config"
+      tags: homeassistant
+    - role: docker/backup_client
+      vars:
+        backup_namespace: homeassistant
+        env:
+          NAMESPACE: "{{ backup_namespace }}"
+        volumes:
+          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+      tags: homeassistant
+
+    ### Node Red ###
+    - role: docker/container
+      vars:
+        container:
+          name: node-red-postgres
+          repository: postgres
+          tag: 14.1
+          ip: "{{ secret.services.node_red.postgres.ip }}"
+          env:
+            POSTGRES_USER: "{{ secret.services.node_red.postgres.user }}"
+            POSTGRES_PASSWORD: "{{ secret.services.node_red.postgres.password }}"
+            POSTGRES_DB: "{{ secret.services.node_red.postgres.database }}"
+          volumes:
+            - "{{ appdata_dir }}/node-red-postgres:/var/lib/postgresql/data"
+      tags: node_red
+    - role: docker/container
+      vars:
+        container:
+          name: "node-red"
+          repository: "nodered/node-red"
+          tag: 2.1.3
+          ip: "{{ secret.services.node_red.ip }}"
+          env:
+            NODE_RED_ENABLE_SAFE_MODE: "false"
+          volumes:
+            - "{{ appdata_dir }}/node-red/data:/data"
+      tags: node_red
+    - role: docker/backup_client
+      vars:
+        backup_namespace: "node-red"
+        env:
+          NAMESPACE: "{{ backup_namespace }}"
+        volumes:
+          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+      tags: node_red
+
+    ### MQTT ###
+    - role: docker/container
+      vars:
+        container:
+          name: mqtt
+          repository: eclipse-mosquitto
+          tag: 2.0.14
+          ip: "{{ secret.services.mqtt.ip }}"
+          volumes:
+            - "{{ appdata_dir }}/mqtt/config:/mosquitto/config"
+            - "{{ appdata_dir }}/mqtt/data:/mosquitto/data"
+      tags: mqtt
+
+    ### Office Touchpad ###
+    - role: docker/container
+      vars:
+        container:
+          name: office-touchpad
+          repository: ghcr.io/fred-drake/office-touchpad
+          tag: latest
+          ip: "{{ secret.services.office_touchpad.ip }}"
+          volumes:
+            - "{{ appdata_dir }}/office-touchpad/runtime-config.js:/work/build/runtime-config.js"
+      tags: office_touchpad
+
+    ### Prometheus ###
+    - role: docker/container
+      vars:
+        container:
+          name: prometheus
+          repository: prom/prometheus
+          tag: latest
+          ip: "{{ secret.services.prometheus.ip }}"
+          volumes:
+            - "{{ appdata_dir }}/prometheus/config:/etc/prometheus"
+      tags: prometheus
+    - role: docker/prometheus
+      tags: prometheus
+
+    ### Prometheus Node Exporter ###
+    - role: docker/container
+      vars:
+        container:
+          name: node-exporter
+          repository: prom/node-exporter
+          tag: latest
+          ip: "{{ secret.services.prometheus.node_exporter.nuc9.ip }}"
+          volumes:
+            - /proc:/host/proc:ro
+            - /sys:/host/sys:ro
+            - /:/rootfs:ro
+          command:
+            - '--path.procfs=/host/proc'
+            - '--path.rootfs=/rootfs'
+            - '--path.sysfs=/host/sys'
+            - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      tags: prometheus
+
+    ### Overseerr ###
+    - role: docker/container
+      vars:
+        container:
+          name: overseerr
+          repository: linuxserver/overseerr
+          tag: latest
+          ip: "{{ secret.services.overseerr.ip }}"
+          env:
+            PUID: "1000"
+            PGID: "1000"
+          volumes:
+            - "{{ appdata_dir }}/overseerr/config:/config"
+      tags: overseerr
+
+    ### Netboot Assets Bridge ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: netboot
+          container: netboot-assets-bridge
+          driver: cifs
+          mount_options: uid=99,gid=100,file_mode=0777,dir_mode=0777
+      tags: netboot
+    - role: docker/container
+      vars:
+        container:
+          name: netboot-assets-bridge
+          repository: ghcr.io/fred-drake/python-ssh
+          tag: latest
+          ip: "{{ secret.services.netboot_assets_bridge.ip }}"
+          env:
+            PUBLIC_KEYS_URL: https://github.com/fred-drake.keys
+          mounts:
+            - source: netboot-assets-bridge_netboot
+              target: /netboot
+      tags: netboot
+
+    ### Obsidian CouchDB ###
+    - role: docker/container
+      vars:
+        container:
+          name: obsidian-couchdb
+          repository: couchdb
+          tag: 3.2.2
+          ip: "{{ secret.services.obsidian_couchdb.ip }}"
+          env:
+            COUCHDB_USER: "{{ secret.services.obsidian_couchdb.user }}"
+            COUCHDB_PASSWORD: "{{ secret.services.obsidian_couchdb.password }}"
+          volumes:
+            - "{{ appdata_dir }}/obsidian/couchdb/config/local.ini:/opt/couchdb/etc/local.ini"
+            - "{{ appdata_dir }}/obsidian/couchdb/data:/opt/couchdb/data"
+      tags: obsidian
+
+      ### DIUN ###
+    - role: docker/container
+      vars:
+        container:
+          name: diun-nuc9
+          repository: crazymax/diun
+          tag: latest
+          ip: "{{ secret.services.diun.nuc9_ip }}"
+          env:
+            LOG_LEVEL: info
+            LOG_JSON: "false"
+            DIUN_WATCH_WORKERS: "20"
+            DIUN_WATCH_SCHEDULE: 0 9 * * *
+            DIUN_PROVIDERS_DOCKER: "true"
+            DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT: "true"
+            DIUN_NOTIF_SLACK_WEBHOOKURL: "{{ secret.services.diun.webhook_url }}"
+          volumes:
+            - "{{ appdata_dir }}/diun/data:/data"
+            - "/var/run/docker.sock:/var/run/docker.sock"
+      tags: diun
+
+    ### SWAG Internal ###
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: swag_internal
+    #       repository: linuxserver/swag
+    #       tag: "{{ special_tags.swag.tag | default('latest') }}"
+    #       ip: "{{ secret.services.swag_internal.ip }}"
+    #       env:
+    #         PUID: "99"
+    #         PGID: "100"
+    #         EMAIL: "{{ secret.services.swag_internal.email }}"
+    #         URL: "{{ secret.services.swag_internal.url }}"
+    #         SUBDOMAINS: "{{ secret.services.swag_internal.subdomains }}"
+    #         ONLY_SUBDOMAINS: "{{ secret.services.swag_internal.only_subdomains }}"
+    #         VALIDATION: "{{ secret.services.swag_internal.validation }}"
+    #         DNSPLUGIN: "{{ secret.services.swag_internal.dnsplugin }}"
+    #         STAGING: "{{ secret.services.swag_internal.staging }}"
+    #       volumes:
+    #         - "{{ appdata_dir }}/swag-internal:/config"
+    #   tags: swag_internal
+    # # Sync proxy files
+    # - role: docker/swag_internal
+    #   tags:
+    #     - swag_internal
+    #     - swag_internal_update

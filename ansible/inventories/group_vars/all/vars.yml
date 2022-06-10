@@ -4,11 +4,14 @@ ansible_python_interpreter: /usr/bin/python3
 # The timezone used on servers and docker containers
 default_timezone: America/New_York
 
+# Root path for netboot assets
+netboot_assets_path: /Volumes/netboot
+
 # kubernetes configuration
 k8s:
   cert_manager: # manages automatic https certificates
     cluster_issuer: letsencrypt-production
-  initial_master_node_hostname: kmaster01
+  initial_master_node_hostname: kw06
   k3s: # k3s install version
     version: v1.22.5+k3s1
   kubegres: # scalable postgres for kubernetes
@@ -29,3 +32,11 @@ k8s:
     default_approvals: "1"
     default_trigger: "poll"
     default_poll_schedule: "@every 1h"
+
+talos:
+  cluster_name: main
+  vip: 192.168.50.4
+  installer_version: v1.0.2
+  k8s_version: v1.23.5
+  pod_subnet: 10.40.0.0/16
+  service_subnet: 10.41.0.0/16

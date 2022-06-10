@@ -1,0 +1,18 @@
+- name: create netboot install config directory
+  file:
+    path: "/netboot/ubuntu/{{ item }}"
+    state: directory
+  loop: "{{ groups['netboot_install_servers'] }}"
+  
+# - name: apply all ubuntu netboot install configs - user-data
+#   template:
+#     src: "{{ item }}-user-data.yml.j2"
+#     dest: "/netboot/ubuntu/{{ item }}/user-data"
+#   loop: "{{ groups['netboot_install_servers'] }}"
+
+- name: apply all ubuntu netboot install configs - meta-data
+  copy:
+    content: ""
+    dest: "/netboot/ubuntu/{{ item }}/meta-data"
+    force: false
+  loop: "{{ groups['netboot_install_servers'] }}"

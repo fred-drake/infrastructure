@@ -15,7 +15,7 @@
           name: sops
           namespace: argocd
       data:
-          sops.asc: "{{ secret.argocd.gpg_key }}"
+          sops.asc: "{{ argocd_gpg_key }}"
 
 - name: argocd helm
   kubernetes.core.helm:

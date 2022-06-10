@@ -1,6 +1,6 @@
 # - import_playbook: docker/delete_containers.yml
 
-- import_playbook: kubernetes/delete_cluster.yml
+# - import_playbook: kubernetes/delete_cluster.yml
 
 # - hosts: scoreboard
 #   gather_facts: false
@@ -19,3 +19,6 @@
   gather_facts: false
   roles:
     - scoreboard/delete
+  tags:
+    - nuke
+    - never

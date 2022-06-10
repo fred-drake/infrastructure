@@ -1,5 +1,7 @@
 
 all:
+  hosts:
+    netboot-assets-bridge:
   #
   # Host groupings
   #
@@ -8,17 +10,21 @@ all:
     # Groups by distribution
     debian: # all debian-based servers
       children:
+        ubuntu:
+        raspbian:
+
+    # All machines with a form of the ubuntu distribution
+    ubuntu:
+      children:
         ubuntu_server:
         ubuntu_desktop:
-        raspbian:
 
     ubuntu_server: # all ubuntu servers
       hosts:
-        docker[1:3]:
+        docker[1:2]:
         docker5:
-        docker7:
-        kmaster[01:02]:
-        kworker[01:13]:
+        rp[1:3]:
+        nuc[1:9]:
 
     ubuntu_desktop: # all ubuntu desktops
       hosts:
@@ -29,7 +35,11 @@ all:
         kiosk:
         scoreboard:
         scannerpi:
-        kvm:
+        rp[4:7]:
+
+    kvm:
+      hosts:
+        rp[4:7]:
 
     cuda: # all hosts with NVidia and CUDA
       hosts:
@@ -38,6 +48,7 @@ all:
     # All docker container servers
     docker:
       children:
+        k8s_cluster:
         docker_services:
         critical_docker_services:
 
@@ -45,8 +56,8 @@ all:
     docker_services:
       hosts:
         docker1:
-        docker3:
-        docker7:
+        nuc9:
+        nuc8:
         brynn-desktop-2:
 
     # Docker container servers who run critical services
@@ -80,7 +91,50 @@ all:
 
     avahi: # Host for avahi daemon
       hosts:
-        # docker3:
+        # nuc9:
+
+    # Servers whose operating systems can be autoinstalled through netboot
+    netboot_install_servers:
+      hosts:
+        nuc[1:9]:
+
+    # All Talos machines
+    talos_machines:
+      children:
+        talos_control_planes:
+        talos_workers:
+
+    # Talos control planes
+    talos_control_planes:
+      hosts:
+        kw06:
+        kw07:
+        kw08:
+
+    # Talos workers
+    talos_workers:
+      hosts:
+        nuc1:
+        nuc3:
+        nuc4:
+        nuc6:
+        nuc7:
+
+    # Talos workers who also act as storage nodes
+    talos_storage_workers:
+      hosts:
+        nuc1:
+        nuc3:
+        nuc7:
+
+    # Servers that are normally PXE network booted
+    netboot_servers:
+      hosts:
+        nuc1:
+        nuc3:
+        nuc4:
+        nuc6:
+        nuc7:
     
     # Kubernetes cluster servers
     k8s_cluster: # every node in the cluster
@@ -90,22 +144,23 @@ all:
         
     k8s_masters: # master nodes.  The first is considered the initial master.
       hosts:
-        kmaster[01:02]:
+        kw06:
+        kw07:
+        kw08:
     k8s_workers: # worker nodes
       hosts:
-        kworker[01:13]:
+        nuc1:
+        nuc3:
+        nuc4:
+        nuc6:
+        nuc7:
+
     k8s_backup: # node managing backup with specially attached storage
       hosts:
         kworker07:
     # k8s_storage: # nodes with SSD cluster-level storage
     #   hosts:
     #     kworker[02:04]:
-
-    # Intel NUC servers
-    intel_nucs:
-      hosts:
-        docker3:
-        docker7:
 
     # Raspberry Pi servers
     raspberry_pi: # all raspberry pi machines
@@ -119,7 +174,9 @@ all:
     raspberry_pi_4: # raspberry pi 4 machines
       hosts:
         kiosk:
-        kworker[06:12]:
+        scoreboard:
+        rp[1:7]:
+        # kworker[06:12]:
         # kmaster01:
         # kworker[01:07]:
 

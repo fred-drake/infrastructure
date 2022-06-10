@@ -1,0 +1,5 @@
+- name: restart prometheus
+  community.docker.docker_container:
+    name: prometheus
+    container_default_behavior: "{{ container_default_behavior }}"
+    restart: true

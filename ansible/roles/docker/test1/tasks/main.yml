@@ -1,0 +1,6 @@
+- name: create temp directory for configuration
+  tempfile:
+    state: directory
+    suffix: foobar
+  register: config_temp_dir
+  changed_when: false
