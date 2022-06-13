@@ -1,0 +1,14 @@
+- name: reboot
+  command:
+    cmd: reboot
+  async: 120
+  poll: 0
+
+- name: wait for reboot
+  wait_for:
+    port: 22
+    host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+    search_regex: dropbear
+    delay: 30
+    timeout: 900
+  connection: local

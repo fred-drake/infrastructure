@@ -1,0 +1,33 @@
+- name: update opkg
+  command: opkg update
+
+- name: install packages
+  command: >
+    opkg install 
+    python3-email 
+    python3-urllib 
+    shadow-usermod
+
+- name: set authorized keys
+  become: false
+  ansible.posix.authorized_key:
+    user: "{{ ansible_user }}"
+    state: present
+    key: "{{ lookup('file', '{{ item }}') }}"
+    path: /etc/dropbear/authorized_keys
+  with_fileglob:
+    - "../../public_keys/*"
+
+- name: update user password
+  user:
+    name: "{{ ansible_user }}"
+    update_password: always
+    password: "{{ ssh_password_hash }}"
+
+- name: network configuration
+  copy:
+    src: "network-{{ ansible_host.split('.')[0] }}"
+    dest: "/etc/config/network"
+  notify: 
+    - reboot
+    - wait for reboot

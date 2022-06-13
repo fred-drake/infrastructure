@@ -1,0 +1,49 @@
+
+config interface 'loopback'
+	option device 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'fd10:c1ce:5643::/48'
+
+config device 'switch'
+	option name 'switch'
+	option type 'bridge'
+	option macaddr 'c8:9e:43:a2:2c:c2'
+
+config bridge-vlan 'admin_vlan'
+	option device 'switch'
+	option vlan '1'
+	option ports 'lan2 lan3 lan5 lan6 lan7 lan8'
+
+config device
+	option name 'switch.1'
+	option macaddr 'c8:9e:43:a2:2c:c2'
+
+config bridge-vlan 'workstation_vlan'
+	option device 'switch'
+	option vlan '30'
+	option ports 'lan1 lan4 lan2:t lan3:t lan8:t'
+
+config bridge-vlan 'iot_vlan'
+	option device 'switch'
+	option vlan '40'
+	option ports 'lan2:t lan3:t lan8:t'
+
+config bridge-vlan 'service_vlan'
+	option device 'switch'
+	option vlan '50'
+	option ports 'lan2:t lan3:t lan8:t'
+
+config interface 'lan'
+	option device 'switch.1'
+	option proto 'static'
+	option ipaddr '192.168.208.28'
+	option netmask '255.255.255.0'
+	option ip6assign '60'
+	option gateway '192.168.208.1'
+	list dns '192.168.40.4'
+	list dns '192.168.40.6'
+	list dns_search 'internal.freddrake.com'

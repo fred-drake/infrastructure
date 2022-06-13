@@ -158,9 +158,6 @@ all:
     k8s_backup: # node managing backup with specially attached storage
       hosts:
         kworker07:
-    # k8s_storage: # nodes with SSD cluster-level storage
-    #   hosts:
-    #     kworker[02:04]:
 
     # Raspberry Pi servers
     raspberry_pi: # all raspberry pi machines
@@ -176,9 +173,6 @@ all:
         kiosk:
         scoreboard:
         rp[1:7]:
-        # kworker[06:12]:
-        # kmaster01:
-        # kworker[01:07]:
 
     raspberry_pi_overclock_none: # no overclock profile
 
@@ -197,3 +191,8 @@ all:
 
     raspberry_pi4_overclock_low: # pi 4 low overclock profile
       hosts:
+
+    # OpenWRT Machines
+    openwrt:
+      hosts:
+        office_switch:

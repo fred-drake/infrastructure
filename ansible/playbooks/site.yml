@@ -27,3 +27,9 @@
   roles:
     - netboot_config
   tags: netboot_config
+
+- hosts: openwrt
+  gather_facts: false
+  become: false
+  roles:
+    - openwrt
