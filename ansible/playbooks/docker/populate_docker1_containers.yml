@@ -30,6 +30,7 @@
           ip: "{{ secret.services.uptime_kuma.ip }}"
           volumes:
            - "{{ appdata_dir }}/uptime-kuma:/app/data"
+      tags: uptime_kuma
     - role: docker/backup_client
       vars:
         backup_namespace: "uptime-kuma"
@@ -37,7 +38,7 @@
           NAMESPACE: "{{ backup_namespace }}"
         volumes:
           - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
-        tags: uptime-kuma
+      tags: uptime_kuma
 
     ### SWAG Internal ###
     - role: docker/container
