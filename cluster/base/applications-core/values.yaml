@@ -1,7 +1,7 @@
-storageNodes:
-  - nuc1
-  - nuc3
-  - nuc7
+storageNodes: []
+  # - nuc1
+  # - nuc3
+  # - nuc7
 
 applications:
   - name: argocd
