@@ -1,0 +1,11 @@
+- hosts: glusterfs_server
+  gather_facts: true
+  become: true
+  roles:
+    - glusterfs-server
+
+- hosts: glusterfs_client
+  gather_facts: true
+  become: true
+  roles:
+    - glusterfs-client

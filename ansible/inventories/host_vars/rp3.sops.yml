@@ -1,7 +1,5 @@
 ansible_host: ENC[AES256_GCM,data:504w5c7PCkRzmI/X+dryWOZ075mFQ26DczQ=,iv:DPVHJiwC6oH8OTj70+GJfWw31ILDORJiPqPa02+5BYk=,tag:9Zf+l3L4AiQ3oirvHrKirg==,type:str]
 ansible_user: ENC[AES256_GCM,data:XFNqQXJp,iv:EN06gfdDrSuhJcPOi+Gu0G3Nxch/EiJTldA3+ZM8YkU=,tag:qJVGilJ//Lza4mfwDFCegg==,type:str]
-talos_disk: ENC[AES256_GCM,data:/xB12oUf0sPohGGc,iv:6SfCJXPyJrkV+qiJEMB6h0E7VTm0HxkF084QmyeU5+M=,tag:a5CE9+MuChmSyGt7jraupg==,type:str]
-talos_interface: ENC[AES256_GCM,data:gxclKA==,iv:6/iQalCtPfDOEZQnzDhEkJ4KW035ge4/gu0hdaRRiDo=,tag:TtKJHIcumSIr8z/LXgQF2A==,type:str]
 interface_50: ENC[AES256_GCM,data:nARr+A==,iv:OrbrCA3rolOc7sdwOIkknGlAsOlWUew+u+pet9O5E60=,tag:q6eoM6LGmeVmlSAtpNcAIw==,type:str]
 sops:
     kms: []
@@ -9,8 +7,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-05-29T03:27:26Z"
-    mac: ENC[AES256_GCM,data:mRNLI5bfTKvzVRjsIqf9SrnbhOXkLuDZ0qSA9JHNhuiZJKma9YU6wcfjFI9miWKqtaKPNLHQiqYJmin9CadrHZJZPO/hThujayw5p9pLLK/Ue5U/TBlfTDI6lLdxzG2X20lHad6aQJCFdn0q2Pv7FRi5aEmv68RGSGGGzD60jrA=,iv:azyJDMc0kFQf5jToj5NRaWI0pJrfCz1EjNIbFTLczHQ=,tag:McA0MMlJSibOTanLbX1ElQ==,type:str]
+    lastmodified: "2022-07-11T01:17:24Z"
+    mac: ENC[AES256_GCM,data:R4noQW6hpMdRSQ7GQEXvMsPb9k+FXGAVOT240xepgvDV9j+Pn7jws6K58dG1AS24iQMyJ0AxD7tWktdIIlXqZyokHCXX66QuPvGjXIYufuMIMJgDorMG5Nc5t3FvddkDa5YeIn00QlpLws1UJ4y/Q/YwNSZd0Lrxxbdg8DA0DPA=,iv:p8/hWwsSz/8b39jBfZrMlLvhOF8we+pCxt9eNx0Bt0A=,tag:XPOHC7pA283LhalP2znYug==,type:str]
     pgp:
         - created_at: "2021-10-14T00:32:45Z"
           enc: |

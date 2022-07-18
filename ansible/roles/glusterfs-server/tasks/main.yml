@@ -1,0 +1,115 @@
+- name: "parted brick device"
+  parted:
+    device: "{{ glusterfs_brick_device }}"
+    label: gpt
+    number: 1
+    flags: [ lvm ]
+    state: present
+- name: "create volume on pv brick device partition 1"
+  lvg:
+    vg: vg_gluster
+    pvs: "{{ glusterfs_brick_device }}1"
+- name: "create a logical volume"
+  lvol:
+    vg: vg_gluster
+    lv: brick0
+    size: 100%FREE
+    shrink: false
+- name: "create a xfs filesystem"
+  filesystem: 
+    fstype: xfs
+    dev: /dev/vg_gluster/brick0   
+- name: "create dir"
+  file:
+    path: /export
+    state: directory
+- name: "create dir"
+  file:
+    path: /export/brick0
+    state: directory
+- name: "mount brick"
+  mount: 
+    path: /export/brick0
+    src: /dev/vg_gluster/brick0
+    fstype: xfs
+    dump: "1"
+    passno: "2"
+    state: mounted
+
+- name: "add apt repo"
+  apt_repository:
+    repo: ppa:gluster/glusterfs-10
+    state: present
+- name: install glusterfs server
+  apt:
+    name: glusterfs-server
+    update_cache: true
+- name: open port for glusterfs communication
+  ufw:
+    rule: allow
+    port: '5667'
+    proto: any
+- name: ensure glusterfs is started
+  systemd:
+    name: glusterd
+    enabled: true
+    state: started
+    masked: false
+
+- name: "create a trusted storage pool"
+  gluster_peer:
+    state: present
+    nodes: "{{ groups['glusterfs_server'] }}"
+  run_once: true
+
+- name: "create gluster volume"
+  gluster_volume:
+    state: present
+    name: vol01
+    brick: /export/brick0/vol01
+    replicas: 3
+    cluster: "{{ groups['glusterfs_server'] }}"
+  run_once: true
+
+- name: get volume info
+  command: gluster volume info
+  register: volume_info
+  run_once: true
+  changed_when: false
+- name: show volume info
+  debug:
+    msg: "{{ volume_info.stdout_lines }}"
+  run_once: true
+
+## Nuke volume and storage pool
+# - name: warning
+#   pause:
+#     prompt: "WARNING: This will destroy your volume.  Be sure this is what you want!!"
+#     seconds: 10
+#   tags:
+#     - never
+#     - nuke
+# - name: delete gluster volume
+#   gluster_volume:
+#     state: absent
+#     name: vol01
+#   run_once: true
+#   tags:
+#     - never
+#     - nuke
+
+# - name: "remove trusted storage pool"
+#   gluster_peer:
+#     state: absent
+#     nodes: "{{ groups['glusterfs_server'][1:] }}"
+#   run_once: true
+#   tags:
+#     - never
+#     - nuke
+# - name: remove vol01
+#   file:
+#     path: /export/brick0/vol01
+#     state: absent
+#   tags:
+#     - never
+#     - nuke

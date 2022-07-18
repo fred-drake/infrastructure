@@ -1,13 +1,14 @@
-ansible_host: ENC[AES256_GCM,data:XCWTVZfr0nVSpNLGweJrEiUSbdtha3yIwhjVNHBJSWI=,iv:lc9f1SnhK+BzeoEFKSGuqBbD1YbhEr2ZjSYH+0mp6sk=,tag:2zNWi+p52wpvHqOsYI/+nQ==,type:str]
+ansible_host: ENC[AES256_GCM,data:tNkTibr4VdwrHKUGcnZMa0R/xZbYbGofBFmS,iv:53GzdlqWHzKlSz8S/yvQSH1zv1flQkRvRJNrA4exrIk=,tag:7oZZkbUpmR3mwReui2+cpQ==,type:str]
 ansible_user: ENC[AES256_GCM,data:XFNqQXJp,iv:EN06gfdDrSuhJcPOi+Gu0G3Nxch/EiJTldA3+ZM8YkU=,tag:qJVGilJ//Lza4mfwDFCegg==,type:str]
+glusterfs_brick_device: ENC[AES256_GCM,data:HU02YG+Wa20=,iv:kiMYcRPoxd9ncqXq1QL9+JHQAy4Sgi5gplYAI4abVqk=,tag:k0e24k8yWWnezxAGmkHCsw==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-17T04:44:36Z"
-    mac: ENC[AES256_GCM,data:YChIst5l6+buntuQeo4Txwq33iP97WCCSudrpdk/W0lmZGToUT8xwv07OMOFkprXl+yWcm6NAOa4A79YwMb+mun8B5cfuRTMXJBaVTKJWl8FbF3kkmGzQPxA8nlcNO3R7NqoHEVSs6erFI205cA516MSimkofuzNKtPyBQhMVY8=,iv:0PNbgtOG9hn2vLT1giWTp/yr9duNeYZuOzWFer6Y0nA=,tag:OV3NsihpnIU69mUUxlmwsQ==,type:str]
+    lastmodified: "2022-07-11T20:02:17Z"
+    mac: ENC[AES256_GCM,data:LlgOFV5nV4w90Nzg2ohxx7p1z6/O4TcH8uUd9bJHBuC8fdlNKuln/DgNm4YeuASGFp8vOQIHcMGvZJix7MFmr8TOyXzNl3dXRDOPsAzDLAp8xVj9mY4D5mOz9khi/X19IdYC81Vsdohemv6R2ZjX/QhlJLWRhJqS1cvWY/2Y6XA=,iv:R+eYRwb8woalDcvBiYfx1AkaMMMHpX5hqAPt6W3Vp5c=,tag:4Mycp+kFC1npW4zmTQ5LWg==,type:str]
     pgp:
         - created_at: "2021-10-14T00:32:45Z"
           enc: |
@@ -52,4 +53,4 @@ sops:
             -----END PGP MESSAGE-----
           fp: 70D687744B9EA519ABD008641D73DBEB53ACB2AC
     unencrypted_suffix: _unencrypted
-    version: 3.7.1
+    version: 3.7.3

@@ -2,6 +2,7 @@
 all:
   hosts:
     netboot-assets-bridge:
+
   #
   # Host groupings
   #
@@ -13,42 +14,46 @@ all:
         ubuntu:
         raspbian:
 
-    # All machines with a form of the ubuntu distribution
+    # All machines with some form of the ubuntu distribution
     ubuntu:
       children:
         ubuntu_server:
         ubuntu_desktop:
 
-    ubuntu_server: # all ubuntu servers
+    # Ubuntu servers
+    ubuntu_server:
       hosts:
         docker[1:2]:
         docker5:
         rp[1:3]:
         nuc[1:9]:
 
-    ubuntu_desktop: # all ubuntu desktops
+    # Ubuntu desktops
+    ubuntu_desktop:
       hosts:
         brynn-desktop-2:
 
-    raspbian: # all raspbian servers
+    # All Raspberry Pi OS distributions
+    raspbian:
       hosts:
         kiosk:
         scoreboard:
         scannerpi:
         rp[4:7]:
 
+    # All machines that are Pi KVM hosts
     kvm:
       hosts:
         rp[4:7]:
 
-    cuda: # all hosts with NVidia and CUDA
+    # All hosts with Nvidia/CUDA
+    cuda:
       hosts:
         brynn-desktop-2:
 
     # All docker container servers
     docker:
       children:
-        k8s_cluster:
         docker_services:
         critical_docker_services:
 
@@ -79,8 +84,24 @@ all:
           pihole_id: pihole2
           dhcp_id: dhcp2
 
-    # Servers with CIFS clients
+    # Hosts that are part of the GlusterFS cluster
+    glusterfs_server:
+      hosts:
+        nuc5:
+        nuc6:
+        nuc4:
+
+    # Machines that use the GlusterFS cluster
+    glusterfs_client:
+      children:
+        k8s_masters:
+      hosts:
+        nuc9:
+
+    # Hosts with CIFS clients
     cifs:
+      children:
+        k8s_workers:
       hosts:
         scannerpi:
 
@@ -97,35 +118,6 @@ all:
     netboot_install_servers:
       hosts:
         nuc[1:9]:
-
-    # All Talos machines
-    talos_machines:
-      children:
-        talos_control_planes:
-        talos_workers:
-
-    # Talos control planes
-    talos_control_planes:
-      hosts:
-        kw06:
-        kw07:
-        kw08:
-
-    # Talos workers
-    talos_workers:
-      hosts:
-        nuc1:
-        nuc3:
-        nuc4:
-        nuc6:
-        nuc7:
-
-    # Talos workers who also act as storage nodes
-    talos_storage_workers:
-      hosts:
-        nuc1:
-        nuc3:
-        nuc7:
 
     # Servers that are normally PXE network booted
     netboot_servers:
@@ -144,20 +136,17 @@ all:
         
     k8s_masters: # master nodes.  The first is considered the initial master.
       hosts:
-        kw06:
-        kw07:
-        kw08:
+        rp1:
+        rp2:
+        rp3:
     k8s_workers: # worker nodes
       hosts:
         nuc1:
+        nuc2:
         nuc3:
         nuc4:
+        nuc5:
         nuc6:
-        nuc7:
-
-    k8s_backup: # node managing backup with specially attached storage
-      hosts:
-        kworker07:
 
     # Raspberry Pi servers
     raspberry_pi: # all raspberry pi machines

@@ -1,0 +1,26 @@
+- hosts: glusterfs_server
+  become: true
+  tasks:
+    - name: warning
+      pause:
+        prompt: "WARNING: This will destroy your volume.  Be sure this is what you want!!  Press ENTER to continue."
+    - name: delete gluster volume
+      gluster_volume:
+        state: absent
+        name: vol01
+      run_once: true
+
+    - name: "remove trusted storage pool"
+      gluster_peer:
+        state: absent
+        nodes: "{{ groups['glusterfs'][1:] }}"
+      run_once: true
+    - name: remove vol01
+      file:
+        path: /export/brick0/vol01
+        state: absent
+    # - name: stop glusterfs
+    #   systemd:
+    #     name: glusterd
+    #     enabled: false
+    #     state: stopped

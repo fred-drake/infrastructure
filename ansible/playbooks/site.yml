@@ -1,5 +1,7 @@
 - import_playbook: provision_servers.yml
 
+- import_playbook: glusterfs.yml
+
 - import_playbook: dedicated_apps.yml
 
 - hosts: docker

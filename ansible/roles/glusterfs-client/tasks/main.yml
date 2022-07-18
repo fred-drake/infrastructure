@@ -1,0 +1,11 @@
+- name: install glusterfs client
+  apt:
+    name: glusterfs-client
+    update_cache: true
+
+# - name: mount vol01
+#   ansible.posix.mount:
+#     path: /mnt/vol01
+#     src: "{{ groups['glusterfs_server'][0] }}:/vol01"
+#     fstype: glusterfs
+#     state: mounted

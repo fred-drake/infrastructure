@@ -23,10 +23,9 @@
       k3sup join 
       --server 
       --host={{ ansible_host }} 
-      --server-host={{ k8s.initial_master_node_hostname }} 
+      --server-host={{ k8s.initial_master_node_hostname }}
       --k3s-version={{ k8s.k3s.version }} 
       --user={{ ansible_user }}
       --server-user={{ ansible_user }}
-      --k3s-extra-args="--docker"
   when: not k3s_check_installed.stat.exists and inventory_hostname != k8s.initial_master_node_hostname
   tags: k8s_setup

@@ -415,6 +415,8 @@ secret:
             transmission_rpc_password: ENC[AES256_GCM,data:74Hh/MCSbpd+cw==,iv:Z+GbU3LFta5+52bYE6+WiXDXBdCF3k487HElbHlnqCE=,tag:OK0HHs+W+VXzUtSbbEE+CA==,type:str]
         uptime_kuma:
             ip: ENC[AES256_GCM,data:pJoZXXkxweQPiqUbEg==,iv:/szxo8sGdtjHE9kSgv7zfPF/P45gfc+XAbxLqWK+dnw=,tag:5AQzRfcaVtus+TX2k5OCow==,type:str]
+        vrising:
+            ip: ENC[AES256_GCM,data:5Ot30Rd4H0tWE4ccHA==,iv:hwThYaQNikGv1RatlrVlt0rUXj9uvAEJt38n0HNcEG0=,tag:QpZbQ7cYPhInrCH77aw9xw==,type:str]
         whoogle:
             ip: ENC[AES256_GCM,data:Fn82lc1pT7fpqPwWeg==,iv:rKh1C/lRk02YqAaIKDPHVmRD2VCr2wFmzmcggpQdfGc=,tag:f0Zv+kY9DqyQXzcj86FMtw==,type:str]
 sops:
@@ -423,8 +425,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-05-29T21:57:03Z"
-    mac: ENC[AES256_GCM,data:BQ+Sf/ncnrKerb7X40kX39rQARDAXK6N7J8Ku3A0ITJMvzpk/H/dUUUkB+sns9IWtcuCB+D4gq75//pYoBjo1P4hCxo7+kd0ewc4hFtVSMMgyT/yPZi5lWikz00ePZj8wNZ9cr+uMWiyl7VLNgzoHslYD+1TWEvyJb83w1FGauE=,iv:id/KaPgSlYotWimbhNmJNQ+KN658mwoBHHiZLU2gqJ0=,tag:h8n5TRB5r2qFbFLl7/762A==,type:str]
+    lastmodified: "2022-06-18T01:15:28Z"
+    mac: ENC[AES256_GCM,data:x4vwrlkrFcbYdua0WKp2yx3FWoi0mKiGTs8OcKt3keZR3+RLLgXZoCZ9sFVJk0eIuJVjf1cei2VtYpSbDQ5v7mFPH2tiVe4h74fSsMAJglXhZBtfDzCmFMR8rjg6HLbBsu/d7nT4orFwomw18Jv//d9wPdH6gNi2yfjTh9+Gg2o=,iv:sVkQj+D0XxIKcGDQLrf2yshsTRf4nY/z0UimtxzuP2g=,tag:xq231x/76W7BeLBifRILLQ==,type:str]
     pgp:
         - created_at: "2021-10-30T18:28:12Z"
           enc: |

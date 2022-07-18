@@ -72,7 +72,8 @@
     - role: docker/volume
       vars:
         volume:
-          name: torrent
+          name: downloads
+          mount_name: torrent/complete
           container: radarr
           driver: cifs
           mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
@@ -92,7 +93,7 @@
           mounts:
             - source: radarr_videos
               target: /videos
-            - source: radarr_torrent
+            - source: radarr_downloads
               target: /downloads
       tags: radarr
     - role: docker/backup_client
@@ -133,7 +134,7 @@
             PUID: "99"
             PGID: "100"
           volumes:
-            - "{{ appdata_dir }}/sonarr/config:/config"
+            - "/mnt/vol01/sonarr/config:/config"
           mounts:
             - source: sonarr_videos
               target: /videos
@@ -146,7 +147,7 @@
         env:
           NAMESPACE: "{{ backup_namespace }}"
         volumes:
-          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+          - "/mnt/vol01/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
       tags: sonarr
       
     ### Netbox ###
@@ -218,12 +219,20 @@
       tags: netbox
           
     ### Home Assistant ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: ha_downloads
+          container: homeassistant
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+      tags: homeassistant
     - role: docker/container
       vars:
         container:
           name: homeassistant
           repository: ghcr.io/linuxserver/homeassistant
-          tag: 2021.11.5
+          tag: latest
           ip: "{{ secret.services.homeassistant.ip }}"
           env:
             PUID: "99"
@@ -231,6 +240,9 @@
             UMASK: "022"
           volumes:
             - "{{ appdata_dir }}/homeassistant/config:/config"
+          mounts:
+            - source: homeassistant_ha_downloads
+              target: /downloads
       tags: homeassistant
     - role: docker/backup_client
       vars:
@@ -242,6 +254,14 @@
       tags: homeassistant
 
     ### Node Red ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: camera_videos
+          container: node-red
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+      tags: node_red
     - role: docker/container
       vars:
         container:
@@ -261,12 +281,15 @@
         container:
           name: "node-red"
           repository: "nodered/node-red"
-          tag: 2.1.3
+          tag: 2.2.2
           ip: "{{ secret.services.node_red.ip }}"
           env:
             NODE_RED_ENABLE_SAFE_MODE: "false"
           volumes:
             - "{{ appdata_dir }}/node-red/data:/data"
+          mounts:
+            - source: node-red_camera_videos
+              target: /camera_videos
       tags: node_red
     - role: docker/backup_client
       vars:
@@ -409,6 +432,24 @@
             - "{{ appdata_dir }}/diun/data:/data"
             - "/var/run/docker.sock:/var/run/docker.sock"
       tags: diun
+
+      ### V-Rising ###
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: vrising
+    #       repository: mephi00/v-rising-wine
+    #       tag: latest
+    #       ip: "{{ secret.services.vrising.ip }}"
+    #       env:
+    #         V_RISING_NAME: example test
+    #         V_RISING_PASSW: example password
+    #         V_RISING_SAVE_NAME: save1
+    #         V_RISING_PUBLIC_LIST: "false"
+    #         V_RISING_GAME_MODE: PvE
+    #       volumes:
+    #         - "{{ appdata_dir }}/vrising/saves:/saves"
+    #   tags: vrising
 
     ### SWAG Internal ###
     # - role: docker/container
