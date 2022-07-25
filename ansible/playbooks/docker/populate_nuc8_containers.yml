@@ -387,3 +387,36 @@
             - "{{ appdata_dir }}/diun/data:/data"
             - "/var/run/docker.sock:/var/run/docker.sock"
       tags: diun
+    - role: docker/container
+      vars:
+        container:
+          name: homebridge
+          repository: oznu/homebridge
+          tag: latest
+          ip: "{{ secret.services.homebridge.ip }}"
+          network: br0.40
+          env:
+            ENABLE_AVAHI: "0"
+          volumes:
+            - "{{ glusterfs_appdata_dir }}/homebridge:/homebridge"
+      tags: homebridge
+    - role: docker/container
+      vars:
+        container:
+          name: omada
+          repository: mbentley/omada-controller
+          tag: latest
+          ip: "{{ secret.services.omada.ip }}"
+          network: br0
+          sysctls:
+            net.ipv4.ip_unprivileged_port_start: "0"
+          env:
+            MANAGE_HTTP_PORT: "80"
+            MANAGE_HTTPS_PORT: "443"
+            PORTAL_HTTP_PORT: "80"
+            PORTAL_HTTPS_PORT: "443"
+          volumes:
+            - "{{ glusterfs_appdata_dir }}/omada/data:/opt/tplink/EAPController/data"
+            - "{{ glusterfs_appdata_dir }}/omada/work:/opt/tplink/EAPController/work"
+            - "{{ glusterfs_appdata_dir }}/omada/logs:/opt/tplink/EAPController/logs"
+      tags: omada

@@ -242,6 +242,8 @@ secret:
             ip: ENC[AES256_GCM,data:QO2LL4L2ROLf0Hgskw==,iv:9aYui6pDz/qAKd0xxMBP6M3YEIpineoK26jyUtManHE=,tag:AkkQBBmcNuH5K+WwgU+18w==,type:str]
         homeassistant:
             ip: ENC[AES256_GCM,data:pYUc2YVmyuFna2z3Ew==,iv:ZA0kXq8VVNV+DTo/uBQy9yVCn8kBlrxTFz1jrAE7Bfc=,tag:XjTXsA8WEugHi1Nfg9wS6Q==,type:str]
+        homebridge:
+            ip: ENC[AES256_GCM,data:wsXt8TibErA1UT1rww==,iv:BVlEs0WLLcCKMwSqDZThTymFMGw5z1yXW+RkjYTHHSk=,tag:Uo9Xt1Nk1U9cMOF3XInTXw==,type:str]
         influxdb:
             ip: ENC[AES256_GCM,data:gtcJY2+CnjpG3MSOag==,iv:6G+eQEMZbcV2ilmL7Vgg9cPZi29yhrH9sdBpOzXajuk=,tag:53Rb5RXcG473Q5eA4X+y4A==,type:str]
         influxdb_wifi:
@@ -310,6 +312,8 @@ secret:
             password: ENC[AES256_GCM,data:f+Nfzx3DmEYD2dsbkub0,iv:qgdy17VZe3GTtuuuON29PrPEYoa8oGtNz4nhXozT/5M=,tag:k8a7XzIw5SS3NwT6XomBzQ==,type:str]
         office_touchpad:
             ip: ENC[AES256_GCM,data:MjGnQiXCJfS7bn6XmFo=,iv:8ssew5y/gg1Z0s/ZeeEmelW1v/etLJ2niXKqDE7ho2c=,tag:ngf9YwkBlxwwFhy1xmqYAA==,type:str]
+        omada:
+            ip: ENC[AES256_GCM,data:r9LPYVRelF4Kf1D18yk=,iv:F8IDdTgAehSPNfaI/bdxZHC4PrdPHMYn6G7yGyEfxbE=,tag:vLX2ZgFgrJtdZeR57hhngA==,type:str]
         overseerr:
             ip: ENC[AES256_GCM,data:hkVpkc1pvqtnbYpX7vk=,iv:pTV8AH+F3LYpWCeRJexevlnZ0veDTD7yKB2DysADsDw=,tag:B4a2qoSvoOearA96P3STRA==,type:str]
         paperless:
@@ -425,8 +429,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-06-18T01:15:28Z"
-    mac: ENC[AES256_GCM,data:x4vwrlkrFcbYdua0WKp2yx3FWoi0mKiGTs8OcKt3keZR3+RLLgXZoCZ9sFVJk0eIuJVjf1cei2VtYpSbDQ5v7mFPH2tiVe4h74fSsMAJglXhZBtfDzCmFMR8rjg6HLbBsu/d7nT4orFwomw18Jv//d9wPdH6gNi2yfjTh9+Gg2o=,iv:sVkQj+D0XxIKcGDQLrf2yshsTRf4nY/z0UimtxzuP2g=,tag:xq231x/76W7BeLBifRILLQ==,type:str]
+    lastmodified: "2022-07-24T02:01:44Z"
+    mac: ENC[AES256_GCM,data:cW3KKlLvej1/qHydzvjeB1+9UISLd03P3v3G5rb89+otmi6lySE+MvK/MWxJtN9i5i0tMnh9CVW/DTOpFrtVDmUqRFA6K4EhokQkyqoDCwgKELGiPxAqcDBY4d3c8ebpuL7N1bbvsmPTQupR4nq7Kvn9yP9Pud0ntwaHRn5XQaU=,iv:5QLXT8OLYYwNEEx1bU60nOw08Ur+RdqtJXMUIcsOI8Q=,tag:x3Ythbzb7B4yspdXaG4yPw==,type:str]
     pgp:
         - created_at: "2021-10-30T18:28:12Z"
           enc: |
