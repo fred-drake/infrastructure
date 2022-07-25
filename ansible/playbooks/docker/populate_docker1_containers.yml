@@ -41,31 +41,31 @@
       tags: uptime_kuma
 
     ### SWAG Internal ###
-    - role: docker/container
-      vars:
-        container:
-          name: swag_internal
-          repository: linuxserver/swag
-          tag: "{{ special_tags.swag.tag | default('latest') }}"
-          ip: "{{ secret.services.swag_internal.ip }}"
-          env:
-            PUID: "99"
-            PGID: "100"
-            EMAIL: "{{ secret.services.swag_internal.email }}"
-            URL: "{{ secret.services.swag_internal.url }}"
-            SUBDOMAINS: "{{ secret.services.swag_internal.subdomains }}"
-            ONLY_SUBDOMAINS: "{{ secret.services.swag_internal.only_subdomains }}"
-            VALIDATION: "{{ secret.services.swag_internal.validation }}"
-            DNSPLUGIN: "{{ secret.services.swag_internal.dnsplugin }}"
-            STAGING: "{{ secret.services.swag_internal.staging }}"
-          volumes:
-            - "{{ appdata_dir }}/swag-internal:/config"
-      tags: swag_internal
-    # Sync proxy files
-    - role: docker/swag_internal
-      tags:
-        - swag_internal
-        - swag_internal_update
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: swag_internal
+    #       repository: linuxserver/swag
+    #       tag: "{{ special_tags.swag.tag | default('latest') }}"
+    #       ip: "{{ secret.services.swag_internal.ip }}"
+    #       env:
+    #         PUID: "99"
+    #         PGID: "100"
+    #         EMAIL: "{{ secret.services.swag_internal.email }}"
+    #         URL: "{{ secret.services.swag_internal.url }}"
+    #         SUBDOMAINS: "{{ secret.services.swag_internal.subdomains }}"
+    #         ONLY_SUBDOMAINS: "{{ secret.services.swag_internal.only_subdomains }}"
+    #         VALIDATION: "{{ secret.services.swag_internal.validation }}"
+    #         DNSPLUGIN: "{{ secret.services.swag_internal.dnsplugin }}"
+    #         STAGING: "{{ secret.services.swag_internal.staging }}"
+    #       volumes:
+    #         - "{{ appdata_dir }}/swag-internal:/config"
+    #   tags: swag_internal
+    # # Sync proxy files
+    # - role: docker/swag_internal
+    #   tags:
+    #     - swag_internal
+    #     - swag_internal_update
 
     ### static.freddrake.com site ###
     - role: docker/volume
