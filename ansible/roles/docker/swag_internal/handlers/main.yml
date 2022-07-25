@@ -1,11 +1,11 @@
 ---
-- name: restart swag_internal
+- name: restart swag-internal
   community.docker.docker_container:
-    name: swag_internal
+    name: swag-internal
     container_default_behavior: "{{ container_default_behavior }}"
     restart: true
 - name: restart nginx
   # ansible.builtin.shell: docker exec swag_internal /usr/sbin/nginx -c /config/nginx/nginx.conf -s reload
   community.docker.docker_container_exec:
-    container: swag_internal
+    container: swag-internal
     command: /bin/bash -c "/usr/sbin/nginx -c /config/nginx/nginx.conf -s reload"
