@@ -93,9 +93,10 @@ all:
 
     # Machines that use the GlusterFS cluster
     glusterfs_client:
-      children:
-        k8s_masters:
+      # children:
+      #   k8s_masters:
       hosts:
+        nuc8:
         nuc9:
 
     # Hosts with CIFS clients
