@@ -2,15 +2,17 @@ ansible_host: ENC[AES256_GCM,data:KJCrcrP6X3SLNzmyTRk5fnrQ9+3IqH9gvwZz,iv:V9lfQs
 ansible_user: ENC[AES256_GCM,data:XFNqQXJp,iv:EN06gfdDrSuhJcPOi+Gu0G3Nxch/EiJTldA3+ZM8YkU=,tag:qJVGilJ//Lza4mfwDFCegg==,type:str]
 interface_208: ENC[AES256_GCM,data:JFXHZxum7A==,iv:W8Le8Vt5Rh0Etz/QpEM/xLmPDyz+DUxDbUBSiX6E9E8=,tag:NnqZGZygBVsTNANXA2jkWA==,type:str]
 interface_50: ENC[AES256_GCM,data:JJiavIiCmFIH0g==,iv:t50wXlk5yVA5B+JfHMGitBhTPkicFZT2xOBt++cm1EE=,tag:pnxP5aMdv0el638u+WmEJA==,type:str]
+interface_40: ENC[AES256_GCM,data:4h5wRk6S7Pzr+A==,iv:V8QKtFhC8kThwcdVmV+oDQ+9f4YDeG1GM82WN2iBWG8=,tag:GEe4L9By1Cr9Ki080nmRRA==,type:str]
 address_50: ENC[AES256_GCM,data:QNTcd7oveVgeKXoEHw==,iv:NEIpjCKjKk3G9lFgXjsTJdzsZSp+9Calk65GQnVH/tM=,tag:wQRvP7cDXUCJHOfvC/E74w==,type:str]
+address_40: ENC[AES256_GCM,data:A3PSjbBt3N0RDY5ZUw==,iv:75oISDZB1ToC3Xa6tyqctuEWkFMVFaIPGCH/zHLDNmo=,tag:i9GqH3mK2iF6GNIWgBePMQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-05-29T01:47:00Z"
-    mac: ENC[AES256_GCM,data:cvaH0aq6wWg5lbtyqe8fDlcwtT6M6cvPugWo5Sz7dsZOF1nJ2Enwt2QwjZOH5PoESu13GsrbWHVi9oLTMDfX2A2rhBL+QkFTBbF27uT+/fkQJ8uZSfWo+nuKGB5sou25ZPkMwQbz9x7pDQYIR3anyidNvr5OFYmJbNrmwo0uhu4=,iv:OTULPNPn2Y7KfxJr+DiJyt9gFgvbZ0auIyKS7eoXsIE=,tag:DVheEOBKT6gsUqOXWT0omA==,type:str]
+    lastmodified: "2022-07-21T02:15:54Z"
+    mac: ENC[AES256_GCM,data:1jNUgaAa2mwiZ1CHwHpia1ho3tXUc6+lgOOQJ+y4iUUQJ71F7wVvLtm8m9nvKjLClhp9nR8y70JPCxLU0TUxyVrhQwTlTSugvMRLbb7Vfjm+8oT5qm2PG45+96vx/jthKHQQ0tEClipLdncftLkeCyMofJqcaJnWCbbzIBvfcec=,iv:f8U/0Fez4I7M/UWpnAKx1/DRdLpQsrxTHawjE7GCA60=,tag:0wPrrAbSoJhbWrIXR4SyKQ==,type:str]
     pgp:
         - created_at: "2021-10-14T00:32:45Z"
           enc: |
