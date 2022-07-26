@@ -21,8 +21,8 @@ applications:
     prune: true
     selfHeal: true
   - name: argocd-image-updater
-    namespace: argocd-image-updater
-    path: cluster/argocd
+    namespace: argocd
+    path: cluster/core/argocd-image-updater
     annotations:
       argocd-image-updater.argoproj.io/image-list: updater=argoprojlabs/argocd-image-updater
       argocd-image-updater.argoproj.io/updater.helm.image-name: argocd-image-updater.image.repository
