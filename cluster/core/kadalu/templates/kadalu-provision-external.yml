@@ -1,10 +1,9 @@
 apiVersion: kadalu-operator.storage/v1alpha1
 kind: KadaluStorage
 metadata:
-  name: gfs-1
+  name: gfs
 spec:
   type: External
-  # kadalu_format: native
   details:
     gluster_hosts:
       - nuc4
