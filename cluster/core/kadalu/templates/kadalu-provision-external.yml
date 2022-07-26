@@ -1,0 +1,11 @@
+apiVersion: kadalu-operator.storage/v1alpha1
+kind: KadaluStorage
+metadata:
+  name: gfs-1
+spec:
+  type: External
+  kadalu_format: native
+  details:
+    gluster_hosts: "{{ .Values.hosts }}"
+    gluster_volname: "{{ .Values.volname }}"
+    gluster_options: "{{ .Values.options }}"

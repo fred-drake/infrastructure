@@ -62,3 +62,10 @@ applications:
     hasSecretsFile: false
     prune: true
     selfHeal: true
+  - name: kadalu
+    namespace: kadalu
+    path: cluster/core/kadalu
+    annotations:
+    hasSecretsFile: false
+    prune: true
+    selfHeal: true

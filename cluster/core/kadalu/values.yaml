@@ -1,0 +1,6 @@
+volname: vol01
+options: log-level=INFO
+hosts:
+  - nuc4
+  - nuc5
+  - nuc6
