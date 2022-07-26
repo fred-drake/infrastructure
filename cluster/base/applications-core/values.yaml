@@ -20,6 +20,18 @@ applications:
     hasSecretsFile: true
     prune: true
     selfHeal: true
+  - name: argocd-image-updater
+    namespace: argocd
+    path: cluster/argocd
+    annotations:
+      argocd-image-updater.argoproj.io/image-list: updater=argoprojlabs/argocd-image-updater
+      argocd-image-updater.argoproj.io/updater.helm.image-name: argocd-image-updater.image.repository
+      argocd-image-updater.argoproj.io/updater.helm.image-tag: argocd-image-updater.image.tag
+      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+      argocd-image-updater.argoproj.io/git-branch: master
+    hasSecretsFile: true
+    prune: true
+    selfHeal: true
   - name: metallb
     namespace: metallb-system
     path: cluster/core/metallb
