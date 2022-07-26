@@ -4,7 +4,7 @@ metadata:
   name: gfs-1
 spec:
   type: External
-  kadalu_format: native
+  # kadalu_format: native
   details:
     gluster_hosts:
       - nuc4
