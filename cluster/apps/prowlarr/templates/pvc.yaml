@@ -4,8 +4,9 @@ metadata:
   name: prowlarr-config
   namespace: prowlarr
 spec:
+  # storageClassName: gfs
   accessModes:
-  - ReadWriteMany
+    - ReadWriteMany
   resources:
     requests:
       storage: 20Gi
