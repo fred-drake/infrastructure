@@ -6,6 +6,9 @@ spec:
   type: External
   kadalu_format: native
   details:
-    gluster_hosts: "{{ .Values.hosts }}"
-    gluster_volname: "{{ .Values.volname }}"
-    gluster_options: "{{ .Values.options }}"
+    gluster_hosts:
+      - nuc4
+      - nuc5
+      - nuc6
+    gluster_volname: vol01
+    gluster_options: log-level=INFO
