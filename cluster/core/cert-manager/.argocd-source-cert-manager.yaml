@@ -4,17 +4,17 @@ helm:
     value: quay.io/jetstack/cert-manager-cainjector
     forcestring: true
   - name: cert-manager.cainjector.image.tag
-    value: v1.9.0
+    value: v1.9.1
     forcestring: true
   - name: cert-manager.image.repository
     value: quay.io/jetstack/cert-manager-controller
     forcestring: true
   - name: cert-manager.image.tag
-    value: v1.9.0
+    value: v1.9.1
     forcestring: true
   - name: cert-manager.webhook.image.repository
     value: quay.io/jetstack/cert-manager-webhook
     forcestring: true
   - name: cert-manager.webhook.image.tag
-    value: v1.9.0
+    value: v1.9.1
     forcestring: true
