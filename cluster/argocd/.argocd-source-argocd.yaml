@@ -4,13 +4,13 @@ helm:
     value: quay.io/argoproj/argocd
     forcestring: true
   - name: argo-cd.global.image.tag
-    value: v2.4.7
+    value: v2.4.8
     forcestring: true
   - name: argo-cd.dex.image.repository
     value: ghcr.io/dexidp/dex
     forcestring: true
   - name: argo-cd.dex.image.tag
-    value: v2.32.0
+    value: v2.33.0
     forcestring: true
   - name: argo-cd.redis.image.repository
     value: redis
