@@ -4,34 +4,34 @@ storageNodes: []
   # - nuc7
 
 applications:
-  - name: argocd
-    namespace: argocd
-    path: cluster/argocd
-    annotations:
-      argocd-image-updater.argoproj.io/image-list: controller=quay.io/argoproj/argocd:2.x, dex=ghcr.io/dexidp/dex:2.x, redis=redis:6.x.x-alpine
-      argocd-image-updater.argoproj.io/dex.helm.image-name: argo-cd.dex.image.repository
-      argocd-image-updater.argoproj.io/dex.helm.image-tag: argo-cd.dex.image.tag
-      argocd-image-updater.argoproj.io/controller.helm.image-name: argo-cd.global.image.repository
-      argocd-image-updater.argoproj.io/controller.helm.image-tag: argo-cd.global.image.tag
-      argocd-image-updater.argoproj.io/redis.helm.image-name: argo-cd.redis.image.repository
-      argocd-image-updater.argoproj.io/redis.helm.image-tag: argo-cd.redis.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
-      argocd-image-updater.argoproj.io/git-branch: master
-    hasSecretsFile: true
-    prune: true
-    selfHeal: true
-  - name: argocd-image-updater
-    namespace: argocd
-    path: cluster/core/argocd-image-updater
-    annotations:
-      argocd-image-updater.argoproj.io/image-list: updater=argoprojlabs/argocd-image-updater
-      argocd-image-updater.argoproj.io/updater.helm.image-name: argocd-image-updater.image.repository
-      argocd-image-updater.argoproj.io/updater.helm.image-tag: argocd-image-updater.image.tag
-      argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
-      argocd-image-updater.argoproj.io/git-branch: master
-    hasSecretsFile: true
-    prune: true
-    selfHeal: true
+  # - name: argocd
+  #   namespace: argocd
+  #   path: cluster/argocd
+  #   annotations:
+  #     argocd-image-updater.argoproj.io/image-list: controller=quay.io/argoproj/argocd:2.x, dex=ghcr.io/dexidp/dex:2.x, redis=redis:6.x.x-alpine
+  #     argocd-image-updater.argoproj.io/dex.helm.image-name: argo-cd.dex.image.repository
+  #     argocd-image-updater.argoproj.io/dex.helm.image-tag: argo-cd.dex.image.tag
+  #     argocd-image-updater.argoproj.io/controller.helm.image-name: argo-cd.global.image.repository
+  #     argocd-image-updater.argoproj.io/controller.helm.image-tag: argo-cd.global.image.tag
+  #     argocd-image-updater.argoproj.io/redis.helm.image-name: argo-cd.redis.image.repository
+  #     argocd-image-updater.argoproj.io/redis.helm.image-tag: argo-cd.redis.image.tag
+  #     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+  #     argocd-image-updater.argoproj.io/git-branch: master
+  #   hasSecretsFile: true
+  #   prune: true
+  #   selfHeal: true
+  # - name: argocd-image-updater
+  #   namespace: argocd
+  #   path: cluster/core/argocd-image-updater
+  #   annotations:
+  #     argocd-image-updater.argoproj.io/image-list: updater=argoprojlabs/argocd-image-updater
+  #     argocd-image-updater.argoproj.io/updater.helm.image-name: argocd-image-updater.image.repository
+  #     argocd-image-updater.argoproj.io/updater.helm.image-tag: argocd-image-updater.image.tag
+  #     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+  #     argocd-image-updater.argoproj.io/git-branch: master
+  #   hasSecretsFile: true
+  #   prune: true
+  #   selfHeal: true
   - name: metallb
     namespace: metallb-system
     path: cluster/core/metallb
@@ -74,10 +74,10 @@ applications:
     hasSecretsFile: false
     prune: true
     selfHeal: true
-  - name: kadalu
-    namespace: kadalu
-    path: cluster/core/kadalu
-    annotations:
-    hasSecretsFile: false
-    prune: true
-    selfHeal: true
+  # - name: kadalu
+  #   namespace: kadalu
+  #   path: cluster/core/kadalu
+  #   annotations:
+  #   hasSecretsFile: false
+  #   prune: true
+  #   selfHeal: true
