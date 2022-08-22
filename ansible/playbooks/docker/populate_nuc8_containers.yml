@@ -368,6 +368,7 @@
           volumes:
             - "{{ appdata_dir }}/gitea/data:/data"
       tags: gitea
+
     - role: docker/container
       vars:
         container:
@@ -387,6 +388,7 @@
             - "{{ appdata_dir }}/diun/data:/data"
             - "/var/run/docker.sock:/var/run/docker.sock"
       tags: diun
+
     - role: docker/container
       vars:
         container:
@@ -400,6 +402,7 @@
           volumes:
             - "{{ glusterfs_appdata_dir }}/homebridge:/homebridge"
       tags: homebridge
+
     - role: docker/container
       vars:
         container:
@@ -420,6 +423,7 @@
             - "{{ glusterfs_appdata_dir }}/omada/work:/opt/tplink/EAPController/work"
             - "{{ glusterfs_appdata_dir }}/omada/logs:/opt/tplink/EAPController/logs"
       tags: omada
+
     - role: docker/container
       vars:
         container:
@@ -445,3 +449,41 @@
       tags:
         - swag_internal
         - swag_internal_update
+
+    ### SabNZBD ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: incomplete
+          container: sabnzbd
+          mount_name: torrent/incomplete
+          driver: cifs
+      tags: sabnzbd
+    - role: docker/volume
+      vars:
+        volume:
+          name: downloads
+          container: sabnzbd
+          mount_name: torrent/complete
+          driver: cifs
+      tags: sabnzbd
+    - role: docker/container
+      vars:
+        container:
+          name: sabnzbd
+          repository: linuxserver/sabnzbd
+          tag: latest
+          ip: "{{ secret.services.sabnzbd.ip }}"
+          env:
+            PUID: "99"
+            PGID: "100"
+          # mounts:
+          #   - source: sabnzbd_incomplete
+          #     target: /incomplete-downloads
+          #   - source: sabnzbd_downloads
+          #     target: /downloads
+          volumes:
+            - "{{ glusterfs_appdata_dir }}/sabnzbd/config:/config"
+            - "{{ glusterfs_appdata_dir }}/sabnzbd/downloads:/downloads"
+            - "{{ glusterfs_appdata_dir }}/sabnzbd/incomplete-downloads:/incomplete-downloads"
+      tags: sabnzbd

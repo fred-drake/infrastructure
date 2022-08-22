@@ -144,41 +144,41 @@
             - '--path.rootfs=/rootfs'
             - '--path.sysfs=/host/sys'
             - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
-    ### SabNZBD ###
-    - role: docker/volume
-      vars:
-        volume:
-          name: incomplete
-          container: sabnzbd
-          mount_name: torrent/incomplete
-          driver: cifs
-      tags: sabnzbd
-    - role: docker/volume
-      vars:
-        volume:
-          name: downloads
-          container: sabnzbd
-          mount_name: torrent/complete
-          driver: cifs
-      tags: sabnzbd
-    - role: docker/container
-      vars:
-        container:
-          name: sabnzbd
-          repository: linuxserver/sabnzbd
-          tag: latest
-          ip: "{{ secret.services.sabnzbd.ip }}"
-          env:
-            PUID: "99"
-            PGID: "100"
-          mounts:
-            - source: sabnzbd_incomplete
-              target: /incomplete-downloads
-            - source: sabnzbd_downloads
-              target: /downloads
-          volumes:
-            - "{{ appdata_dir }}/sabnzbd:/config"
-      tags: sabnzbd
+    # ### SabNZBD ###
+    # - role: docker/volume
+    #   vars:
+    #     volume:
+    #       name: incomplete
+    #       container: sabnzbd
+    #       mount_name: torrent/incomplete
+    #       driver: cifs
+    #   tags: sabnzbd
+    # - role: docker/volume
+    #   vars:
+    #     volume:
+    #       name: downloads
+    #       container: sabnzbd
+    #       mount_name: torrent/complete
+    #       driver: cifs
+    #   tags: sabnzbd
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: sabnzbd
+    #       repository: linuxserver/sabnzbd
+    #       tag: latest
+    #       ip: "{{ secret.services.sabnzbd.ip }}"
+    #       env:
+    #         PUID: "99"
+    #         PGID: "100"
+    #       mounts:
+    #         - source: sabnzbd_incomplete
+    #           target: /incomplete-downloads
+    #         - source: sabnzbd_downloads
+    #           target: /downloads
+    #       volumes:
+    #         - "{{ appdata_dir }}/sabnzbd:/config"
+    #   tags: sabnzbd
 
     ### DIUN ###
     - role: docker/container

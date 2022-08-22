@@ -90,11 +90,10 @@
             PGID: "100"
           volumes:
             - "{{ appdata_dir }}/radarr/config:/config"
+            - "{{ glusterfs_appdata_dir }}/sabnzbd/downloads:/downloads"
           mounts:
             - source: radarr_videos
               target: /videos
-            - source: radarr_downloads
-              target: /downloads
       tags: radarr
     - role: docker/backup_client
       vars:
@@ -135,11 +134,10 @@
             PGID: "100"
           volumes:
             - "{{ glusterfs_appdata_dir }}/sonarr/config:/config"
+            - "{{ glusterfs_appdata_dir }}/sabnzbd/downloads:/downloads"
           mounts:
             - source: sonarr_videos
               target: /videos
-            - source: sonarr_downloads
-              target: /downloads
       tags: sonarr
     - role: docker/backup_client
       vars:
