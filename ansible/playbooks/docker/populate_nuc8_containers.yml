@@ -487,3 +487,11 @@
             - "{{ glusterfs_appdata_dir }}/sabnzbd/downloads:/downloads"
             - "{{ glusterfs_appdata_dir }}/sabnzbd/incomplete-downloads:/incomplete-downloads"
       tags: sabnzbd
+    - role: docker/backup_client
+      vars:
+        backup_namespace: sabnzbd
+        env:
+          NAMESPACE: "{{ backup_namespace }}"
+        volumes:
+          - "{{ glusterfs_appdata_dir }}/{{ backup_namespace }}/config:/backup/{{ backup_namespace }}"
+      tags: sabnzbd

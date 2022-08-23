@@ -94,6 +94,8 @@
           mounts:
             - source: radarr_videos
               target: /videos
+            - source: radarr_videos
+              target: /movies
       tags: radarr
     - role: docker/backup_client
       vars:
@@ -430,6 +432,27 @@
             - "{{ appdata_dir }}/diun/data:/data"
             - "/var/run/docker.sock:/var/run/docker.sock"
       tags: diun
+
+    ### Uptime Kuma ###
+    - role: docker/container
+      vars:
+        container:
+          name: uptime-kuma
+          repository: louislam/uptime-kuma
+          tag: "{{ special_tags.uptime_kuma.tag | default('latest') }}"
+          ip: "{{ secret.services.uptime_kuma.ip }}"
+          volumes:
+           - "{{ glusterfs_appdata_dir }}/uptime-kuma:/app/data"
+      tags: uptime_kuma
+    - role: docker/backup_client
+      vars:
+        backup_namespace: "uptime-kuma"
+        env:
+          NAMESPACE: "{{ backup_namespace }}"
+        volumes:
+          - "{{ glusterfs_appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+      tags: uptime_kuma
+
 
       ### V-Rising ###
     # - role: docker/container

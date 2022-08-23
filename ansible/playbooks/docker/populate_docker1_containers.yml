@@ -20,25 +20,25 @@
             - /var/run/docker.sock:/var/run/docker.sock
       tags: dozzle
 
-    ### Uptime Kuma ###
-    - role: docker/container
-      vars:
-        container:
-          name: uptime-kuma
-          repository: louislam/uptime-kuma
-          tag: "{{ special_tags.uptime_kuma.tag | default('latest') }}"
-          ip: "{{ secret.services.uptime_kuma.ip }}"
-          volumes:
-           - "{{ appdata_dir }}/uptime-kuma:/app/data"
-      tags: uptime_kuma
-    - role: docker/backup_client
-      vars:
-        backup_namespace: "uptime-kuma"
-        env:
-          NAMESPACE: "{{ backup_namespace }}"
-        volumes:
-          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
-      tags: uptime_kuma
+    # ### Uptime Kuma ###
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: uptime-kuma
+    #       repository: louislam/uptime-kuma
+    #       tag: "{{ special_tags.uptime_kuma.tag | default('latest') }}"
+    #       ip: "{{ secret.services.uptime_kuma.ip }}"
+    #       volumes:
+    #        - "{{ appdata_dir }}/uptime-kuma:/app/data"
+    #   tags: uptime_kuma
+    # - role: docker/backup_client
+    #   vars:
+    #     backup_namespace: "uptime-kuma"
+    #     env:
+    #       NAMESPACE: "{{ backup_namespace }}"
+    #     volumes:
+    #       - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+    #   tags: uptime_kuma
 
     ### SWAG Internal ###
     # - role: docker/container
