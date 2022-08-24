@@ -23,4 +23,3 @@
 
 - ansible.builtin.include_role:
     name: docker/container
-    # vars_from: "{{ traefik_type }}"
