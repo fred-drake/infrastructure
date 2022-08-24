@@ -118,7 +118,7 @@ secret:
                 router: ENC[AES256_GCM,data:w3v1GaUYIqhInqDd,iv:+Iq3QFUp2k21+c+QlID09SyOk8BvVzJ5psovba6ELww=,tag:DyLIA1UD08eGX7B2WD7cmQ==,type:str]
                 dns1: ENC[AES256_GCM,data:iiEeIKTNBkAIbH8J,iv:AVAHGvea7f98ZVWNJH2EGU52+gaWEWNP/RYQDFlweGg=,tag:4j1PtsrrZ1tTXqWtii+nEg==,type:str]
                 dns2: ENC[AES256_GCM,data:/JMYSkWHzXoR4K8V,iv:wBlL0Tv0QWSH1kmioglT2EPsAwHzZCi+6AGQcbR+6vs=,tag:oaqTuxBL3KJz2OZIo3na/Q==,type:str]
-                range_start: ENC[AES256_GCM,data:gm/dakP8O9D9ILCcqU0=,iv:tVE3kVLHOnrDEgv51HqJMKeWjpF3hPOj4ViQbri1l9o=,tag:uHSdxxEDU/45IWI82vREmg==,type:str]
+                range_start: ENC[AES256_GCM,data:aqARkE13im5Gd3ezTyY=,iv:66TgfLi26Snka2/SDtuPvJEYS9CSp3IbgaNhFSJ5Aj4=,tag:UHY4u36kM5lt22ljsZAIJw==,type:str]
                 range_end: ENC[AES256_GCM,data:P4L2gLLyQLj9qf+wFj8=,iv:kKG6P6UhF1VNCa5L989eaZ0JnbHu3MSpCv28E+cElOY=,tag:ERNt7BmrMBJ6abcMgna5Tw==,type:str]
                 boot_addr: ENC[AES256_GCM,data:9S7HW4V8AJ3v0DNWrQ==,iv:cCni7rQ36pLRNpSOVTzsp8VsjMqJ21Fs/2xZUn2aTvw=,tag:aYz9DUFhZ1BwUVxE35nToQ==,type:str]
             workstation:
@@ -429,8 +429,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-07-24T02:01:44Z"
-    mac: ENC[AES256_GCM,data:cW3KKlLvej1/qHydzvjeB1+9UISLd03P3v3G5rb89+otmi6lySE+MvK/MWxJtN9i5i0tMnh9CVW/DTOpFrtVDmUqRFA6K4EhokQkyqoDCwgKELGiPxAqcDBY4d3c8ebpuL7N1bbvsmPTQupR4nq7Kvn9yP9Pud0ntwaHRn5XQaU=,iv:5QLXT8OLYYwNEEx1bU60nOw08Ur+RdqtJXMUIcsOI8Q=,tag:x3Ythbzb7B4yspdXaG4yPw==,type:str]
+    lastmodified: "2022-08-23T19:10:19Z"
+    mac: ENC[AES256_GCM,data:pN5u4OKso4wJj3LlwSv4uOlysKlBJDaytAze+4dURvXf4RiUaEmzyjqfvdw3ltCkhzmshZMDTRIHCXpiiJUghiq7zPaSJXfB+tR8GV1jEUwtS6ohMUFREXcz0xwcILsGka66GlbPBXxHyT0Vm8737kc7VRtYLCQVVosJTgKB/Tg=,iv:6osRlLQz/UM/RVCDpM/KxySt3qmRUwJ5Gh46zDdG1qk=,tag:Hjec2VkGNJ7No4SNEh+ELg==,type:str]
     pgp:
         - created_at: "2021-10-30T18:28:12Z"
           enc: |
