@@ -454,43 +454,42 @@
       tags: uptime_kuma
 
     ### Traefik Internal ###
-    # - role: docker/container
-    #   vars:
-    #     container:
-    #       name: traefik-internal
-    #       repository: traefik
-    #       tag: latest
-    #       ip: "{{ secret.services.traefik_internal.ip }}"
-    #       env:
-    #         CLOUDFLARE_EMAIL: "{{ secret.services.traefik_internal.cloudflare_email }}"
-    #         CLOUDFLARE_API_KEY: "{{ secret.services.traefik_internal.cloudflare_key }}"
-    #       security_opts:
-    #         - "no-new-privileges:true"
-    #       labels: 
-    #         traefik.enable: "true"
-    #         traefik.http.services.justAdummyService.loadbalancer.server.port: "1337"
-    #         traefik.http.routers.traefik.entrypoints: http
-    #         traefik.http.routers.traefik.rule: "Host (`traefik-internal.{{ secret.domain }}`)"
-    #         traefik.http.middlewares.traefik-auth.basicauth.users: "{{ secret.services.traefik_internal.credentials }}"
-    #         traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme: https
-    #         traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto: https
-    #         traefik.http.routers.traefik.middlewares: traefik-https-redirect
-    #         traefik.http.routers.traefik-secure.entrypoints: https
-    #         traefik.http.routers.traefik-secure.rule: "Host (`traefik-internal.{{ secret.domain }}`)"
-    #         traefik.http.routers.traefik-secure.middlewares: traefik-auth
-    #         traefik.http.routers.traefik-secure.tls: "true"
-    #         traefik.http.routers.traefik-secure.tls.certresolver: cloudflare
-    #         traefik.http.routers.traefik-secure.tls.domains[0].main: "{{ secret.domain }}"
-    #         traefik.http.routers.traefik-secure.tls.domains[0].sans: "*.{{ secret.domain }}"
-    #         traefik.http.routers.traefik-secure.service: api@internal
-    #       volumes:
-    #         - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    #         - "{{ glusterfs_appdata_dir }}/traefik-internal/data/traefik.yml:/traefik.yml:ro"
-    #         - "{{ glusterfs_appdata_dir }}/traefik-internal/data/acme.json:/acme.json"
-    #         - "{{ glusterfs_appdata_dir }}/traefik-internal/config.yml:/config.yml:ro"
-    #   tags: traefik_internal
     - name: traefik internal
-      role: docker/traefik_internal
+      role: docker/traefik
+      vars:
+        traefik_type: internal
+        container:
+          name: traefik-internal
+          repository: traefik
+          tag: latest
+          ip: "{{ secret.services.traefik_internal.ip }}"
+          env:
+            CLOUDFLARE_EMAIL: "{{ secret.services.traefik_internal.cloudflare_email }}"
+            CLOUDFLARE_API_KEY: "{{ secret.services.traefik_internal.cloudflare_key }}"
+          security_opts:
+            - "no-new-privileges:true"
+          labels: 
+            traefik.enable: "true"
+            traefik.http.services.justAdummyService.loadbalancer.server.port: "1337"
+            traefik.http.routers.traefik.entrypoints: http
+            traefik.http.routers.traefik.rule: "Host (`traefik-internal.{{ secret.domain }}`)"
+            traefik.http.middlewares.traefik-auth.basicauth.users: "{{ secret.services.traefik_internal.credentials }}"
+            traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme: https
+            traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto: https
+            traefik.http.routers.traefik.middlewares: traefik-https-redirect
+            traefik.http.routers.traefik-secure.entrypoints: https
+            traefik.http.routers.traefik-secure.rule: "Host (`traefik-internal.{{ secret.domain }}`)"
+            traefik.http.routers.traefik-secure.middlewares: traefik-auth
+            traefik.http.routers.traefik-secure.tls: "true"
+            traefik.http.routers.traefik-secure.tls.certresolver: cloudflare
+            traefik.http.routers.traefik-secure.tls.domains[0].main: "{{ secret.domain }}"
+            traefik.http.routers.traefik-secure.tls.domains[0].sans: "*.{{ secret.domain }}"
+            traefik.http.routers.traefik-secure.service: api@internal
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock:ro"
+            - "{{ glusterfs_appdata_dir }}/traefik-internal/data/traefik.yml:/traefik.yml:ro"
+            - "{{ glusterfs_appdata_dir }}/traefik-internal/data/acme.json:/acme.json"
+            - "{{ glusterfs_appdata_dir }}/traefik-internal/config.yml:/config.yml:ro"
       tags: traefik_internal
 
 

@@ -1,31 +1,26 @@
-# - name: acme.json directory stat
-#   stat:
-#     path: "{{ glusterfs_appdata_dir }}/traefik-internal/data/acme.json"
-#   register: acme_json_file
-
 - name: create empty acme.json file if it doesn't already exist
   ansible.builtin.file:
-    path: "{{ glusterfs_appdata_dir }}/traefik-internal/data/acme.json"
+    path: "{{ glusterfs_appdata_dir }}/traefik-{{ traefik_type }}/data/acme.json"
     state: touch
     mode: "0600"
     modification_time: preserve
     access_time: preserve
   notify: restart traefik
-  # when: not acme_json_file.stat.exists
 
 - name: set traefik system configuration
   ansible.builtin.template:
-    src: traefik.yml.j2
-    dest: "{{ glusterfs_appdata_dir }}/traefik-internal/data/traefik.yml"
+    src: "{{ traefik_type }}/traefik.yml.j2"
+    dest: "{{ glusterfs_appdata_dir }}/traefik-{{ traefik_type }}/data/traefik.yml"
     mode: "0644"
   notify: restart traefik
 
 - name: set traefik route configuration
   ansible.builtin.template:
-    src: config.yml.j2
-    dest: "{{ glusterfs_appdata_dir }}/traefik-internal/config.yml"
+    src: "{{ traefik_type }}/config.yml.j2"
+    dest: "{{ glusterfs_appdata_dir }}/traefik-{{ traefik_type }}/config.yml"
     mode: "0644"
   notify: restart traefik
 
 - ansible.builtin.include_role:
     name: docker/container
+    # vars_from: "{{ traefik_type }}"
