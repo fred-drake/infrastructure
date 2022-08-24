@@ -458,6 +458,69 @@
       role: docker/traefik
       vars:
         traefik_type: internal
+        proxies:
+          - name: bitwarden
+            url: "http://{{ secret.services.bitwarden.ip }}"
+          - name: calibre
+            url: "http://{{ secret.services.calibre_web.ip }}:8083"
+          - name: calibre-server
+            url: "http://{{ secret.services.calibre.ip }}:8080"
+          - name: ersatz
+            url: "http://{{ secret.services.ersatz.ip }}:8409"
+          - name: gitea
+            url: "http://{{ secret.services.gitea.ip }}:3000"
+          - name: grafana
+            url: "http://{{ secret.services.grafana.ip }}:3000"
+          - name: homeassistant
+            url: "http://{{ secret.services.homeassistant.ip }}:8123"
+          - name: homebridge
+            url: "http://{{ secret.services.homebridge.ip }}:8581"
+          - name: minio-backup
+            url: "http://{{ secret.services.minio_backup.ip }}:9000"
+          - name: minio-backup-ui
+            url: "http://{{ secret.services.minio_backup.ip }}:9001"
+          - name: minio-loki
+            url: "http://{{ secret.services.minio_loki.ip }}:9000"
+          - name: minio-loki-ui
+            url: "http://{{ secret.services.minio_loki.ip }}:9001"
+          - name: netboot
+            url: "http://{{ secret.services.netboot.ip_50 }}:3000"
+          - name: netbox
+            url: "http://{{ secret.services.netbox.ip }}:8000"
+          - name: nodered
+            url: "http://{{ secret.services.node_red.ip }}:1880"
+          - name: office-touchpad
+            url: "http://{{ secret.services.office_touchpad.ip }}:3000"
+          - name: overseerr
+            url: "http://{{ secret.services.overseerr.ip }}:5055"
+          - name: paperless
+            url: "http://{{ secret.services.paperless.ip }}:8000"
+          - name: photoprism-internal
+            url: "http://{{ secret.services.photoprism.internal_ip }}:2342"
+          - name: plex
+            url: "http://{{ secret.services.plex.ip }}:32400"
+          - name: prometheus
+            url: "http://{{ secret.services.prometheus.ip }}:9090"
+          - name: prowlarr
+            url: "http://{{ secret.services.prowlarr.ip }}:9696"
+          - name: radarr
+            url: "http://{{ secret.services.radarr.ip }}:7878"
+          - name: readarr
+            url: "http://{{ secret.services.readarr.ip }}:8787"
+          - name: sabnzbd
+            url: "http://{{ secret.services.sabnzbd.ip }}:8080"
+          - name: scanner-api
+            url: "http://{{ secret.services.scannerpi.ip }}:3000"
+          - name: sonarr
+            url: "http://{{ secret.services.sonarr.ip }}:8989"
+          - name: tdarr
+            url: "http://{{ secret.services.tdarr.ip }}:8265"
+          - name: torrent
+            url: "http://{{ secret.services.torrent.ip }}:9091"
+          - name: uptime-kuma
+            url: "http://{{ secret.services.uptime_kuma.ip }}:3001"
+          - name: whoogle
+            url: "http://{{ secret.services.whoogle.ip }}:5000"
         container:
           name: traefik-internal
           repository: traefik

@@ -1,19 +1,57 @@
 http:
   routers:
-    minio-loki-ui:
+{% for p in proxies %}
+    {{ p.name }}:
       entryPoints:
-        - "https"
-      rule: "Host(`minio-loki-ui.{{ secret.domain }}`)"
+        - https
+      rule: "Host(`{{ p.name }}.{{ secret.domain }}`)"
       middlewares:
         - default-headers
       tls: {}
-      service: minio-loki-ui
+      service: {{ p.name }}
+{% endfor %}
+#    bitwarden:
+#      entryPoints:
+#        - https
+#      rule: "Host(`bitwarden.{{ secret.domain }}`)"
+#      middlewares:
+#        - default-headers
+#      tls: {}
+#      service: bitwarden
+#    gitea:
+#      entryPoints:
+#        - https
+#      rule: "Host(`gitea.{{ secret.domain }}`)"
+#      middlewares:
+#        - default-headers
+#      tls: {}
+#      service: gitea
+#    minio-loki-ui:
+#      entryPoints:
+#        - https
+#      rule: "Host(`minio-loki-ui.{{ secret.domain }}`)"
+#      middlewares:
+#        - default-headers
+#      tls: {}
+#      service: minio-loki-ui
   services:
-    minio-loki-ui:
+{% for p in proxies %}
+    {{ p.name }}:
       loadBalancer:
         servers:
-          - url: "http://{{ secret.services.minio_loki.ip }}:9001"
+          - url: "{{ p.url }}"
         passHostHeader: true
+{% endfor %}
+#    gitea:
+#      loadBalancer:
+#        servers:
+#          - url: "http://{{ secret.services.gitea.ip }}:3000"
+#        passHostHeader: true
+#    minio-loki-ui:
+#      loadBalancer:
+#        servers:
+#          - url: "http://{{ secret.services.minio_loki.ip }}:9001"
+#        passHostHeader: true
 
   middlewares:
     https-redirect:
