@@ -1,0 +1,6 @@
+---
+- name: restart traefik
+  community.docker.docker_container:
+    name: traefik-internal
+    container_default_behavior: "{{ container_default_behavior }}"
+    restart: true

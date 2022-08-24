@@ -255,6 +255,8 @@ secret:
             influxd_http_bind_address: ENC[AES256_GCM,data:5hUF5w==,iv:50G/MAN4OOCtUq6Tcb21xgNHiWzteZJNH0ieDQMnRHQ=,tag:Ol/SFYn7m1E+KfeyLaP1Rg==,type:str]
             influxd_tls_cert: ENC[AES256_GCM,data:kEwdFn7LZlQCdZmkgSN7sOScjR/m68zxvYs6,iv:Wym6k0GoG9mXgH6xMjn0TsO/T+CU9GnqEf+ku87is+s=,tag:EdmzlIUkjy44Tjy2X6yk/Q==,type:str]
             influxd_tls_key: ENC[AES256_GCM,data:Q2LH4FNMocO2JMJ2Dw2u15T/98NCyL5Y3JrTdCJd,iv:W0e9UMV54i1Mf47IwucFTBPbkK8pfBcE38OpQlmOic0=,tag:4Uifn955id/TmOEaivrhtQ==,type:str]
+        minio_loki:
+            ip: ENC[AES256_GCM,data:IjTmG8zElFunmQFxUA==,iv:VbYRMdnrkFlPDkQTx1zWsTI3V6qISF8MbWyPaiznMYY=,tag:Br4eNGj4e3Hm3eQC4JuaYQ==,type:str]
         mqtt:
             ip: ENC[AES256_GCM,data:ohWdHeGNfvZp46986A==,iv:u8m3LCx9sH2SnhaGsTEznJm8QQeQF2ekK4lPNoc9+c4=,tag:fxwB9Q3u4Vnwtg2StRG6WA==,type:str]
         n8n:
@@ -417,6 +419,12 @@ secret:
             local_network: ENC[AES256_GCM,data:+OQYGq/RVgQfErxzr1o=,iv:rKtPrcqYgBo4qccMMfnuSVHEswfLq7t3goX9ciD7R+0=,tag:3DEOEDx3/eXQs76wTrcorA==,type:str]
             transmission_rpc_username: ENC[AES256_GCM,data:4Eaom58=,iv:exgdrfaQOABoD++sivpR67IrSoQPI/hr5sg3Op4urTs=,tag:OJTyXimkjNlEEUIG4pU4Vw==,type:str]
             transmission_rpc_password: ENC[AES256_GCM,data:74Hh/MCSbpd+cw==,iv:Z+GbU3LFta5+52bYE6+WiXDXBdCF3k487HElbHlnqCE=,tag:OK0HHs+W+VXzUtSbbEE+CA==,type:str]
+        traefik_internal:
+            ip: ENC[AES256_GCM,data:AULQjOCk/jrqNLdSOg==,iv:KrOqeaIZTpiC9Mb7eCXP7saAd6JkAsF/yn4IqWpud8s=,tag:R2ixFtJVF12Gqgz2R5z9Kg==,type:str]
+            cloudflare_email: ENC[AES256_GCM,data:Ev7LF4I6XQkqN9ndIkNtM9Hi3t0=,iv:FOEgkt8wpAra5So6m2Meq14GxhNpZ3jdnEhLtFjawrQ=,tag:hmTOyj4otU7bmBayXfhxqw==,type:str]
+            cloudflare_key: ENC[AES256_GCM,data:Pr1618FRiBjrwwCvnIDHRs+FNNcxWE1/YJ082Kf6n4ghduKyLw==,iv:ortMai/xdJ22Ot9wd59TK4JcpPcz8Rqc5+14VWRiXVE=,tag:X/AOq4UmPP0hPekuDwFPfw==,type:str]
+            #ENC[AES256_GCM,data:nLhy5FExr5CFGjuCXMwNXDx2OYro,iv:RMAOXcDZUKSA4BaE3r1/35meUpHY7YgfDztp6SU6CIg=,tag:vLf/EvbKRfx02mCrQFYwXw==,type:comment]
+            credentials: ENC[AES256_GCM,data:nH+d1k67mxBzDBgYgcULvxiN4S6qSrWhzNazw448iORH5+OQWI6sFDuNWplJdnCXFtUmpt2Ee7aFWAedIOhMkuTr,iv:BzGkDsHhG5CTXzjAGF+RVdNBRl4B2mfOrlZSoCg/q1Y=,tag:46EwtYZoVAWoCeG14vCz1g==,type:str]
         uptime_kuma:
             ip: ENC[AES256_GCM,data:pJoZXXkxweQPiqUbEg==,iv:/szxo8sGdtjHE9kSgv7zfPF/P45gfc+XAbxLqWK+dnw=,tag:5AQzRfcaVtus+TX2k5OCow==,type:str]
         vrising:
@@ -429,8 +437,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-08-23T19:10:19Z"
-    mac: ENC[AES256_GCM,data:pN5u4OKso4wJj3LlwSv4uOlysKlBJDaytAze+4dURvXf4RiUaEmzyjqfvdw3ltCkhzmshZMDTRIHCXpiiJUghiq7zPaSJXfB+tR8GV1jEUwtS6ohMUFREXcz0xwcILsGka66GlbPBXxHyT0Vm8737kc7VRtYLCQVVosJTgKB/Tg=,iv:6osRlLQz/UM/RVCDpM/KxySt3qmRUwJ5Gh46zDdG1qk=,tag:Hjec2VkGNJ7No4SNEh+ELg==,type:str]
+    lastmodified: "2022-08-24T13:28:51Z"
+    mac: ENC[AES256_GCM,data:U8MDgJfhU8feuuIYXEuE1TGlWn2w3kwpBCSGuowfGhB+PlC048LqIk9DG2Zq4FJ3D48dOemVu3Z29rCO12PybbtRSPPXCRZA+gxIulYitPLgxdSCmOF3j91P2THSJwRBsE2HxDCx5fGxppX7woa1T5ffoMHNl9buigMLwNfsknY=,iv:FVbwl7YxZZ0ZI6VGE80njDBsmHBOJr+bM9WQFkTnGgw=,tag:H0mCT2Qeq21THdJy24STiQ==,type:str]
     pgp:
         - created_at: "2021-10-30T18:28:12Z"
           enc: |

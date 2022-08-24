@@ -1,0 +1,58 @@
+## Version 2020/12/09
+# make sure that your dns has a cname set for adminer
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    server_name minio-loki-ui.*;
+
+    ignore_invalid_headers off;
+    proxy_buffering off;
+
+    include /config/nginx/ssl.conf;
+
+    client_max_body_size 0;
+
+    # enable for ldap auth, fill in ldap details in ldap.conf
+    #include /config/nginx/ldap.conf;
+
+    # enable for Authelia
+    #include /config/nginx/authelia-server.conf;
+
+    location / {
+        # enable the next two lines for http auth
+        #auth_basic "Restricted";
+        #auth_basic_user_file /config/nginx/.htpasswd;
+
+        # enable the next two lines for ldap auth
+        #auth_request /auth;
+        #error_page 401 =200 /ldaplogin;
+
+        # enable for Authelia
+        #include /config/nginx/authelia-location.conf;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host $http_host;
+        proxy_connect_timeout 300;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        chunked_transfer_encoding off;
+
+#        include /config/nginx/proxy.conf;
+        resolver 127.0.0.11 valid=30s;
+        set $upstream_app minio-loki-app.{{ secret.domain }};
+        set $upstream_port 9001;
+        set $upstream_proto http;
+        proxy_pass $upstream_proto://$upstream_app:$upstream_port;
+
+    }
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name minio-loki-ui;
+    return 301 https://minio-loki-ui.{{ secret.domain }}$request_uri;
+}
