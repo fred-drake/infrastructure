@@ -62,6 +62,12 @@
     nodes: "{{ groups['glusterfs_server'] }}"
   run_once: true
 
+- name: check if volume already exists
+  command: gluster volume info vol01
+  ignore_errors: true
+  register: volume_status
+  changed_when: false
+
 - name: "create gluster volume"
   gluster_volume:
     state: present
@@ -70,6 +76,7 @@
     replicas: 3
     cluster: "{{ groups['glusterfs_server'] }}"
   run_once: true
+  when: volume_status.rc != 0
 
 - name: get volume info
   command: gluster volume info
