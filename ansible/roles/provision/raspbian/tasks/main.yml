@@ -1,8 +1,8 @@
-- name: update user password
-  user:
-    name: "{{ ansible_user }}"
-    update_password: always
-    password: "{{ ssh_password | default(secret.hosts.default_ssh_password) | password_hash('sha512') }}"
+# - name: update user password
+#   user:
+#     name: "{{ ansible_user }}"
+#     update_password: always
+#     password: "{{ ssh_password | default(secret.hosts.default_ssh_password) | password_hash('sha512') }}"
 
 - name: Allow release-info to change for APT repositories
   command: apt-get update -y --allow-releaseinfo-change
