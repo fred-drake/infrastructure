@@ -23,6 +23,8 @@
 
 - import_playbook: kubernetes/k8s_install.yml
 
+# - import_playbook: swarm.yml
+
 - hosts: netboot-assets-bridge
   gather_facts: false
   become: false

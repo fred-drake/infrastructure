@@ -56,6 +56,7 @@ all:
       children:
         docker_services:
         critical_docker_services:
+        swarm_cluster:
 
     # Docker container servers who run regular services
     docker_services:
@@ -137,10 +138,37 @@ all:
         
     k8s_masters: # master nodes.  The first is considered the initial master.
       hosts:
+        # rp1:
+        # rp2:
+        # rp3:
+    k8s_workers: # worker nodes
+      hosts:
+        # nuc1:
+        # nuc2:
+        # nuc3:
+        # nuc4:
+        # nuc5:
+        # nuc6:
+
+    # Docker Swarm assignments
+    swarm_cluster:
+      children:
+        swarm_initial_master:
+        swarm_additional_masters:
+        swarm_workers:
+
+    # Docker Swarm initial master.  Used as focal point when adding other nodes to swarm.
+    swarm_initial_master:
+      hosts:
         rp1:
+
+    # Docker Swarm additional master nodes.
+    swarm_additional_masters:
+      hosts:
         rp2:
         rp3:
-    k8s_workers: # worker nodes
+
+    swarm_workers:
       hosts:
         nuc1:
         nuc2:

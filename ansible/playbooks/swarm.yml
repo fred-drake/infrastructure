@@ -1,0 +1,27 @@
+- hosts: swarm_initial_master
+  gather_facts: true
+  become: true
+  roles:
+    - swarm/initial-manager
+
+- hosts: swarm_additional_masters
+  gather_facts: true
+  become: true
+  roles:
+    - swarm/add-manager
+
+- hosts: swarm_workers
+  gather_facts: true
+  become: true
+  roles:
+    - swarm/add-worker
+
+- hosts: swarm_cluster
+  gather_facts: true
+  become: true
+  serial: 1
+  roles:
+    - swarm/eject-swarm
+  tags: 
+    - eject
+    - never

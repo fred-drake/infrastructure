@@ -1,0 +1,29 @@
+- ansible.builtin.include_role: 
+    name: swarm/swarm-status
+
+# - name: initialize docker swarm
+#   docker_swarm:
+#     state: present
+#     advertise_addr: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+#   when: swarm_status.rc != 0
+#   run_once: true
+
+- name: initialize docker swarm
+  command: docker swarm init --advertise-addr "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+  when: swarm_status.rc != 0
+  run_once: true
+
+- name: set master to drain so it isn't scheduled
+  docker_node:
+    hostname: "{{ inventory_hostname }}"
+    availability: drain
+
+- name: get the manager join-token
+  command: docker swarm join-token --quiet manager
+  register: manager_token
+  changed_when: false
+
+- name: get the worker join-token
+  command: docker swarm join-token --quiet worker
+  register: worker_token
+  changed_when: false

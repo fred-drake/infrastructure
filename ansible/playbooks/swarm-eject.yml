@@ -1,0 +1,17 @@
+- hosts: swarm_workers
+  gather_facts: false
+  become: true
+  roles:
+    - swarm/eject-swarm
+
+- hosts: swarm_additional_masters
+  gather_facts: false
+  become: true
+  roles:
+    - swarm/eject-swarm
+
+- hosts: swarm_initial_master
+  gather_facts: false
+  become: true
+  roles:
+    - swarm/eject-swarm
