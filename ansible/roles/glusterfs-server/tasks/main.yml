@@ -8,7 +8,7 @@
 - name: "create volume on pv brick device partition 1"
   lvg:
     vg: vg_gluster
-    pvs: "{{ glusterfs_brick_device }}1"
+    pvs: "{{ glusterfs_brick_partition }}"
 - name: "create a logical volume"
   lvol:
     vg: vg_gluster

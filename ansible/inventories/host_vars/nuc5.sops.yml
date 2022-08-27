@@ -1,14 +1,15 @@
 ansible_host: ENC[AES256_GCM,data:dMVKZNaAfwTTvcDWBeSmsp037nH0y5rDeXZX,iv:/E3nljX6MziPJeelUg+6wPJuHB9iJddjuoYmTCjYzSw=,tag:2Bn3hOYCRwBK1QdI6rQ0JA==,type:str]
 ansible_user: ENC[AES256_GCM,data:XFNqQXJp,iv:EN06gfdDrSuhJcPOi+Gu0G3Nxch/EiJTldA3+ZM8YkU=,tag:qJVGilJ//Lza4mfwDFCegg==,type:str]
-glusterfs_brick_device: ENC[AES256_GCM,data:3iEC80wVayw=,iv:DTGaiWLaFRDfNiiQ6CC3/l4zpzBWjoRA3pNGJI/UDx8=,tag:lKTisfl2dFcXShp7fUISKA==,type:str]
+glusterfs_brick_device: ENC[AES256_GCM,data:995T58fs89Z/a1scON88+NGcRNBSADS/qbXmd8u/,iv:9zJuuW2EGtB6hJ22OuvVqLfq9l654AkC0xGICu+I+8Y=,tag:IJKZpMb/DumZhCtFjwNycA==,type:str]
+glusterfs_brick_partition: ENC[AES256_GCM,data:BKbnzy3AGXQou3za+2YK9r00MQV7fbGahJikmPRFv0XVZ1Ly,iv:DDWn5Y4EJ/QvRF5t3kXqIOEAHfCFjPuYuOC2GWq+AXE=,tag:rGOJEtBzfApzPKcJqZCdoQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-07-05T01:20:41Z"
-    mac: ENC[AES256_GCM,data:n8EO6vulD2V1D4Fo5KdXfEG0nImtPRHG7jnz1xQxTwiMKeMfsjzWbbBRP/cSOgBMcvBZybZbUtGPkfOAHleKicTg6GW8EYpBmaJbDydhu6V/XGF+Qy8C8MNipJTzJmpyS68PWN9CfAyFMxss8+Mfr9aY6CepoHUDmZTKUcnziik=,iv:IHGM4BrgfRZftQvm6P8k0LZlzmXHzfrzhsav6V/WAmg=,tag:3le+ZfQR5nbndWfRt9Zxrg==,type:str]
+    lastmodified: "2022-08-27T18:09:32Z"
+    mac: ENC[AES256_GCM,data:heAC7RUkgHgtaeIqZFywVw5ibdDHVnU38GbwZFTF9kVfi/afQJKfCghhVKCcxWTSNR0ZOhColf5xXqioytrOoKgvgmoJ1KDj0ea9E9EEl+VQdc2eDJcdZKPdVQK7zYtVcqIgA66hrxAOHaVtoNHVQhn5w/1q0b08iTHK859lG+Y=,iv:gEnPoVjQXxh0O8GA6Q9JBd29WKyeU81jbEIS4lScHnw=,tag:5I6HIkdo+5adjap57VVWJg==,type:str]
     pgp:
         - created_at: "2021-10-14T00:32:45Z"
           enc: |
