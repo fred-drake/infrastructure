@@ -1,11 +1,11 @@
-[program:web-service]
+[program:scanner-service]
 directory={{ root_scanner_dir }}/node
-command=npm run web
+command=npm run scanner
 autostart=true
 autorestart=true
 user={{ ansible_user }}
 
-[program:directory-watcher]
+[program:paperless-broker]
 directory={{ root_scanner_dir }}/node
 command=npm run watch
 autostart=true

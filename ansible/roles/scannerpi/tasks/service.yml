@@ -19,33 +19,37 @@
   apt:
     name: nodejs
 
-- name: copy node files
-  copy:
-    src: node
-    dest: /opt/scanner
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_group }}"
+- name: pull scanner service git repo
+  ansible.builtin.git:
+    repo: https://github.com/fred-drake/scanner-directory-broker.git
+    dest: "{{ root_scanner_dir }}/node"
   notify: restart supervisor
   tags: code
 
 - name: copy config file
   template:
-    src: config.json.j2
-    dest: /opt/scanner/node/src/config.json
+    src: config.yaml.j2
+    dest: "{{ root_scanner_dir }}/node/config.yaml"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_group }}"
   notify: restart supervisor
   tags: code
 
-- name: install node supervisor globally
-  community.general.npm:
-    name: supervisor
-    global: true
-
 - name: install npm packages
   community.general.npm:
     path: "{{ root_scanner_dir }}/node"
   notify: restart supervisor
+
+- name: compile scanner service
+  ansible.builtin.command:
+    cmd: npm run build:release
+    chdir: "{{ root_scanner_dir }}/node"
+  notify: restart supervisor
+
+- name: install node supervisor globally
+  community.general.npm:
+    name: supervisor
+    global: true
 
 - name: configure supervisor
   blockinfile:

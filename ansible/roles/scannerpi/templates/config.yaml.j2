@@ -1,0 +1,8 @@
+trace: false
+debug: false
+paperlessApiUrl: "https://paperless.{{ secret.domain }}/api"
+paperlessUsername: "{{ secret.services.paperless.user }}"
+paperlessPassword: "{{ secret.services.paperless.password }}"
+scannerWebPort: 3000
+watchDirectoryPath: "{{ root_scanner_dir }}/watch"
+outgoingDirectoryPath: "{{ root_scanner_dir }}/outgoing"
