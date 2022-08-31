@@ -1,0 +1,27 @@
+global
+  maxconn 4096
+
+defaults
+  log global
+  mode tcp
+  timeout connect 5000
+  timeout client 50000
+  timeout server 50000
+
+frontend web_frontend
+  bind *:80
+  default_backend web_backend
+
+backend web_backend
+{% for h in hostlist_results.hosts %}
+  server {{ h.hostname }} {{ h.address }}:80 check
+{% endfor %}
+
+frontend web_secure_frontend
+  bind *:443
+  default_backend web_secure_backend
+
+backend web_secure_backend
+{% for h in hostlist_results.hosts %}
+  server {{ h.hostname }} {{ h.address }}:443 check
+{% endfor %}

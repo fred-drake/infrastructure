@@ -453,6 +453,11 @@
           - "{{ glusterfs_appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
       tags: uptime_kuma
 
+    ### Swarm Layer 4 Load Balancer ###
+    - name: swarm layer 4 load balancer
+      role: docker/swarm-lb
+      tags: swarm_lb
+
     ### Traefik Internal ###
     - name: traefik internal
       role: docker/traefik

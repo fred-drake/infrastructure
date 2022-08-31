@@ -1,0 +1,34 @@
+- name: generate swarm-lb nodes from netbox (with 'swarm-lb' tags)
+  connection: local
+  become: false
+  export_netbox_hostlist:
+    netbox_api_prefix: "https://netbox.{{ secret.domain }}"
+    netbox_token: "{{ secret.netbox.token }}"
+    tag: swarm-lb
+  register: hostlist_results
+  run_once: true
+
+- name: create config directory
+  ansible.builtin.file:
+    path: "{{ glusterfs_appdata_dir }}/swarm_lb"
+    state: directory
+    mode: '0755'
+
+- name: apply config template
+  ansible.builtin.template:
+    src: haproxy.cfg.j2
+    dest: "{{ glusterfs_appdata_dir }}/swarm_lb/haproxy.cfg"
+    mode: '0644'
+  run_once: true
+  notify: restart container
+
+- include_role: 
+    name: docker/container
+  vars:
+    container:
+      name: swarm-lb
+      repository: haproxy
+      tag: latest
+      ip: "{{ secret.services.swarm_lb.ip }}"
+      volumes:
+        - "{{ glusterfs_appdata_dir }}/swarm_lb:/usr/local/etc/haproxy:ro"
