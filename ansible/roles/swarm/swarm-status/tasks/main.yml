@@ -1,5 +1,0 @@
-- name: check if swarm has already been initialized
-  command: docker node ls
-  register: swarm_status
-  ignore_errors: true
-  changed_when: false

@@ -1,0 +1,14 @@
+- name: Rebooting server if required, one at a time.
+  hosts: debian
+  become: true
+  serial: 1
+  tasks:
+    - name: check if reboot required
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+
+    - name: reboot if required
+      reboot:
+        msg: "System is ready to reboot.  Rebooting."
+      when: reboot_required_file.stat.exists

@@ -404,6 +404,8 @@ secret:
             dnsplugin: ENC[AES256_GCM,data:sygcG6OZwVswWQ==,iv:AG90nBjINlxJI4ReO0/ZvWknKSpfB/0+mdQGQeKXP70=,tag:4HmOHLuI0PuIQGz9sTif4A==,type:str]
             staging: ENC[AES256_GCM,data:VBiv5is=,iv:iSJcagm05KWrt08wliEVhluSdi7tqrelpOaaDg7aS10=,tag:FdyH5foY31/LORGWpaFfzQ==,type:str]
             dns_cloudflare_api_token: ENC[AES256_GCM,data:qDrkGbC7/EknJG2llXk5YaHyVevuPBNGcE1pGNxBO7HsclbKQ2muPA==,iv:w8SbmoE5iyXh0sPS1ppu7+c/eX9/hh/mFbEQupvvpBA=,tag:IhBc2cmQkg08tqXvCZNO8Q==,type:str]
+        swarm_lb:
+            ip: ENC[AES256_GCM,data:mPGB22vw8RlSz2barQ==,iv:EKJHj6//Q3Mrgcz7hnEynaUmXzR5IhxelGlkVg0pZt4=,tag:2RvSXZ6SVsyqdrlLiVWa8w==,type:str]
         syncthing:
             ip: ENC[AES256_GCM,data:IO7qp4doa+nRiaPx5A==,iv:OjKWFvmpIMktCfLMKaAkVfOr8AAHy8w3XS4BaWjEt4U=,tag:xtaMiHwvOlqmLX046tIJaQ==,type:str]
         tautulli:
@@ -449,8 +451,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-08-24T23:45:52Z"
-    mac: ENC[AES256_GCM,data:TgnL5Hla62IMB/3os8pkp6UDy1kSPc/9oPViwONFQcBmDPlApw9Er7Jk6nwHtchb0lKP90i2anUPE/GmbFQ19syVM1epiBTe0bY/6JkaLojSBJHMyq36EyqhG6hMIpT5KZTIwZKS3WjZO++/43/+vH23lrakb0g6xpju2CAakG0=,iv:Jn/GPvw46GnH/ZPJHuH/U5MQeFNg8ID/4YBgg2OAVzQ=,tag:dYVG7Enr2hmKDoRG/qbs9A==,type:str]
+    lastmodified: "2022-08-30T23:15:32Z"
+    mac: ENC[AES256_GCM,data:pef1wG3bbmizqMa/AbqZqq4GaQb2+YXzGJmF80QO7pbkc9IK8sDtGprDfvCaqANcUz2ElgJEqieMlkJdOQvri1MxmrWrcHWu+ACRBvMpRSDcB1LxNgKi/bUB/ltaMhZnpUqWDNtFcj4FNP6sJmkcB8avoPBas6vCYjHrHAGadtA=,iv:M4NkybVCsq4TN4ocPgpxJr0UTFYvgoZCHjQXJ1kwe88=,tag:znvsd+d7J0L97brxe+9L8A==,type:str]
     pgp:
         - created_at: "2021-10-30T18:28:12Z"
           enc: |

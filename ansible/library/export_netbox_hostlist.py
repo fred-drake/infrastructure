@@ -4,7 +4,7 @@ from ansible.module_utils.basic import *
 import urllib.parse, urllib.request
 import json
 
-def build_hosts(token, api_prefix):
+def build_hosts(token, api_prefix, tag):
     offset = 0
     limit = 50
     url = '{0}/api/ipam/ip-addresses/'.format(api_prefix)
@@ -20,21 +20,28 @@ def build_hosts(token, api_prefix):
         for result in response['results']:
             address = result['address'].split('/')[0]
 
+            if tag is not None:
+                for t in result['tags']:
+                    if t['name'] == tag: 
+                        add_host(hosts, address, result['dns_name'])
+                        continue
+                continue
+
             if result['status']['value'] not in ['active', 'reserved']:
-                continue;
+                continue
 
             if result['dns_name']:
                 add_host(hosts, address, result['dns_name'])
 
-            for tag in result['tags']:
-                if not tag['name'].startswith('dnsalias:'):
-                    continue;
+            for t in result['tags']:
+                if not t['name'].startswith('dnsalias:'):
+                    continue
                 
-                hostname = tag['name'].split(':')[1]
+                hostname = t['name'].split(':')[1]
                 add_host(hosts, address, hostname)
 
         if not response['next']:
-            break;
+            break
 
         offset += 50
 
@@ -49,11 +56,12 @@ def main():
     fields = {
         'netbox_token': {'required': True, 'type': 'str'},
         'netbox_api_prefix': {'required': True, 'type': 'str'},
+        'tag': {'required': False, 'type': 'str'},
     }
 
     module = AnsibleModule(argument_spec=fields, supports_check_mode=True)
 
-    hosts = build_hosts(token=module.params['netbox_token'], api_prefix=module.params['netbox_api_prefix'])
+    hosts = build_hosts(token=module.params['netbox_token'], api_prefix=module.params['netbox_api_prefix'], tag=module.params['tag'])
 
     module.exit_json(changed=False, hosts=hosts)
 

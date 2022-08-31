@@ -96,6 +96,8 @@ all:
     glusterfs_client:
       # children:
       #   k8s_masters:
+      children:
+        swarm_cluster:
       hosts:
         nuc8:
         nuc9:
@@ -167,6 +169,11 @@ all:
       hosts:
         rp2:
         rp3:
+
+    swarm_masters:
+      children:
+        swarm_initial_master:
+        swarm_additional_masters:
 
     swarm_workers:
       hosts:

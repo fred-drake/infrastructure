@@ -1,0 +1,78 @@
+- name: create empty acme.json file if it doesn't already exist
+  ansible.builtin.file:
+    path: "{{ glusterfs_appdata_dir }}/traefik-swarm/data/acme.json"
+    state: touch
+    mode: "0600"
+    modification_time: preserve
+    access_time: preserve
+  notify: restart traefik
+
+- name: set traefik system configuration
+  ansible.builtin.template:
+    src: "traefik.yml.j2"
+    dest: "{{ glusterfs_appdata_dir }}/traefik-swarm/data/traefik.yml"
+    mode: "0644"
+  notify: restart traefik
+
+- name: set traefik route configuration
+  ansible.builtin.template:
+    src: "config.yml.j2"
+    dest: "{{ glusterfs_appdata_dir }}/traefik-swarm/config.yml"
+    mode: "0644"
+  notify: restart traefik
+
+- name: traefik network
+  docker_network:
+    name: traefik
+    driver: overlay
+
+- name: traefik swarm service
+  docker_swarm_service:
+    name: traefik
+    image: traefik:latest
+    placement:
+      constraints: node.role==manager
+    publish:
+      - published_port: 80
+        target_port: 80
+      - published_port: 443
+        target_port: 443
+      # - published_port: 8080
+      #   target_port: 8080
+    env:
+      CLOUDFLARE_EMAIL: "{{ secret.services.traefik_internal.cloudflare_email }}"
+      CLOUDFLARE_API_KEY: "{{ secret.services.traefik_internal.cloudflare_key }}"
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: traefik
+      traefik.http.services.justAdummyService.loadbalancer.server.port: "1337"
+      traefik.backend.loadbalancer.swarm: "true"
+      traefik.http.routers.traefik.entrypoints: http
+      traefik.http.routers.traefik.rule: "Host (`traefik-swarm.{{ secret.domain }}`)"
+      traefik.http.middlewares.traefik-auth.basicauth.users: "{{ secret.services.traefik_internal.credentials }}"
+      traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme: https
+      traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto: https
+      traefik.http.routers.traefik.middlewares: traefik-https-redirect
+      traefik.http.routers.traefik-secure.entrypoints: https
+      traefik.http.routers.traefik-secure.rule: "Host (`traefik-swarm.{{ secret.domain }}`)"
+      traefik.http.routers.traefik-secure.middlewares: traefik-auth
+      traefik.http.routers.traefik-secure.tls: "true"
+      traefik.http.routers.traefik-secure.tls.certresolver: cloudflare
+      traefik.http.routers.traefik-secure.tls.domains[0].main: "{{ secret.domain }}"
+      traefik.http.routers.traefik-secure.tls.domains[0].sans: "*.{{ secret.domain }}"
+      traefik.http.routers.traefik-secure.service: api@internal
+      traefik.http.services.traefik.loadbalancer.server.port: "8080"
+    mounts:
+      - source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        readonly: true
+      - source: "{{ glusterfs_appdata_dir }}/traefik-swarm/data/traefik.yml"
+        target: /traefik.yml
+        readonly: true
+      - source: "{{ glusterfs_appdata_dir }}/traefik-swarm/data/acme.json"
+        target: /acme.json
+      - source: "{{ glusterfs_appdata_dir }}/traefik-swarm/config.yml"
+        target: /config.yml
+        readonly: true
+    networks:
+      - traefik

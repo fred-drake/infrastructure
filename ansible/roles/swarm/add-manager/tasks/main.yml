@@ -1,5 +1,5 @@
 - ansible.builtin.include_role: 
-    name: swarm/swarm-status
+    name: swarm/master-common
 
 - name: add manager to swarm
   docker_swarm:
@@ -7,12 +7,3 @@
     join_token: "{{ hostvars[groups['swarm_initial_master'][0]]['manager_token']['stdout'] }}"
     remote_addrs: "{{ hostvars[groups['swarm_initial_master'][0]]['ansible_default_ipv4']['address'] }}:2377"
   when: swarm_status.rc != 0
-
-# - name: add manager to swarm
-#   command: docker swarm join --token "{{ hostvars[groups['swarm_initial_master'][0]]['manager_token']['stdout'] }}" "{{ hostvars[groups['swarm_initial_master'][0]]['ansible_default_ipv4']['address'] }}:2377"
-#   when: swarm_status.rc != 0
-
-- name: set master to drain so it isn't scheduled
-  docker_node:
-    hostname: "{{ inventory_hostname }}"
-    availability: drain

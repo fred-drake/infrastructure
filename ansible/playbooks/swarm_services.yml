@@ -1,0 +1,11 @@
+- hosts: swarm_masters
+  gather_facts: false
+  run_once: true
+  become: true
+  roles:
+    - role: swarm_services/traefik
+      vars:
+        proxies: []
+      tags: traefik_swarm
+    - role: swarm_services/whoogle
+      tags: whoogle
