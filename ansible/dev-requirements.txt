@@ -1,3 +1,6 @@
+ansible-lint
+black
+flake8
 netaddr
 kubernetes
 passlib

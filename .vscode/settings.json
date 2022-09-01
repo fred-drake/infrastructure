@@ -1,0 +1,22 @@
+{
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Path": "flake8",
+    "python.linting.ignorePatterns": [
+      ".vscode/*.py",
+      "**/site-packages/**/*.py",
+      ".venv/**/*.py",
+      ".pytest_cache/**/*.py"
+    ],
+    "python.linting.enabled": true,
+    "python.formatting.provider": "black",
+    "python.testing.pytestArgs": ["tests"],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "yaml.validate": true,
+    "yaml.schemaStore.enable": true,
+    "terminal.integrated.fontFamily": "monospace",  
+    "sops.enabled": true,
+    "sops.binPath": "/usr/local/bin/sops",
+    
+}

@@ -2,3 +2,14 @@
 exclude_paths:
   - ./ansible/galaxy_roles/
   - ./ansible/galaxy_collections/
+
+enable_list:
+  - yaml
+
+kinds:
+  - playbook: playbooks/**/*.{yml,yaml}
+  - tasks: "**/tasks/*.{yml,yaml}"
+  - vars: "**/vars/*.{yml,yaml}"
+  - handlers: "**/handlers/*.{yml,yaml}"
+  - templates: "**/templates/**/*.{yml,yaml}"
+  - meta: "**/meta/main.{yml,yaml}"

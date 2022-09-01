@@ -6,9 +6,8 @@
 *.retry
 .vault_pass
 galaxy_collections/
+id_ansible
 
-# Editors
-.vscode/
 # Trash
 .DS_Store
 Thumbs.db
