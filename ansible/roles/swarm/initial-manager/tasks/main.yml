@@ -2,6 +2,7 @@
   ansible.builtin.include_role:
     name: swarm/master-common
 
+### This doesn't work and I'm not sure why right now... using command as workaround
 # - name: initialize docker swarm
 #   docker_swarm:
 #     state: present

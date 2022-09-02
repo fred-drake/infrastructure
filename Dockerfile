@@ -39,6 +39,7 @@ WORKDIR /workspaces/infrastructure
 ENV ANSIBLE_CONFIG=/workspaces/infrastructure/ansible/ansible.cfg
 COPY ansible/galaxy-requirements.yml ansible/galaxy-requirements.yml
 RUN ansible-galaxy install -r ansible/galaxy-requirements.yml
+RUN echo "alias ap='cd /workspaces/infrastructure/ansible/playbooks && ansible-playbook'" >> /root/.bashrc
 
 FROM staging
 ENV ANSIBLE_CONFIG=/infrastructure/ansible/ansible.cfg

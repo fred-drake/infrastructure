@@ -1,3 +1,7 @@
+- name: Check if token is available
+  ansible.builtin.fail:
+    msg: Cannot find token.  Did you not include the swarm initial master in the host list?
+  when: hostvars[groups['swarm_initial_master'][0]]['worker_token'] is undefined
 - name: Add worker to the swarm
   community.docker.docker_swarm:
     state: join
