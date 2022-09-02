@@ -1,6 +1,0 @@
-- name: Load service applications into Kubernetes
-  hosts: localhost
-  gather_facts: false
-  become: false
-  roles:
-    - kubernetes/applications_service

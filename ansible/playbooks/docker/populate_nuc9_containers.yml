@@ -18,16 +18,6 @@
             - /var/run/docker.sock:/var/run/docker.sock
       tags: dozzle
 
-    ### Whoogle ###
-    - role: docker/container
-      vars:
-        container:
-          name: whoogle
-          repository: benbusby/whoogle-search
-          tag: "{{ special_tags.whoogle.tag | default('latest') }}"
-          ip: "{{ secret.services.whoogle.ip }}"
-      tags: whoogle
-
     ### Prowlarr ###
     - role: docker/container
       vars:
@@ -394,22 +384,6 @@
             - source: netboot-assets-bridge_netboot
               target: /netboot
       tags: netboot
-
-    ### Obsidian CouchDB ###
-    - role: docker/container
-      vars:
-        container:
-          name: obsidian-couchdb
-          repository: couchdb
-          tag: 3.2.2
-          ip: "{{ secret.services.obsidian_couchdb.ip }}"
-          env:
-            COUCHDB_USER: "{{ secret.services.obsidian_couchdb.user }}"
-            COUCHDB_PASSWORD: "{{ secret.services.obsidian_couchdb.password }}"
-          volumes:
-            - "{{ appdata_dir }}/obsidian/couchdb/config/local.ini:/opt/couchdb/etc/local.ini"
-            - "{{ appdata_dir }}/obsidian/couchdb/data:/opt/couchdb/data"
-      tags: obsidian
 
       ### DIUN ###
     - role: docker/container

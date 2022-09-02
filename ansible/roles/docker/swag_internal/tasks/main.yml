@@ -3,6 +3,7 @@
   ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ appdata_dir }}/swag-internal/dns-conf/{{ item | basename | regex_replace('.j2$', '') }}"
+    mode: '0644'
   with_fileglob:
     - "../templates/dns-conf/*.j2"
   notify:

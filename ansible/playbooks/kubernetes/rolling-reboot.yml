@@ -1,8 +1,0 @@
-- name: Reboot cluster nodes, one at a time
-  hosts: k8s_cluster
-  gather_facts: false
-  become: true
-  tasks:
-    - name: Reboot
-      ansible.builtin.reboot:
-      throttle: 1

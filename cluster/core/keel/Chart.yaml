@@ -1,7 +1,0 @@
-apiVersion: v2
-name: keel
-version: 1.0.0
-dependencies:
-  - name: keel
-    version: 0.9.8
-    repository: https://charts.keel.sh

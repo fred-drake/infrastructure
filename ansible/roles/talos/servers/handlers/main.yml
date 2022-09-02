@@ -1,2 +1,0 @@
-- name: Reboot node
-  ansible.builtin.command: "talosctl -n {{ host_ip_addr }} reboot"

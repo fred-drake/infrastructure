@@ -1,9 +1,0 @@
-dependencies:
-- name: readarr
-  repository: https://k8s-at-home.com/charts/
-  version: 6.0.1
-- name: backup
-  repository: file://../../base/charts/backup
-  version: 1.0.0
-digest: sha256:f6f31188675b77fe3649e2e5fdc10075c56ae4a649c19561776782224da7f5be
-generated: "2021-12-05T22:56:12.07042-05:00"

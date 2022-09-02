@@ -1,8 +1,0 @@
-helm:
-  parameters:
-  - name: cyberchef.image.repository
-    value: mpepping/cyberchef
-    forcestring: true
-  - name: cyberchef.image.tag
-    value: v9.46.0
-    forcestring: true

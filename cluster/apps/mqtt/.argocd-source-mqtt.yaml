@@ -1,8 +1,0 @@
-helm:
-  parameters:
-  - name: mosquitto.image.repository
-    value: eclipse-mosquitto
-    forcestring: true
-  - name: mosquitto.image.tag
-    value: 2.0.14
-    forcestring: true

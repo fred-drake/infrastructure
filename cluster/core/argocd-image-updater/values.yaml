@@ -1,5 +1,0 @@
-argocd-image-updater:
-  nodeSelector:
-    kubernetes.io/arch: amd64
-  config:
-    logLevel: "info"

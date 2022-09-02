@@ -1,9 +1,0 @@
-dependencies:
-- name: node-red
-  repository: https://k8s-at-home.com/charts/
-  version: 9.1.0
-- name: backup
-  repository: file://../../base/charts/backup
-  version: 1.0.0
-digest: sha256:1e22d5fed332762a5e8bef5d84f9767f3d8cf04bc3a33ff06dd0a6a3f8220bb3
-generated: "2021-12-07T19:10:39.248355-05:00"

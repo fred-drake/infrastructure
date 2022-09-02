@@ -203,6 +203,5 @@
 
     - docker/ddns
     - docker/git_hash_updater
-    # - docker/smtp
     - docker/teslamate
     - docker/backup_client

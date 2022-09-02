@@ -21,8 +21,6 @@
 - import_playbook: docker/critical_apps_secondary.yml
 - import_playbook: docker/populate_containers.yml
 
-- import_playbook: kubernetes/k8s_install.yml
-
 - import_playbook: swarm.yml
 
 - hosts: netboot-assets-bridge

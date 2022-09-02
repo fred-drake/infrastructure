@@ -1,9 +1,0 @@
-dependencies:
-- name: sabnzbd
-  repository: https://k8s-at-home.com/charts/
-  version: 9.1.0
-- name: backup
-  repository: file://../../base/charts/backup
-  version: 1.0.0
-digest: sha256:4ec11fa9a9e70f293fa0527e02375542677f1a3f56a732e54294ba54d466504d
-generated: "2021-12-07T19:11:40.839159-05:00"

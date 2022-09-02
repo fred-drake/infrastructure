@@ -1,7 +1,0 @@
-apiVersion: v2
-name: external-static
-version: 1.0.0
-dependencies:
-  - name: backup
-    version: 1.0.0
-    repository: "file://../../base/charts/backup"

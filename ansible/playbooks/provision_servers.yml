@@ -6,38 +6,44 @@
     - provision/debian
   tags: debian
 
-- hosts: ubuntu_server
+- name: Configuration of ubuntu-based machines
+  hosts: ubuntu_server
   gather_facts: true
   become: true
   roles:
     - provision/ubuntu
     - netplan
 
-- hosts: ubuntu_desktop
+- name: Configuration of ubuntu desktop machines
+  hosts: ubuntu_desktop
   gather_facts: true
   become: true
   roles:
     - provision/ubuntu
 
-- hosts: raspbian
+- name: Configuration of Raspbian OS machines
+  hosts: raspbian
   gather_facts: true
   become: true
   roles:
     - provision/raspbian
 
-- hosts: raspberry_pi_3:&raspbian
+- name: Configuration of Raspbian OS machines running Raspberry Pi 3
+  hosts: raspberry_pi_3:&raspbian
   gather_facts: true
   become: true
   roles:
     - provision/raspberry_pi/pi3_raspbian
 
-- hosts: raspberry_pi_4:&ubuntu
+- name: Configuration of Ubuntu machines running Raspberry Pi 4
+  hosts: raspberry_pi_4:&ubuntu
   gather_facts: true
   become: true
   roles:
     - provision/raspberry_pi/pi4_ubuntu
 
-- hosts: raspberry_pi_4:&raspbian
+- name: Configuration of Raspbian OS machines running Raspberry Pi 4
+  hosts: raspberry_pi_4:&raspbian
   gather_facts: true
   become: true
   roles:

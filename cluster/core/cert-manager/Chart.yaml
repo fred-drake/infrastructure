@@ -1,7 +1,0 @@
-apiVersion: v2
-name: cert-mgr
-version: 1.0.0
-dependencies:
-  - name: cert-manager
-    version: 1.6.1
-    repository: https://charts.jetstack.io/

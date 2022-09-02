@@ -1,9 +1,0 @@
-dependencies:
-- name: prometheus
-  repository: https://prometheus-community.github.io/helm-charts
-  version: 14.11.0
-- name: backup
-  repository: file://../../base/charts/backup
-  version: 1.0.0
-digest: sha256:1969d86d873a4c36b97d35738f1a3bb24134318b0ee96ae12decdb90954cb8d1
-generated: "2021-12-07T17:59:10.939639-05:00"

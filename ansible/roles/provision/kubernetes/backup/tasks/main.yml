@@ -1,8 +1,0 @@
-- name: Mount backup volume
-  ansible.posix.mount:
-    path: /mnt/backup
-    src: /dev/sda1
-    fstype: ext4
-    state: mounted
-  tags:
-    - k8s_setup

@@ -1,9 +1,0 @@
-dependencies:
-- name: redis
-  repository: https://charts.pascaliske.dev
-  version: 0.0.2
-- name: backup
-  repository: file://../../base/charts/backup
-  version: 1.0.0
-digest: sha256:b32ec692e9ed53a759741e0f1328d3705368cd920e2bcd888dad35f392f45d4f
-generated: "2021-12-09T09:23:55.778491-05:00"

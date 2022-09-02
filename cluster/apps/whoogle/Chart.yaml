@@ -1,7 +1,0 @@
-apiVersion: v2
-name: whoogle
-version: 1.0.0
-dependencies:
-  - name: whoogle
-    version: 3.0.1
-    repository: https://k8s-at-home.com/charts/

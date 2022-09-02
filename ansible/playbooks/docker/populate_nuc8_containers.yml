@@ -256,7 +256,7 @@
           tag: latest
           ip: "{{ secret.services.prometheus.pihole_exporter.pihole1.ip }}"
           env:
-            PIHOLE_HOSTNAME: "pihole2.{{ secret.domain }}"
+            PIHOLE_HOSTNAME: "pihole1.{{ secret.domain }}"
             PIHOLE_API_TOKEN: "{{ secret.pihole.pihole1.api_token }}"
             INTERVAL: 30s
             PORT: "9617"
