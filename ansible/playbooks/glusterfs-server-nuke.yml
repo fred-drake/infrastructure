@@ -1,22 +1,23 @@
-- hosts: glusterfs_server
+- name: Removal of GlusterFS server nodes
+  hosts: glusterfs_server
   become: true
   tasks:
-    - name: warning
-      pause:
+    - name: Warning
+      ansible.builtin.pause:
         prompt: "WARNING: This will destroy your volume.  Be sure this is what you want!!  Press ENTER to continue."
-    - name: delete gluster volume
-      gluster_volume:
+    - name: Delete gluster volume
+      gluster.gluster.gluster_volume:
         state: absent
         name: vol01
       run_once: true
 
-    - name: "remove trusted storage pool"
-      gluster_peer:
+    - name: Remove trusted storage pool
+      gluster.gluster.gluster_peer:
         state: absent
         nodes: "{{ groups['glusterfs'][1:] }}"
       run_once: true
-    - name: remove vol01
-      file:
+    - name: Remove vol01
+      ansible.builtin.file:
         path: /export/brick0/vol01
         state: absent
     # - name: stop glusterfs

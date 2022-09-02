@@ -1,4 +1,4 @@
-- name: mount longhorn disks
+- name: Mount longhorn disks
   ansible.posix.mount:
     path: /var/lib/longhorn
     src: /dev/sda1

@@ -1,34 +1,36 @@
-- name: "parted brick device"
-  parted:
+- name: Parted brick device
+  ansible.builtin.parted:
     device: "{{ glusterfs_brick_device }}"
     label: gpt
     number: 1
-    flags: [ lvm ]
+    flags: [lvm]
     state: present
-- name: "create volume on pv brick device partition 1"
-  lvg:
+- name: Create volume on pv brick device partition 1
+  ansible.builtin.lvg:
     vg: vg_gluster
     pvs: "{{ glusterfs_brick_partition }}"
-- name: "create a logical volume"
-  lvol:
+- name: Create a logical volume
+  ansible.builtin.lvol:
     vg: vg_gluster
     lv: brick0
     size: 100%FREE
     shrink: false
-- name: "create a xfs filesystem"
-  filesystem: 
+- name: Create a xfs filesystem
+  ansible.builtin.filesystem:
     fstype: xfs
-    dev: /dev/vg_gluster/brick0   
-- name: "create dir"
-  file:
+    dev: /dev/vg_gluster/brick0
+- name: Create dir
+  ansible.builtin.file:
     path: /export
     state: directory
-- name: "create dir"
-  file:
+    mode: '0755'
+- name: Create dir
+  ansible.builtin.file:
     path: /export/brick0
     state: directory
-- name: "mount brick"
-  mount: 
+    mode: '0755'
+- name: Mount brick
+  ansible.builtin.mount:
     path: /export/brick0
     src: /dev/vg_gluster/brick0
     fstype: xfs
@@ -36,40 +38,40 @@
     passno: "2"
     state: mounted
 
-- name: "add apt repo"
-  apt_repository:
+- name: Add apt repo
+  ansible.builtin.apt_repository:
     repo: ppa:gluster/glusterfs-10
     state: present
-- name: install glusterfs server
-  apt:
+- name: Install glusterfs server
+  ansible.builtin.apt:
     name: glusterfs-server
     update_cache: true
-- name: open port for glusterfs communication
-  ufw:
+- name: Open port for glusterfs communication
+  ansible.builtin.ufw:
     rule: allow
     port: '5667'
     proto: any
-- name: ensure glusterfs is started
-  systemd:
+- name: Ensure glusterfs is started
+  ansible.builtin.systemd:
     name: glusterd
     enabled: true
     state: started
     masked: false
 
-- name: "create a trusted storage pool"
-  gluster_peer:
+- name: Create a trusted storage pool
+  ansible.builtin.gluster_peer:
     state: present
     nodes: "{{ groups['glusterfs_server'] }}"
   run_once: true
 
-- name: check if volume already exists
-  command: gluster volume info vol01
+- name: Check if volume already exists
+  ansible.builtin.command: gluster volume info vol01
   ignore_errors: true
   register: volume_status
   changed_when: false
 
-- name: "create gluster volume"
-  gluster_volume:
+- name: Create gluster volume
+  ansible.builtin.gluster_volume:
     state: present
     name: vol01
     brick: /export/brick0/vol01
@@ -78,13 +80,13 @@
   run_once: true
   when: volume_status.rc != 0
 
-- name: get volume info
-  command: gluster volume info
+- name: Get volume info
+  ansible.builtin.command: gluster volume info
   register: volume_info
   run_once: true
   changed_when: false
-- name: show volume info
-  debug:
+- name: Show volume info
+  ansible.builtin.debug:
     msg: "{{ volume_info.stdout_lines }}"
   run_once: true
 

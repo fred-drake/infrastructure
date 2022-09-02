@@ -1,12 +1,12 @@
-- name: get labels
+- name: Get labels
   traefik_labels:
     name: whoogle
     domain: "{{ secret.domain }}"
     port: 5000
   register: tl
 
-- name: whoogle swarm service
-  docker_swarm_service:
+- name: Whoogle swarm service
+  community.docker.docker_swarm_service:
     name: whoogle
     image: benbusby/whoogle-search:latest
     placement:

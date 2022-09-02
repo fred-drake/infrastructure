@@ -1,13 +1,13 @@
 ---
-- name: reboot system
-  reboot:
+- name: Reboot system
+  ansible.builtin.reboot:
 
-- name: restart kiosk service
-  systemd:
+- name: Restart kiosk service
+  ansible.builtin.systemd:
     name: kiosk
     state: restarted
 
-- name: restart supervisor
-  systemd:
+- name: Restart supervisor
+  ansible.builtin.systemd:
     name: supervisor
     state: restarted

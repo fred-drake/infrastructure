@@ -1,0 +1,3 @@
+- name: Reload Kubernetes network configuration
+  ansible.builtin.command: sysctl -p /etc/sysctl.d/99-kubernetes-cri.conf
+  changed_when: true

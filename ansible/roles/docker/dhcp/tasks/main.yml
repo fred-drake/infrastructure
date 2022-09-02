@@ -1,5 +1,5 @@
 ---
-- name: generate dhcp static reservations from netbox
+- name: Generate dhcp static reservations from netbox
   connection: local
   become: false
   export_netbox_static_reservations:
@@ -13,16 +13,16 @@
     - dhcp_update
   run_once: true
 
-- name: create data directory
-  file:
+- name: Create data directory
+  ansible.builtin.file:
     path: "{{ appdata_dir }}/{{ dhcp_id }}/data"
     state: directory
     mode: "0755"
   tags:
     - dhcp
 
-- name: set dhcp configurations
-  template:
+- name: Set dhcp configurations
+  ansible.builtin.template:
     src: "dhcp_{{ secret.dhcp.machines[dhcp_id].type }}.j2"
     dest: "{{ appdata_dir }}/{{ dhcp_id }}/data/dhcpd.conf"
     mode: "0644"
@@ -33,7 +33,7 @@
     - dhcp
     - dhcp_update
 
-- name: create application containers
+- name: Create application containers
   community.docker.docker_container:
     name: "{{ dhcp_id }}"
     image: "networkboot/dhcpd"
@@ -54,7 +54,7 @@
   tags:
     - dhcp
 
-- name: glass gui container
+- name: Glass gui container
   community.docker.docker_container:
     name: "glass-{{ dhcp_id }}"
     image: "fdrake/glass-dhcp"

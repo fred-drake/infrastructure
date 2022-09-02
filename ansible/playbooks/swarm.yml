@@ -1,17 +1,20 @@
-- hosts: swarm_initial_master
+- name: Installation of swarm to the initial manager
+  hosts: swarm_initial_master
   gather_facts: true
   become: true
   roles:
     - swarm/initial-manager
 
-- hosts: swarm_additional_masters
+- name: Installation of swarm to additional managers
+  hosts: swarm_additional_masters
   gather_facts: true
   become: true
   serial: 1
   roles:
     - swarm/add-manager
 
-- hosts: swarm_workers
+- name: Installation of swarm to worker nodes
+  hosts: swarm_workers
   gather_facts: true
   become: true
   roles:

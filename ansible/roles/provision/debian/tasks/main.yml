@@ -1,5 +1,5 @@
 ---
-- name: set authorized keys
+- name: Set authorized keys
   become: false
   ansible.posix.authorized_key:
     user: "{{ ansible_user }}"
@@ -9,12 +9,12 @@
     - "public_keys/*"
 
 - name: Make sure we have a 'wheel' group
-  group:
+  ansible.builtin.group:
     name: wheel
     state: present
 
 - name: Allow 'wheel' group to have passwordless sudo
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/sudoers
     state: present
     regexp: '^%wheel'
@@ -22,10 +22,10 @@
     validate: 'visudo -cf %s'
 
 - name: Add sudoers users to wheel group
-  user:
+  ansible.builtin.user:
     name: "{{ ansible_user }}"
-    groups: 
-     - wheel
+    groups:
+      - wheel
     append: true
     state: present
     createhome: true
@@ -36,23 +36,23 @@
 #     key: "{{ item }}"
 #   loop: "{{ public_keys }}"
 
-- name: disable automatic daily upgrade
-  systemd:
+- name: Disable automatic daily upgrade
+  ansible.builtin.systemd:
     name: apt-daily-upgrade.timer
     enabled: false
     state: stopped
     daemon_reload: true
 
-- name: set hostname
+- name: Set hostname
   ansible.builtin.hostname:
     name: "{{ inventory_hostname }}"
 
-- name: set timezone
+- name: Set timezone
   community.general.timezone:
     name: "{{ default_timezone }}"
 
-- name: install initial libraries
-  apt:
+- name: Install initial libraries
+  ansible.builtin.apt:
     name:
       - net-tools
       - python3-pip
@@ -66,34 +66,34 @@
     state: present
     update_cache: true
 
-- name: install glances
-  pip:
+- name: Install glances
+  ansible.builtin.pip:
     name: "glances[docker]"
   tags:
     - update
 
-- name: set terminal setup user to ansible user
-  set_fact:
+- name: Set terminal setup user to ansible user
+  ansible.builtin.set_fact:
     terminal_root_user: false
 
 - import_tasks: terminal.yml
 
-- name: set terminal setup user to root user
-  set_fact:
+- name: Set terminal setup user to root user
+  ansible.builtin.set_fact:
     terminal_root_user: true
-    
+
 - import_tasks: terminal.yml
 
-- name: install cifs apt dependencies
-  apt:
+- name: Install cifs apt dependencies
+  ansible.builtin.apt:
     name:
       - smbclient
       - cifs-utils
       - nfs-common
   when: "'cifs' in group_names"
 
-- name: set credentials file
-  template:
+- name: Set credentials file
+  ansible.builtin.template:
     src: cifs_credentials.j2
     dest: /etc/cifs_credentials
     mode: '0600'

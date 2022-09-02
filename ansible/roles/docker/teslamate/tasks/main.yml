@@ -1,5 +1,5 @@
 ---
-- name: create postgres container
+- name: Create postgres container
   community.docker.docker_container:
     name: teslamate-db
     image: "postgres:12"
@@ -26,7 +26,7 @@
     - teslamate-db
     - docker_update
 
-- name: create application container
+- name: Create application container
   community.docker.docker_container:
     name: "teslamate"
     image: "teslamate/teslamate"
@@ -54,7 +54,7 @@
     - teslamate
     - docker_update
 
-- name: create dashboard container
+- name: Create dashboard container
   community.docker.docker_container:
     name: teslamate-grafana
     image: "teslamate/grafana"

@@ -1,5 +1,5 @@
 ---
-- name: create application container
+- name: Create application container
   community.docker.docker_container:
     name: "smtp"
     image: "bytemark/smtp"

@@ -2,7 +2,6 @@
   gather_facts: false
   become: true
   roles:
-    
     ### Dozzle - NUC9 ###
     - role: docker/container
       vars:
@@ -51,7 +50,7 @@
         volumes:
           - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
       tags: prowlarr
-      
+
     ### Radarr ###
     - role: docker/volume
       vars:
@@ -105,7 +104,7 @@
         volumes:
           - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
       tags: radarr
-      
+
     ### Sonarr ###
     - role: docker/volume
       vars:
@@ -149,7 +148,7 @@
         volumes:
           - "{{ glusterfs_appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
       tags: sonarr
-      
+
     ### Netbox ###
     - role: docker/container
       vars:
@@ -198,7 +197,7 @@
       tags: netbox
     - role: docker/container
       vars:
-        container: 
+        container:
           name: backup-netbox
           repository: ghcr.io/fred-drake/k8s-backup
           tag: latest
@@ -217,7 +216,7 @@
             PG_PASSWORD: "{{ secret.services.netbox.postgres.password }}"
             PG_BACKUP_FILE: "netbox.sql"
       tags: netbox
-          
+
     ### Home Assistant ###
     - role: docker/volume
       vars:
@@ -352,10 +351,10 @@
             - /sys:/host/sys:ro
             - /:/rootfs:ro
           command:
-            - '--path.procfs=/host/proc'
-            - '--path.rootfs=/rootfs'
-            - '--path.sysfs=/host/sys'
-            - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+            - "--path.procfs=/host/proc"
+            - "--path.rootfs=/rootfs"
+            - "--path.sysfs=/host/sys"
+            - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
       tags: prometheus
 
     ### Overseerr ###
@@ -442,7 +441,7 @@
           tag: "{{ special_tags.uptime_kuma.tag | default('latest') }}"
           ip: "{{ secret.services.uptime_kuma.ip }}"
           volumes:
-           - "{{ glusterfs_appdata_dir }}/uptime-kuma:/app/data"
+            - "{{ glusterfs_appdata_dir }}/uptime-kuma:/app/data"
       tags: uptime_kuma
     - role: docker/backup_client
       vars:
@@ -536,7 +535,7 @@
             CLOUDFLARE_API_KEY: "{{ secret.services.traefik_internal.cloudflare_key }}"
           security_opts:
             - "no-new-privileges:true"
-          labels: 
+          labels:
             traefik.enable: "true"
             traefik.http.services.justAdummyService.loadbalancer.server.port: "1337"
             traefik.http.routers.traefik.entrypoints: http
@@ -559,8 +558,6 @@
             - "{{ glusterfs_appdata_dir }}/traefik-internal/data/acme.json:/acme.json"
             - "{{ glusterfs_appdata_dir }}/traefik-internal/config.yml:/config.yml:ro"
       tags: traefik_internal
-
-
 
       ### V-Rising ###
     # - role: docker/container

@@ -7,6 +7,7 @@
 
 - name: Update /etc/hosts to include hostname
   ansible.builtin.blockinfile:
+    mode: '0644'
     path: /etc/hosts
     create: true
     block: |
@@ -23,6 +24,7 @@
   ansible.builtin.stat:
     path: /proc/sys/net/bridge/bridge-nf-call-iptables
   register: bridge_nf_call_iptables_result
+  changed_when: bridge_nf_call_iptables_result.stat.exists
 
 - name: Set Kubernetes network configuration
   ansible.builtin.blockinfile:
@@ -37,9 +39,11 @@
   when:
     - bridge_nf_call_iptables_result.stat.exists
   register: sysctl_network
+  changed_when: sysctl_network.changed
 
-- name: Reload Kubernetes network configuration
-  ansible.builtin.shell: sysctl -p /etc/sysctl.d/99-kubernetes-cri.conf
-  when:
-    - sysctl_network.changed
-    - bridge_nf_call_iptables_result.stat.exists
+# - name: Reload Kubernetes network configuration
+#   ansible.builtin.command: sysctl -p /etc/sysctl.d/99-kubernetes-cri.conf
+#   when:
+#     - sysctl_network.changed
+#     - bridge_nf_call_iptables_result.stat.exists
+#   changed_when: true

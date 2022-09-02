@@ -1,13 +1,12 @@
-- name: reboot
-  command:
-    cmd: reboot
+- name: Reboot
+  ansible.builtin.command: reboot
   async: 120
   poll: 0
 
-- name: wait for reboot
-  wait_for:
+- name: Wait for reboot
+  ansible.builtin.wait_for:
     port: 22
-    host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+    host: '{{ (ansible_ssh_host | default(ansible_host)) | default(inventory_hostname) }}'
     search_regex: dropbear
     delay: 30
     timeout: 900

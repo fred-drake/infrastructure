@@ -1,14 +1,16 @@
-- name: update opkg
-  command: opkg update
+- name: Update opkg
+  ansible.builtin.command: opkg update
+  changed_when: true
 
-- name: install packages
-  command: >
-    opkg install 
-    python3-email 
-    python3-urllib 
+- name: Install packages
+  ansible.builtin.command: >
+    opkg install
+    python3-email
+    python3-urllib
     shadow-usermod
+  changed_when: true
 
-- name: set authorized keys
+- name: Set authorized keys
   become: false
   ansible.posix.authorized_key:
     user: "{{ ansible_user }}"
@@ -18,16 +20,17 @@
   with_fileglob:
     - "../../public_keys/*"
 
-- name: update user password
-  user:
+- name: Update user password
+  ansible.builtin.user:
     name: "{{ ansible_user }}"
     update_password: always
     password: "{{ ssh_password_hash }}"
 
-- name: network configuration
-  copy:
+- name: Network configuration
+  ansible.builtin.copy:
     src: "network-{{ ansible_host.split('.')[0] }}"
     dest: "/etc/config/network"
-  notify: 
+    mode: '0644'
+  notify:
     - reboot
     - wait for reboot

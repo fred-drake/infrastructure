@@ -1,5 +1,5 @@
 ---
-- name: create pihole container
+- name: Create pihole container
   community.docker.docker_container:
     name: "{{ pihole_id }}"
     # image: "jacklul/pihole"
@@ -32,7 +32,7 @@
     - pihole
     - pihole_only
 
-- name: generate pihole hosts from netbox
+- name: Generate pihole hosts from netbox
   connection: local
   become: false
   export_netbox_hostlist:
@@ -44,8 +44,8 @@
     - pihole
     - dns_update
 
-- name: transfer pihole hosts
-  template:
+- name: Transfer pihole hosts
+  ansible.builtin.template:
     src: hostlist.j2
     dest: "{{ appdata_dir }}/{{ secret.pihole[pihole_id].hostname }}/etc/pihole/custom.list"
     mode: "0644"
@@ -56,8 +56,8 @@
     - pihole
     - dns_update
 
-- name: copy pihole-updatelists configuration
-  copy:
+- name: Copy pihole-updatelists configuration
+  ansible.builtin.copy:
     src: "pihole-updatelists.conf"
     dest: "{{ appdata_dir }}/{{ secret.pihole[pihole_id].hostname }}/etc/pihole-updatelists/pihole-updatelists.conf"
     mode: "0644"

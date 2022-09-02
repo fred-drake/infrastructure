@@ -1,13 +1,13 @@
-- name: no overclock
-  copy:
+- name: No overclock
+  ansible.builtin.copy:
     src: pi3-none.txt
     dest: /boot/config.txt
     mode: "0755"
   when: "'raspberry_pi_overclock_none' in group_names"
   notify: reboot system
 
-- name: overclock pi 3
-  copy:
+- name: Overclock pi 3
+  ansible.builtin.copy:
     src: pi3-overclock.txt
     dest: /boot/config.txt
     mode: "0755"

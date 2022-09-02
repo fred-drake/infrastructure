@@ -1,9 +1,9 @@
 ---
-- name: restart avahi
-  service:
+- name: Restart avahi
+  ansible.builtin.service:
     name: avahi-daemon
     state: restarted
 
-- name: fail because service is stopped
-  fail:
+- name: Fail because service is stopped
+  ansible.builtin.fail:
     msg: Avahi service not started.  There was probably an error in the configuration.

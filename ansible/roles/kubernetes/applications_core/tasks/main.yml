@@ -1,23 +1,23 @@
-- name: create argocd namespace
-  k8s:
+- name: Create argocd namespace
+  kubernetes.core.k8s:
     state: present
     api_version: v1
     kind: Namespace
     name: argocd
 
-- name: create sops gpg secret
-  k8s:
+- name: Create Sops GPG secret
+  kubernetes.core.k8s:
     state: present
     definition:
       apiVersion: v1
       kind: Secret
       metadata:
-          name: sops
-          namespace: argocd
+        name: sops
+        namespace: argocd
       data:
-          sops.asc: "{{ argocd_gpg_key }}"
+        sops.asc: "{{ argocd_gpg_key }}"
 
-- name: argocd helm
+- name: ArgoCD helm
   kubernetes.core.helm:
     name: argocd
     chart_ref: "{{ playbook_dir }}/../../../cluster/argocd"

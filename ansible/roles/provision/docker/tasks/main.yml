@@ -1,7 +1,7 @@
 ---
 
-- name: install libraries
-  apt:
+- name: Install libraries
+  ansible.builtin.apt:
     name:
       - apt-transport-https
       - ca-certificates
@@ -16,24 +16,24 @@
     state: present
     update_cache: true
 
-- name: install pip libraries
-  pip:
+- name: Install pip libraries
+  ansible.builtin.pip:
     name:
       - docker
       - docker-compose
 
-- name: add GPG key
-  apt_key:
+- name: Add GPG key
+  ansible.builtin.apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
 
-- name: add docker repository to apt
-  apt_repository:
+- name: Add docker repository to apt
+  ansible.builtin.apt_repository:
     repo: deb https://download.docker.com/linux/ubuntu bionic stable
     state: present
 
-- name: install docker
-  apt:
+- name: Install docker
+  ansible.builtin.apt:
     name: "{{ item }}"
     state: present
     update_cache: true
@@ -42,21 +42,21 @@
     - docker-ce-cli
     - containerd.io
 
-- name: start docker service
-  service:
+- name: Start docker service
+  ansible.builtin.service:
     name: docker
     state: started
     enabled: true
 
-- name: wipe containers
-  shell: docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
+- name: Wipe containers
+  ansible.builtin.shell: docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
   when: "True"
   tags:
     - never
     - rebuild_containers
     - rebuild_all
 
-- name: wipe images, volumes and networks
+- name: Wipe images, volumes and networks
   community.docker.docker_prune:
     images: true
     images_filters:
@@ -68,8 +68,8 @@
     - never
     - rebuild_all
 
-- name: setup admin network
-  docker_network:
+- name: Setup admin network
+  community.docker.docker_network:
     name: "{{ secret.docker.network.admin }}"
     driver: "macvlan"
     internal: false
@@ -81,8 +81,8 @@
   when: interface_208 is defined
   # tags: docker_network
 
-- name: setup container network
-  docker_network:
+- name: Setup container network
+  community.docker.docker_network:
     name: "{{ secret.docker.network.container }}"
     driver: "macvlan"
     internal: false
@@ -94,8 +94,8 @@
   when: interface_50 is defined
   # tags: docker_network
 
-- name: setup iot network
-  docker_network:
+- name: Setup iot network
+  community.docker.docker_network:
     name: "{{ secret.docker.network.iot }}"
     driver: "macvlan"
     internal: false
@@ -107,8 +107,8 @@
   when: interface_40 is defined
   # tags: docker_network
 
-- name: setup workstation network
-  docker_network:
+- name: Setup workstation network
+  community.docker.docker_network:
     name: "{{ secret.docker.network.workstation }}"
     driver: "macvlan"
     internal: false
@@ -120,33 +120,33 @@
   when: interface_30 is defined
   tags: docker_network
 
-- name: set DNS variables for services containers
-  set_fact:
+- name: Set DNS variables for services containers
+  ansible.builtin.set_fact:
     dns1: "{{ secret.pihole.pihole1.address }}"
     dns2: "{{ secret.pihole.pihole2.address }}"
   when: "'critical_docker_services' not in group_names"
 
-- name: set DNS variables for critical services containers
-  set_fact:
+- name: Set DNS variables for critical services containers
+  ansible.builtin.set_fact:
     dns1: "8.8.8.8"
     dns2: "8.8.4.4"
   when: "'critical_docker_services' in group_names"
 
-- name: set docker configuration
-  template:
+- name: Set docker configuration
+  ansible.builtin.template:
     src: "docker_config.j2"
     dest: "/etc/default/docker"
     mode: "0644"
   notify:
     - restart docker
 
-- name: add a docker group
-  group:
+- name: Add a docker group
+  ansible.builtin.group:
     name: docker
     state: present
 
-- name: add ansible user to docker group
-  user:
+- name: Add ansible user to docker group
+  ansible.builtin.user:
     name: "{{ ansible_user }}"
     groups: docker
     append: true

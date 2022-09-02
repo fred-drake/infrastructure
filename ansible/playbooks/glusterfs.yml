@@ -1,10 +1,12 @@
-- hosts: glusterfs_server
+- name: Installation and configuration of GlusterFS server nodes
+  hosts: glusterfs_server
   gather_facts: true
   become: true
   roles:
     - glusterfs-server
 
-- hosts: glusterfs_client
+- name: Installation and configuration of GlusterFS client nodes
+  hosts: glusterfs_client
   gather_facts: true
   become: true
   roles:

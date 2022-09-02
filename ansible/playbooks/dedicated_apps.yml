@@ -1,22 +1,26 @@
-- hosts: scoreboard
+- name: Scoreboard application
+  hosts: scoreboard
   gather_facts: false
   become: true
   roles:
     - scoreboard
 
-- hosts: kiosk
+- name: Kiosk application
+  hosts: kiosk
   gather_facts: false
   become: true
   roles:
     - kiosk
 
-- hosts: scannerpi
+- name: Scanner Pi applications
+  hosts: scannerpi
   gather_facts: false
   become: true
   roles:
     - scannerpi
 
-- hosts: kvm
+- name: KVM applications
+  hosts: kvm
   gather_facts: false
   become: true
   roles:

@@ -1,6 +1,6 @@
 ---
-- name: install avahi daemon
-  apt:
+- name: Install avahi daemon
+  ansible.builtin.apt:
     name: "{{ item }}"
     state: present
     update_cache: true
@@ -10,8 +10,8 @@
   tags:
     - avahi_update
 
-- name: copy configuration file
-  copy:
+- name: Copy configuration file
+  ansible.builtin.copy:
     src: avahi-daemon.conf
     dest: /etc/avahi/avahi-daemon.conf
     mode: '0644'
@@ -20,13 +20,13 @@
   tags:
     - avahi_update
 
-- name: execute service restart if necessary
-  meta: flush_handlers
+- name: Execute service restart if necessary
+  ansible.builtin.meta: flush_handlers
   tags:
     - avaihi_update
 
-- name: check if service is started
-  service:
+- name: Check if service is started
+  ansible.builtin.service:
     name: avahi-daemon
     state: started
   notify:

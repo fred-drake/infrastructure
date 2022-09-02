@@ -1,4 +1,5 @@
-- hosts: scoreboard
+- name: All installations and configurations associated with the scoreboard Pi
+  hosts: scoreboard
   gather_facts: false
   become: true
   roles:

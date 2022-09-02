@@ -1,20 +1,27 @@
-- name: "{{ k8s_namespace }} / create backup directory"
-  file:
+- name: "Prom {{ k8s_namespace }} / create backup directory"
+  ansible.builtin.file:
     path: "{{ backup_root_directory }}/{{ backup_directory }}"
     state: directory
     mode: '0755'
 
-- name: "{{ k8s_namespace }} / removing old prometheus snapshots"
-  shell: >
+- name: "Prom {{ k8s_namespace }} / removing old prometheus snapshots"
+  ansible.builtin.command: >
     kubectl exec -i -n {{ k8s_namespace }} prometheus-server-0 -c prometheus-server -- rm -rf /data/snapshots
+  changed_when: true
 
-- name: "{{ k8s_namespace }} / creating prometheus snapshot"
-  shell: >
-    curl -XPOST https://prometheus.internal.freddrake.com/api/v1/admin/tsdb/snapshot
+- name: "Prom {{ k8s_namespace }} / creating prometheus snapshot"
+  ansible.builtin.uri:
+    url: https://prometheus.internal.freddrake.com/api/v1/admin/tsdb/snapshot
+    method: POST
+  # ansible.builtin.command: >
+  #   curl -XPOST https://prometheus.internal.freddrake.com/api/v1/admin/tsdb/snapshot
+  changed_when: true
 
-- name: "{{ k8s_namespace }} / backing up prometheus snapshot"
-  shell: >
+- name: "Prom {{ k8s_namespace }} / backing up prometheus snapshot"
+  ansible.builtin.command: >
     kubectl cp -n {{ k8s_namespace }} prometheus-server-0:/data/snapshots/ {{ backup_root_directory }}/{{ backup_directory }} -c prometheus-server
+  changed_when: true
 
-- name: "{{ k8s_namespace }} / prepping snapshot directory"
-  shell: "mv {{ backup_root_directory}}/{{ backup_directory }}/* {{ backup_root_directory}}/{{ backup_directory }}/data"
+- name: "Prom {{ k8s_namespace }} / prepping snapshot directory"
+  ansible.builtin.command: "mv {{ backup_root_directory }}/{{ backup_directory }}/* {{ backup_root_directory }}/{{ backup_directory }}/data"
+  changed_when: true

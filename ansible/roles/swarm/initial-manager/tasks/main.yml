@@ -1,4 +1,5 @@
-- ansible.builtin.include_role: 
+- name: Run routines common to master node manipulation
+  ansible.builtin.include_role:
     name: swarm/master-common
 
 # - name: initialize docker swarm
@@ -8,17 +9,17 @@
 #   when: swarm_status.rc != 0
 #   run_once: true
 
-- name: initialize docker swarm
-  command: docker swarm init --advertise-addr "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+- name: Initialize docker swarm
+  ansible.builtin.command: docker swarm init --advertise-addr "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
   when: swarm_status.rc != 0
   run_once: true
 
-- name: get the manager join-token
-  command: docker swarm join-token --quiet manager
+- name: Get the manager join-token
+  ansible.builtin.command: docker swarm join-token --quiet manager
   register: manager_token
   changed_when: false
 
-- name: get the worker join-token
-  command: docker swarm join-token --quiet worker
+- name: Get the worker join-token
+  ansible.builtin.command: docker swarm join-token --quiet worker
   register: worker_token
   changed_when: false

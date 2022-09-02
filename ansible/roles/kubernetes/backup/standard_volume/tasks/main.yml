@@ -1,11 +1,12 @@
-- name: "{{ k8s_namespace }}-{{ backup_directory }} / create backup directory"
-  file:
+- name: "Volume {{ k8s_namespace }}-{{ backup_directory }} / create backup directory"
+  ansible.builtin.file:
     path: "{{ backup_root_directory }}/{{ k8s_namespace }}"
     state: directory
     mode: '0755'
 
-- name: "{{ k8s_namespace }}-{{ backup_directory }} / backing up volume"
-  shell: >
-    kubectl cp -n {{ k8s_namespace }}
+- name: "Volume {{ k8s_namespace }}-{{ backup_directory }} / backing up volume"
+  ansible.builtin.shell: >
+    set -o pipefail && kubectl cp -n {{ k8s_namespace }}
     `kubectl get pod -n {{ k8s_namespace }} -o json | jq ".items[0].metadata.name" | tr -d \"`:{{ container_directory }}
     {{ backup_root_directory }}/{{ k8s_namespace }}/{{ backup_directory }} -c {{ container_name }}
+  changed_when: true

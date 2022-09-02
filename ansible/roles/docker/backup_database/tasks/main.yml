@@ -7,7 +7,7 @@
 #       device: ":/mnt/user/k8s_backup"
 #     volume_name: backup-data
 
-- name: create storage container
+- name: Create storage container
   community.docker.docker_container:
     name: backup_database
     image: "minio/minio:RELEASE.2021-11-09T03-21-45Z"

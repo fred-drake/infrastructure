@@ -1,25 +1,27 @@
-- name: create temp file for talosconfig template
-  tempfile:
+- name: Create temp file for talosconfig template
+  ansible.builtin.tempfile:
     state: file
     suffix: talosconfig
   register: config_temp_file
   changed_when: false
 
-- name: build IP addresses of control plane machines
-  set_fact:
+- name: Build IP addresses of control plane machines
+  ansible.builtin.set_fact:
     endpoint_ip_addresses: "{{ endpoint_ip_addresses }} + [ '{{ lookup('dig', '{{ item }}.{{ secret.domain }}') }}' ]"
   with_items: "{{ groups['talos_control_planes'] }}"
 
-- name: build talosconfig
-  template:
+- name: Build talosconfig
+  ansible.builtin.template:
     src: talosconfig.j2
     dest: "{{ config_temp_file.path }}"
+    mode: '0644'
   changed_when: false
 
-- name: merge talosconfig
-  command: "talosctl config merge {{ config_temp_file.path|quote }}"
+- name: Merge talosconfig
+  ansible.builtin.command: "talosctl config merge {{ config_temp_file.path | quote }}"
+  changed_when: true
   register: merge_output
 
-- name: display merge output
-  debug:
+- name: Display merge output
+  ansible.builtin.debug:
     var: merge_output.stdout

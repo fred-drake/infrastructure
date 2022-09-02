@@ -1,24 +1,23 @@
-- name: install prerequisite library
-  apt:
+- name: Install prerequisite library
+  ansible.builtin.apt:
     name:
       - python3-venv
 
-- name: check for existing tinypilot installation
-  stat:
+- name: Check for existing tinypilot installation
+  ansible.builtin.stat:
     path: /opt/tinypilot
   register: tp_dir
 
-- name: install tinypilot
-  shell: curl --silent --show-error https://raw.githubusercontent.com/tiny-pilot/tinypilot/master/quick-install | bash -
+- name: Install tinypilot
+  ansible.builtin.shell: set -o pipefail && curl --silent --show-error https://raw.githubusercontent.com/tiny-pilot/tinypilot/master/quick-install | bash -
   notify: reboot
   when: not tp_dir.stat.exists
 
-- name: overwrite settings
-  template:
+- name: Overwrite settings
+  ansible.builtin.template:
     src: settings.yml.j2
     dest: /home/tinypilot/settings.yml
     owner: tinypilot
     group: tinypilot
     mode: '0644'
   notify: reboot
-

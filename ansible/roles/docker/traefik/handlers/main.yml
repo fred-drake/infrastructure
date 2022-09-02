@@ -1,5 +1,5 @@
 ---
-- name: restart traefik
+- name: Restart traefik
   community.docker.docker_container:
     name: "traefik-{{ traefik_type }}"
     container_default_behavior: "{{ container_default_behavior }}"

@@ -1,5 +1,5 @@
 ---
-- name: create application container
+- name: Create application container
   community.docker.docker_container:
     name: "git_hash_updater"
     image: "fdrake/git-hash-updater"

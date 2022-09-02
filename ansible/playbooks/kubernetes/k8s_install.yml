@@ -5,14 +5,16 @@
 #   roles:
 #     - provision/kubernetes/backup
 
-- hosts: k8s_masters
+- name: Install kubernetes on master nodes
+  hosts: k8s_masters
   gather_facts: false
   become: true
   roles:
     - provision/kubernetes/init_master
     - provision/kubernetes/additional_master
 
-- hosts: k8s_workers
+- name: Install kubernetes on worker nodes
+  hosts: k8s_workers
   gather_facts: false
   become: true
   roles:

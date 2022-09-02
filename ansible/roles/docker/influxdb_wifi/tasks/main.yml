@@ -1,5 +1,5 @@
 ---
-- name: create application container
+- name: Create application container
   community.docker.docker_container:
     name: "influxdb_wifi"
     image: "influxdb:2.0"

@@ -1,4 +1,5 @@
-- hosts: scannerpi
+- name: All installations and configurations associated with the ScannerPi
+  hosts: scannerpi
   gather_facts: false
   become: true
   roles:

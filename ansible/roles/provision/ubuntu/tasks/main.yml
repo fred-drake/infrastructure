@@ -1,10 +1,10 @@
-- name: make sudo group
-  group:
+- name: Make sudo group
+  ansible.builtin.group:
     name: sudo
     state: present
 
-- name: allow sudo group to execute without password
-  lineinfile:
+- name: Allow sudo group to execute without password
+  ansible.builtin.lineinfile:
     dest: /etc/sudoers
     state: present
     regexp: '^sudo'
@@ -17,19 +17,18 @@
 #     update_password: always
 #     password: "{{ ssh_password | default(secret.hosts.default_ssh_password) | password_hash('sha512') }}"
 
-- name: update ubuntu motd
-  copy:
+- name: Update ubuntu motd
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: /etc/update-motd.d/
     mode: "0755"
   with_fileglob:
     - "motd/*"
 
-- name: upgrade packages
-  apt:
+- name: Upgrade packages
+  ansible.builtin.apt:
     update_cache: true
-    upgrade: "dist"
-  ignore_errors: true
+    upgrade: dist
   tags:
     - update
 

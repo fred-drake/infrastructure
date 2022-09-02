@@ -1,5 +1,5 @@
 ---
-- name: create wireguard container
+- name: Create wireguard container
   community.docker.docker_container:
     name: wireguard
     image: "linuxserver/wireguard"

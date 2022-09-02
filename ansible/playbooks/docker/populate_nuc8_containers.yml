@@ -2,7 +2,6 @@
   gather_facts: false
   become: true
   roles:
-    
     ### Dozzle - NUC8 ###
     - role: docker/container
       vars:
@@ -210,7 +209,7 @@
       tags: photoprism
     - role: docker/container
       vars:
-        container: 
+        container:
           name: backup-photoprism-internal
           repository: ghcr.io/fred-drake/k8s-backup
           tag: "0.3"
@@ -243,10 +242,10 @@
             - /sys:/host/sys:ro
             - /:/rootfs:ro
           command:
-            - '--path.procfs=/host/proc'
-            - '--path.rootfs=/rootfs'
-            - '--path.sysfs=/host/sys'
-            - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+            - "--path.procfs=/host/proc"
+            - "--path.rootfs=/rootfs"
+            - "--path.sysfs=/host/sys"
+            - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
 
     ### Prometheus Pihole Exporter - Pihole1 ###
     - role: docker/container

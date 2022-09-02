@@ -1,5 +1,5 @@
 ---
-- name: create application container
+- name: Create application container
   community.docker.docker_container:
     name: "ddns"
     image: "ghcr.io/akarys42/cloudflare-ddns-docker"

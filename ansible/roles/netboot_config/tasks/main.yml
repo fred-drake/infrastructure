@@ -1,18 +1,20 @@
-- name: create netboot install config directory
-  file:
+- name: Create netboot install config directory
+  ansible.builtin.file:
     path: "/netboot/ubuntu/{{ item }}"
     state: directory
+    mode: '0755'
   loop: "{{ groups['netboot_install_servers'] }}"
-  
+
 # - name: apply all ubuntu netboot install configs - user-data
 #   template:
 #     src: "{{ item }}-user-data.yml.j2"
 #     dest: "/netboot/ubuntu/{{ item }}/user-data"
 #   loop: "{{ groups['netboot_install_servers'] }}"
 
-- name: apply all ubuntu netboot install configs - meta-data
-  copy:
+- name: Apply all ubuntu netboot install configs - meta-data
+  ansible.builtin.copy:
     content: ""
     dest: "/netboot/ubuntu/{{ item }}/meta-data"
     force: false
+    mode: '0644'
   loop: "{{ groups['netboot_install_servers'] }}"

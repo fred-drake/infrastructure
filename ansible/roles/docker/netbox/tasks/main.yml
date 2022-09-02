@@ -1,5 +1,5 @@
 ---
-- name: create postgres container
+- name: Create postgres container
   community.docker.docker_container:
     name: netbox-db-postgres
     image: "postgres:12"
@@ -25,7 +25,7 @@
     - netbox-db-postgres
     - docker_update
 
-- name: create redis container
+- name: Create redis container
   community.docker.docker_container:
     name: netbox-db-redis
     image: "redis"
@@ -49,7 +49,7 @@
     - netbox-db-redis
     - docker_update
 
-- name: create application container
+- name: Create application container
   community.docker.docker_container:
     name: netbox
     image: "linuxserver/netbox:latest"

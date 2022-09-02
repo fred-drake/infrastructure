@@ -1,7 +1,6 @@
-- name: "create application volume for {{ container.name }}"
+- name: "Create application volume for {{ container.name }}"
   block:
-    - &vol
-      name: "create cifs volume"
+    - name: Create cifs volume
       community.docker.docker_volume:
         volume_name: "{{ item.container }}_{{ item.name }}"
         driver: local
@@ -12,9 +11,18 @@
         recreate: options-changed
       loop: "{{ cifs_volumes }}"
   rescue:
-    - name: remove application container
+    - name: Remove application container
       community.docker.docker_container:
         name: "{{ item.container }}"
         state: absent
         container_default_behavior: compatibility
-    - <<: *vol
+    - name: Create cifs volume
+      community.docker.docker_volume:
+        volume_name: "{{ item.container }}_{{ item.name }}"
+        driver: local
+        driver_options:
+          type: cifs
+          device: "//{{ cifs_server }}/{{ item.name }}"
+          o: "{{ cifs_docker_mount_options }},{{ item.mount_options | default('') }}"
+        recreate: options-changed
+      loop: "{{ cifs_volumes }}"

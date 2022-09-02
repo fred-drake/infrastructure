@@ -27,3 +27,7 @@ repos:
     rev: v2.0.3
     hooks:
       - id: forbid-secrets
+  - repo: https://github.com/ansible-community/ansible-lint.git
+    rev: v6.5.1
+    hooks:
+      - id: ansible-lint

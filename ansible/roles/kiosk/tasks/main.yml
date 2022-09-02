@@ -1,5 +1,5 @@
-- name: remove unnecessary libraries
-  apt:
+- name: Remove unnecessary libraries
+  ansible.builtin.apt:
     name:
       - purge
       - wolfram-engine
@@ -15,16 +15,16 @@
       - openjdk-11-jre-headless
     state: absent
 
-- name: remove useless packages from the cache
-  apt:
+- name: Remove useless packages from the cache
+  ansible.builtin.apt:
     autoclean: true
 
-- name: remove dependencies that are no longer required
-  apt:
+- name: Remove dependencies that are no longer required
+  ansible.builtin.apt:
     autoremove: true
 
-- name: install kiosk dependencies
-  apt:
+- name: Install kiosk dependencies
+  ansible.builtin.apt:
     name:
       - xdotool
       - unclutter
@@ -32,8 +32,8 @@
       - supervisor
     state: present
 
-- name: copy kiosk script
-  template:
+- name: Copy kiosk script
+  ansible.builtin.template:
     src: kiosk.sh.j2
     dest: "/home/{{ ansible_user }}/kiosk.sh"
     mode: '0755'
@@ -51,15 +51,15 @@
 # - name: restart service if necessary
 #   meta: flush_handlers
 
-- name: configure supervisor
-  blockinfile:
+- name: Configure supervisor
+  ansible.builtin.blockinfile:
     state: present
     path: /etc/supervisor/supervisord.conf
     block: "{{ lookup('file', 'supervisord-block.conf') }}"
   notify: restart supervisor
 
-- name: apply supervisor configuration
-  template:
+- name: Apply supervisor configuration
+  ansible.builtin.template:
     src: kiosk.supervisor.conf.j2
     dest: /etc/supervisor/conf.d/kiosk.conf
     mode: '0644'

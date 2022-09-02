@@ -1,65 +1,68 @@
-- name: install apt dependencies
-  apt:
-    name: 
+- name: Install apt dependencies
+  ansible.builtin.apt:
+    name:
       - curl
       - supervisor
       - smbclient
       - cifs-utils
 
-- name: check if node repository is already installed
-  shell: grep -rhE ^deb /etc/apt/sources.list* | grep deb.nodesource.com | wc -l
+- name: Check if node repository is already installed
+  ansible.builtin.shell: set -o pipefail && grep -rhE ^deb /etc/apt/sources.list* | grep deb.nodesource.com | wc -l
   register: nodesource
   changed_when: false
 
-- name: install node repository
-  shell: curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+- name: Install node repository
+  ansible.builtin.shell: set -o pipefail && curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
   when: nodesource.stdout == '0'
 
-- name: install nodejs apt
-  apt:
+- name: Install nodejs apt
+  ansible.builtin.apt:
     name: nodejs
 
-- name: pull scanner service git repo
+- name: Pull scanner service git repo
   ansible.builtin.git:
     repo: https://github.com/fred-drake/scanner-directory-broker.git
+    version: master
     dest: "{{ root_scanner_dir }}/node"
   notify: restart supervisor
   tags: code
 
-- name: copy config file
-  template:
+- name: Copy config file
+  ansible.builtin.template:
     src: config.yaml.j2
     dest: "{{ root_scanner_dir }}/node/config.yaml"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_group }}"
+    mode: '0644'
   notify: restart supervisor
   tags: code
 
-- name: install npm packages
+- name: Install npm packages
   community.general.npm:
     path: "{{ root_scanner_dir }}/node"
   notify: restart supervisor
 
-- name: compile scanner service
+- name: Compile scanner service
   ansible.builtin.command:
     cmd: npm run build:release
     chdir: "{{ root_scanner_dir }}/node"
+  changed_when: true
   notify: restart supervisor
 
-- name: install node supervisor globally
+- name: Install node supervisor globally
   community.general.npm:
     name: supervisor
     global: true
 
-- name: configure supervisor
-  blockinfile:
+- name: Configure supervisor
+  ansible.builtin.blockinfile:
     state: present
     path: /etc/supervisor/supervisord.conf
     block: "{{ lookup('file', 'supervisord-block.conf') }}"
   notify: restart supervisor
 
-- name: apply supervisor configuration
-  template:
+- name: Apply supervisor configuration
+  ansible.builtin.template:
     src: node.supervisor.conf.j2
     dest: /etc/supervisor/conf.d/node.conf
     mode: '0644'

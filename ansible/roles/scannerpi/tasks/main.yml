@@ -1,21 +1,21 @@
-- name: make scanner app directory
-  file:
+- name: Make scanner app directory
+  ansible.builtin.file:
     path: "{{ root_scanner_dir }}"
     state: directory
     mode: '0755'
     owner: "{{ ansible_user }}"
     group: "{{ ansible_group }}"
 
-- name: make scanner watch directory
-  file:
+- name: Make scanner watch directory
+  ansible.builtin.file:
     path: "{{ root_scanner_dir }}/watch"
     state: directory
     mode: '0755'
     owner: "{{ ansible_user }}"
     group: "{{ ansible_group }}"
 
-- name: make scanner outgoing directory
-  file:
+- name: Make scanner outgoing directory
+  ansible.builtin.file:
     path: "{{ root_scanner_dir }}/outgoing"
     state: directory
     mode: '0755'

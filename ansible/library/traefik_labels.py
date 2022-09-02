@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from ansible.module_utils.basic import *
+from ansible.module_utils.basic import AnsibleModule
 
 
 def build_labels(name, domain, port, additional_labels):

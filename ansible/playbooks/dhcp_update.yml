@@ -1,4 +1,5 @@
-- hosts: critical_docker_services
+- name: Update DHCP service
+  hosts: critical_docker_services
   gather_facts: false
   become: true
   roles:

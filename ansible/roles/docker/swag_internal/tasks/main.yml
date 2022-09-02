@@ -1,14 +1,14 @@
 ---
-- name: set dns config files
-  template:
+- name: Set dns config files
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ appdata_dir }}/swag-internal/dns-conf/{{ item | basename | regex_replace('.j2$', '') }}"
   with_fileglob:
     - "../templates/dns-conf/*.j2"
   notify:
     - restart swag-internal
-- name: sync proxy config files
-  template:
+- name: Sync proxy config files
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ appdata_dir }}/swag-internal/nginx/proxy-confs/{{ item | basename | regex_replace('.j2$', '.conf') }}"
     owner: "99"

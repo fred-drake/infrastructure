@@ -1,6 +1,6 @@
 # - import_tasks: volume.yml
 
-- name: "create application container - {{ container.name }}"
+- name: "Create application container - {{ container.name }}"
   community.docker.docker_container:
     name: "{{ container.name }}"
     image: "{{ container.repository }}:{{ container.tag }}"
@@ -30,7 +30,7 @@
     - docker_container
   when: container.ip is defined
 
-- name: "create application container - {{ container.name }}"
+- name: "Create application container - {{ container.name }}"
   community.docker.docker_container:
     name: "{{ container.name }}"
     image: "{{ container.repository }}:{{ container.tag }}"
@@ -58,7 +58,7 @@
     - docker_container
   when: container.ip is not defined and container.networks is defined
 
-- name: "create application container - {{ container.name }}"
+- name: "Create application container - {{ container.name }}"
   community.docker.docker_container:
     name: "{{ container.name }}"
     image: "{{ container.repository }}:{{ container.tag }}"

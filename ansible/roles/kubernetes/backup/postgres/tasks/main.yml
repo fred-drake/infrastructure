@@ -1,38 +1,43 @@
-- name: create backup directory
-  file:
+- name: Create backup directory
+  ansible.builtin.file:
     path: "{{ backup_root_directory }}/{{ backup_directory }}"
     state: directory
     mode: '0755'
 
-- name: create temp file
-  tempfile:
+- name: Create temp file
+  ansible.builtin.tempfile:
     state: file
   register: backup_script
 
-- name: make backup script
-  template:
+- name: Make backup script
+  ansible.builtin.template:
     src: backup.sh.j2
     dest: "{{ backup_script.path }}"
     mode: '0700'
 
-- name: store pgpass
-  shell: "kubectl cp -n {{ k8s_namespace }} {{ backup_script.path }} {{ pg_podname }}:/root/backup.sh"
+- name: Store pgpass
+  ansible.builtin.command: "kubectl cp -n {{ k8s_namespace }} {{ backup_script.path }} {{ pg_podname }}:/root/backup.sh"
+  changed_when: true
 
-- name: delete temp file
-  file:
+- name: Delete temp file
+  ansible.builtin.file:
     path: "{{ backup_script.path }}"
     state: absent
 
-- name: postgres dump to file
-  shell: "kubectl exec -n {{ k8s_namespace}} -i {{ pg_podname }} -- /root/backup.sh"
+- name: Postgres dump to file
+  ansible.builtin.command: "kubectl exec -n {{ k8s_namespace }} -i {{ pg_podname }} -- /root/backup.sh"
+  changed_when: true
 
-- name: copy postgres backup from pod
-  shell: >
+- name: Copy postgres backup from pod
+  ansible.builtin.command: >
     kubectl cp -n {{ k8s_namespace }}
     {{ pg_podname }}:/root/{{ backup_file }} {{ backup_root_directory }}/{{ k8s_namespace }}/{{ backup_file }}
+  changed_when: true
 
-- name: remove backup script
-  shell: "kubectl exec -n {{ k8s_namespace}} -i {{ pg_podname }} -- rm -f /root/restore.sh"
+- name: Remove backup script
+  ansible.builtin.command: "kubectl exec -n {{ k8s_namespace }} -i {{ pg_podname }} -- rm -f /root/restore.sh"
+  changed_when: true
 
-- name: remove backup file
-  shell: "kubectl exec -n {{ k8s_namespace}} -i {{ pg_podname }} -- rm -f /root/{{ backup_file }}"
+- name: Remove backup file
+  ansible.builtin.command: "kubectl exec -n {{ k8s_namespace }} -i {{ pg_podname }} -- rm -f /root/{{ backup_file }}"
+  changed_when: true

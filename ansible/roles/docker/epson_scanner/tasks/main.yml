@@ -1,8 +1,7 @@
 ---
-- name: create scanner incoming volume
+- name: Create scanner incoming volume
   block:
-    - &volume
-      name: create volume
+    - name: Create volume
       community.docker.docker_volume:
         volume_name: epson_scanner_outgoing
         driver: local
@@ -12,16 +11,24 @@
           o: "{{ cifs_docker_mount_options }},gid=200,uid=200"
         recreate: options-changed
   rescue:
-    - name: remove application container
+    - name: Remove application container
       community.docker.docker_container:
         name: "epson_scanner"
         state: absent
         container_default_behavior: compatibility
-    - <<: *volume
+    - name: Create volume
+      community.docker.docker_volume:
+        volume_name: epson_scanner_outgoing
+        driver: local
+        driver_options:
+          type: cifs
+          device: "//{{ cifs_server }}/ScannerIncoming"
+          o: "{{ cifs_docker_mount_options }},gid=200,uid=200"
+        recreate: options-changed
   tags:
     - epson_scanner
 
-- name: create application container
+- name: Create application container
   community.docker.docker_container:
     name: "epson_scanner"
     image: "registry.{{ secret.domain }}/epson-scanner"

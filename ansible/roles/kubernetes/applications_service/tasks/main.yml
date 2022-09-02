@@ -1,4 +1,4 @@
-- name: service applications helm
+- name: Service applications helm
   kubernetes.core.helm:
     name: applications-service
     chart_ref: "{{ playbook_dir }}/../../../cluster/base/applications-service"

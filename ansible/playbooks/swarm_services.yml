@@ -1,4 +1,5 @@
-- hosts: swarm_masters
+- name: Installation and configuration of swarm services
+  hosts: swarm_masters
   gather_facts: false
   run_once: true
   become: true

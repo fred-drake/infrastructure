@@ -1,4 +1,4 @@
-- name: mount docker lib directory to SSD
+- name: Mount docker lib directory to SSD
   ansible.posix.mount:
     path: /var/lib/docker
     src: /dev/sda1

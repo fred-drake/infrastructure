@@ -1,55 +1,58 @@
-- name: change shell to zsh
-  user:
+- name: Change shell to zsh
+  ansible.builtin.user:
     name: "{{ (terminal_root_user) | ternary('root', ansible_user) }}"
     shell: /bin/zsh
-- name: stat the ohmyzsh path
+- name: Stat the ohmyzsh path
   become: "{{ terminal_root_user }}"
-  stat:
+  ansible.builtin.stat:
     path: "~/.oh-my-zsh"
   register: ohmyzsh_path
 
-- name: assign temp file for oh my zsh
-  tempfile:
+- name: Assign temp file for oh my zsh
+  ansible.builtin.tempfile:
     state: file
     suffix: ohmyzsh
   register: ohmyzsh_install_file
   when: not ohmyzsh_path.stat.exists
 
-- name: download oh-my-zsh install file
-  get_url:
+- name: Download oh-my-zsh install file
+  ansible.builtin.get_url:
     url: https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh
     dest: "{{ ohmyzsh_install_file.path }}"
     mode: '0755'
   when: not ohmyzsh_path.stat.exists
 
-- name: install oh-my-zsh
+- name: Install oh-my-zsh
   become: "{{ terminal_root_user }}"
-  command: "{{ ohmyzsh_install_file.path }} --unattended"
+  ansible.builtin.command: "{{ ohmyzsh_install_file.path }} --unattended"
   when: not ohmyzsh_path.stat.exists
 
-- name: install zsh-autosuggestions plugin
+- name: Install zsh-autosuggestions plugin
   become: "{{ terminal_root_user }}"
-  git:
+  ansible.builtin.git:
     depth: 1
-    repo: https://github.com/zsh-users/zsh-autosuggestions
+    repo: https://github.com/zsh-users/zsh-autosuggestions.git
+    version: master
     dest: "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
 
-- name: install zsh-syntax-highlighting
+- name: Install zsh-syntax-highlighting
   become: "{{ terminal_root_user }}"
-  git:
+  ansible.builtin.git:
     depth: 1
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    version: master
     dest: "~/zsh-syntax-highlighting"
 
-- name: make font directory
+- name: Make font directory
   become: "{{ terminal_root_user }}"
-  file:
+  ansible.builtin.file:
     path: "~/.fonts"
     state: directory
+    mode: '0755'
 
-- name: copy fonts
+- name: Copy fonts
   become: "{{ terminal_root_user }}"
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: "~/.fonts"
     mode: '0644'
@@ -57,22 +60,23 @@
     - "fonts/*"
   notify: rebuild font cache
 
-- name: stat p10k path
+- name: Stat p10k path
   become: "{{ terminal_root_user }}"
-  stat:
+  ansible.builtin.stat:
     path: "~/powerlevel10k"
   register: p10k_path
 
-- name: install powerlevel10k zsh theme
+- name: Install powerlevel10k zsh theme
   become: "{{ terminal_root_user }}"
-  git:
+  ansible.builtin.git:
     depth: 1
     repo: https://github.com/romkatv/powerlevel10k.git
     dest: "~/powerlevel10k"
+    version: master
 
-- name: copy zsh configuration
+- name: Copy zsh configuration
   become: "{{ terminal_root_user }}"
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: "~/"
     mode: '0664'

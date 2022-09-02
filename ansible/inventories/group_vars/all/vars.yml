@@ -15,7 +15,7 @@ k8s:
   k3s: # k3s install version
     version: v1.24.2+k3s2
   kubegres: # scalable postgres for kubernetes
-      version: 1.9
+    version: 1.9
   resources: # kubernetes resources
     cpu:
       request:

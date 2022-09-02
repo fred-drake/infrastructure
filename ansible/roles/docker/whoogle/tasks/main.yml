@@ -1,4 +1,4 @@
-- name: create application container
+- name: Create application container
   community.docker.docker_container:
     name: whoogle
     image: "benbusby/whoogle-search:latest"

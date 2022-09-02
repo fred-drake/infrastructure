@@ -1,8 +1,7 @@
 ---
-- name: create application data volume
+- name: Create application data volume
   block:
-    - &volume
-      name: create volume
+    - name: Create volume
       community.docker.docker_volume:
         volume_name: nginxstatic_data
         driver: local
@@ -12,16 +11,24 @@
           o: "{{ cifs_docker_mount_options }},gid=100,uid=99,file_mode=0777,dir_mode=0777"
         recreate: options-changed
   rescue:
-    - name: remove application container
+    - name: Remove application container
       community.docker.docker_container:
         name: "nginx_static"
         state: absent
         container_default_behavior: compatibility
-    - <<: *volume
+    - name: Create volume
+      community.docker.docker_volume:
+        volume_name: nginxstatic_data
+        driver: local
+        driver_options:
+          type: cifs
+          device: "//{{ cifs_server }}/nginx_external_content_static"
+          o: "{{ cifs_docker_mount_options }},gid=100,uid=99,file_mode=0777,dir_mode=0777"
+        recreate: options-changed
   tags:
     - nginx_static
 
-- name: create application container
+- name: Create application container
   community.docker.docker_container:
     name: "nginx_static"
     image: "linuxserver/nginx:latest"

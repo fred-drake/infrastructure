@@ -1,5 +1,5 @@
 ---
-- name: "create application container - {{ backup_namespace }}"
+- name: "Create application container - {{ backup_namespace }}"
   community.docker.docker_container:
     name: "backup-{{ backup_namespace }}"
     image: ghcr.io/fred-drake/k8s-backup

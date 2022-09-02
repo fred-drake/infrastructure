@@ -1,13 +1,15 @@
-- name: apply netplan for machine containing dns server
-  template:
+- name: Apply netplan for machine containing dns server
+  ansible.builtin.template:
     src: netplan-config-dns-server.yml.j2
     dest: /etc/netplan/00-installer-config.yaml
+    mode: '0644'
   notify: netplan apply
   when: "'critical_docker_services' in group_names"
 
-- name: apply netplan for docker services machine
-  template:
+- name: Apply netplan for docker services machine
+  ansible.builtin.template:
     src: netplan-config-docker-service.yml.j2
     dest: /etc/netplan/00-installer-config.yaml
+    mode: '0644'
   notify: netplan apply
   when: "'docker_services' in group_names"

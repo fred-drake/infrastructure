@@ -1,9 +1,9 @@
 ---
-- name: restart service
-  service:
+- name: Restart service
+  ansible.builtin.service:
     name: wg-quick@wg0
     state: restarted
 
-- name: fail because service is stopped
-  fail:
+- name: Fail because service is stopped
+  ansible.builtin.fail:
     msg: Wireguard service not started.  There was probably an error in the configuration.

@@ -3,23 +3,24 @@
 #     url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
 #     dest: /etc/apt/preferences.d/cuda-repository-pin-600
 
-- name: add apt GPG key
-  apt_key:
+- name: Add apt GPG key
+  ansible.builtin.apt_key:
     url: https://nvidia.github.io/nvidia-docker/gpgkey
     state: present
 
-- name: get distribution from system
-  shell: . /etc/os-release;echo $ID$VERSION_ID
+- name: Get distribution from system
+  ansible.builtin.shell: . /etc/os-release;echo $ID$VERSION_ID
   register: os_id
-  changed_when: False
+  changed_when: false
 
-- name: add nvidia apt sources list
-  get_url:
+- name: Add nvidia apt sources list
+  ansible.builtin.get_url:
     url: "https://nvidia.github.io/nvidia-docker/{{ os_id.stdout }}/nvidia-docker.list"
     dest: /etc/apt/sources.list.d/nvidia-docker.list
+    mode: '0644'
 
-- name: add apt dependencies
-  apt:
+- name: Add apt dependencies
+  ansible.builtin.apt:
     update_cache: true
     name:
       - nvidia-docker2

@@ -5,37 +5,40 @@
 #     password: "{{ ssh_password | default(secret.hosts.default_ssh_password) | password_hash('sha512') }}"
 
 - name: Allow release-info to change for APT repositories
-  command: apt-get update -y --allow-releaseinfo-change
-  changed_when: False
+  ansible.builtin.apt:
+    update_cache: true
+    upgrade: dist
 
-- name: update raspbian motd
-  copy:
+  # ansible.builtin.command: apt-get update -y --allow-releaseinfo-change
+  # changed_when: false
+
+- name: Update raspbian motd
+  ansible.builtin.copy:
     src: motd
     dest: /etc/motd
     mode: "0644"
 
-- name: update raspbian bashrc
-  copy:
+- name: Update raspbian bashrc
+  ansible.builtin.copy:
     src: "bashrc"
     dest: "/home/{{ ansible_user }}/.bashrc"
     mode: "0644"
 
 # Raspbian has no check if we should reboot, so do it on any upgraded package
-- name: upgrade packages
-  apt:
+- name: Upgrade packages
+  ansible.builtin.apt:
     update_cache: true
     upgrade: "dist"
-  ignore_errors: true
   notify: reboot system
   tags:
     - update
 
-- name: set wifi network
-  template:
+- name: Set wifi network
+  ansible.builtin.template:
     src: wpa_supplicant.conf.j2
     dest: "/etc/wpa_supplicant/wpa_supplicant.conf"
     mode: "0600"
-  notify: 
+  notify:
     - set wifi
     - reboot system
   when: wifi_ssid is defined and wifi_password is defined

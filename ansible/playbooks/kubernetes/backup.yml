@@ -1,4 +1,5 @@
-- hosts: localhost
+- name: Load backup images into Kubernetes
+  hosts: localhost
   gather_facts: false
   become: false
   vars:

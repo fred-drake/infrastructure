@@ -4,4 +4,3 @@ epson:
   download_url: https://download2.ebz.epson.net/epsonscan2/common/deb/arm
   core_deb: epsonscan2_6.6.40.0-1_armhf.deb
   plugins_deb: epsonscan2-non-free-plugin_1.0.0.5-1_armhf.deb
-

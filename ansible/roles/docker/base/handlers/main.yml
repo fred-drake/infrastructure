@@ -1,5 +1,5 @@
 ---
-- name: deep prune docker
+- name: Deep prune docker
   community.docker.docker_prune:
     images: true
     images_filters:

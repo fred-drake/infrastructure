@@ -1,4 +1,5 @@
-- hosts: localhost
+- name: Load core applications into Kubernetes
+  hosts: localhost
   gather_facts: false
   become: false
   roles:
