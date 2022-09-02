@@ -15,17 +15,28 @@ def build_labels(name, domain, port, additional_labels):
 
 def build_defaults(name, domain, port):
     t = "traefik"
-    td = f"{t}.docker"
     thr = f"{t}.http.routers"
     ths = f"{t}.http.services"
+    thm = f"{t}.http.middlewares"
     ns = f"{name}-secure"
 
     return {
         f"{t}.enable": "true",
-        f"{td}.network": "traefik",
+        f"{t}.docker.network": "traefik",
+        f"{t}.backend.loadbalancer.swarm": "true",
+        f"{thr}.{name}.entrypoints": "http",
+        f"{thr}.{name}.rule": f"Host(`{name}.{domain}`)",
+        f"{thm}.{name}-https-redirect.redirectscheme.scheme": "https",
+        f"{thm}.sslheader.headers.customrequestheaders.X-Forwarded-Proto": "https",
+        f"{thr}.{name}.middlewares": f"{name}-https-redirect",
+        f"{thr}.{ns}.entrypoints": "https",
         f"{thr}.{ns}.rule": f"Host(`{name}.{domain}`)",
         f"{thr}.{ns}.tls": "true",
-        f"{ths}.{ns}.loadbalancer.server.port": str(port),
+        f"{thr}.{ns}.tls.certresolver": "cloudflare",
+        f"{thr}.{ns}.tls.domains[0].main": domain,
+        f"{thr}.{ns}.tls.domains[0].sans": f"*.{domain}",
+        f"{thr}.{ns}.service": name,
+        f"{ths}.{name}.loadbalancer.server.port": str(port),
     }
 
 
@@ -35,7 +46,7 @@ def main():
         "name": {"require": True, "type": "str"},
         "domain": {"require": True, "type": "str"},
         "port": {"require": True, "type": "int"},
-        "additional_labels": {"required": False, "type": "map"},
+        "additional_labels": {"required": False, "type": "dict"},
     }
 
     module = AnsibleModule(argument_spec=fields, supports_check_mode=True)

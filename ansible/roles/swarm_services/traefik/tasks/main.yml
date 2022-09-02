@@ -26,6 +26,20 @@
     name: traefik
     driver: overlay
 
+- name: Get labels
+  traefik_labels:
+    name: traefik
+    domain: "{{ secret.domain }}"
+    port: 8080
+    additional_labels:
+      traefik.http.services.justAdummyService.loadbalancer.server.port: "1337"
+      traefik.http.routers.traefik.rule: "Host (`traefik-swarm.{{ secret.domain }}`)"
+      traefik.http.middlewares.traefik-auth.basicauth.users: "{{ secret.services.traefik_internal.credentials }}"
+      traefik.http.routers.traefik-secure.rule: "Host (`traefik-swarm.{{ secret.domain }}`)"
+      traefik.http.routers.traefik-secure.middlewares: traefik-auth
+      traefik.http.routers.traefik-secure.service: api@internal
+  register: tl
+
 - name: Traefik swarm service
   community.docker.docker_swarm_service:
     name: traefik
@@ -40,26 +54,7 @@
     env:
       CLOUDFLARE_EMAIL: "{{ secret.services.traefik_internal.cloudflare_email }}"
       CLOUDFLARE_API_KEY: "{{ secret.services.traefik_internal.cloudflare_key }}"
-    labels:
-      traefik.enable: "true"
-      traefik.docker.network: traefik
-      traefik.http.services.justAdummyService.loadbalancer.server.port: "1337"
-      traefik.backend.loadbalancer.swarm: "true"
-      traefik.http.routers.traefik.entrypoints: http
-      traefik.http.routers.traefik.rule: "Host (`traefik-swarm.{{ secret.domain }}`)"
-      traefik.http.middlewares.traefik-auth.basicauth.users: "{{ secret.services.traefik_internal.credentials }}"
-      traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme: https
-      traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto: https
-      traefik.http.routers.traefik.middlewares: traefik-https-redirect
-      traefik.http.routers.traefik-secure.entrypoints: https
-      traefik.http.routers.traefik-secure.rule: "Host (`traefik-swarm.{{ secret.domain }}`)"
-      traefik.http.routers.traefik-secure.middlewares: traefik-auth
-      traefik.http.routers.traefik-secure.tls: "true"
-      traefik.http.routers.traefik-secure.tls.certresolver: cloudflare
-      traefik.http.routers.traefik-secure.tls.domains[0].main: "{{ secret.domain }}"
-      traefik.http.routers.traefik-secure.tls.domains[0].sans: "*.{{ secret.domain }}"
-      traefik.http.routers.traefik-secure.service: api@internal
-      traefik.http.services.traefik.loadbalancer.server.port: "8080"
+    labels: "{{ tl.labels }}"
     mounts:
       - source: /var/run/docker.sock
         target: /var/run/docker.sock
