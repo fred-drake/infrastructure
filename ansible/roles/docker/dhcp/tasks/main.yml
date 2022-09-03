@@ -28,7 +28,7 @@
     mode: "0644"
     backup: true
   notify:
-    - restart dhcp
+    - Restart dhcp
   tags:
     - dhcp
     - dhcp_update
@@ -50,7 +50,7 @@
     networks_cli_compatible: "{{ container_networks_cli_compatible }}"
     state: "{{ container_state }}"
   notify:
-    - deep prune docker
+    - Deep prune docker
   tags:
     - dhcp
 
@@ -74,6 +74,6 @@
     networks_cli_compatible: "{{ container_networks_cli_compatible }}"
     state: "{{ container_state }}"
   notify:
-    - deep prune docker
+    - Deep prune docker
   tags:
     - dhcp

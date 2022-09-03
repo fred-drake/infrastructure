@@ -11,10 +11,9 @@
     state: mounted
     boot: true
 
-# Ubuntu on RPi 4 can't mount at boot time.  Adding a workaround
+# Machines don't always mount on boot.  Doing this as a workaround.
 - name: Adding cron entry to mount vol01 for raspi
   ansible.builtin.cron:
     name: mount vol01
     special_time: reboot
-    job: "sleep 30 && mount -t glusterfs {{ groups['glusterfs_server'][0] }}:/vol01 /mnt/vol01 &"
-  when: inventory_hostname in groups['raspberry_pi']
+    job: "sleep 60 && mount -t glusterfs {{ groups['glusterfs_server'][0] }}:/vol01 /mnt/vol01 &"

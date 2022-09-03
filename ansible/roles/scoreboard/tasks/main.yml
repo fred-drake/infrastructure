@@ -82,7 +82,7 @@
     src: nhl-config.json.j2
     dest: /opt/nhl-led-scoreboard/config/config.json
     mode: '0644'
-  notify: restart scoreboard
+  notify: Restart scoreboard
   tags:
     - nhl
 
@@ -91,7 +91,7 @@
     src: mlb-config.json.j2
     dest: /opt/mlb-led-scoreboard/config.json
     mode: '0644'
-  notify: restart scoreboard
+  notify: Restart scoreboard
   tags:
     - mlb
 
@@ -100,7 +100,7 @@
     src: colors
     dest: /opt/mlb-led-scoreboard
     mode: '0755'
-  notify: restart supervisor
+  notify: Restart supervisor
   tags:
     - mlb
 
@@ -121,7 +121,7 @@
     path: /boot/config.txt
     regexp: '^dtparam=audio=on$'
     replace: 'dtparam=audio=off'
-  notify: reboot system
+  notify: Reboot system
   tags:
     - nhl
     - mlb
@@ -131,7 +131,7 @@
     state: present
     path: /etc/supervisor/supervisord.conf
     block: "{{ lookup('file', 'supervisord-block.conf') }}"
-  notify: restart supervisor
+  notify: Restart supervisor
   tags:
     - nhl
     - mlb
@@ -141,7 +141,7 @@
     src: nhl-scoreboard.conf
     dest: /etc/supervisor/conf.d/scoreboard.conf
     mode: '0644'
-  notify: restart supervisor
+  notify: Restart supervisor
   tags: nhl
 
 - name: Apply mlb scoreboard supervisor configuration
@@ -149,5 +149,5 @@
     src: mlb-scoreboard.conf
     dest: /etc/supervisor/conf.d/scoreboard.conf
     mode: '0644'
-  notify: restart supervisor
+  notify: Restart supervisor
   tags: mlb

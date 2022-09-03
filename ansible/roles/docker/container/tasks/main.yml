@@ -25,7 +25,7 @@
     sysctls: "{{ container.sysctls | default({}) }}"
     state: started
   notify:
-    - deep prune docker
+    - Deep prune docker
   tags:
     - docker_container
   when: container.ip is defined
@@ -53,7 +53,7 @@
     sysctls: "{{ container.sysctls | default({}) }}"
     state: started
   notify:
-    - deep prune docker
+    - Deep prune docker
   tags:
     - docker_container
   when: container.ip is not defined and container.networks is defined
@@ -81,7 +81,7 @@
     sysctls: "{{ container.sysctls | default({}) }}"
     state: started
   notify:
-    - deep prune docker
+    - Deep prune docker
   tags:
     - docker_container
   when: container.ip is not defined and container.networks is not defined

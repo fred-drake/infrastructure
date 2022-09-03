@@ -4,7 +4,7 @@
     dest: /boot/firmware/usercfg.txt
     mode: "0755"
   when: "'raspberry_pi4_overclock_high' in group_names"
-  notify: reboot system
+  notify: Reboot system
 
 - name: Overclock pi 4 (medium)
   ansible.builtin.copy:
@@ -12,7 +12,7 @@
     dest: /boot/firmware/usercfg.txt
     mode: "0755"
   when: "'raspberry_pi4_overclock_medium' in group_names"
-  notify: reboot system
+  notify: Reboot system
 
 - name: Overclock pi 4 (low)
   ansible.builtin.copy:
@@ -20,12 +20,12 @@
     dest: /boot/firmware/usercfg.txt
     mode: "0755"
   when: "'raspberry_pi4_overclock_low' in group_names"
-  notify: reboot system
+  notify: Reboot system
 
 - name: Update boot options
   ansible.builtin.copy:
     src: cmdline.txt
     dest: /boot/firmware/cmdline.txt
     mode: '0755'
-  notify: reboot system
+  notify: Reboot system
   when: "'k8s_cluster' in group_names"

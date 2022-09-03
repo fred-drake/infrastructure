@@ -3,7 +3,7 @@
     src: netplan-config-dns-server.yml.j2
     dest: /etc/netplan/00-installer-config.yaml
     mode: '0644'
-  notify: netplan apply
+  notify: Netplan apply
   when: "'critical_docker_services' in group_names"
 
 - name: Apply netplan for docker services machine
@@ -11,5 +11,5 @@
     src: netplan-config-docker-service.yml.j2
     dest: /etc/netplan/00-installer-config.yaml
     mode: '0644'
-  notify: netplan apply
+  notify: Netplan apply
   when: "'docker_services' in group_names"

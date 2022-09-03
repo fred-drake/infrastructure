@@ -16,7 +16,7 @@
     dest: /etc/avahi/avahi-daemon.conf
     mode: '0644'
   notify:
-    - restart avahi
+    - Restart avahi
   tags:
     - avahi_update
 
@@ -30,6 +30,6 @@
     name: avahi-daemon
     state: started
   notify:
-    - fail because service is stopped
+    - Fail because service is stopped
   tags:
     - avahi_update

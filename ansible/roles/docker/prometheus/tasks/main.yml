@@ -4,4 +4,4 @@
     dest: "{{ appdata_dir }}/prometheus/config/prometheus.yml"
     mode: "0644"
   notify:
-    - restart prometheus
+    - Restart prometheus

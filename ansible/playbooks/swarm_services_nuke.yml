@@ -1,0 +1,43 @@
+- name: Removal of swarm services
+  hosts: swarm_masters
+  gather_facts: false
+  run_once: true
+  become: true
+  # roles:
+  #   - role: swarm_services/traefik
+  #     vars:
+  #       proxies: []
+  #     tags:
+  #       - traefik_swarm
+  #       - nuke
+  #   - role: swarm_services/whoogle
+  #     tags:
+  #       - whoogle
+  #       - nuke
+  #   - import_
+  #   - role: swarm_services/radarr
+  #     tags:
+  #       - radarr
+  #       - nuke
+  tasks:
+    - name: Uninstall services
+      ansible.builtin.import_role:
+        name: swarm_services/radarr
+        tasks_from: uninstall_service
+      tags: radarr
+
+- name: Removal of swarm volumes
+  hosts: swarm_cluster
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Uninstall videos
+      community.docker.docker_volume:
+        name: radarr_videos
+        state: absent
+      tags: radarr
+    - name: Uninstall movies
+      community.docker.docker_volume:
+        name: radarr_movies
+        state: absent
+      tags: radarr

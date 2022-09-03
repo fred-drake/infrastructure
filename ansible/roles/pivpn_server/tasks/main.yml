@@ -34,7 +34,7 @@
     mode: "0600"
     directory_mode: "0700"
   notify:
-    - restart service
+    - Restart service
   tags:
     - update
 
@@ -48,6 +48,6 @@
     name: wg-quick@wg0
     state: started
   notify:
-    - fail because service is stopped
+    - Fail because service is stopped
   tags:
     - update

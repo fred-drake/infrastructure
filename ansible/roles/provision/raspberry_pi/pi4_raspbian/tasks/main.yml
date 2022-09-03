@@ -4,7 +4,7 @@
     dest: /boot/config.txt
     mode: "0755"
   when: "'raspberry_pi_overclock_none' in group_names"
-  notify: reboot system
+  notify: Reboot system
 
 - name: Overclock pi 4 to 2000MHz processor no gpu overclock
   ansible.builtin.copy:
@@ -12,4 +12,4 @@
     dest: /boot/config.txt
     mode: "0755"
   when: "'raspberry_pi4_overclock_2k' in group_names"
-  notify: reboot system
+  notify: Reboot system

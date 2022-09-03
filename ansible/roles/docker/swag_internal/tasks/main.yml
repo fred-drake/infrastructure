@@ -7,7 +7,7 @@
   with_fileglob:
     - "../templates/dns-conf/*.j2"
   notify:
-    - restart swag-internal
+    - Restart swag-internal
 - name: Sync proxy config files
   ansible.builtin.template:
     src: "{{ item }}"
@@ -18,7 +18,7 @@
   with_fileglob:
     - "../templates/proxy-confs/*.j2"
   notify:
-    - restart nginx
+    - Restart nginx
   tags:
     - swag_internal
     - docker_update

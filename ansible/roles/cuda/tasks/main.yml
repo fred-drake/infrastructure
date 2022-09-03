@@ -1,6 +1,6 @@
 # - name: ubuntu-drivers autoinstall
 #   command: ubuntu-drivers autoinstall
-#   notify: reboot
+#   notify: Reboot
 
 # - name: nvidia driver install
 #   apt:

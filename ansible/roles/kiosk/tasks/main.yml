@@ -39,14 +39,14 @@
     mode: '0755'
     owner: "{{ ansible_user }}"
     group: "{{ ansible_group }}"
-  notify: restart supervisor
+  notify: Restart supervisor
 
 # - name: copy kiosk service file
 #   template:
 #     src: kiosk.service.j2
 #     dest: /lib/systemd/system/kiosk.service
 #     mode: '0644'
-#   notify: restart kiosk service
+#   notify: Restart kiosk service
 
 # - name: restart service if necessary
 #   meta: flush_handlers
@@ -56,14 +56,14 @@
     state: present
     path: /etc/supervisor/supervisord.conf
     block: "{{ lookup('file', 'supervisord-block.conf') }}"
-  notify: restart supervisor
+  notify: Restart supervisor
 
 - name: Apply supervisor configuration
   ansible.builtin.template:
     src: kiosk.supervisor.conf.j2
     dest: /etc/supervisor/conf.d/kiosk.conf
     mode: '0644'
-  notify: restart supervisor
+  notify: Restart supervisor
 
 # - name: enable kiosk service
 #   systemd:

@@ -5,21 +5,21 @@
     mode: "0600"
     modification_time: preserve
     access_time: preserve
-  notify: restart traefik
+  notify: Restart traefik
 
 - name: Set traefik system configuration
   ansible.builtin.template:
     src: "{{ traefik_type }}/traefik.yml.j2"
     dest: "{{ glusterfs_appdata_dir }}/traefik-{{ traefik_type }}/data/traefik.yml"
     mode: "0644"
-  notify: restart traefik
+  notify: Restart traefik
 
 - name: Set traefik route configuration
   ansible.builtin.template:
     src: "{{ traefik_type }}/config.yml.j2"
     dest: "{{ glusterfs_appdata_dir }}/traefik-{{ traefik_type }}/config.yml"
     mode: "0644"
-  notify: restart traefik
+  notify: Restart traefik
 
 - name: Build traefik container
   ansible.builtin.include_role:

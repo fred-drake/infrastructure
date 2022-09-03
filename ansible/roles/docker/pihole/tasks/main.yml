@@ -27,7 +27,7 @@
     capabilities:
       - "NET_ADMIN"
   notify:
-    - deep prune docker
+    - Deep prune docker
   tags:
     - pihole
     - pihole_only
@@ -51,7 +51,7 @@
     mode: "0644"
     backup: true
   notify:
-    - restart DNS
+    - Restart DNS
   tags:
     - pihole
     - dns_update
@@ -61,7 +61,7 @@
     src: "pihole-updatelists.conf"
     dest: "{{ appdata_dir }}/{{ secret.pihole[pihole_id].hostname }}/etc/pihole-updatelists/pihole-updatelists.conf"
     mode: "0644"
-  notify: execute pihole-updatelists
+  notify: Execute pihole-updatelists
   tags:
     - pihole
     - dns_update

@@ -1,0 +1,9 @@
+- name: Remove volume videos
+  community.docker.docker_volume:
+    name: radarr_videos
+    state: absent
+
+- name: Remove volume movies
+  community.docker.docker_volume:
+    name: radarr_movies
+    state: absent

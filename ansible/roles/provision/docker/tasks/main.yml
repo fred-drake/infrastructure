@@ -138,7 +138,7 @@
     dest: "/etc/default/docker"
     mode: "0644"
   notify:
-    - restart docker
+    - Restart docker
 
 - name: Add a docker group
   ansible.builtin.group:

@@ -33,7 +33,7 @@
     state: "{{ container_state }}"
     # user: 65534:65534
   notify:
-    - deep prune docker
+    - Deep prune docker
   tags:
     - "backup_database"
     - docker_update

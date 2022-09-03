@@ -10,3 +10,5 @@
       tags: traefik_swarm
     - role: swarm_services/whoogle
       tags: whoogle
+    - role: swarm_services/radarr
+      tags: radarr

@@ -12,7 +12,7 @@
     state: "{{ container_state }}"
     volumes: "{{ volumes }}"
   notify:
-    - "deep prune docker"
+    - Deep prune docker
   tags:
     - "backup_client"
     - docker_update

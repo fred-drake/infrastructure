@@ -29,7 +29,7 @@
   ansible.builtin.apt:
     update_cache: true
     upgrade: "dist"
-  notify: reboot system
+  notify: Reboot system
   tags:
     - update
 
@@ -39,6 +39,6 @@
     dest: "/etc/wpa_supplicant/wpa_supplicant.conf"
     mode: "0600"
   notify:
-    - set wifi
-    - reboot system
+    - Set wifi
+    - Reboot system
   when: wifi_ssid is defined and wifi_password is defined

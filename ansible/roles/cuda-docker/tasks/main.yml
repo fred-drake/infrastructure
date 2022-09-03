@@ -24,4 +24,4 @@
     update_cache: true
     name:
       - nvidia-docker2
-  notify: restart docker
+  notify: Restart docker

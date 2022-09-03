@@ -92,8 +92,6 @@ all:
 
     # Machines that use the GlusterFS cluster
     glusterfs_client:
-      # children:
-      #   k8s_masters:
       children:
         swarm_cluster:
       hosts:
@@ -103,7 +101,7 @@ all:
     # Hosts with CIFS clients
     cifs:
       children:
-        k8s_workers:
+        swarm_cluster:
       hosts:
         scannerpi:
 
@@ -129,26 +127,6 @@ all:
         nuc4:
         nuc6:
         nuc7:
-
-    # Kubernetes cluster servers
-    k8s_cluster: # every node in the cluster
-      children:
-        k8s_masters:
-        k8s_workers:
-
-    k8s_masters: # master nodes.  The first is considered the initial master.
-      hosts:
-        # rp1:
-        # rp2:
-        # rp3:
-    k8s_workers: # worker nodes
-      hosts:
-        # nuc1:
-        # nuc2:
-        # nuc3:
-        # nuc4:
-        # nuc5:
-        # nuc6:
 
     # Docker Swarm assignments
     swarm_cluster:

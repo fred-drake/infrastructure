@@ -32,5 +32,5 @@
     dest: "/etc/config/network"
     mode: '0644'
   notify:
-    - reboot
-    - wait for reboot
+    - Reboot
+    - Wait for reboot

@@ -13,7 +13,4 @@
       constraints: node.role==worker
     networks:
       - traefik
-    publish:
-      - published_port: 5000
-        target_port: 5000
     labels: "{{ tl.labels }}"

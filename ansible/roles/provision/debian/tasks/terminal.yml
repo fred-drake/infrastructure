@@ -58,7 +58,7 @@
     mode: '0644'
   with_fileglob:
     - "fonts/*"
-  notify: rebuild font cache
+  notify: Rebuild font cache
 
 - name: Stat p10k path
   become: "{{ terminal_root_user }}"

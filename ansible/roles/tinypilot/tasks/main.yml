@@ -10,7 +10,7 @@
 
 - name: Install tinypilot
   ansible.builtin.shell: set -o pipefail && curl --silent --show-error https://raw.githubusercontent.com/tiny-pilot/tinypilot/master/quick-install | bash -
-  notify: reboot
+  notify: Reboot
   when: not tp_dir.stat.exists
 
 - name: Overwrite settings
@@ -20,4 +20,4 @@
     owner: tinypilot
     group: tinypilot
     mode: '0644'
-  notify: reboot
+  notify: Reboot
