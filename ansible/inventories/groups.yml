@@ -79,7 +79,7 @@ all:
     # Identifies the secondary server for critical services
     critical_docker_secondary:
       hosts:
-        docker2:
+        nuc9:
           pihole_id: pihole2
           dhcp_id: dhcp2
 
@@ -95,6 +95,7 @@ all:
       children:
         swarm_cluster:
       hosts:
+        docker1:
         nuc8:
         nuc9:
 

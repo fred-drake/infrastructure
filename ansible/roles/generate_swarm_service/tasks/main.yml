@@ -1,0 +1,5 @@
+- name: Generate swarm services play
+  ansible.builtin.template:
+    src: tasks.yml.j2
+    dest: swarm_services.yml
+    mode: '0644'

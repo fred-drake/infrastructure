@@ -1,0 +1,29 @@
+#################################################################################
+# This file is auto-generated through the generate_swarm_services.yml playbook. #
+#################################################################################
+
+- name: Installation and configuration of swarm services
+  hosts: swarm_masters
+  gather_facts: false
+  run_once: true
+  become: true
+  roles:
+{% for key in swarm_services %}
+
+#################################################################################
+# {{ swarm_services[key].name }}
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ '{{' }} swarm_services.{{ key }} {{ '}}' }}"
+      tags:
+        - never
+        - {{ key }}_nuke
+        - {{ key }}_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ '{{' }} swarm_services.{{ key }} {{ '}}' }}"
+      tags:
+        - {{ key }}
+        - {{ key }}_rebuild
+{% endfor %}

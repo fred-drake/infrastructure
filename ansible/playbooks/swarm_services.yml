@@ -1,14 +1,163 @@
+#################################################################################
+# This file is auto-generated through the generate_swarm_services.yml playbook. #
+#################################################################################
+
 - name: Installation and configuration of swarm services
   hosts: swarm_masters
   gather_facts: false
   run_once: true
   become: true
   roles:
-    - role: swarm_services/traefik
+
+#################################################################################
+# ddns
+#################################################################################
+    - role: swarm_service_nuke
       vars:
-        proxies: []
-      tags: traefik_swarm
-    - role: swarm_services/whoogle
-      tags: whoogle
-    - role: swarm_services/radarr
-      tags: radarr
+        service: "{{ swarm_services.ddns }}"
+      tags:
+        - never
+        - ddns_nuke
+        - ddns_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.ddns }}"
+      tags:
+        - ddns
+        - ddns_rebuild
+
+#################################################################################
+# git-hash_updater
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.git_hash_updater }}"
+      tags:
+        - never
+        - git_hash_updater_nuke
+        - git_hash_updater_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.git_hash_updater }}"
+      tags:
+        - git_hash_updater
+        - git_hash_updater_rebuild
+
+#################################################################################
+# nginx-static
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.nginx_static }}"
+      tags:
+        - never
+        - nginx_static_nuke
+        - nginx_static_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.nginx_static }}"
+      tags:
+        - nginx_static
+        - nginx_static_rebuild
+
+#################################################################################
+# node-red
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.node_red }}"
+      tags:
+        - never
+        - node_red_nuke
+        - node_red_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.node_red }}"
+      tags:
+        - node_red
+        - node_red_rebuild
+
+#################################################################################
+# prometheus
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.prometheus }}"
+      tags:
+        - never
+        - prometheus_nuke
+        - prometheus_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.prometheus }}"
+      tags:
+        - prometheus
+        - prometheus_rebuild
+
+#################################################################################
+# radarr
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.radarr }}"
+      tags:
+        - never
+        - radarr_nuke
+        - radarr_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.radarr }}"
+      tags:
+        - radarr
+        - radarr_rebuild
+
+#################################################################################
+# teslamate
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.teslamate }}"
+      tags:
+        - never
+        - teslamate_nuke
+        - teslamate_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.teslamate }}"
+      tags:
+        - teslamate
+        - teslamate_rebuild
+
+#################################################################################
+# traefik-swarm
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.traefik_swarm }}"
+      tags:
+        - never
+        - traefik_swarm_nuke
+        - traefik_swarm_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.traefik_swarm }}"
+      tags:
+        - traefik_swarm
+        - traefik_swarm_rebuild
+
+#################################################################################
+# whoogle
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.whoogle }}"
+      tags:
+        - never
+        - whoogle_nuke
+        - whoogle_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.whoogle }}"
+      tags:
+        - whoogle
+        - whoogle_rebuild

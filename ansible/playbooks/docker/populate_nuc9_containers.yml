@@ -2,6 +2,42 @@
   gather_facts: false
   become: true
   roles:
+    ### NetbootXYZ ###
+    - role: docker/volume
+      vars:
+        volume:
+          name: netboot
+          container: netbootxyz
+          driver: cifs
+          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777,ro
+      tags: netboot
+    - role: docker/container
+      vars:
+        container:
+          name: netbootxyz
+          repository: lscr.io/linuxserver/netbootxyz
+          tag: latest
+          networks:
+            - name: "{{ secret.docker.network.container }}"
+              ipv4_address: "{{ secret.services.netboot.ip_50 }}"
+            - name: "{{ secret.docker.network.admin }}"
+              ipv4_address: "{{ secret.services.netboot.ip_208 }}"
+            # - name: "{{ secret.docker.network.workstation }}"
+            #   ipv4_address: "{{ secret.services.netboot.ip_30 }}"
+          env:
+            MENU_VERSION: 1.9.9
+            PORT_RANGE: 30000:30010
+            SUBFOLDER: /
+            PUID: "99"
+            PGID: "100"
+            UMASK: "022"
+          mounts:
+            - source: netbootxyz_netboot
+              target: /assets
+          volumes:
+            - "{{ glusterfs_appdata_dir }}/netbootxyz/config:/config"
+      tags: netboot
+
     ### Dozzle - NUC9 ###
     - role: docker/container
       vars:
@@ -42,58 +78,58 @@
       tags: prowlarr
 
     ### Radarr ###
-    - role: docker/volume
-      vars:
-        volume:
-          name: videos
-          container: radarr
-          driver: cifs
-          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
-      tags: radarr
-    - role: docker/volume
-      vars:
-        volume:
-          name: movies
-          container: radarr
-          driver: cifs
-          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
-      tags: radarr
-    - role: docker/volume
-      vars:
-        volume:
-          name: downloads
-          mount_name: torrent/complete
-          container: radarr
-          driver: cifs
-          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
-      tags: radarr
-    - role: docker/container
-      vars:
-        container:
-          name: radarr
-          repository: linuxserver/radarr
-          tag: latest
-          ip: "{{ secret.services.radarr.ip }}"
-          env:
-            PUID: "99"
-            PGID: "100"
-          volumes:
-            - "{{ appdata_dir }}/radarr/config:/config"
-            - "{{ glusterfs_appdata_dir }}/sabnzbd/downloads:/downloads"
-          mounts:
-            - source: radarr_videos
-              target: /videos
-            - source: radarr_videos
-              target: /movies
-      tags: radarr
-    - role: docker/backup_client
-      vars:
-        backup_namespace: radarr
-        env:
-          NAMESPACE: "{{ backup_namespace }}"
-        volumes:
-          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
-      tags: radarr
+    # - role: docker/volume
+    #   vars:
+    #     volume:
+    #       name: videos
+    #       container: radarr
+    #       driver: cifs
+    #       mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+    #   tags: radarr
+    # - role: docker/volume
+    #   vars:
+    #     volume:
+    #       name: movies
+    #       container: radarr
+    #       driver: cifs
+    #       mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+    #   tags: radarr
+    # - role: docker/volume
+    #   vars:
+    #     volume:
+    #       name: downloads
+    #       mount_name: torrent/complete
+    #       container: radarr
+    #       driver: cifs
+    #       mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+    #   tags: radarr
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: radarr
+    #       repository: linuxserver/radarr
+    #       tag: latest
+    #       ip: "{{ secret.services.radarr.ip }}"
+    #       env:
+    #         PUID: "99"
+    #         PGID: "100"
+    #       volumes:
+    #         - "{{ appdata_dir }}/radarr/config:/config"
+    #         - "{{ glusterfs_appdata_dir }}/sabnzbd/downloads:/downloads"
+    #       mounts:
+    #         - source: radarr_videos
+    #           target: /videos
+    #         - source: radarr_videos
+    #           target: /movies
+    #   tags: radarr
+    # - role: docker/backup_client
+    #   vars:
+    #     backup_namespace: radarr
+    #     env:
+    #       NAMESPACE: "{{ backup_namespace }}"
+    #     volumes:
+    #       - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+    #   tags: radarr
 
     ### Sonarr ###
     - role: docker/volume
@@ -243,51 +279,51 @@
       tags: homeassistant
 
     ### Node Red ###
-    - role: docker/volume
-      vars:
-        volume:
-          name: camera_videos
-          container: node-red
-          driver: cifs
-          mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
-      tags: node_red
-    - role: docker/container
-      vars:
-        container:
-          name: node-red-postgres
-          repository: postgres
-          tag: 14.1
-          ip: "{{ secret.services.node_red.postgres.ip }}"
-          env:
-            POSTGRES_USER: "{{ secret.services.node_red.postgres.user }}"
-            POSTGRES_PASSWORD: "{{ secret.services.node_red.postgres.password }}"
-            POSTGRES_DB: "{{ secret.services.node_red.postgres.database }}"
-          volumes:
-            - "{{ appdata_dir }}/node-red-postgres:/var/lib/postgresql/data"
-      tags: node_red
-    - role: docker/container
-      vars:
-        container:
-          name: "node-red"
-          repository: "nodered/node-red"
-          tag: 2.2.2
-          ip: "{{ secret.services.node_red.ip }}"
-          env:
-            NODE_RED_ENABLE_SAFE_MODE: "false"
-          volumes:
-            - "{{ appdata_dir }}/node-red/data:/data"
-          mounts:
-            - source: node-red_camera_videos
-              target: /camera_videos
-      tags: node_red
-    - role: docker/backup_client
-      vars:
-        backup_namespace: "node-red"
-        env:
-          NAMESPACE: "{{ backup_namespace }}"
-        volumes:
-          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
-      tags: node_red
+    # - role: docker/volume
+    #   vars:
+    #     volume:
+    #       name: camera_videos
+    #       container: node-red
+    #       driver: cifs
+    #       mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
+    #   tags: node_red
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: node-red-postgres
+    #       repository: postgres
+    #       tag: 14.1
+    #       ip: "{{ secret.services.node_red.postgres.ip }}"
+    #       env:
+    #         POSTGRES_USER: "{{ secret.services.node_red.postgres.user }}"
+    #         POSTGRES_PASSWORD: "{{ secret.services.node_red.postgres.password }}"
+    #         POSTGRES_DB: "{{ secret.services.node_red.postgres.database }}"
+    #       volumes:
+    #         - "{{ appdata_dir }}/node-red-postgres:/var/lib/postgresql/data"
+    #   tags: node_red
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: "node-red"
+    #       repository: "nodered/node-red"
+    #       tag: 2.2.2
+    #       ip: "{{ secret.services.node_red.ip }}"
+    #       env:
+    #         NODE_RED_ENABLE_SAFE_MODE: "false"
+    #       volumes:
+    #         - "{{ appdata_dir }}/node-red/data:/data"
+    #       mounts:
+    #         - source: node-red_camera_videos
+    #           target: /camera_videos
+    #   tags: node_red
+    # - role: docker/backup_client
+    #   vars:
+    #     backup_namespace: "node-red"
+    #     env:
+    #       NAMESPACE: "{{ backup_namespace }}"
+    #     volumes:
+    #       - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+    #   tags: node_red
 
     ### MQTT ###
     - role: docker/container
@@ -315,18 +351,18 @@
       tags: office_touchpad
 
     ### Prometheus ###
-    - role: docker/container
-      vars:
-        container:
-          name: prometheus
-          repository: prom/prometheus
-          tag: latest
-          ip: "{{ secret.services.prometheus.ip }}"
-          volumes:
-            - "{{ appdata_dir }}/prometheus/config:/etc/prometheus"
-      tags: prometheus
-    - role: docker/prometheus
-      tags: prometheus
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: prometheus
+    #       repository: prom/prometheus
+    #       tag: latest
+    #       ip: "{{ secret.services.prometheus.ip }}"
+    #       volumes:
+    #         - "{{ appdata_dir }}/prometheus/config:/etc/prometheus"
+    #   tags: prometheus
+    # - role: docker/prometheus
+    #   tags: prometheus
 
     ### Prometheus Node Exporter ###
     - role: docker/container

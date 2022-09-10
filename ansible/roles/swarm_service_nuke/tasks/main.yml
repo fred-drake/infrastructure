@@ -1,0 +1,28 @@
+- name: Get swarm service facts
+  swarm_service_facts:
+    name: "{{ service.name }}"
+    domain: "{{ secret.domain }}"
+    cifs_server: "{{ cifs_server }}"
+    cifs_mount_options: "{{ cifs_docker_mount_options }}"
+    nfs_server: "{{ secret.nfs.host }}"
+    nfs_mount_options: "{{ secret.nfs.default_options }}"
+    containers: "{{ service.containers }}"
+    glusterfs_appdata_dir: "{{ glusterfs_appdata_dir }}"
+  register: sf
+
+- name: Debug
+  ansible.builtin.debug:
+    var: sf.facts
+
+- name: Remove backup service, if applicable
+  community.docker.docker_swarm_service:
+    name: "backup-{{ service.name }}"
+    state: absent
+
+- name: Remove containers
+  community.docker.docker_swarm_service:
+    name: "{{ item.name }}"
+    state: absent
+  loop: "{{ sf.facts.services }}"
+  loop_control:
+    label: "{{ item.name }}"

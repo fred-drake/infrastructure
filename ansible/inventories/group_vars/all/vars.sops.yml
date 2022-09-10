@@ -145,6 +145,9 @@ secret:
         mount_options: ENC[AES256_GCM,data:etz6jh3XM62gtS8vX7rDH0fUA/85bzm6PpMH2OQgfjqj8/Irt3BhrnmG77Ud0KYQp/bKoDS23/P/qENAuRM1v9S5m7Qg7/mLBvitiA==,iv:3d4qYENAvLzkt59vkRBmR68UOLHdTd/12EljV/fyv7o=,tag:+XLZsZ/rtF1y8V6EIZlYYQ==,type:str]
         username: ENC[AES256_GCM,data:Gs34Pn9PgQ==,iv:gyp1MpveHxgcrblx2C7eK2DKVnu4dFC8YSkgmRq7Vw8=,tag:Qk8kqX9/YoNmv8UuTIZ87Q==,type:str]
         password: ENC[AES256_GCM,data:TXlmepYVhQZ8oAvv,iv:gufHY/VaWPGSTQYyrv7mVWp0PUjO7WoYeNd8rVLfos0=,tag:mgm+HFYK0ZGqgFOyPrYqmA==,type:str]
+    nfs:
+        host: ENC[AES256_GCM,data:zSotvyp33ZMinYx6rCk=,iv:eRTSYALiP4ajaCFGL/kH2O+g8NyZ9GLSpbpxdnQpmb4=,tag:r6RLyAwRt3QUPlwbwWZMiw==,type:str]
+        default_options: ENC[AES256_GCM,data:2Sbv4FQfiDTZEfg+gB4I,iv:aQ18OsYr3FhZiYarNtXUt/aPKlEo3zCfhJ3vldJBqSA=,tag:MrEbKJQeSQs8a1kTdULbJA==,type:str]
     backup:
         keyId: ENC[AES256_GCM,data:IvZ09YI+BVx7gPEB2InaFaE7HbeA,iv:krdYkT7Bs5vx1o8H+2FZipApq59SMh5UcqMWiO+TS3o=,tag:xckweLI412+Y+nMApS1TvA==,type:str]
         keySecret: ENC[AES256_GCM,data:RxtnVry/ODJBI5UVsF6iqCbkhOQ4,iv:SS3zJH6hq/yKuY2td8BeJLIbeZfEnbd1gGBZtVeMbIw=,tag:arBImHvVoiQHThtSNB3y3w==,type:str]
@@ -451,8 +454,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-08-30T23:15:32Z"
-    mac: ENC[AES256_GCM,data:pef1wG3bbmizqMa/AbqZqq4GaQb2+YXzGJmF80QO7pbkc9IK8sDtGprDfvCaqANcUz2ElgJEqieMlkJdOQvri1MxmrWrcHWu+ACRBvMpRSDcB1LxNgKi/bUB/ltaMhZnpUqWDNtFcj4FNP6sJmkcB8avoPBas6vCYjHrHAGadtA=,iv:M4NkybVCsq4TN4ocPgpxJr0UTFYvgoZCHjQXJ1kwe88=,tag:znvsd+d7J0L97brxe+9L8A==,type:str]
+    lastmodified: "2022-09-06T15:08:14Z"
+    mac: ENC[AES256_GCM,data:WJs87ownmVHFri3AbsKbjONlkrTx3InWI4ciCuPKADISP8Mv3VX0avVwNnDYHFskGGD1kg4BHZGem+kjgqy6DNirjrkDnE8fGYljK2iRndM6zgHMSI34KsJbLU84DDeHPPM3cqTBw1J2YjTlOKRUQQ3bHNeJKCEzO7J80YvW+vA=,iv:CM/bgxwPJEBiy+6k2tfsmGsbp6t7BkaWZIajMvUmwqs=,tag:e8gMqETU6lBJl08rTQRVRw==,type:str]
     pgp:
         - created_at: "2021-10-30T18:28:12Z"
           enc: |

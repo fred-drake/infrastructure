@@ -40,3 +40,185 @@ talos:
   k8s_version: v1.23.5
   pod_subnet: 10.40.0.0/16
   service_subnet: 10.41.0.0/16
+
+swarm_services:
+  ddns:
+    name: ddns
+    containers:
+      - repository: ghcr.io/akarys42/cloudflare-ddns-docker
+        tag: latest
+        env:
+          TZ: "{{ default_timezone }}"
+          CF_DDNS_TOKEN: "{{ secret.services.ddns.token }}"
+          CF_DDNS_DOMAINS: "{{ secret.services.ddns.domains }}"
+  git_hash_updater:
+    name: git-hash_updater
+    containers:
+      - repository: fdrake/git-hash-updater
+        tag: latest
+        env:
+          TZ: "{{ default_timezone }}"
+          GIT_USER_EMAIL: "{{ secret.services.git_hash_updater.git_user_email }}"
+          GIT_USER_NAME: "{{ secret.services.git_hash_updater.git_user_name }}"
+        bind_mounts:
+          - source: data
+            target: /data
+  nginx_static:
+    name: nginx-static
+    containers:
+      - web_port: 80
+        web_hostname: external-static
+        repository: linuxserver/nginx
+        tag: latest
+        bind_mounts:
+          - source: config
+            target: /config
+        nfs_mounts:
+          - name: nginx_external
+            target: /www
+  node_red:
+    name: node-red
+    backup: true
+    containers:
+      - name: node-red-postgres
+        repository: postgres
+        tag: 14.1
+        bind_mounts:
+          - source: postgres
+            target: /var/lib/postgresql/data
+        env:
+          POSTGRES_USER: "{{ secret.services.node_red.postgres.user }}"
+          POSTGRES_PASSWORD: "{{ secret.services.node_red.postgres.password }}"
+          POSTGRES_DB: "{{ secret.services.node_red.postgres.database }}"
+      - name: node-red
+        web_port: 1880
+        web_hostname: nodered
+        repository: nodered/node-red
+        tag: 2.2.3
+        bind_mounts:
+          - source: data
+            target: /data
+        nfs_mounts:
+          - name: camera_videos
+            target: /camera_videos
+        env:
+          TZ: "{{ default_timezone }}"
+          NODE_RED_ENABLE_SAFE_MODE: "false"
+  prometheus:
+    name: prometheus
+    containers:
+      - web_port: 9090
+        repository: prom/prometheus
+        tag: latest
+        bind_mounts:
+          - source: config
+            target: /etc/prometheus
+  radarr:
+    name: radarr
+    backup: true
+    containers:
+      - repository: linuxserver/radarr
+        web_port: 7878
+        tag: latest
+        bind_mounts:
+          - source: config
+            target: /config
+          - source: "{{ glusterfs_appdata_dir }}/sabnzbd/downloads"
+            target: /downloads
+            literal: true
+        nfs_mounts:
+          - name: videos
+            target: /videos
+          - name: movies
+            device_share: videos
+            target: /movies
+        env:
+          TZ: America/New_York
+          PUID: "99"
+          PGID: "100"
+  teslamate:
+    name: teslamate
+    containers:
+      - name: teslamate-db
+        repository: postgres
+        tag: "12"
+        env:
+          TZ: "{{ default_timezone }}"
+          POSTGRES_USER: "{{ secret.services.teslamate_db.postgres_user }}"
+          POSTGRES_PASSWORD: "{{ secret.services.teslamate_db.postgres_password }}"
+          POSTGRES_DB: "{{ secret.services.teslamate_db.postgres_db }}"
+        bind_mounts:
+          - source: postgres
+            target: /var/lib/postgresql/data
+      - name: teslamate-app
+        repository: teslamate/teslamate
+        tag: latest
+        env:
+          TZ: "{{ default_timezone }}"
+          DATABASE_USER: "{{ secret.services.teslamate_db.postgres_user }}"
+          DATABASE_PASS: "{{ secret.services.teslamate_db.postgres_password }}"
+          DATABASE_NAME: "{{ secret.services.teslamate_db.postgres_db }}"
+          DATABASE_HOST: "{{ secret.services.teslamate.database_host }}"
+          DATABASE_PORT: "{{ secret.services.teslamate.database_port }}"
+          MQTT_HOST: "{{ secret.services.teslamate.mqtt_host }}"
+      - name: teslamate-grafana
+        web_port: 3000
+        repository: teslamate/grafana
+        tag: latest
+        env:
+          TZ: "{{ default_timezone }}"
+          DATABASE_USER: "{{ secret.services.teslamate_db.postgres_user }}"
+          DATABASE_PASS: "{{ secret.services.teslamate_db.postgres_password }}"
+          DATABASE_NAME: "{{ secret.services.teslamate_db.postgres_db }}"
+          DATABASE_HOST: "{{ secret.services.teslamate.database_host }}"
+          DATABASE_PORT: "{{ secret.services.teslamate.database_port }}"
+        bind_mounts:
+          - source: grafana
+            target: /var/lib/grafana
+  traefik_swarm:
+    name: traefik-swarm
+    init_role: traefik_swarm
+    containers:
+      - name: traefik
+        web_port: 8080
+        constraints:
+          - node.role==manager
+        web_hostname: traefik-swarm
+        repository: traefik
+        tag: latest
+        publish:
+          - published_port: 80
+            target_port: 80
+          - published_port: 443
+            target_port: 443
+        env:
+          CLOUDFLARE_EMAIL: "{{ secret.services.traefik_internal.cloudflare_email }}"
+          CLOUDFLARE_API_KEY: "{{ secret.services.traefik_internal.cloudflare_key }}"
+        labels:
+          traefik.http.services.justAdummyService.loadbalancer.server.port: "1337"
+          traefik.http.middlewares.traefik-auth.basicauth.users: "{{ secret.services.traefik_internal.credentials }}"
+          traefik.http.routers.traefik-swarm-secure.middlewares: traefik-auth
+          traefik.http.routers.traefik-swarm-secure.service: api@internal
+        bind_mounts:
+          - source: /var/run/docker.sock
+            target: /var/run/docker.sock
+            type: file
+            literal: true
+            readonly: true
+          - source: data/traefik.yml
+            target: /traefik.yml
+            type: file
+            readonly: true
+          - source: data/acme.json
+            target: /acme.json
+            type: file
+          - source: config.yml
+            target: /config.yml
+            type: file
+            readonly: true
+  whoogle:
+    name: whoogle
+    containers:
+      - web_port: 5000
+        repository: benbusby/whoogle-search
+        tag: latest

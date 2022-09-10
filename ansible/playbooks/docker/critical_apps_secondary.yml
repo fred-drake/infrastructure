@@ -1,4 +1,5 @@
-- hosts: critical_docker_secondary
+- name: Critical secondary apps
+  hosts: critical_docker_secondary
   gather_facts: false
   become: true
   roles:
