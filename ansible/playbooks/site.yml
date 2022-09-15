@@ -1,14 +1,11 @@
-- import_playbook: provision_servers.yml
+- name: Provision servers
+  ansible.builtin.import_playbook: provision_servers.yml
 
-- import_playbook: glusterfs.yml
+- ansible.builtin.import_playbook: glusterfs.yml
 
-- import_playbook: dedicated_apps.yml
+- ansible.builtin.import_playbook: dedicated_apps.yml
 
-- hosts: docker
-  gather_facts: false
-  become: true
-  roles:
-    - provision/docker
+- ansible.builtin.import_playbook: docker.yml
 
 - hosts: cuda
   gather_facts: true
@@ -17,11 +14,11 @@
     - cuda
     - cuda-docker
 
-- import_playbook: docker/critical_apps_primary.yml
-- import_playbook: docker/critical_apps_secondary.yml
-- import_playbook: docker/populate_containers.yml
+- ansible.builtin.import_playbook: docker/critical_apps_primary.yml
+- ansible.builtin.import_playbook: docker/critical_apps_secondary.yml
+- ansible.builtin.import_playbook: docker/populate_containers.yml
 
-- import_playbook: swarm.yml
+- ansible.builtin.import_playbook: swarm.yml
 
 - hosts: netboot-assets-bridge
   gather_facts: false
@@ -30,8 +27,4 @@
     - netboot_config
   tags: netboot_config
 
-- hosts: openwrt
-  gather_facts: false
-  become: false
-  roles:
-    - openwrt
+- ansible.builtin.import_playbook: openwrt.yml

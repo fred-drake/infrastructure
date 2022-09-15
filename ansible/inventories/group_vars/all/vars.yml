@@ -42,6 +42,22 @@ talos:
   service_subnet: 10.41.0.0/16
 
 swarm_services:
+  bitwarden:
+    name: bitwarden
+    backup: true
+    containers:
+      - repository: vaultwarden/server
+        tag: latest
+        web_port: 80
+        env:
+          SERVER_ADMIN_EMAIL: "{{ secret.services.bitwarden.server_admin_email }}"
+          SIGNUPS_ALLOWED: "false"
+          INVITATIONS_ALLOWED: "true"
+          WEBSOCKET_ENABLED: "true"
+          ROCKET_PORT: "80"
+        bind_mounts:
+          - source: data
+            target: /data
   ddns:
     name: ddns
     containers:
@@ -63,6 +79,84 @@ swarm_services:
         bind_mounts:
           - source: data
             target: /data
+  homeassistant:
+    name: homeassistant
+    backup: true
+    containers:
+      - repository: ghcr.io/linuxserver/homeassistant
+        web_port: 8123
+        tag: latest
+        env:
+          TZ: "{{ default_timezone }}"
+          PUID: "99"
+          PGID: "100"
+          UMASK: "022"
+        bind_mounts:
+          - source: config
+            target: /config
+        publish:
+          - published_port: 42843
+            target_port: 42843
+            mode: host
+  loki:
+    name: loki
+    init_role: loki
+    containers:
+      - repository: grafana/loki
+        tag: latest
+        web_port: 3100
+        bind_mounts:
+          - source: config
+            target: /etc/loki
+          - source: data
+            target: /data
+          - source: wal
+            target: /wal
+  netbox:
+    name: netbox
+    backup: true
+    backup_env:
+      BACKUP_TYPES: postgresql
+      PG_HOST: netbox-postgres
+      PG_DATABASE: "{{ secret.services.netbox.postgres.database }}"
+      PG_PORT: "{{ secret.services.netbox.postgres.port }}"
+      PG_USER: "{{ secret.services.netbox.postgres.user }}"
+      PG_PASSWORD: "{{ secret.services.netbox.postgres.password }}"
+      PG_BACKUP_FILE: "netbox.sql"
+    containers:
+      - name: netbox-postgres
+        repository: postgres
+        tag: "12"
+        env:
+          POSTGRES_USER: "{{ secret.services.netbox.postgres.user }}"
+          POSTGRES_PASSWORD: "{{ secret.services.netbox.postgres.password }}"
+          POSTGRES_DB: "{{ secret.services.netbox.postgres.database }}"
+        bind_mounts:
+          - source: data
+            target: /var/lib/postgresql/data
+      - name: netbox-redis
+        repository: redis
+        tag: latest
+      - name: netbox
+        repository: linuxserver/netbox
+        tag: "3.1.11"
+        web_port: 8000
+        env:
+          PUID: "99"
+          PGID: "100"
+          SUPERUSER_EMAIL: "{{ secret.services.netbox.superuser.email }}"
+          SUPERUSER_PASSWORD: "{{ secret.services.netbox.superuser.password }}"
+          ALLOWED_HOST: "{{ secret.services.netbox.allowed_host }}"
+          DB_NAME: "{{ secret.services.netbox.postgres.database }}"
+          DB_USER: "{{ secret.services.netbox.postgres.user }}"
+          DB_PASSWORD: "{{ secret.services.netbox.postgres.password }}"
+          DB_HOST: "netbox-postgres"
+          DB_PORT: "{{ secret.services.netbox.postgres.port }}"
+          REDIS_HOST: "netbox-redis"
+          REDIS_PORT: "{{ secret.services.netbox.redis.port }}"
+        bind_mounts:
+          - source: config
+            target: /config
   nginx_static:
     name: nginx-static
     containers:
@@ -104,6 +198,10 @@ swarm_services:
         env:
           TZ: "{{ default_timezone }}"
           NODE_RED_ENABLE_SAFE_MODE: "false"
+        publish:
+          - published_port: 3456
+            target_port: 3456
+            mode: host
   prometheus:
     name: prometheus
     containers:
@@ -113,6 +211,44 @@ swarm_services:
         bind_mounts:
           - source: config
             target: /etc/prometheus
+  promtail:
+    name: promtail
+    init_role: promtail
+    containers:
+      - repository: grafana/promtail
+        tag: latest
+        mode: global
+        constraints:
+          # Force on all nodes, both workers and managers.
+          - node.role != foo
+        command: >
+            /bin/sh -c
+            "export HOSTNAME=`/bin/cat /etc/hostname` &&
+            /usr/bin/promtail --client.external-labels=hostname=$HOSTNAME --config.file=/etc/promtail/config.yml"
+        bind_mounts:
+          - source: config
+            target: /etc/promtail
+          - source: /var/log
+            target: /var/log
+            literal: true
+            readonly: true
+          - source: /etc/hostname
+            target: /etc/hostname
+            literal: true
+            readonly: true
+  prowlarr:
+    name: prowlarr
+    backup: true
+    containers:
+      - web_port: 9696
+        repository: linuxserver/prowlarr
+        tag: nightly
+        env:
+          PUID: "99"
+          PGID: "100"
+        bind_mounts:
+          - source: config
+            target: /config
   radarr:
     name: radarr
     backup: true

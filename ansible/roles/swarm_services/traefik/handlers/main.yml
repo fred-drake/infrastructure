@@ -1,3 +1,0 @@
----
-- name: Restart traefik
-  ansible.builtin.command: docker service update traefik --force

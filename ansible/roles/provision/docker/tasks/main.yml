@@ -150,3 +150,9 @@
     name: "{{ ansible_user }}"
     groups: docker
     append: true
+
+- name: Loki/Promtail integration
+  ansible.builtin.include_role:
+    name: provision/docker
+    tasks_from: loki.yml
+  # when: inventory_hostname not in groups['docker_loki']

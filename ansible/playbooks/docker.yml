@@ -1,0 +1,6 @@
+- name: Provision docker
+  hosts: docker
+  gather_facts: false
+  become: true
+  roles:
+    - provision/docker

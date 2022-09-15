@@ -1,0 +1,6 @@
+default_backup_env:
+  AWS_ACCESS_KEY_ID: "{{ secret.backup.keyId }}"
+  AWS_SECRET_ACCESS_KEY: "{{ secret.backup.keySecret }}"
+  RESTIC_REPOSITORY: "s3:http://minio-backup-app.{{ secret.domain }}:9000/restic"
+  RESTIC_PASSWORD: "{{ secret.backup.restic.password }}"
+  NAMESPACE: "{{ service.name }}"

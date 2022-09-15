@@ -10,6 +10,23 @@
   roles:
 
 #################################################################################
+# bitwarden
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.bitwarden }}"
+      tags:
+        - never
+        - bitwarden_nuke
+        - bitwarden_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.bitwarden }}"
+      tags:
+        - bitwarden
+        - bitwarden_rebuild
+
+#################################################################################
 # ddns
 #################################################################################
     - role: swarm_service_nuke
@@ -42,6 +59,57 @@
       tags:
         - git_hash_updater
         - git_hash_updater_rebuild
+
+#################################################################################
+# homeassistant
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.homeassistant }}"
+      tags:
+        - never
+        - homeassistant_nuke
+        - homeassistant_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.homeassistant }}"
+      tags:
+        - homeassistant
+        - homeassistant_rebuild
+
+#################################################################################
+# loki
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.loki }}"
+      tags:
+        - never
+        - loki_nuke
+        - loki_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.loki }}"
+      tags:
+        - loki
+        - loki_rebuild
+
+#################################################################################
+# netbox
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.netbox }}"
+      tags:
+        - never
+        - netbox_nuke
+        - netbox_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.netbox }}"
+      tags:
+        - netbox
+        - netbox_rebuild
 
 #################################################################################
 # nginx-static
@@ -93,6 +161,40 @@
       tags:
         - prometheus
         - prometheus_rebuild
+
+#################################################################################
+# promtail
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.promtail }}"
+      tags:
+        - never
+        - promtail_nuke
+        - promtail_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.promtail }}"
+      tags:
+        - promtail
+        - promtail_rebuild
+
+#################################################################################
+# prowlarr
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.prowlarr }}"
+      tags:
+        - never
+        - prowlarr_nuke
+        - prowlarr_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.prowlarr }}"
+      tags:
+        - prowlarr
+        - prowlarr_rebuild
 
 #################################################################################
 # radarr

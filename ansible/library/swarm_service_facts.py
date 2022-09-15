@@ -4,52 +4,62 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 def build_facts(
-    name,
     domain,
-    containers,
     cifs_server,
     nfs_server,
     nfs_mount_options,
     cifs_mount_options,
     glusterfs_appdata_dir,
+    service,
 ):
     sf = {}
-    sf["name"] = name
-    sf["service_network"] = len(containers) > 1
+    sf["name"] = service["name"]
+    sf["service_network"] = len(service["containers"]) > 1 or (
+        "backup" in service and service["backup"]
+    )
     sf["networks"] = set()
     sf["bind_mount_source_paths"] = set()
     sf["services"] = []
 
-    for container in containers:
-        service = {}
-        if "name" not in container and len(containers) > 1:
+    for container in service["containers"]:
+        pod = {}
+        if "name" not in container and len(service["containers"]) > 1:
             raise Exception(
                 "Container name is not defined but we have multiple containers."
             )
-        service["name"] = container["name"] if "name" in container else name
-        service["repository"] = container["repository"]
-        service["tag"] = container["tag"]
+        pod["name"] = container["name"] if "name" in container else service["name"]
+        pod["repository"] = container["repository"]
+        pod["tag"] = container["tag"]
 
-        service["constraints"] = (
+        if "command" in container:
+            pod["command"] = container["command"]
+
+        if "mode" in container:
+            pod["mode"] = container["mode"]
+
+        pod["constraints"] = (
             container["constraints"] if "constraints" in container else []
         )
         add_default_constraint = True
-        for c in service["constraints"]:
+        for c in pod["constraints"]:
             if c.startswith("node.role"):
                 add_default_constraint = False
         if add_default_constraint:
-            service["constraints"].append("node.role==worker")
+            pod["constraints"].append("node.role==worker")
 
         if "publish" in container:
-            service["publish"] = container["publish"]
+            pod["publish"] = container["publish"]
 
-        service["networks"] = []
+        if "endpoint_mode" in container:
+            pod["endpoint_mode"] = container["endpoint_mode"]
+
+        pod["networks"] = []
         if "web_port" in container:
-            service["networks"].append("traefik")
+            pod["networks"].append("traefik")
             sf["networks"].add("traefik")
         if sf["service_network"]:
-            service["networks"].append(name)
-            sf["networks"].add(name)
+            pod["networks"].append(sf["name"])
+            sf["networks"].add(sf["name"])
 
         container_labels = container["labels"] if "labels" in container else {}
         if "web_port" in container:
@@ -59,13 +69,17 @@ def build_facts(
                 hostname = container["name"]
             else:
                 hostname = service["name"]
-            service["labels"] = build_labels(
-                name, hostname, domain, container["web_port"], container_labels
+            pod["labels"] = build_labels(
+                service["name"],
+                hostname,
+                domain,
+                container["web_port"],
+                container_labels,
             )
         else:
-            service["labels"] = container_labels
+            pod["labels"] = container_labels
 
-        service["mounts"] = []
+        pod["mounts"] = []
         if "bind_mounts" in container:
             for bm in container["bind_mounts"]:
                 mount = {}
@@ -76,12 +90,12 @@ def build_facts(
                 else:
                     mount[
                         "source"
-                    ] = f"{glusterfs_appdata_dir}/{sf['name']}/{service['name']}/{bm['source']}"
-                service["mounts"].append(mount)
-                if "type" not in bm or bm["type"] == 'directory':
-                    sf["bind_mount_source_paths"].add(mount["source"])
+                    ] = f"{glusterfs_appdata_dir}/{sf['name']}/{pod['name']}/{bm['source']}"
+                    if "type" not in bm or bm["type"] == "directory":
+                        sf["bind_mount_source_paths"].add(mount["source"])
                 if "readonly" in bm:
                     mount["readonly"] = bm["readonly"]
+                pod["mounts"].append(mount)
         if "cifs_mounts" in container:
             for cm in container["cifs_mounts"]:
                 device_share = (
@@ -89,7 +103,7 @@ def build_facts(
                 )
                 mount = {}
                 mount["type"] = "volume"
-                mount["source"] = f"{service['name']}_{cm['name']}"
+                mount["source"] = f"{pod['name']}_{cm['name']}"
                 mount["target"] = cm["target"]
                 mount["driver_config"] = {}
                 mount["driver_config"]["name"] = "local"
@@ -105,7 +119,7 @@ def build_facts(
                     ] = f"{cifs_mount_options},{cm['mount_options']}"
                 else:
                     mount["driver_config"]["options"]["o"] = cifs_mount_options
-                service["mounts"].append(mount)
+                pod["mounts"].append(mount)
         if "nfs_mounts" in container:
             for nm in container["nfs_mounts"]:
                 device_share = (
@@ -113,7 +127,7 @@ def build_facts(
                 )
                 mount = {}
                 mount["type"] = "volume"
-                mount["source"] = f"{service['name']}_{nm['name']}"
+                mount["source"] = f"{pod['name']}_{nm['name']}"
                 mount["target"] = nm["target"]
                 mount["driver_config"] = {}
                 mount["driver_config"]["name"] = "local"
@@ -125,10 +139,10 @@ def build_facts(
                 ] = f"addr={nfs_server},{nfs_mount_options}"
                 if "mount_options" in nm:
                     mount["driver_config"]["options"]["o"] += f",{nm['mount_options']}"
-                service["mounts"].append(mount)
+                pod["mounts"].append(mount)
         if "env" in container:
-            service["env"] = container["env"]
-        sf["services"].append(service)
+            pod["env"] = container["env"]
+        sf["services"].append(pod)
 
     return sf
 
@@ -173,28 +187,26 @@ def build_defaults(name, hostname, domain, port):
 def main():
 
     fields = {
-        "name": {"require": True, "type": "str"},
         "domain": {"require": True, "type": "str"},
         "cifs_server": {"require": True, "type": "str"},
         "cifs_mount_options": {"require": True, "type": "str"},
         "nfs_server": {"require": True, "type": "str"},
         "nfs_mount_options": {"require": True, "type": "str"},
-        "containers": {"require": True, "type": "list"},
         "glusterfs_appdata_dir": {"require": True, "type": "str"},
+        "service": {"require": True, "type": "dict"},
     }
 
     module = AnsibleModule(argument_spec=fields, supports_check_mode=True)
 
     try:
         facts = build_facts(
-            name=module.params["name"],
             domain=module.params["domain"],
             cifs_server=module.params["cifs_server"],
             cifs_mount_options=module.params["cifs_mount_options"],
             nfs_server=module.params["nfs_server"],
             nfs_mount_options=module.params["nfs_mount_options"],
-            containers=module.params["containers"],
             glusterfs_appdata_dir=module.params["glusterfs_appdata_dir"],
+            service=module.params["service"],
         )
 
         module.exit_json(changed=False, facts=facts)

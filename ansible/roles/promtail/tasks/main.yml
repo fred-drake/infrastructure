@@ -1,0 +1,11 @@
+- name: Create config directory
+  ansible.builtin.file:
+    path: "{{ glusterfs_appdata_dir }}/promtail/promtail/config"
+    state: directory
+    mode: '0777'
+
+- name: Apply config
+  ansible.builtin.template:
+    src: config.yml.j2
+    dest: "{{ glusterfs_appdata_dir }}/promtail/promtail/config/config.yml"
+    mode: '0644'

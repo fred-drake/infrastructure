@@ -1,0 +1,22 @@
+- name: Install Loki plugin
+  community.docker.docker_plugin:
+    plugin_name: grafana/loki-docker-driver:latest
+    alias: loki
+    state: present
+  notify: Restart docker
+
+- name: Update docker daemon
+  ansible.builtin.blockinfile:
+    create: true
+    path: /etc/docker/daemon.json
+    mode: '0644'
+    block: |
+      {
+        "debug": true,
+        "log-driver": "loki",
+        "log-opts": {
+          "loki-url": "https://loki.{{ secret.domain }}/loki/api/v1/push",
+          "loki-batch-size": "400"
+        }
+      }
+  notify: Restart docker

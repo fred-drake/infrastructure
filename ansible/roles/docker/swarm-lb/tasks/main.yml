@@ -1,11 +1,21 @@
-- name: Generate swarm-lb nodes from netbox (with 'swarm-lb' tags)
+- name: Generate swarm-lb-managers nodes from netbox (with 'swarm-lb-managers' tags)
   connection: local
   become: false
   export_netbox_hostlist:
     netbox_api_prefix: "https://netbox.{{ secret.domain }}"
     netbox_token: "{{ secret.netbox.token }}"
-    tag: swarm-lb
-  register: hostlist_results
+    tag: swarm-lb-managers
+  register: managers_hostlist_results
+  run_once: true
+
+- name: Generate swarm-lb-workers nodes from netbox (with 'swarm-lb-workers' tags)
+  connection: local
+  become: false
+  export_netbox_hostlist:
+    netbox_api_prefix: "https://netbox.{{ secret.domain }}"
+    netbox_token: "{{ secret.netbox.token }}"
+    tag: swarm-lb-workers
+  register: workers_hostlist_results
   run_once: true
 
 - name: Create config directory

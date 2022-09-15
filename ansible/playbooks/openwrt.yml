@@ -1,0 +1,13 @@
+#
+# Before this will work, you need to:
+# 1. Set up the address manually so you can connect to it.  OpenWRT
+#    defaults to 192.168.1.1 VLAN 100 in port 1.
+# 2. Add the public key to /etc/dropbear/authorized_keys.
+#
+
+- name: Configure OpenWRT router software
+  hosts: openwrt
+  gather_facts: false
+  become: false
+  roles:
+    - openwrt

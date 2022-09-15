@@ -13,7 +13,7 @@ frontend web_frontend
   default_backend web_backend
 
 backend web_backend
-{% for h in hostlist_results.hosts %}
+{% for h in managers_hostlist_results.hosts %}
   server {{ h.hostname }} {{ h.address }}:80 check
 {% endfor %}
 
@@ -22,6 +22,24 @@ frontend web_secure_frontend
   default_backend web_secure_backend
 
 backend web_secure_backend
-{% for h in hostlist_results.hosts %}
+{% for h in managers_hostlist_results.hosts %}
   server {{ h.hostname }} {{ h.address }}:443 check
+{% endfor %}
+
+frontend node_red_alexa_frontend
+  bind *:3456
+  default_backend node_red_alexa_backend
+
+backend node_red_alexa_backend
+{% for h in workers_hostlist_results.hosts %}
+  server {{ h.hostname }} {{ h.address }}:3456 check
+{% endfor %}
+
+frontend homeassistant_hubitat_frontend
+  bind *:42843
+  default_backend homeassistant_hubitat_backend
+
+backend homeassistant_hubitat_backend
+{% for h in workers_hostlist_results.hosts %}
+  server {{ h.hostname }} {{ h.address }}:42843 check
 {% endfor %}
