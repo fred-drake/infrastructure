@@ -146,7 +146,7 @@ secret:
         username: ENC[AES256_GCM,data:Gs34Pn9PgQ==,iv:gyp1MpveHxgcrblx2C7eK2DKVnu4dFC8YSkgmRq7Vw8=,tag:Qk8kqX9/YoNmv8UuTIZ87Q==,type:str]
         password: ENC[AES256_GCM,data:TXlmepYVhQZ8oAvv,iv:gufHY/VaWPGSTQYyrv7mVWp0PUjO7WoYeNd8rVLfos0=,tag:mgm+HFYK0ZGqgFOyPrYqmA==,type:str]
     nfs:
-        host: ENC[AES256_GCM,data:zSotvyp33ZMinYx6rCk=,iv:eRTSYALiP4ajaCFGL/kH2O+g8NyZ9GLSpbpxdnQpmb4=,tag:r6RLyAwRt3QUPlwbwWZMiw==,type:str]
+        host: ENC[AES256_GCM,data:lI4kKwzzPQLJqM5Big==,iv:cbWW2Oeo6nBGG23EfEiKH5TX5QvmV4fVg4Fu9qcQZoM=,tag:q9kBIHle7pxTheEfB89aJQ==,type:str]
         default_options: ENC[AES256_GCM,data:2Sbv4FQfiDTZEfg+gB4I,iv:aQ18OsYr3FhZiYarNtXUt/aPKlEo3zCfhJ3vldJBqSA=,tag:MrEbKJQeSQs8a1kTdULbJA==,type:str]
     backup:
         keyId: ENC[AES256_GCM,data:IvZ09YI+BVx7gPEB2InaFaE7HbeA,iv:krdYkT7Bs5vx1o8H+2FZipApq59SMh5UcqMWiO+TS3o=,tag:xckweLI412+Y+nMApS1TvA==,type:str]
@@ -191,6 +191,7 @@ secret:
                 root_password: ENC[AES256_GCM,data:uSN3H0aFBe+4gP+KEpXpawaeuryJ,iv:VBF3+rm8BcCwI4Xf1hIiEzeTuCa9F2DizkEePAoFD+E=,tag:x1WR0/4QCKZIlBkooB6mnA==,type:str]
         bitwarden:
             ip: ENC[AES256_GCM,data:OOWqXlJ53vKhM9yfiQ==,iv:dVTRcY7sznEuW2rapOpZUCj3TCPV0GBuPqi4C9XZYr8=,tag:LXzWsrrlPdmeVPf5AlXsqQ==,type:str]
+            server_admin_email: ENC[AES256_GCM,data:/FbwEtTjUT5LqQJr6eFmEew7cg==,iv:Wd7ATbTNhmODa0De3/KzH1YyAJoGVWT4ckZDLSURNA8=,tag:FrEcb3HP3mDT+eJynESiYw==,type:str]
         brynn_web:
             name: ENC[AES256_GCM,data:0kV1tz9JrEGs,iv:gDFubL25guepoQo9xFEB6ViRkhwv6SoqIsI1hNMvzeg=,tag:xnqiemDvTWbN42NKuSYvTQ==,type:str]
             namespace: ENC[AES256_GCM,data:DZQjBNvDI0xL,iv:ecdEK1pxmtLDMMKEYVrqFFKVIc+KYlzZBEjICmx9+qQ=,tag:ngFA1FmowvPcgFhMeBK9Dg==,type:str]
@@ -454,8 +455,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-09-06T15:08:14Z"
-    mac: ENC[AES256_GCM,data:WJs87ownmVHFri3AbsKbjONlkrTx3InWI4ciCuPKADISP8Mv3VX0avVwNnDYHFskGGD1kg4BHZGem+kjgqy6DNirjrkDnE8fGYljK2iRndM6zgHMSI34KsJbLU84DDeHPPM3cqTBw1J2YjTlOKRUQQ3bHNeJKCEzO7J80YvW+vA=,iv:CM/bgxwPJEBiy+6k2tfsmGsbp6t7BkaWZIajMvUmwqs=,tag:e8gMqETU6lBJl08rTQRVRw==,type:str]
+    lastmodified: "2022-09-13T22:50:02Z"
+    mac: ENC[AES256_GCM,data:e/xNY61htdsb/0OUy7itUkPZtsS1ZgAmxMzUJbUGV4P+cGy0TJAH+tsCcJtzs9KY8DYrJ34VUHeX2V5fybicJ405PaoWhMEMs8um2qVutSvLnPoJhTQOQtOpt22Jqo+a+Y9mJHx/pPl50BksjN17b4N/SqGEJwMkGHYm7MdG5RU=,iv:yDJFzRtBkn7eJFOYs4zWWpvi51TbsAzTYnitBuKwXp4=,tag:sRDczGImmWfwGqbgTmSanw==,type:str]
     pgp:
         - created_at: "2021-10-30T18:28:12Z"
           enc: |
