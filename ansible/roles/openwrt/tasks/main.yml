@@ -1,6 +1,6 @@
 - name: Update opkg
   ansible.builtin.command: opkg update
-  changed_when: true
+  changed_when: false
 
 - name: Install packages
   ansible.builtin.command: >
@@ -8,7 +8,8 @@
     python3-email
     python3-urllib
     shadow-usermod
-  changed_when: true
+  register: opkg_out
+  changed_when: (opkg_out.stdout | regex_findall('is up to date') | length) != 3
 
 - name: Set authorized keys
   become: false
@@ -18,7 +19,7 @@
     key: "{{ lookup('file', '{{ item }}') }}"
     path: /etc/dropbear/authorized_keys
   with_fileglob:
-    - "../../public_keys/*"
+    - "public_keys/*"
 
 - name: Update user password
   ansible.builtin.user:
@@ -27,10 +28,9 @@
     password: "{{ ssh_password_hash }}"
 
 - name: Network configuration
-  ansible.builtin.copy:
-    src: "network-{{ ansible_host.split('.')[0] }}"
+  ansible.builtin.template:
+    src: "network-{{ inventory_hostname.split('.')[0] }}.j2"
     dest: "/etc/config/network"
     mode: '0644'
   notify:
     - Reboot
-    - Wait for reboot

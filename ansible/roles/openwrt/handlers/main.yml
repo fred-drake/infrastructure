@@ -2,6 +2,7 @@
   ansible.builtin.command: reboot
   async: 120
   poll: 0
+  notify: Wait for reboot
 
 - name: Wait for reboot
   ansible.builtin.wait_for:
