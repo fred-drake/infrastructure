@@ -21,7 +21,6 @@ all:
     # Ubuntu servers
     ubuntu_server:
       hosts:
-        docker[1:2]:
         docker5:
         rp[1:3]:
         nuc[1:9]:
@@ -59,7 +58,6 @@ all:
     # Docker container servers who run regular services
     docker_services:
       hosts:
-        docker1:
         nuc9:
         nuc8:
         brynn-desktop-2:
@@ -95,7 +93,6 @@ all:
       children:
         swarm_cluster:
       hosts:
-        docker1:
         nuc8:
         nuc9:
 
@@ -198,3 +195,4 @@ all:
     openwrt:
       hosts:
         office_switch:
+        laisa_office_switch:
