@@ -1,18 +1,19 @@
-- name: Wipe Loki data
-  community.docker.docker_container:
-    name: miniomc
-    image: minio/mc:latest
-    auto_remove: true
-    entrypoint: ["/bin/sh", "-c"]
-    command: >
-      /usr/bin/mc config host add myminio http://minio-loki-app.internal.freddrake.com:9000 admin 2cyUD4sFY4p3Gu;
-      /usr/bin/mc rm -r --force myminio/loki;
-      /usr/bin/mc mb myminio/loki;
-      /usr/bin/mc policy set public myminio/loki;
-      exit 0;
-  tags:
-    - never
-    - wipe_loki_data
+# - name: Wipe Loki data
+#   community.docker.docker_container:
+#     name: miniomc
+#     image: minio/mc:latest
+#     auto_remove: true
+#     entrypoint: ["/bin/sh", "-c"]
+#     command: >
+#       /usr/bin/mc config host add myminio http://minio-loki-app.{{ secret.domain }}:9000 \
+#         {{ secret.services.minio_loki.username }} {{ secret.services.minio_loki.password }};
+#       /usr/bin/mc rm -r --force myminio/loki;
+#       /usr/bin/mc mb myminio/loki;
+#       /usr/bin/mc policy set public myminio/loki;
+#       exit 0;
+#   tags:
+#     - never
+#     - wipe_loki_data
 
 - name: Create config directory
   ansible.builtin.file:

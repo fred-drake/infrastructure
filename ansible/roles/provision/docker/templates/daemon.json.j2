@@ -1,0 +1,8 @@
+{
+    "debug": true,
+    "log-driver": "loki",
+    "log-opts": {
+        "loki-url": "https://loki.{{ secret.domain }}/loki/api/v1/push",
+	"loki-batch-size": "400"
+    }
+}

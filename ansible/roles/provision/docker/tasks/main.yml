@@ -1,5 +1,4 @@
 ---
-
 - name: Install libraries
   ansible.builtin.apt:
     name:
@@ -34,13 +33,12 @@
 
 - name: Install docker
   ansible.builtin.apt:
-    name: "{{ item }}"
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
     state: present
     update_cache: true
-  loop:
-    - docker-ce
-    - docker-ce-cli
-    - containerd.io
 
 - name: Start docker service
   ansible.builtin.service:
@@ -151,8 +149,17 @@
     groups: docker
     append: true
 
-- name: Loki/Promtail integration
-  ansible.builtin.include_role:
-    name: provision/docker
-    tasks_from: loki.yml
-  # when: inventory_hostname not in groups['docker_loki']
+- name: Install Loki plugin
+  community.docker.docker_plugin:
+    plugin_name: grafana/loki-docker-driver:latest
+    alias: loki
+    state: enable
+  when: ansible_architecture != 'aarch64'
+
+- name: Install docker daemon
+  ansible.builtin.template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    mode: '0644'
+  notify: Restart docker
+  when: ansible_architecture != 'aarch64'

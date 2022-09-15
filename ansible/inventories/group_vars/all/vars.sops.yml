@@ -267,6 +267,8 @@ secret:
             ip: ENC[AES256_GCM,data:liu+2vxZcMDhlEVrvd0=,iv:i+mv6sJ0YG/xcUu1MECcT1nvQyIkNCgzWySxySr973o=,tag:a6yzKivHi20qalga8IgMiA==,type:str]
         minio_loki:
             ip: ENC[AES256_GCM,data:NSxVKH4g7uNN03l/mA==,iv:T/XHJqZRSsmrIEyJdQlbG6n1BUR8KbQg17uWQCKkvis=,tag:Hf0b8Xy5VT8A6SO2XB0cTA==,type:str]
+            username: ENC[AES256_GCM,data:gGxKy2c=,iv:laRMpGxjy/7eVZnX1vQL0sijvuNO4vnLaZ4n316GclU=,tag:R5EsLbHQ9Sr7oZK2ioml1A==,type:str]
+            password: ENC[AES256_GCM,data:lAVL+7s1lVyOCRlmzm8=,iv:iQjsnn4zwm4LfABfrNx3MdGJ6yUgEltrH46LGuNhVOw=,tag:CV8ixA5AbwUj8tgltYRGTA==,type:str]
         mqtt:
             ip: ENC[AES256_GCM,data:10PliC+bdAyix6+AgA==,iv:/j4z57Prqb4IRUBGXZ8h5xftDkZerAeuYQn4ciD9auk=,tag:jPWZeHQzdgpH0COCixDs9g==,type:str]
         n8n:
@@ -455,8 +457,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-09-13T22:50:02Z"
-    mac: ENC[AES256_GCM,data:e/xNY61htdsb/0OUy7itUkPZtsS1ZgAmxMzUJbUGV4P+cGy0TJAH+tsCcJtzs9KY8DYrJ34VUHeX2V5fybicJ405PaoWhMEMs8um2qVutSvLnPoJhTQOQtOpt22Jqo+a+Y9mJHx/pPl50BksjN17b4N/SqGEJwMkGHYm7MdG5RU=,iv:yDJFzRtBkn7eJFOYs4zWWpvi51TbsAzTYnitBuKwXp4=,tag:sRDczGImmWfwGqbgTmSanw==,type:str]
+    lastmodified: "2022-09-15T19:59:30Z"
+    mac: ENC[AES256_GCM,data:otYNcqMAjNz0S35PG5UW0lYP6mEZqdzCjeKkyZi168+8gLKoROGZX87gk/+v7QQq7g/mFmLBmtnNryO2lSt/JrNn2KBoA57D26YcEGUkaPVrSb8vX9GjFiNMLqyH1AUDaSHNoEHK6dYY2sMOMFnVZxLMgNqJD5XYpSU5pV8JhkM=,iv:o3C6pyoC7EI+jwqUWJYDyfyeOgTrTJogmTumb66+l7Y=,tag:ji+wqy9gYTWf2LuESmPhFw==,type:str]
     pgp:
         - created_at: "2021-10-30T18:28:12Z"
           enc: |
