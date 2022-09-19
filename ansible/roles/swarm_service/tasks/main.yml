@@ -57,8 +57,6 @@
       constraints: node.role==worker
     networks:
       - "{{ sf.facts.name }}"
-    mounts:
-      - source: "{{ glusterfs_appdata_dir }}/{{ service.name }}"
-        target: "/backup/{{ service.name }}"
+    mounts: "{{ default_mounts + (backup_mounts | default([])) }}"
     env: "{{ default_backup_env | combine(service.backup_env | default({})) }}"
   when: service.backup is defined and service.backup

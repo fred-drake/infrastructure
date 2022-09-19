@@ -79,6 +79,46 @@ swarm_services:
         bind_mounts:
           - source: data
             target: /data
+  gitea:
+    name: gitea
+    backup: true
+    containers:
+      - name: gitea
+        repository: gitea/gitea
+        web_port: 3000
+        tag: 1.16.7
+        env:
+          GITEA__database__DB_TYPE: mysql
+          GITEA__database__HOST: "gitea-db"
+          GITEA__database__NAME: "{{ secret.services.gitea.mariadb.mysql_name }}"
+          GITEA__database__USER: "{{ secret.services.gitea.mariadb.mysql_user }}"
+          GITEA__database__PASSWD: "{{ secret.services.gitea.mariadb.mysql_password }}"
+        bind_mounts:
+          - source: data
+            target: /data
+      - name: gitea-db
+        repository: mariadb
+        tag: "10"
+        env:
+          MYSQL_ROOT_PASSWORD: "{{ secret.services.gitea.mariadb.mysql_root_password }}"
+          MYSQL_DATABASE: "{{ secret.services.gitea.mariadb.mysql_name }}"
+          MYSQL_USER: "{{ secret.services.gitea.mariadb.mysql_user }}"
+          MYSQL_PASSWORD: "{{ secret.services.gitea.mariadb.mysql_password }}"
+        bind_mounts:
+          - source: mariadb
+            target: /var/lib/mysql
+  grafana:
+    name: grafana
+    containers:
+      - repository: grafana/grafana-oss
+        tag: latest
+        web_port: 3000
+        env:
+          GF_PANELS_DISABLE_SANITIZE_HTML: "true"
+          GF_AUTH_ANONYMOUS_ENABLED: "true"
+        bind_mounts:
+          - source: data
+            target: /var/lib/grafana
   homeassistant:
     name: homeassistant
     backup: true
@@ -112,6 +152,27 @@ swarm_services:
             target: /data
           - source: wal
             target: /wal
+        publish:
+          - published_port: 43645
+            target_port: 3100
+            mode: host
+  mqtt:
+    name: mqtt
+    containers:
+      - repository: eclipse-mosquitto
+        tag: 2.0.14
+        bind_mounts:
+          - source: config
+            target: /mosquitto/config
+          - source: data
+            target: /mosquitto/data
+        publish:
+          - published_port: 44622
+            target_port: 1883
+            mode: host
+          - published_port: 44623
+            target_port: 8080
+            mode: host
   netbox:
     name: netbox
     backup: true
@@ -202,8 +263,81 @@ swarm_services:
           - published_port: 3456
             target_port: 3456
             mode: host
+  office_touchpad:
+    name: office-touchpad
+    backup: true
+    containers:
+      - repository: ghcr.io/fred-drake/office-touchpad
+        tag: latest
+        web_port: 3000
+        bind_volumes:
+          - source: config/runtime-config.js
+            target: /work/build/runtime-config.js
+            type: file
+  paperless:
+    name: paperless
+    backup: true
+    backup_env:
+      PRE_COMMAND: /usr/bin/docker exec paperless python3 /usr/src/paperless/src/manage.py document_exporter /backup/
+    backup_mounts:
+      - /usr/bin/docker:/usr/bin/docker
+      - /var/run/docker.sock:/var/run/docker.sock
+      - "{{ glusterfs_appdata_dir }}/paperless/paperless/backup:/backup/paperless"
+    containers:
+      - name: paperless
+        web_port: 8000
+        repository: linuxserver/paperless-ngx
+        tag: latest
+        env:
+          PUID: "1000"
+          PGID: "1000"
+          PAPERLESS_REDIS: "redis://paperless-redis:6379"
+          REDIS_URL: "redis://paperless-redis:6379"
+          PAPERLESS_OCR_LANGUAGE: eng
+          PAPERLESSS_FILE_FORMAT: "{created}-{correspondent}-{title}"
+          PAPERLESS_CONSUMER_POLLING: "30"
+          PAPERLESS_SECRET_KEY: "{{ secret.services.paperless.paperless_secret_key }}"
+          PAPERLESS_CORS_ALLOWED_HOSTS: "https://paperless.{{ secret.domain }}"
+          PAPERLESS_ADMIN_USER: "{{ secret.services.paperless.user }}"
+          PAPERLESS_ADMIN_PASSWORD: "{{ secret.services.paperless.password }}"
+          PAPERLESS_URL: "https://paperless.{{ secret.domain }}"
+        bind_mounts:
+          - source: config
+            target: /config
+          - source: data
+            target: /data
+          - source: backup
+            target: /backup
+      - name: paperless-redis
+        repository: redis
+        tag: 6.2.6          
+  pihole_exporter:
+    name: pihole-exporter
+    containers:
+      - name: pihole-exporter-pihole1
+        repository: ekofr/pihole-exporter
+        tag: latest
+        web_port: 9617
+        env:
+          PIHOLE_HOSTNAME: "pihole1.{{ secret.domain }}"
+          PIHOLE_API_TOKEN: "{{ secret.pihole.pihole1.api_token }}"
+          # PIHOLE_PROTOCOL: https
+          INTERVAL: 30s
+          PORT: "9617"
+      - name: pihole-exporter-pihole2
+        repository: ekofr/pihole-exporter
+        tag: latest
+        web_port: 9618
+        env:
+          PIHOLE_HOSTNAME: "pihole2.{{ secret.domain }}"
+          PIHOLE_API_TOKEN: "{{ secret.pihole.pihole2.api_token }}"
+          # PIHOLE_PROTOCOL: https
+          INTERVAL: 30s
+          PORT: "9618"
+
   prometheus:
     name: prometheus
+    init_role: prometheus
     containers:
       - web_port: 9090
         repository: prom/prometheus
@@ -211,6 +345,38 @@ swarm_services:
         bind_mounts:
           - source: config
             target: /etc/prometheus
+  prom_node_exporter:
+    name: prom-node-exporter
+    containers:
+      - repository: prom/node-exporter
+        tag: latest
+        mode: global
+        constraints:
+          # Force on all nodes, both workers and managers.
+          - node.role != foo
+        command: >
+          /bin/sh -c
+          "/bin/node_exporter
+          --path.procfs=/host/proc
+          --path.rootfs=/rootfs
+          --path.sysfs=/host/sys
+          --collector.filesystem.mount-points-exclude='^/(sys|proc|dev|host|etc)($$|/)'"
+        bind_mounts:
+          - source: /proc
+            target: /host/proc
+            literal: true
+            readonly: true
+          - source: /sys
+            target: /host/sys
+            literal: true
+            readonly: true
+          - source: /
+            target: /rootfs
+            literal: true
+            readonly: true
+        publish:
+          - published_port: 9100
+            target_port: 9100
   promtail:
     name: promtail
     init_role: promtail
@@ -224,7 +390,7 @@ swarm_services:
         command: >
             /bin/sh -c
             "export HOSTNAME=`/bin/cat /etc/hostname` &&
-            /usr/bin/promtail --client.external-labels=hostname=$HOSTNAME --config.file=/etc/promtail/config.yml"
+            /usr/bin/promtail --client.external-labels=host=$HOSTNAME --config.file=/etc/promtail/config.yml"
         bind_mounts:
           - source: config
             target: /etc/promtail
@@ -268,6 +434,26 @@ swarm_services:
           - name: movies
             device_share: videos
             target: /movies
+        env:
+          TZ: America/New_York
+          PUID: "99"
+          PGID: "100"
+  sonarr:
+    name: sonarr
+    backup: true
+    containers:
+      - repository: linuxserver/sonarr
+        tag: latest
+        web_port: 8989
+        bind_mounts:
+          - source: config
+            target: /config
+          - source: "{{ glusterfs_appdata_dir }}/sabnzbd/downloads"
+            target: /downloads
+            literal: true
+        nfs_mounts:
+          - name: videos
+            target: /videos
         env:
           TZ: America/New_York
           PUID: "99"

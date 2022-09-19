@@ -1,0 +1,11 @@
+[Unit]
+Description=Promtail service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/bin/bash -c "HOSTNAME=$(hostname); /usr/local/bin/promtail --client.external-labels=host=$HOSTNAME --config.file /etc/promtail/config.yml"
+
+[Install]
+WantedBy=multi-user.target

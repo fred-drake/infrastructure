@@ -1,0 +1,61 @@
+- name: Get file stat
+  ansible.builtin.stat:
+    path: /usr/local/bin/promtail
+  register: file_data
+
+- name: Get temporary directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: promtail
+  register: promtail_temp_dir
+  changed_when: false
+  when: not file_data.stat.exists
+
+- name: Get Promtail zip file
+  ansible.builtin.get_url:
+    url: "https://github.com/grafana/loki/releases/download/v{{ loki_binary_version }}/promtail-linux-{{ arch_map[ansible_architecture] }}.zip"
+    dest: "{{ promtail_temp_dir.path }}/promtail.zip"
+    mode: '0644'
+  when: not file_data.stat.exists
+
+- name: Unzip to get executable
+  ansible.builtin.unarchive:
+    src: "{{ promtail_temp_dir.path }}/promtail.zip"
+    dest: "/usr/local/bin"
+    remote_src: true
+  when: not file_data.stat.exists
+
+- name: Copy executable
+  ansible.builtin.copy:
+    src: "/usr/local/bin/promtail-linux-{{ arch_map[ansible_architecture] }}"
+    dest: /usr/local/bin/promtail
+    remote_src: true
+    mode: '0755'
+  when: not file_data.stat.exists
+  notify: Restart service
+
+- name: Remove old executable
+  ansible.builtin.file:
+    path: "/usr/local/bin/promtail-linux-{{ arch_map[ansible_architecture] }}"
+    state: absent
+  when: not file_data.stat.exists
+
+- name: Create config directory
+  ansible.builtin.file:
+    path: "/etc/promtail"
+    state: directory
+    mode: '0755'
+
+- name: Apply config
+  ansible.builtin.template:
+    src: config.yml.j2
+    dest: "/etc/promtail/config.yml"
+    mode: '0644'
+  notify: Restart service
+
+- name: Apply service definition
+  ansible.builtin.copy:
+    src: promtail.service
+    dest: /etc/systemd/system/promtail.service
+    mode: '0644'
+  notify: Restart service

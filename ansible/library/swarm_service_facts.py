@@ -61,6 +61,10 @@ def build_facts(
             pod["networks"].append(sf["name"])
             sf["networks"].add(sf["name"])
 
+        if "networks" in container:
+            for nw in container["networks"]:
+                pod["networks"].append(nw)
+
         container_labels = container["labels"] if "labels" in container else {}
         if "web_port" in container:
             if "web_hostname" in container:
@@ -70,7 +74,7 @@ def build_facts(
             else:
                 hostname = service["name"]
             pod["labels"] = build_labels(
-                service["name"],
+                pod["name"],
                 hostname,
                 domain,
                 container["web_port"],

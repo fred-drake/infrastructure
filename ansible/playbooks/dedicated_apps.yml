@@ -25,3 +25,37 @@
   become: true
   roles:
     - tinypilot
+
+- name: Nuke promtail binary
+  hosts: promtail
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Delete existing file
+      ansible.builtin.file:
+        path: /usr/local/bin/promtail
+        state: absent
+  tags:
+    - never
+    - force
+
+- name: Promtail binary
+  hosts: promtail
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Install promtail binary
+      ansible.builtin.include_role:
+        name: promtail
+        tasks_from: binary
+  tags: promtail
+
+- name: Prometheus node exporter binary
+  hosts: node_exporter
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Install node exporter binary
+      ansible.builtin.include_role:
+        name: prom_node_exporter
+  tags: node_exporter

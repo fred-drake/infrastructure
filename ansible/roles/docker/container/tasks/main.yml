@@ -20,7 +20,7 @@
     command_handling: compatibility
     networks:
       - name: "{{ container.network | default(secret.docker.network.container) }}"
-        ipv4_address: "{{ container.ip }}"
+        ipv4_address: "{{ container.ip | default(omit) }}"
     networks_cli_compatible: "{{ container.networks_cli_compatible | default(true) }}"
     sysctls: "{{ container.sysctls | default({}) }}"
     state: started

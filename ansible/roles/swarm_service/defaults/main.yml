@@ -4,3 +4,6 @@ default_backup_env:
   RESTIC_REPOSITORY: "s3:http://minio-backup-app.{{ secret.domain }}:9000/restic"
   RESTIC_PASSWORD: "{{ secret.backup.restic.password }}"
   NAMESPACE: "{{ service.name }}"
+default_mounts:
+  - source: "{{ glusterfs_appdata_dir }}/{{ service.name }}"
+    target: "/backup/{{ service.name }}"

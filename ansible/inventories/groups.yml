@@ -21,6 +21,7 @@ all:
     # Ubuntu servers
     ubuntu_server:
       hosts:
+        docker2:
         docker5:
         rp[1:3]:
         nuc[1:9]:
@@ -54,6 +55,20 @@ all:
         docker_services:
         critical_docker_services:
         swarm_cluster:
+
+    # All servers that require the non-dockerized promtail installed
+    promtail:
+      hosts:
+        scannerpi:
+        scoreboard:
+        kiosk:
+
+    # All servers that require the non-dockerized Prometheus node exporter installed
+    node_exporter:
+      hosts:
+        scannerpi:
+        scoreboard:
+        kiosk:
 
     # Docker container servers who run regular services
     docker_services:

@@ -6,7 +6,7 @@ WORKDIR /tmp
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        ansible && \
+        sshpass ansible && \
     rm -rf /var/cache/apt/archives
 COPY ansible/dev-requirements.txt .
 RUN pip install -r dev-requirements.txt && rm -f dev-requirements.txt

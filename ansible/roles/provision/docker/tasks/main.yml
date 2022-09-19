@@ -76,6 +76,7 @@
     ipam_config:
       - gateway: "{{ gateway_208 }}"
         subnet: "{{ netmask_208 }}"
+        iprange: "{{ iprange_208 | default(omit) }}"
   when: interface_208 is defined
   # tags: docker_network
 
@@ -89,6 +90,7 @@
     ipam_config:
       - gateway: "{{ gateway_50 }}"
         subnet: "{{ netmask_50 }}"
+        iprange: "{{ iprange_50 | default(omit) }}"
   when: interface_50 is defined
   # tags: docker_network
 
@@ -102,6 +104,7 @@
     ipam_config:
       - gateway: "{{ gateway_40 }}"
         subnet: "{{ netmask_40 }}"
+        iprange: "{{ iprange_40 | default(omit) }}"
   when: interface_40 is defined
   # tags: docker_network
 
@@ -115,6 +118,7 @@
     ipam_config:
       - gateway: "{{ gateway_30 }}"
         subnet: "{{ netmask_30 }}"
+        iprange: "{{ iprange_30 | default(omit) }}"
   when: interface_30 is defined
   tags: docker_network
 

@@ -6,7 +6,7 @@ positions:
     filename: /tmp/positions.yaml
 
 clients:
-    - url: https://loki.{{ secret.domain }}/loki/api/v1/push
+    - url: http://loki.{{ secret.domain }}:43645/loki/api/v1/push
 
 # local machine logs
 scrape_configs:
@@ -16,7 +16,7 @@ scrape_configs:
             - localhost
           labels:
             job: varlogs
-            __path__: /var/log/*log
+            __path__: /var/log/**/*log
     - job_name: docker
       pipeline_stages:
         - docker: {}

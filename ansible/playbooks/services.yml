@@ -61,6 +61,40 @@
         - git_hash_updater_rebuild
 
 #################################################################################
+# gitea
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.gitea }}"
+      tags:
+        - never
+        - gitea_nuke
+        - gitea_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.gitea }}"
+      tags:
+        - gitea
+        - gitea_rebuild
+
+#################################################################################
+# grafana
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.grafana }}"
+      tags:
+        - never
+        - grafana_nuke
+        - grafana_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.grafana }}"
+      tags:
+        - grafana
+        - grafana_rebuild
+
+#################################################################################
 # homeassistant
 #################################################################################
     - role: swarm_service_nuke
@@ -93,6 +127,23 @@
       tags:
         - loki
         - loki_rebuild
+
+#################################################################################
+# mqtt
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.mqtt }}"
+      tags:
+        - never
+        - mqtt_nuke
+        - mqtt_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.mqtt }}"
+      tags:
+        - mqtt
+        - mqtt_rebuild
 
 #################################################################################
 # netbox
@@ -146,6 +197,57 @@
         - node_red_rebuild
 
 #################################################################################
+# office-touchpad
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.office_touchpad }}"
+      tags:
+        - never
+        - office_touchpad_nuke
+        - office_touchpad_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.office_touchpad }}"
+      tags:
+        - office_touchpad
+        - office_touchpad_rebuild
+
+#################################################################################
+# paperless
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.paperless }}"
+      tags:
+        - never
+        - paperless_nuke
+        - paperless_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.paperless }}"
+      tags:
+        - paperless
+        - paperless_rebuild
+
+#################################################################################
+# pihole-exporter
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.pihole_exporter }}"
+      tags:
+        - never
+        - pihole_exporter_nuke
+        - pihole_exporter_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.pihole_exporter }}"
+      tags:
+        - pihole_exporter
+        - pihole_exporter_rebuild
+
+#################################################################################
 # prometheus
 #################################################################################
     - role: swarm_service_nuke
@@ -161,6 +263,23 @@
       tags:
         - prometheus
         - prometheus_rebuild
+
+#################################################################################
+# prom-node-exporter
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.prom_node_exporter }}"
+      tags:
+        - never
+        - prom_node_exporter_nuke
+        - prom_node_exporter_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.prom_node_exporter }}"
+      tags:
+        - prom_node_exporter
+        - prom_node_exporter_rebuild
 
 #################################################################################
 # promtail
@@ -212,6 +331,23 @@
       tags:
         - radarr
         - radarr_rebuild
+
+#################################################################################
+# sonarr
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.sonarr }}"
+      tags:
+        - never
+        - sonarr_nuke
+        - sonarr_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.sonarr }}"
+      tags:
+        - sonarr
+        - sonarr_rebuild
 
 #################################################################################
 # teslamate

@@ -43,3 +43,30 @@ backend homeassistant_hubitat_backend
 {% for h in workers_hostlist_results.hosts %}
   server {{ h.hostname }} {{ h.address }}:42843 check
 {% endfor %}
+
+frontend loki_frontend
+  bind *:43645
+  default_backend loki_backend
+
+backend loki_backend
+{% for h in workers_hostlist_results.hosts %}
+  server {{ h.hostname }} {{ h.address }}:43645 check
+{% endfor %}
+
+frontend mqtt_frontend
+  bind *:44622
+  default_backend mqtt_backend
+
+backend mqtt_backend
+{% for h in workers_hostlist_results.hosts %}
+  server {{ h.hostname }} {{ h.address }}:44622 check
+{% endfor %}
+
+frontend mqtt_ws_frontend
+  bind *:44623
+  default_backend mqtt_backend
+
+backend mqtt_ws_backend
+{% for h in workers_hostlist_results.hosts %}
+  server {{ h.hostname }} {{ h.address }}:44623 check
+{% endfor %}
