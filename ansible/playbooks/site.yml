@@ -3,8 +3,6 @@
 
 - ansible.builtin.import_playbook: glusterfs.yml
 
-- ansible.builtin.import_playbook: dedicated_apps.yml
-
 - ansible.builtin.import_playbook: docker.yml
 
 - hosts: cuda
@@ -19,6 +17,8 @@
 - ansible.builtin.import_playbook: docker/populate_containers.yml
 
 - ansible.builtin.import_playbook: swarm.yml
+
+- ansible.builtin.import_playbook: dedicated_apps.yml
 
 - hosts: netboot-assets-bridge
   gather_facts: false

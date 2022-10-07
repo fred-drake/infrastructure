@@ -1,0 +1,19 @@
+- name: Install docker containers for specops machine
+  hosts: specops
+  gather_facts: false
+  become: true
+  roles:
+    - docker/base
+    - role: docker/container
+      vars:
+        container:
+          name: maas-postgres
+          repository: postgres
+          tag: "14"
+          ip: "{{ secret.services.maas.postgres.ip }}"
+          env:
+            POSTGRES_USER: "{{ secret.services.maas.postgres.user }}"
+            POSTGRES_PASSWORD: "{{ secret.services.maas.postgres.password }}"
+            POSTGRES_DB: "{{ secret.services.maas.postgres.database }}"
+          volumes:
+            - "{{ glusterfs_appdata_dir }}/maas/postgres/data:/var/lib/postgresql/data"

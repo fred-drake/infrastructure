@@ -25,6 +25,7 @@ all:
         docker5:
         rp[1:3]:
         nuc[1:9]:
+        specops:
 
     # Ubuntu desktops
     ubuntu_desktop:
@@ -52,9 +53,13 @@ all:
     # All docker container servers
     docker:
       children:
-        docker_services:
+        # docker_services:
         critical_docker_services:
         swarm_cluster:
+      hosts:
+        nuc9:
+        nuc8:
+        specops:
 
     # All servers that require the non-dockerized promtail installed
     promtail:
@@ -71,11 +76,12 @@ all:
         kiosk:
 
     # Docker container servers who run regular services
-    docker_services:
-      hosts:
-        nuc9:
-        nuc8:
-        brynn-desktop-2:
+    # docker_services:
+    #   hosts:
+    #     nuc9:
+    #     nuc8:
+    #     specops:
+    #     brynn-desktop-2:
 
     # Docker container servers who run critical services
     critical_docker_services:
@@ -110,6 +116,7 @@ all:
       hosts:
         nuc8:
         nuc9:
+        specops:
 
     # Hosts with CIFS clients
     cifs:
@@ -126,6 +133,10 @@ all:
     avahi: # Host for avahi daemon
       hosts:
         # nuc9:
+
+    netplan_dynamic:
+      hosts:
+        specops:
 
     # Servers whose operating systems can be autoinstalled through netboot
     netboot_install_servers:

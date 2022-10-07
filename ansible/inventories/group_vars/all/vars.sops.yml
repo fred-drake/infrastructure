@@ -263,6 +263,12 @@ secret:
             influxd_http_bind_address: ENC[AES256_GCM,data:OKY9zg==,iv:vUpwU0P0vz9QHsk5WPzI4PfyCNnbJny0yIm68FS5guc=,tag:l57XgA9vkWBhbH09qnQlWA==,type:str]
             influxd_tls_cert: ENC[AES256_GCM,data:P5kjdUC1yCY4oI1FhilE01IBgACxZrVVi0Q6,iv:A4zI5OhEJ4lNDbi8Q2LhUfuMPyMhS8rNtZJBCdTMUjo=,tag:mxhD205CV+KjjqnVk9Vnjw==,type:str]
             influxd_tls_key: ENC[AES256_GCM,data:wGDpjMlJCFctOfwRluI/7ZTw4deAc4w39RHcVTvO,iv:/wYpgwz+gnn2FDacbd81TVjaXjSzJh+J0QTkJZ6yqn4=,tag:BXIKmfXJHDzNO3UhviXcAQ==,type:str]
+        maas:
+            postgres:
+                ip: ENC[AES256_GCM,data:PmWQLmoZ9Eqp2obRQQ==,iv:wEgowT0s+G2jErd+s/FE9ONR2xT46RK8yvI9Gt5De5M=,tag:KpM8dueHENsO1OBJ5Z6HLQ==,type:str]
+                user: ENC[AES256_GCM,data:A/dPsMbTLgw=,iv:emogQ5OPMYBUcFse3hMdGCRwxvGSdxnGOSwszwARepo=,tag:11GDdhSD2YMTgnIyktbr2g==,type:str]
+                password: ENC[AES256_GCM,data:t31Oju4Y65jK1lGPrVU=,iv:GF9RG7zooj2jofCOigoAUb+U2GaXA0xQxGzDTeEqWk0=,tag:kKnt23mluQg+AXfEKG19Uw==,type:str]
+                database: ENC[AES256_GCM,data:rqZJpg==,iv:PT1UncBUs9pSBdCcVDOxCy6m12glref3WS/YFluxWKI=,tag:u5PcQAeXx5/FhqTsLp28yw==,type:str]
         minio_backup:
             ip: ENC[AES256_GCM,data:liu+2vxZcMDhlEVrvd0=,iv:i+mv6sJ0YG/xcUu1MECcT1nvQyIkNCgzWySxySr973o=,tag:a6yzKivHi20qalga8IgMiA==,type:str]
         minio_loki:
@@ -457,8 +463,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-09-16T15:43:04Z"
-    mac: ENC[AES256_GCM,data:/AWqdH5bnHLP4I4RQ6bexmrG9GP5CUiGF4vww6lIjsdt0DCbM5M62HfjSKF3Y3sTWw3UP+b+qaw6shmRkxhIoumDYo3LaCa9/waNVSS2uwam9z8KDrF+8yaszEasbLID3FRBQ7l++EShDCqqd5Ky8wHmDBf5BSXNzladBCVQIts=,iv:fpA2aZ7ROwBOhHhrChl+zFiHXEKJimM3ljU+4hfdDsY=,tag:OTE7J+cBkYdVDe4zJM14KA==,type:str]
+    lastmodified: "2022-09-19T21:29:57Z"
+    mac: ENC[AES256_GCM,data:FsAZvg2d504uwZvTSwnGj+//NnA8gf/hXvcTUOYD/9rONXMgtIZ99BAKI9fl2tklUtAge4Iyghud/FpwwjAtxGz3IxIeKVimjeK/SYrEmvulGSy1gOms63XkR6YW7apyaYWBONUTfazMh/6aibMVKXXzg2D7aJxLaIxqkj+i1+o=,iv:5ze0AMQyYD0ZnkXA6Ress4lc3LhVpeSLiNQcRMcGR18=,tag:w47BMAinKgB2Nslhe48hpQ==,type:str]
     pgp:
         - created_at: "2021-10-30T18:28:12Z"
           enc: |

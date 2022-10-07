@@ -1,4 +1,5 @@
-- import_playbook: populate_docker1_containers.yml
-- import_playbook: populate_nuc9_containers.yml
-- import_playbook: populate_nuc8_containers.yml
+- ansible.builtin.import_playbook: populate_docker1_containers.yml
+- ansible.builtin.import_playbook: populate_nuc9_containers.yml
+- ansible.builtin.import_playbook: populate_nuc8_containers.yml
+- ansible.builtin.import_playbook: populate_specops_containers.yml
 # - import_playbook: populate_brynn_desktop_containers.yml
