@@ -1,0 +1,69 @@
+- name: Install HashiCorp GPG key
+  ansible.builtin.apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: Get architecture
+  ansible.builtin.command:
+    cmd: dpkg --print-architecture
+  changed_when: false
+  register: dpkg_arch
+
+- name: Add HashiCorp repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch={{ dpkg_arch.stdout }}] https://apt.releases.hashicorp.com jammy main"
+    state: present
+
+- name: Install apt libraries
+  ansible.builtin.apt:
+    name:
+      - qemu-utils
+      - python-pip
+      - packer
+      - git
+    state: present
+    update_cache: true
+
+- name: Install or upgrade MAAS
+  community.general.snap:
+    name: maas
+    channel: "{{ maas_version }}"
+
+- name: Check if configured
+  ansible.builtin.command:
+    cmd: maas status
+  register: maas_status
+  failed_when: false
+  changed_when: false
+
+- name: Initialize
+  ansible.builtin.command:
+    cmd: >
+      maas init region+rack --database-uri
+      postgres://{{ secret.services.maas.postgres.user }}:{{ secret.services.maas.postgres.password }}@{{ ansible_host }}/maas
+      --maas-url http://{{ ansible_host }}:5240/MAAS
+  when: maas_status.stdout == 'MAAS is not configured'
+
+- name: Create admin user
+  ansible.builtin.command:
+    cmd: >
+      maas createadmin
+      --username {{ secret.services.maas.adminuser }}
+      --password {{ secret.services.maas.adminpass }}
+      --email {{ secret.services.maas.adminemail }}
+      --ssh-import {{ secret.services.maas.adminsshimport }}
+  register: create_user
+  failed_when: create_user.rc not in [0, 2]
+  changed_when: create_user.rc == 0
+
+- name: Create directory for private key
+  ansible.builtin.file:
+    state: directory
+    path: /var/snap/maas/current/root/.ssh
+    mode: '0700'
+
+- name: Apply private key for libvirt access
+  ansible.builtin.template:
+    src: private-key.j2
+    dest: /var/snap/maas/current/root/.ssh
+    mode: '0600'

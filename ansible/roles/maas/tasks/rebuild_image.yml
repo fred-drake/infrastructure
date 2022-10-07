@@ -1,0 +1,90 @@
+- name: Clear workspace directory
+  ansible.builtin.file:
+    path: "{{ image_workspace_dir }}"
+    state: absent
+
+- name: Create workspace directory
+  ansible.builtin.file:
+    path: "{{ image_workspace_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Check out packer templates repository
+  ansible.builtin.git:
+    repo: https://github.com/canonical/packer-maas.git
+    dest: "{{ image_workspace_dir }}/packer-maas"
+    version: main
+
+- name: Initialize packer
+  ansible.builtin.command:
+    cmd: packer init
+    chdir: "{{ image_workspace_dir }}/packer-maas/vmware-esxi"
+  register: packer_init
+  failed_when: false
+  changed_when: packer_init.rc == 0
+
+- name: Update password to kickstart script
+  ansible.builtin.lineinfile:
+    path: "{{ image_workspace_dir }}/packer-maas/vmware-esxi/KS.CFG"
+    regexp: '^rootpw '
+    line: "rootpw {{ secret.esxi.root_password }}"
+
+- name: Update serial number to kickstart script
+  ansible.builtin.lineinfile:
+    path: "{{ image_workspace_dir }}/packer-maas/vmware-esxi/KS.CFG"
+    regexp: '^.*?serialnum '
+    line: "serialnum --esx={{ secret.esxi.serialnum }}"
+
+- name: Uncomment enable_ssh to kickstart script
+  ansible.builtin.lineinfile:
+    path: "{{ image_workspace_dir }}/packer-maas/vmware-esxi/KS.CFG"
+    regexp: '^# vim-cmd hostsvc/enable_ssh'
+    line: 'vim-cmd hostsvc/enable_ssh'
+
+- name: Uncomment start_ssh to kickstart script
+  ansible.builtin.lineinfile:
+    path: "{{ image_workspace_dir }}/packer-maas/vmware-esxi/KS.CFG"
+    regexp: '^# vim-cmd hostsvc/start_ssh'
+    line: 'vim-cmd hostsvc/start_ssh'
+
+- name: MAAS login
+  ansible.builtin.command:
+    cmd: "maas login {{ secret.services.maas.adminuser }} {{ secret.services.maas.url }} {{ secret.services.maas.apikey }}"
+  changed_when: false
+
+- name: Build the image
+  ansible.builtin.command:
+    cmd: >
+      packer build -force -machine-readable -color=false
+      -var 'vmware_esxi_iso_path={{ vmware_image_path }}' .
+    chdir: "{{ image_workspace_dir }}/packer-maas/vmware-esxi"
+  changed_when: true
+  async: 1200
+  poll: 60
+
+- name: Get ID of current image in MAAS
+  ansible.builtin.shell:
+    cmd: "maas {{ secret.services.maas.adminuser }} boot-resources read | jq '.[] | select(.name == \"{{ maas_image_name }}\").id'"
+  register: image_id
+  changed_when: false
+
+- name: Delete current image in MAAS
+  ansible.builtin.command:
+    cmd: "maas {{ secret.services.maas.adminuser }} boot-resource delete {{ image_id.stdout }}"
+  register: delete_image
+  failed_when: delete_image.rc not in [0, 2]
+  changed_when: delete_image.rc == 0
+
+- name: Upload built image to MAAS
+  ansible.builtin.command:
+    cmd: >
+      maas {{ secret.services.maas.adminuser }} boot-resources create
+      name='{{ maas_image_name }}'
+      title='{{ maas_image_title }}'
+      architecture='amd64/generic'
+      filetype='ddgz'
+      content@=vmware-esxi.dd.gz
+    chdir: "{{ image_workspace_dir }}/packer-maas/vmware-esxi"
+  changed_when: true
+  async: 1200
+  poll: 60
