@@ -1,15 +1,26 @@
-- name: Apply netplan for machine containing dns server
-  ansible.builtin.template:
-    src: netplan-config-dns-server.yml.j2
-    dest: /etc/netplan/00-installer-config.yaml
-    mode: '0644'
-  notify: Netplan apply
-  when: "'critical_docker_services' in group_names"
+# - name: Apply netplan for machine containing dns server
+#   ansible.builtin.template:
+#     src: netplan-config-dns-server.yml.j2
+#     dest: /etc/netplan/00-installer-config.yaml
+#     mode: '0644'
+#   notify: Netplan apply
+#   when: "'critical_docker_services' in group_names"
 
-- name: Apply netplan for docker services machine
+- name: Apply netplan based on raw configuration
   ansible.builtin.template:
-    src: netplan-config-docker-service.yml.j2
+    src: netplan-raw.yml.j2
     dest: /etc/netplan/00-installer-config.yaml
     mode: '0644'
   notify: Netplan apply
-  when: "'docker_services' in group_names"
+  when: netplan_config is defined
+
+- name: Apply netplan based on interface definitions
+  ansible.builtin.template:
+    src: netplan.yml.j2
+    dest: /etc/netplan/00-installer-config.yaml
+    mode: '0644'
+  notify: Netplan apply
+  when: >
+    netplan_config is not defined and
+    (interface_208 is defined or interface_50 is defined or
+    interface_40 is defined or interface_30 is defined)

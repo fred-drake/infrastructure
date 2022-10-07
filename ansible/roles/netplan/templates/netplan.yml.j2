@@ -1,0 +1,170 @@
+#jinja2: lstrip_blocks: "True"
+network:
+  ethernets:
+{% if interface_208 is defined %}
+    {{ interface_208 }}:
+  {% if address_208 is defined %}
+      addresses:
+        - {{ address_208 }}/24
+      gateway4: {{ secret.network.admin.gateway }}
+      nameservers:
+        addresses:
+    {% if public_nameservers is defined and public_nameservers %}
+          - 8.8.8.8
+          - 8.8.4.4
+        search: []
+    {% else %}
+          - {{ secret.pihole.pihole1.address }}
+          - {{ secret.pihole.pihole2.address }}
+        search:
+          - {{ secret.domain }}.
+    {% endif %}
+  {% else %}
+      critical: true
+      dhcp-identifier: mac
+      dhcp4: true
+  {% endif %}
+{% elif interface_50 is defined %}
+    {{ interface_50 }}:
+  {% if address_50 is defined %}
+      addresses:
+        - {{ address_50 }}/24
+      gateway4: {{ secret.network.services.gateway }}
+      nameservers:
+        addresses:
+    {% if public_nameservers is defined and public_nameservers %}
+          - 8.8.8.8
+          - 8.8.4.4
+        search: []
+    {% else %}
+          - {{ secret.pihole.pihole1.address }}
+          - {{ secret.pihole.pihole2.address }}
+        search:
+          - {{ secret.domain }}.
+    {% endif %}
+  {% else %}
+      critical: true
+      dhcp-identifier: mac
+      dhcp4: true
+  {% endif %}
+{% elif interface_40 is defined %}
+    {{ interface_40 }}:
+  {% if address_40 is defined %}
+      addresses:
+        - {{ address_40 }}/24
+      gateway4: {{ secret.network.iot.gateway }}
+      nameservers:
+        addresses:
+    {% if public_nameservers is defined and public_nameservers %}
+          - 8.8.8.8
+          - 8.8.4.4
+        search: []
+    {% else %}
+          - {{ secret.pihole.pihole1.address }}
+          - {{ secret.pihole.pihole2.address }}
+        search:
+          - {{ secret.domain }}.
+    {% endif %}
+  {% else %}
+      critical: true
+      dhcp-identifier: mac
+      dhcp4: true
+  {% endif %}
+{% elif interface_30 is defined %}
+    {{ interface_30 }}:
+  {% if address_30 is defined %}
+      addresses:
+        - {{ address_30 }}/24
+      gateway4: {{ secret.network.workstation.gateway }}
+      nameservers:
+        addresses:
+    {% if public_nameservers is defined and public_nameservers %}
+          - 8.8.8.8
+          - 8.8.4.4
+        search: []
+    {% else %}
+          - {{ secret.pihole.pihole1.address }}
+          - {{ secret.pihole.pihole2.address }}
+        search:
+          - {{ secret.domain }}.
+    {% endif %}
+  {% else %}
+      critical: true
+      dhcp-identifier: mac
+      dhcp4: true
+  {% endif %}
+{% elif interface_70 is defined %}
+    {{ interface_70 }}:
+  {% if address_30 is defined %}
+      addresses:
+        - {{ address_70 }}/24
+      nameservers:
+        addresses:
+    {% if public_nameservers is defined and public_nameservers %}
+          - 8.8.8.8
+          - 8.8.4.4
+        search: []
+    {% else %}
+          - {{ secret.pihole.pihole1.address }}
+          - {{ secret.pihole.pihole2.address }}
+        search:
+          - {{ secret.domain }}.
+    {% endif %}
+  {% else %}
+      critical: true
+      dhcp-identifier: mac
+      dhcp4: true
+  {% endif %}
+{% endif %}
+{% if (interface_208 is defined and (interface_50 is defined or interface_40 is defined or interface_30 is defined)) or
+      (interface_50 is defined and interface_40 is defined) %}
+  vlans:
+  {% if interface_208 is defined and interface_50 is defined %}
+    {{ interface_50 }}:
+      id: 50
+      link: {{ interface_208 }}
+    {% if address_50 is defined %}
+      addresses:
+        - {{ address_50 }}/24
+    {% else %}
+      dhcp-identifier: mac
+      dhcp4: true
+    {% endif %}
+  {% endif %}
+  {% if interface_208 is defined and interface_40 is defined %}
+    {{ interface_40 }}:
+      id: 40
+      link: {{ interface_208 }}
+    {% if address_40 is defined %}
+      addresses:
+        - {{ address_40 }}/24
+    {% else %}
+      dhcp-identifier: mac
+      dhcp4: true
+    {% endif %}
+  {% elif interface_50 is defined and interface_40 is defined %}
+    {{ interface_40 }}:
+      id: 40
+      link: {{ interface_50 }}
+    {% if address_40 is defined %}
+      addresses:
+        - {{ address_40 }}/24
+    {% else %}
+      dhcp-identifier: mac
+      dhcp4: true
+    {% endif %}
+  {% endif %}
+  {% if interface_208 is defined and interface_30 is defined %}
+    {{ interface_30 }}:
+      id: 30
+      link: {{ interface_208 }}
+    {% if address_30 is defined %}
+      addresses:
+        - {{ address_30 }}/24
+    {% else %}
+      dhcp-identifier: mac
+      dhcp4: true
+    {% endif %}
+  {% endif %}
+{% endif %}
+  version: 2
