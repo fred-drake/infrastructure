@@ -1,0 +1,29 @@
+- name: Enable SSH permanently
+  ansible.builtin.lineinfile:
+    path: /etc/rc.local.d/local.sh
+    regexp: ^vim-cmd hostsvc/enable_ssh
+    insertbefore: ^exit 0
+    line: vim-cmd hostsvc/enable_ssh
+
+- name: Create temp dir
+  ansible.builtin.tempfile:
+    state: file
+    suffix: authkeys
+  register: authorized_keys
+  delegate_to: localhost
+  changed_when: false
+
+- name: Pull authorized keys
+  ansible.builtin.get_url:
+    url: https://github.com/fred-drake.keys
+    dest: "{{ authorized_keys.path }}"
+    mode: '0644'
+  delegate_to: localhost
+  changed_when: false
+
+- name: Set authorized keys
+  ansible.builtin.lineinfile:
+    regexp: "^{{ item }}"
+    path: "/etc/ssh/keys-{{ ansible_user }}/authorized_keys"
+    line: "{{ item }}"
+  loop: "{{ lookup('file', authorized_keys.path).splitlines() }}"
