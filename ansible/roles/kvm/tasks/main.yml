@@ -1,0 +1,53 @@
+- name: Set libvirt public key
+  become: false
+  ansible.posix.authorized_key:
+    user: "{{ ansible_user }}"
+    state: present
+    key: "{{ lookup('file', 'libvirt_public_key') }}"
+
+- name: Install apt libraries
+  ansible.builtin.apt:
+    name:
+      - libvirt-clients
+      - libvirt-daemon-system
+      - qemu-kvm
+      - python3-libvirt
+    state: present
+    update_cache: true
+
+- name: Add user to kvm group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: kvm
+    append: true
+  notify: Reboot
+
+# - name: Update GRUB to add IOMMU (we assume Intel)
+#   ansible.builtin.lineinfile:
+#     dest: /etc/default/grub
+#     state: present
+#     regexp: "^GRUB_CMDLINE_LINUX_DEFAULT="
+#     line: "GRUB_CMDLINE_LINUX_DEFAULT=\"intel_iommu=on iommu=pt\""
+#   notify: Update grub
+
+# - name: Add modules
+#   ansible.builtin.modprobe:
+#     name: "{{ item }}"
+#     state: present
+#   loop:
+#     - vfio
+#     - vfio_iommu_type1
+#     - vfio_pci
+#     - kvm
+#     - kvm_intel
+
+# - name: Add modules
+#   ansible.builtin.blockinfile:
+#     path: /etc/modules
+#     block: |
+#       vfio
+#       vfio_iommu_type1
+#       vfio_pci
+#       kvm
+#       kvm_intel
+#   notify: Reboot

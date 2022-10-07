@@ -1,0 +1,7 @@
+- name: Update grub
+  ansible.builtin.command:
+    cmd: update-grub
+  notify: Reboot
+
+- name: Reboot
+  ansible.builtin.reboot:

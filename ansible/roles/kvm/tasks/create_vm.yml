@@ -1,0 +1,9 @@
+- name: Define a virtual machine
+  community.libvirt.virt:
+    command: define
+    xml: "{{ lookup('file', vm_definition_file) }}"
+
+- name: Start the virtual machine
+  community.libvirt.virt:
+    name: "{{ vm_name }}"
+    state: running
