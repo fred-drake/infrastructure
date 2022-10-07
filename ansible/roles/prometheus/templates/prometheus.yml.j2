@@ -33,6 +33,7 @@ scrape_configs:
       - targets:
             - node-exporter-nuc9.{{ secret.domain }}:9100
             - node-exporter-nuc8.{{ secret.domain }}:9100
+            - specops.{{ secret.domain }}:9100
             - larussa.{{ secret.domain }}:9100
             - gateway-50.{{ secret.domain }}:9100
   
