@@ -51,10 +51,18 @@
   community.general.timezone:
     name: "{{ default_timezone }}"
 
+- name: Update with custom apt sources file
+  ansible.builtin.template:
+    src: blank-apt-sources.j2
+    dest: /etc/apt/sources.list
+    mode: '0644'
+  when: host_specific_apt_sources is defined
+
 - name: Install initial libraries
   ansible.builtin.apt:
     name:
       - net-tools
+      - bridge-utils
       - python3-pip
       - neofetch
       - figlet
@@ -98,3 +106,35 @@
     dest: /etc/cifs_credentials
     mode: '0600'
   when: "'cifs' in group_names"
+
+- name: Create open app logs directory
+  ansible.builtin.file:
+    state: directory
+    name: /var/log/custom_logs
+    mode: '0777'
+
+- name: Add host-specific mounts
+  ansible.posix.mount:
+    path: "{{ item.path | default(omit) }}"
+    src: "{{ item.src | default(omit) }}"
+    fstype: "{{ item.fstype | default(omit) }}"
+    state: mounted
+  loop: "{{ host_specific_mounts }}"
+  when: host_specific_mounts is defined
+
+- name: Install firewalld for port opening
+  ansible.builtin.apt:
+    name:
+      - firewalld
+    state: present
+    update_cache: true
+  when: host_specific_firewall_ports is defined
+
+- name: Open firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ item.zone | default('public') }}"
+    permanent: "{{ item.permanent | default(true) }}"
+    port: "{{ item.port | default(omit) }}"
+    state: enabled
+  loop: "{{ host_specific_firewall_ports }}"
+  when: host_specific_firewall_ports is defined

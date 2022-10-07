@@ -1,4 +1,5 @@
-- hosts: critical_docker_primary
+- name: Install containers on the primary critical apps server
+  hosts: critical_docker_primary
   gather_facts: false
   become: true
   roles:
@@ -10,3 +11,42 @@
       vars:
         pihole_id: pihole1
     - docker/backup_client
+
+    ### Prometheus Node Exporter ###
+    - role: docker/container
+      vars:
+        container:
+          name: node-exporter
+          repository: prom/node-exporter
+          tag: latest
+          network: bridge
+          ports:
+            - 0.0.0.0:9100:9100
+          volumes:
+            - /proc:/host/proc:ro
+            - /sys:/host/sys:ro
+            - /:/rootfs:ro
+          command:
+            - "--path.procfs=/host/proc"
+            - "--path.rootfs=/rootfs"
+            - "--path.sysfs=/host/sys"
+            - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+      tags: prometheus
+    - role: promtail
+      tags: promtail
+    - role: docker/container
+      vars:
+        container:
+          name: promtail
+          repository: grafana/promtail
+          tag: latest
+          entrypoint: >
+            /bin/sh -c
+            "export HOSTNAME=`/bin/cat /etc/hostname` &&
+            /usr/bin/promtail --client.external-labels=host=$HOSTNAME --config.file=/etc/promtail/config.yml"
+          network: bridge
+          volumes:
+            - "{{ appdata_dir }}/promtail/promtail/config:/etc/promtail"
+            - /var/log:/var/log:ro
+            - /etc/hostname:/etc/hostname:ro
+      tags: promtail

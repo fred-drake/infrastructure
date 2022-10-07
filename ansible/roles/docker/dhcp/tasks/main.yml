@@ -4,7 +4,7 @@
   become: false
   export_netbox_static_reservations:
     netbox_api_prefix: "https://netbox.{{ secret.domain }}"
-    netbox_token: "{{ secret.netbox.token }}"
+    netbox_token: "{{ secret.services.netbox.api_token }}"
     subnet_dict: "{{ secret.dhcp.nets }}"
   register: reservation_results
   tags:

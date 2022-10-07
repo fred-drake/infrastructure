@@ -59,7 +59,7 @@ frontend mqtt_frontend
 
 backend mqtt_backend
 {% for h in workers_hostlist_results.hosts %}
-  server {{ h.hostname }} {{ h.address }}:44622 check
+  server {{ h.hostname }} {{ h.address }}:44622
 {% endfor %}
 
 frontend mqtt_ws_frontend

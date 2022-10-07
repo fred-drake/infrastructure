@@ -160,10 +160,17 @@
     state: enable
   when: ansible_architecture != 'aarch64'
 
+- name: Install Loki plugin ARM64 workaround
+  community.docker.docker_plugin:
+    plugin_name: miacis/loki-docker-driver:latest
+    alias: loki
+    state: enable
+  when: ansible_architecture == 'aarch64'
+
 - name: Install docker daemon
   ansible.builtin.template:
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
     mode: '0644'
   notify: Restart docker
-  when: ansible_architecture != 'aarch64'
+  # when: ansible_architecture != 'aarch64'

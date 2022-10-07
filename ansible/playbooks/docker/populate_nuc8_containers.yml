@@ -246,8 +246,29 @@
             - "--path.rootfs=/rootfs"
             - "--path.sysfs=/host/sys"
             - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+      tags: prometheus
+  
+    #### Promtail ####
+    - role: promtail
+      tags: promtail
+    - role: docker/container
+      vars:
+        container:
+          name: promtail
+          repository: grafana/promtail
+          tag: latest
+          entrypoint: >
+            /bin/sh -c
+            "export HOSTNAME=`/bin/cat /etc/hostname` &&
+            /usr/bin/promtail --client.external-labels=host=$HOSTNAME --config.file=/etc/promtail/config.yml"
+          network: bridge
+          volumes:
+            - "{{ appdata_dir }}/promtail/promtail/config:/etc/promtail"
+            - /var/log:/var/log:ro
+            - /etc/hostname:/etc/hostname:ro
+      tags: promtail
 
-    ### Prometheus Pihole Exporter - Pihole1 ###
+  ### Prometheus Pihole Exporter - Pihole1 ###
     # - role: docker/container
     #   vars:
     #     container:
@@ -402,95 +423,95 @@
             - "{{ glusterfs_appdata_dir }}/homebridge/homebridge/config:/homebridge"
       tags: homebridge
 
-    - role: docker/container
-      vars:
-        container:
-          name: omada
-          repository: mbentley/omada-controller
-          tag: latest
-          ip: "{{ secret.services.omada.ip }}"
-          network: br0
-          sysctls:
-            net.ipv4.ip_unprivileged_port_start: "0"
-          env:
-            MANAGE_HTTP_PORT: "80"
-            MANAGE_HTTPS_PORT: "443"
-            PORTAL_HTTP_PORT: "80"
-            PORTAL_HTTPS_PORT: "443"
-          volumes:
-            - "{{ glusterfs_appdata_dir }}/omada/data:/opt/tplink/EAPController/data"
-            - "{{ glusterfs_appdata_dir }}/omada/work:/opt/tplink/EAPController/work"
-            - "{{ glusterfs_appdata_dir }}/omada/logs:/opt/tplink/EAPController/logs"
-      tags: omada
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: omada
+    #       repository: mbentley/omada-controller
+    #       tag: latest
+    #       ip: "{{ secret.services.omada.ip }}"
+    #       network: br0
+    #       sysctls:
+    #         net.ipv4.ip_unprivileged_port_start: "0"
+    #       env:
+    #         MANAGE_HTTP_PORT: "80"
+    #         MANAGE_HTTPS_PORT: "443"
+    #         PORTAL_HTTP_PORT: "80"
+    #         PORTAL_HTTPS_PORT: "443"
+    #       volumes:
+    #         - "{{ glusterfs_appdata_dir }}/omada/data:/opt/tplink/EAPController/data"
+    #         - "{{ glusterfs_appdata_dir }}/omada/work:/opt/tplink/EAPController/work"
+    #         - "{{ glusterfs_appdata_dir }}/omada/logs:/opt/tplink/EAPController/logs"
+    #   tags: omada
 
-    - role: docker/container
-      vars:
-        container:
-          name: swag-internal
-          repository: linuxserver/swag
-          tag: "{{ special_tags.swag.tag | default('latest') }}"
-          ip: "{{ secret.services.swag_internal.ip }}"
-          env:
-            PUID: "99"
-            PGID: "100"
-            EMAIL: "{{ secret.services.swag_internal.email }}"
-            URL: "{{ secret.services.swag_internal.url }}"
-            SUBDOMAINS: "{{ secret.services.swag_internal.subdomains }}"
-            ONLY_SUBDOMAINS: "{{ secret.services.swag_internal.only_subdomains }}"
-            VALIDATION: "{{ secret.services.swag_internal.validation }}"
-            DNSPLUGIN: "{{ secret.services.swag_internal.dnsplugin }}"
-            STAGING: "{{ secret.services.swag_internal.staging }}"
-          volumes:
-            - "{{ appdata_dir }}/swag-internal:/config"
-      tags: swag_internal
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: swag-internal
+    #       repository: linuxserver/swag
+    #       tag: "{{ special_tags.swag.tag | default('latest') }}"
+    #       ip: "{{ secret.services.swag_internal.ip }}"
+    #       env:
+    #         PUID: "99"
+    #         PGID: "100"
+    #         EMAIL: "{{ secret.services.swag_internal.email }}"
+    #         URL: "{{ secret.services.swag_internal.url }}"
+    #         SUBDOMAINS: "{{ secret.services.swag_internal.subdomains }}"
+    #         ONLY_SUBDOMAINS: "{{ secret.services.swag_internal.only_subdomains }}"
+    #         VALIDATION: "{{ secret.services.swag_internal.validation }}"
+    #         DNSPLUGIN: "{{ secret.services.swag_internal.dnsplugin }}"
+    #         STAGING: "{{ secret.services.swag_internal.staging }}"
+    #       volumes:
+    #         - "{{ appdata_dir }}/swag-internal:/config"
+    #   tags: swag_internal
     # Sync proxy files
-    - role: docker/swag_internal
-      tags:
-        - swag_internal
-        - swag_internal_update
+    # - role: docker/swag_internal
+    #   tags:
+    #     - swag_internal
+    #     - swag_internal_update
 
     ### SabNZBD ###
-    - role: docker/volume
-      vars:
-        volume:
-          name: incomplete
-          container: sabnzbd
-          mount_name: torrent/incomplete
-          driver: cifs
-      tags: sabnzbd
-    - role: docker/volume
-      vars:
-        volume:
-          name: downloads
-          container: sabnzbd
-          mount_name: torrent/complete
-          driver: cifs
-      tags: sabnzbd
-    - role: docker/container
-      vars:
-        container:
-          name: sabnzbd
-          repository: linuxserver/sabnzbd
-          tag: latest
-          ip: "{{ secret.services.sabnzbd.ip }}"
-          env:
-            PUID: "99"
-            PGID: "100"
-          # mounts:
-          #   - source: sabnzbd_incomplete
-          #     target: /incomplete-downloads
-          #   - source: sabnzbd_downloads
-          #     target: /downloads
-          volumes:
-            - "{{ glusterfs_appdata_dir }}/sabnzbd/config:/config"
-            - "{{ glusterfs_appdata_dir }}/sabnzbd/downloads:/downloads"
-            - "{{ glusterfs_appdata_dir }}/sabnzbd/incomplete-downloads:/incomplete-downloads"
-      tags: sabnzbd
-    - role: docker/backup_client
-      vars:
-        backup_namespace: sabnzbd
-        env:
-          NAMESPACE: "{{ backup_namespace }}"
-        volumes:
-          - "{{ glusterfs_appdata_dir }}/{{ backup_namespace }}/config:/backup/{{ backup_namespace }}"
-      tags: sabnzbd
+    # - role: docker/volume
+    #   vars:
+    #     volume:
+    #       name: incomplete
+    #       container: sabnzbd
+    #       mount_name: torrent/incomplete
+    #       driver: cifs
+    #   tags: sabnzbd
+    # - role: docker/volume
+    #   vars:
+    #     volume:
+    #       name: downloads
+    #       container: sabnzbd
+    #       mount_name: torrent/complete
+    #       driver: cifs
+    #   tags: sabnzbd
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: sabnzbd
+    #       repository: linuxserver/sabnzbd
+    #       tag: latest
+    #       ip: "{{ secret.services.sabnzbd.ip }}"
+    #       env:
+    #         PUID: "99"
+    #         PGID: "100"
+    #       # mounts:
+    #       #   - source: sabnzbd_incomplete
+    #       #     target: /incomplete-downloads
+    #       #   - source: sabnzbd_downloads
+    #       #     target: /downloads
+    #       volumes:
+    #         - "{{ glusterfs_appdata_dir }}/sabnzbd/config:/config"
+    #         - "{{ glusterfs_appdata_dir }}/sabnzbd/downloads:/downloads"
+    #         - "{{ glusterfs_appdata_dir }}/sabnzbd/incomplete-downloads:/incomplete-downloads"
+    #   tags: sabnzbd
+    # - role: docker/backup_client
+    #   vars:
+    #     backup_namespace: sabnzbd
+    #     env:
+    #       NAMESPACE: "{{ backup_namespace }}"
+    #     volumes:
+    #       - "{{ glusterfs_appdata_dir }}/{{ backup_namespace }}/config:/backup/{{ backup_namespace }}"
+    #   tags: sabnzbd

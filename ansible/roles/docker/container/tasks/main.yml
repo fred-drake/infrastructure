@@ -63,7 +63,7 @@
     name: "{{ container.name }}"
     image: "{{ container.repository }}:{{ container.tag }}"
     pull: "{{ container.pull_policy | default(true) }}"
-    ports: "{{ container.ports | default(omit) }}"
+    published_ports: "{{ container.ports | default(omit) }}"
     hostname: "{{ container.hostname | default(container.name) }}"
     env: "{{ default_env | combine(container.env | default({})) }}"
     mounts: "{{ container.mounts | default([]) }}"
@@ -74,6 +74,7 @@
     network_mode: "{{ container.network | default(secret.docker.network.container) }}"
     restart_policy: "{{ container.restart_policy | default('unless-stopped') }}"
     runtime: "{{ container.runtime | default(omit) }}"
+    entrypoint: "{{ container.entrypoint | default(omit) }}"
     command: "{{ container.command | default([]) }}"
     command_handling: compatibility
     device_requests: "{{ container.device_requests | default(omit) }}"

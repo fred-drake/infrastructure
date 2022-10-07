@@ -7,40 +7,6 @@ default_timezone: America/New_York
 # Root path for netboot assets
 netboot_assets_path: /Volumes/netboot
 
-# kubernetes configuration
-k8s:
-  cert_manager: # manages automatic https certificates
-    cluster_issuer: letsencrypt-production
-  initial_master_node_hostname: rp1
-  k3s: # k3s install version
-    version: v1.24.2+k3s2
-  kubegres: # scalable postgres for kubernetes
-    version: 1.9
-  resources: # kubernetes resources
-    cpu:
-      request:
-        default: 100m
-    memory:
-      request:
-        default: 128Mi
-  traefik: # kubernetes ingress
-    address: "192.168.50.240"
-  metallb: # kubernetes load balancer
-    range: 192.168.50.225-192.168.50.250
-  keel:
-    default_policy: minor
-    default_approvals: "1"
-    default_trigger: "poll"
-    default_poll_schedule: "@every 1h"
-
-talos:
-  cluster_name: main
-  vip: 192.168.50.4
-  installer_version: v1.0.2
-  k8s_version: v1.23.5
-  pod_subnet: 10.40.0.0/16
-  service_subnet: 10.41.0.0/16
-
 swarm_services:
   bitwarden:
     name: bitwarden
@@ -237,7 +203,7 @@ swarm_services:
     containers:
       - name: node-red-postgres
         repository: postgres
-        tag: 14.1
+        tag: latest
         bind_mounts:
           - source: postgres
             target: /var/lib/postgresql/data
@@ -253,16 +219,19 @@ swarm_services:
         bind_mounts:
           - source: data
             target: /data
+          - source: /var/log/custom_logs
+            target: /log
+            literal: true
         nfs_mounts:
           - name: camera_videos
             target: /camera_videos
         env:
           TZ: "{{ default_timezone }}"
           NODE_RED_ENABLE_SAFE_MODE: "false"
-        publish:
-          - published_port: 3456
-            target_port: 3456
-            mode: host
+        # publish:
+        #   - published_port: 3456
+        #     target_port: 3456
+        #     mode: host
   office_touchpad:
     name: office-touchpad
     backup: true
@@ -270,10 +239,23 @@ swarm_services:
       - repository: ghcr.io/fred-drake/office-touchpad
         tag: latest
         web_port: 3000
-        bind_volumes:
+        bind_mounts:
           - source: config/runtime-config.js
             target: /work/build/runtime-config.js
             type: file
+  overseerr:
+    name: overseerr
+    containers:
+      - name: overseerr
+        repository: linuxserver/overseerr
+        tag: latest
+        web_port: 5055
+        env:
+          PUID: "1000"
+          PGID: "1000"
+        bind_mounts:
+          - source: config
+            target: /config
   paperless:
     name: paperless
     backup: true
@@ -438,6 +420,23 @@ swarm_services:
           TZ: America/New_York
           PUID: "99"
           PGID: "100"
+  sabnzbd:
+    name: sabnzbd
+    backup: true
+    containers:
+      - repository: linuxserver/sabnzbd
+        tag: latest
+        web_port: 8080
+        bind_mounts:
+          - source: config
+            target: /config
+          - source: downloads
+            target: /downloads
+          - source: incomplete-downloads
+            target: /incomplete-downloads
+        env:
+          PUID: "99"
+          PGID: "100"
   sonarr:
     name: sonarr
     backup: true
@@ -448,7 +447,7 @@ swarm_services:
         bind_mounts:
           - source: config
             target: /config
-          - source: "{{ glusterfs_appdata_dir }}/sabnzbd/downloads"
+          - source: "{{ glusterfs_appdata_dir }}/sabnzbd/sabnzbd/downloads"
             target: /downloads
             literal: true
         nfs_mounts:

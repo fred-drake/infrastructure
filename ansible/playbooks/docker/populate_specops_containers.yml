@@ -10,10 +10,73 @@
           name: maas-postgres
           repository: postgres
           tag: "14"
-          ip: "{{ secret.services.maas.postgres.ip }}"
+          network: bridge
+          ports:
+            - 0.0.0.0:5432:5432
           env:
             POSTGRES_USER: "{{ secret.services.maas.postgres.user }}"
             POSTGRES_PASSWORD: "{{ secret.services.maas.postgres.password }}"
             POSTGRES_DB: "{{ secret.services.maas.postgres.database }}"
           volumes:
-            - "{{ glusterfs_appdata_dir }}/maas/postgres/data:/var/lib/postgresql/data"
+            - "{{ appdata_dir }}/maas/postgres/data:/var/lib/postgresql/data"
+    - role: docker/container
+      vars:
+        container:
+          name: uptime-kuma
+          repository: louislam/uptime-kuma
+          tag: "{{ special_tags.uptime_kuma.tag | default('latest') }}"
+          network: bridge
+          ports:
+            - 0.0.0.0:3001:3001
+          volumes:
+            - "{{ appdata_dir }}/uptime-kuma/uptime-kuma:/app/data"
+      tags: uptime_kuma
+    - role: docker/backup_client
+      vars:
+        backup_namespace: "uptime-kuma"
+        env:
+          NAMESPACE: "{{ backup_namespace }}"
+        volumes:
+          - "{{ appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+      tags: uptime_kuma
+    - role: docker/container
+      vars:
+        container:
+          name: node-exporter
+          repository: prom/node-exporter
+          tag: latest
+          network: bridge
+          volumes:
+            - /proc:/host/proc:ro
+            - /sys:/host/sys:ro
+            - /:/rootfs:ro
+          ports:
+            - 0.0.0.0:9100:9100
+          command:
+            - "--path.procfs=/host/proc"
+            - "--path.rootfs=/rootfs"
+            - "--path.sysfs=/host/sys"
+            - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+      tags: prometheus
+    - role: promtail
+      tags: promtail
+    - role: docker/container
+      vars:
+        container:
+          name: promtail
+          repository: grafana/promtail
+          tag: latest
+          entrypoint: >
+            /bin/sh -c
+            "export HOSTNAME=`/bin/cat /etc/hostname` &&
+            /usr/bin/promtail --client.external-labels=host=$HOSTNAME --config.file=/etc/promtail/config.yml"
+          network: bridge
+          volumes:
+            - "{{ appdata_dir }}/promtail/promtail/config:/etc/promtail"
+            - /var/log:/var/log:ro
+            - /etc/hostname:/etc/hostname:ro
+      tags: promtail
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: promtail

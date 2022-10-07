@@ -11,3 +11,13 @@
   become: false
   roles:
     - openwrt
+
+- name: Configure OpenWRT software for machines that can't run python
+  hosts: openwrt_lite
+  gather_facts: false
+  become: false
+  tasks:
+    - name: OpenWRT manual setup
+      ansible.builtin.include_role:
+        name: openwrt
+        tasks_from: manual

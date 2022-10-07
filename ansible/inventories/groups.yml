@@ -26,6 +26,7 @@ all:
         rp[1:3]:
         nuc[1:9]:
         specops:
+        poweredge2:
 
     # Ubuntu desktops
     ubuntu_desktop:
@@ -40,10 +41,19 @@ all:
         scannerpi:
         rp[4:7]:
 
-    # All machines that are Pi KVM hosts
-    kvm:
+    # All machines that are Pi KVM hosts 
+    # (Keyboard/Video/Mouse, NOT the KVM virtual manager)
+    tinypilot:
       hosts:
         rp[4:7]:
+
+    kvm:
+      hosts:
+        poweredge2:
+
+    # esxi:
+    #   hosts:
+    #     poweredge2:
 
     # All hosts with Nvidia/CUDA
     cuda:
@@ -98,7 +108,7 @@ all:
     # Identifies the secondary server for critical services
     critical_docker_secondary:
       hosts:
-        nuc9:
+        poweredge2:
           pihole_id: pihole2
           dhcp_id: dhcp2
 
@@ -116,7 +126,6 @@ all:
       hosts:
         nuc8:
         nuc9:
-        specops:
 
     # Hosts with CIFS clients
     cifs:
@@ -134,23 +143,20 @@ all:
       hosts:
         # nuc9:
 
-    netplan_dynamic:
+    # Servers containing the MAAS software
+    maas:
       hosts:
         specops:
+
+    # Server containing the Omada software
+    omada:
+      hosts:
+        nuc9:
 
     # Servers whose operating systems can be autoinstalled through netboot
     netboot_install_servers:
       hosts:
         nuc[1:9]:
-
-    # Servers that are normally PXE network booted
-    netboot_servers:
-      hosts:
-        nuc1:
-        nuc3:
-        nuc4:
-        nuc6:
-        nuc7:
 
     # Docker Swarm assignments
     swarm_cluster:
@@ -222,3 +228,8 @@ all:
       hosts:
         office_switch:
         laisa_office_switch:
+
+    openwrt_lite:
+      hosts:
+        hallway_switch:
+        tvroom_switch:

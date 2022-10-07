@@ -38,21 +38,41 @@
             - "{{ glusterfs_appdata_dir }}/netbootxyz/config:/config"
       tags: netboot
 
-    ### Dozzle - NUC9 ###
+  #### Promtail ####
+    - role: promtail
+      tags: promtail
     - role: docker/container
       vars:
         container:
-          name: dozzle
-          repository: amir20/dozzle
-          tag: "{{ special_tags.dozzle.tag | default('latest') }}"
-          ip: "{{ secret.services.dozzle.nuc9_ip }}"
-          env:
-            DOZZLE_BASE: /
-            DOZZLE_LEVEL: info
-            DOZZLE_TAILSIZE: "300"
+          name: promtail
+          repository: grafana/promtail
+          tag: latest
+          entrypoint: >
+            /bin/sh -c
+            "export HOSTNAME=`/bin/cat /etc/hostname` &&
+            /usr/bin/promtail --client.external-labels=host=$HOSTNAME --config.file=/etc/promtail/config.yml"
+          network: bridge
           volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-      tags: dozzle
+            - "{{ appdata_dir }}/promtail/promtail/config:/etc/promtail"
+            - /var/log:/var/log:ro
+            - /etc/hostname:/etc/hostname:ro
+      tags: promtail
+
+    ### Dozzle - NUC9 ###
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: dozzle
+    #       repository: amir20/dozzle
+    #       tag: "{{ special_tags.dozzle.tag | default('latest') }}"
+    #       ip: "{{ secret.services.dozzle.nuc9_ip }}"
+    #       env:
+    #         DOZZLE_BASE: /
+    #         DOZZLE_LEVEL: info
+    #         DOZZLE_TAILSIZE: "300"
+    #       volumes:
+    #         - /var/run/docker.sock:/var/run/docker.sock
+    #   tags: dozzle
 
     ### Prowlarr ###
     # - role: docker/container
@@ -399,27 +419,27 @@
       tags: overseerr
 
     ### Netboot Assets Bridge ###
-    - role: docker/volume
-      vars:
-        volume:
-          name: netboot
-          container: netboot-assets-bridge
-          driver: cifs
-          mount_options: uid=99,gid=100,file_mode=0777,dir_mode=0777
-      tags: netboot
-    - role: docker/container
-      vars:
-        container:
-          name: netboot-assets-bridge
-          repository: ghcr.io/fred-drake/python-ssh
-          tag: latest
-          ip: "{{ secret.services.netboot_assets_bridge.ip }}"
-          env:
-            PUBLIC_KEYS_URL: https://github.com/fred-drake.keys
-          mounts:
-            - source: netboot-assets-bridge_netboot
-              target: /netboot
-      tags: netboot
+    # - role: docker/volume
+    #   vars:
+    #     volume:
+    #       name: netboot
+    #       container: netboot-assets-bridge
+    #       driver: cifs
+    #       mount_options: uid=99,gid=100,file_mode=0777,dir_mode=0777
+    #   tags: netboot
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: netboot-assets-bridge
+    #       repository: ghcr.io/fred-drake/python-ssh
+    #       tag: latest
+    #       ip: "{{ secret.services.netboot_assets_bridge.ip }}"
+    #       env:
+    #         PUBLIC_KEYS_URL: https://github.com/fred-drake.keys
+    #       mounts:
+    #         - source: netboot-assets-bridge_netboot
+    #           target: /netboot
+    #   tags: netboot
 
       ### DIUN ###
     - role: docker/container
@@ -443,24 +463,24 @@
       tags: diun
 
     ### Uptime Kuma ###
-    - role: docker/container
-      vars:
-        container:
-          name: uptime-kuma
-          repository: louislam/uptime-kuma
-          tag: "{{ special_tags.uptime_kuma.tag | default('latest') }}"
-          ip: "{{ secret.services.uptime_kuma.ip }}"
-          volumes:
-            - "{{ glusterfs_appdata_dir }}/uptime-kuma:/app/data"
-      tags: uptime_kuma
-    - role: docker/backup_client
-      vars:
-        backup_namespace: "uptime-kuma"
-        env:
-          NAMESPACE: "{{ backup_namespace }}"
-        volumes:
-          - "{{ glusterfs_appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
-      tags: uptime_kuma
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: uptime-kuma
+    #       repository: louislam/uptime-kuma
+    #       tag: "{{ special_tags.uptime_kuma.tag | default('latest') }}"
+    #       ip: "{{ secret.services.uptime_kuma.ip }}"
+    #       volumes:
+    #         - "{{ glusterfs_appdata_dir }}/uptime-kuma:/app/data"
+    #   tags: uptime_kuma
+    # - role: docker/backup_client
+    #   vars:
+    #     backup_namespace: "uptime-kuma"
+    #     env:
+    #       NAMESPACE: "{{ backup_namespace }}"
+    #     volumes:
+    #       - "{{ glusterfs_appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
+    #   tags: uptime_kuma
 
     ### Swarm Layer 4 Load Balancer ###
     - name: swarm layer 4 load balancer
@@ -473,20 +493,12 @@
       vars:
         traefik_type: internal
         proxies:
-          # - name: bitwarden
-          #   url: "http://{{ secret.services.bitwarden.ip }}"
           - name: calibre
             url: "http://{{ secret.services.calibre_web.ip }}:8083"
           - name: calibre-server
             url: "http://{{ secret.services.calibre.ip }}:8080"
           - name: ersatz
             url: "http://{{ secret.services.ersatz.ip }}:8409"
-          - name: gitea
-            url: "http://{{ secret.services.gitea.ip }}:3000"
-          - name: grafana
-            url: "http://{{ secret.services.grafana.ip }}:3000"
-          # - name: homeassistant
-          #   url: "http://{{ secret.services.homeassistant.ip }}:8123"
           - name: homebridge
             url: "http://{{ secret.services.homebridge.ip }}:8581"
           - name: minio-backup
@@ -499,42 +511,24 @@
             url: "http://{{ secret.services.minio_loki.ip }}:9001"
           - name: netboot
             url: "http://{{ secret.services.netboot.ip_50 }}:3000"
-          # - name: netbox
-          #   url: "http://{{ secret.services.netbox.ip }}:8000"
-          # - name: nodered
-          #   url: "http://{{ secret.services.node_red.ip }}:1880"
-          - name: office-touchpad
-            url: "http://{{ secret.services.office_touchpad.ip }}:3000"
+          - name: omada
+            url: "https://192.168.208.5:8043"
           - name: overseerr
             url: "http://{{ secret.services.overseerr.ip }}:5055"
-          # - name: paperless
-          #   url: "http://{{ secret.services.paperless.ip }}:8000"
           - name: photoprism-internal
             url: "http://{{ secret.services.photoprism.internal_ip }}:2342"
           - name: plex
             url: "http://{{ secret.services.plex.ip }}:32400"
-          # - name: prometheus
-          #   url: "http://{{ secret.services.prometheus.ip }}:9090"
-          # - name: prowlarr
-          #   url: "http://{{ secret.services.prowlarr.ip }}:9696"
-          # - name: radarr
-          #   url: "http://{{ secret.services.radarr.ip }}:7878"
           - name: readarr
             url: "http://{{ secret.services.readarr.ip }}:8787"
-          - name: sabnzbd
-            url: "http://{{ secret.services.sabnzbd.ip }}:8080"
           - name: scanner-api
             url: "http://{{ secret.services.scannerpi.ip }}:3000"
-          # - name: sonarr
-          #   url: "http://{{ secret.services.sonarr.ip }}:8989"
           - name: tdarr
             url: "http://{{ secret.services.tdarr.ip }}:8265"
           - name: torrent
             url: "http://{{ secret.services.torrent.ip }}:9091"
           - name: uptime-kuma
             url: "http://{{ secret.services.uptime_kuma.ip }}:3001"
-          # - name: whoogle
-          #   url: "http://{{ secret.services.whoogle.ip }}:5000"
         container:
           name: traefik-internal
           repository: traefik
@@ -568,6 +562,71 @@
             - "{{ glusterfs_appdata_dir }}/traefik-internal/data/acme.json:/acme.json"
             - "{{ glusterfs_appdata_dir }}/traefik-internal/config.yml:/config.yml:ro"
       tags: traefik_internal
+
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: omada
+    #       repository: mbentley/omada-controller
+    #       tag: latest
+    #       ip: "{{ secret.services.omada.ip }}"
+    #       network: br0
+    #       sysctls:
+    #         net.ipv4.ip_unprivileged_port_start: "0"
+    #       env:
+    #         MANAGE_HTTP_PORT: "80"
+    #         MANAGE_HTTPS_PORT: "443"
+    #         PORTAL_HTTP_PORT: "80"
+    #         PORTAL_HTTPS_PORT: "443"
+    #       volumes:
+    #         - "{{ glusterfs_appdata_dir }}/omada/data:/opt/tplink/EAPController/data"
+    #         - "{{ glusterfs_appdata_dir }}/omada/work:/opt/tplink/EAPController/work"
+    #         - "{{ glusterfs_appdata_dir }}/omada/logs:/opt/tplink/EAPController/logs"
+    #   tags: omada
+    # - role: docker/volume
+    #   vars:
+    #     volume:
+    #       name: incomplete
+    #       container: sabnzbd
+    #       mount_name: torrent/incomplete
+    #       driver: cifs
+    #   tags: sabnzbd
+    # - role: docker/volume
+    #   vars:
+    #     volume:
+    #       name: downloads
+    #       container: sabnzbd
+    #       mount_name: torrent/complete
+    #       driver: cifs
+    #   tags: sabnzbd
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: sabnzbd
+    #       repository: linuxserver/sabnzbd
+    #       tag: latest
+    #       ip: "{{ secret.services.sabnzbd.ip }}"
+    #       env:
+    #         PUID: "99"
+    #         PGID: "100"
+    #       # mounts:
+    #       #   - source: sabnzbd_incomplete
+    #       #     target: /incomplete-downloads
+    #       #   - source: sabnzbd_downloads
+    #       #     target: /downloads
+    #       volumes:
+    #         - "{{ glusterfs_appdata_dir }}/sabnzbd/sabnzbd/config:/config"
+    #         - "{{ glusterfs_appdata_dir }}/sabnzbd/sabnzbd/downloads:/downloads"
+    #         - "{{ glusterfs_appdata_dir }}/sabnzbd/sabnzbd/incomplete-downloads:/incomplete-downloads"
+    #   tags: sabnzbd
+    # - role: docker/backup_client
+    #   vars:
+    #     backup_namespace: sabnzbd
+    #     env:
+    #       NAMESPACE: "{{ backup_namespace }}"
+    #     volumes:
+    #       - "{{ glusterfs_appdata_dir }}/{{ backup_namespace }}/config:/backup/{{ backup_namespace }}"
+    #   tags: sabnzbd
 
       ### V-Rising ###
     # - role: docker/container

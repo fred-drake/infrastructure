@@ -1,0 +1,62 @@
+- name: KVM virtual management installation and configuration
+  hosts: kvm
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Set facts
+      ansible.builtin.set_fact:
+        iso_file: pfSense-CE-2.6.0-RELEASE-amd64.iso
+        iso_dir: /var/lib/libvirt/images
+    - name: Install KVM application
+      ansible.builtin.import_role:
+        name: kvm
+    - name: Check if PFSense disk exists
+      ansible.builtin.stat:
+        path: /var/lib/libvirt/images/PFSense.qcow2
+        get_attributes: false
+        get_checksum: false
+        get_mime: false
+      register: pfsense_disk
+    - name: Create disk if it doesn't exist
+      ansible.builtin.command:
+        cmd: >
+          virsh vol-create-as
+          --pool default
+          --name PFSense.qcow2
+          --capacity 50G
+          --format qcow2
+      changed_when: true
+      when: not pfsense_disk.stat.exists
+    - name: Get list of VMs
+      community.libvirt.virt:
+        command: list_vms
+      register: vm_list
+    - name: Debug
+      ansible.builtin.debug:
+        var: vm_list
+    - name: Check if PFSense ISO exists
+      ansible.builtin.stat:
+        path: "{{ iso_dir }}/{{ iso_file }}"
+        get_attributes: false
+        get_checksum: false
+        get_mime: false
+      register: pfsense_iso
+    - name: Pull PFSense ISO
+      ansible.builtin.get_url:
+        url: "https://atxfiles.netgate.com/mirror/downloads/{{ iso_file }}.gz"
+        dest: "{{ iso_dir }}/{{ iso_file }}.gz"
+        mode: '0644'
+      when: not pfsense_iso.stat.exists
+    - name: Unpack ISO
+      ansible.builtin.command:
+        cmd: "gunzip {{ iso_dir }}/{{ iso_file }}.gz"
+      changed_when: true
+      when: not pfsense_iso.stat.exists
+    - name: Create and start PFSense VM
+      ansible.builtin.include_role:
+        name: kvm
+        tasks_from: create_vm
+      vars:
+        vm_name: PFSense
+        vm_definition_file: poweredge2-pfsense.xml
+      when: "'PFSense' not in vm_list.list_vms"

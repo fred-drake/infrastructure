@@ -1,11 +1,17 @@
 - name: Provision servers
   ansible.builtin.import_playbook: provision_servers.yml
 
-- ansible.builtin.import_playbook: glusterfs.yml
+- name: KVM virtual management
+  ansible.builtin.import_playbook: kvm.yml
 
-- ansible.builtin.import_playbook: docker.yml
+- name: GlusterFS client and server software
+  ansible.builtin.import_playbook: glusterfs.yml
 
-- hosts: cuda
+- name: Docker application (not containers)
+  ansible.builtin.import_playbook: docker.yml
+
+- name: CUDA software
+  hosts: cuda
   gather_facts: true
   become: true
   roles:

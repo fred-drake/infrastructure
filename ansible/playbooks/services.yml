@@ -214,6 +214,23 @@
         - office_touchpad_rebuild
 
 #################################################################################
+# overseerr
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.overseerr }}"
+      tags:
+        - never
+        - overseerr_nuke
+        - overseerr_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.overseerr }}"
+      tags:
+        - overseerr
+        - overseerr_rebuild
+
+#################################################################################
 # paperless
 #################################################################################
     - role: swarm_service_nuke
@@ -331,6 +348,23 @@
       tags:
         - radarr
         - radarr_rebuild
+
+#################################################################################
+# sabnzbd
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.sabnzbd }}"
+      tags:
+        - never
+        - sabnzbd_nuke
+        - sabnzbd_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.sabnzbd }}"
+      tags:
+        - sabnzbd
+        - sabnzbd_rebuild
 
 #################################################################################
 # sonarr

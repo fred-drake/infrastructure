@@ -19,8 +19,8 @@
   roles:
     - scannerpi
 
-- name: KVM applications
-  hosts: kvm
+- name: Tinypilot applications
+  hosts: tinypilot
   gather_facts: false
   become: true
   roles:
@@ -59,3 +59,24 @@
       ansible.builtin.include_role:
         name: prom_node_exporter
   tags: node_exporter
+
+- name: MAAS - Metal as a Service
+  hosts: maas
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Install and configure MAAS
+      ansible.builtin.include_role:
+        name: maas
+  tags: maas
+
+- name: Omada AP management
+  hosts: omada
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Install Omada
+      ansible.builtin.include_role:
+        name: omada
+  tags: omada
+  

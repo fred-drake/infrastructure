@@ -3,7 +3,7 @@
   become: false
   export_netbox_hostlist:
     netbox_api_prefix: "https://netbox.{{ secret.domain }}"
-    netbox_token: "{{ secret.netbox.token }}"
+    netbox_token: "{{ secret.services.netbox.api_token }}"
     tag: swarm-lb-managers
   register: managers_hostlist_results
   run_once: true
@@ -13,7 +13,7 @@
   become: false
   export_netbox_hostlist:
     netbox_api_prefix: "https://netbox.{{ secret.domain }}"
-    netbox_token: "{{ secret.netbox.token }}"
+    netbox_token: "{{ secret.services.netbox.api_token }}"
     tag: swarm-lb-workers
   register: workers_hostlist_results
   run_once: true

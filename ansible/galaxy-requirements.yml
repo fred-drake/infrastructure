@@ -8,5 +8,6 @@ collections:
   - community.kubernetes
   - kubernetes.core
   - community.sops
+  - community.libvirt
 
 roles: []

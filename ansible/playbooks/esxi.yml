@@ -1,0 +1,6 @@
+- name: Provision ESXi
+  hosts: esxi
+  gather_facts: false
+  become: false
+  roles:
+    - provision/esxi

@@ -1,0 +1,22 @@
+- name: Get MongoDB apt key
+  ansible.builtin.apt_key:
+    url: https://www.mongodb.org/static/pgp/server-4.4.asc
+    state: present
+
+- name: Add apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/4.4 multiverse"
+    state: present
+
+- name: Add apt packages
+  ansible.builtin.apt:
+    name:
+      - openjdk-8-jre-headless
+      - mongodb-org
+      - jsvc
+      - curl
+    update_cache: true
+
+- name: Install Omada package
+  ansible.builtin.apt:
+    deb: "{{ omada_package_url }}"

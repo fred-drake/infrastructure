@@ -2,8 +2,8 @@
 - name: Create pihole container
   community.docker.docker_container:
     name: "{{ pihole_id }}"
-    # image: "jacklul/pihole"
-    image: "pihole/pihole:2021.11"
+    image: "jacklul/pihole"
+    # image: "pihole/pihole:2021.11"
     pull: "{{ container_pull }}"
     hostname: "{{ secret.pihole[pihole_id].hostname }}"
     env:
@@ -37,7 +37,7 @@
   become: false
   export_netbox_hostlist:
     netbox_api_prefix: "https://netbox.{{ secret.domain }}"
-    netbox_token: "{{ secret.netbox.token }}"
+    netbox_token: "{{ secret.services.netbox.api_token }}"
   register: hostlist_results
   run_once: true
   tags:
