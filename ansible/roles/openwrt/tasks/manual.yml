@@ -1,0 +1,103 @@
+# Some OpenWRT routers don't have enough room to allow for python libraries.
+# We have to workaround this with a solution that can't track changes.  This needs
+# to run locally with manual commands
+
+- name: Configure device through ssh-suite
+  block:
+    - name: Create temp dir
+      connection: local
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: openwrt
+      register: temp_dir
+      changed_when: false
+
+    - name: Build authorized keys locally
+      connection: local
+      ansible.posix.authorized_key:
+        user: "{{ ansible_user }}"
+        state: present
+        key: "{{ lookup('file', '{{ item }}') }}"
+        path: "{{ temp_dir.path }}/authorized_keys"
+      with_fileglob:
+        - "public_keys/*"
+      changed_when: false
+
+    - name: Push authorized keys file to device
+      connection: local
+      ansible.builtin.command:
+        cmd: >
+          scp -i {{ playbook_dir }}/../../id_ansible
+          -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no"
+          {{ temp_dir.path }}/authorized_keys
+          {{ ansible_user }}@{{ ansible_host }}:/etc/dropbear/authorized_keys
+      changed_when: true
+
+    - name: Build passwd script
+      connection: local
+      ansible.builtin.template:
+        src: "passwd_change_cheesy.sh.j2"
+        dest: "{{ temp_dir.path }}/passwd.sh"
+        mode: '0755'
+      changed_when: false
+
+    - name: Push passwd script to device
+      connection: local
+      ansible.builtin.command:
+        cmd: >
+          scp -i {{ playbook_dir }}/../../id_ansible
+          -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no"
+          {{ temp_dir.path }}/passwd.sh
+          {{ ansible_user }}@{{ ansible_host }}:/tmp/passwd.sh
+      changed_when: false
+
+    - name: Execute passwd script to change password
+      connection: local
+      ansible.builtin.command:
+        cmd: >
+          ssh -i {{ playbook_dir }}/../../id_ansible
+          -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no"
+          {{ ansible_user }}@{{ ansible_host }}
+          /tmp/passwd.sh
+      changed_when: true
+
+    - name: Build network file
+      connection: local
+      ansible.builtin.template:
+        src: "network-{{ inventory_hostname.split('.')[0] }}.j2"
+        dest: "{{ temp_dir.path }}/network"
+        mode: '0644'
+      changed_when: false
+
+    - name: Push network file to device
+      connection: local
+      ansible.builtin.command:
+        cmd: >
+          scp -i {{ playbook_dir }}/../../id_ansible
+          -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no"
+          {{ temp_dir.path }}/network
+          {{ ansible_user }}@{{ ansible_host }}:/etc/config/network
+      changed_when: true
+
+    - name: Reload the network service so any changes are enabled
+      connection: local
+      ansible.builtin.command:
+        cmd: >
+          ssh -i {{ playbook_dir }}/../../id_ansible
+          -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no"
+          {{ ansible_user }}@{{ ansible_host }}
+          service network reload
+      changed_when: true
+  always:
+    - name: Clean up temporary directory
+      connection: local
+      ansible.builtin.file:
+        name: "{{ temp_dir.path }}"
+        state: absent
+      when: temp_dir is defined
+
+# - name: Test ls command
+#   connection: local
+#   ansible.builtin.command:
+#     cmd: "ssh -i {{ playbook_dir }}/../../id_ansible {{ ansible_host }} ls"
+#   changed_when: true

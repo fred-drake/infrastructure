@@ -1,0 +1,5 @@
+#!/bin/sh
+passwd << EOF
+{{ secret.hosts.default_ssh_password }}
+{{ secret.hosts.default_ssh_password }}
+EOF

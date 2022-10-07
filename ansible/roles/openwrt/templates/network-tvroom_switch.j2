@@ -1,0 +1,53 @@
+config interface 'loopback'
+	option device 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'fdf1:ca3b:3b09::/48'
+
+config device 'switch'
+	option name 'switch'
+	option type 'bridge'
+	option macaddr 'd8:ec:e5:8e:06:cf'
+
+config bridge-vlan 'admin_vlan'
+	option device 'switch'
+	option vlan '1'
+	option ports 'lan1 lan2 lan3 lan4 lan8'
+
+config bridge-vlan 'workstation_vlan'
+    option device 'switch'
+    option vlan '30'
+    option ports 'lan1:t lan2:t lan3:t lan4:t lan8:t'
+
+config bridge-vlan 'iot_vlan'
+	option device 'switch'
+	option vlan '40'
+	option ports 'lan1:t lan2:t lan3:t lan4:t lan5 lan6 lan7 lan8:t'
+
+config bridge-vlan 'guest_vlan'
+    option device 'switch'
+	option vlan '60'
+	option ports 'lan1:t lan2:t lan3:t lan4:t lan8:t'
+
+config bridge-vlan 'service_vlan'
+	option device 'switch'
+	option vlan '50'
+	option ports 'lan1:t lan2:t lan3:t lan4:t lan8:t'
+
+config device
+	option name 'switch.1'
+	option macaddr 'd8:ec:e5:8e:06:cf'
+
+config interface 'lan'
+    option device 'switch.1'
+    option proto 'static'
+    option ipaddr '192.168.208.40'
+    option netmask '255.255.255.0'
+    option ip6assign '60'
+    option gateway '192.168.208.1'
+    list dns '192.168.40.4'
+    list dns '192.168.40.6'
+    list dns_search '{{ secret.domain }}'
