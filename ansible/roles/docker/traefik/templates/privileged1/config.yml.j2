@@ -1,0 +1,52 @@
+http:
+  routers:
+{% for p in proxies %}
+    {{ p.name }}:
+      entryPoints:
+        - https
+      rule: "Host(`{{ p.name }}.{{ secret.domain }}`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: {{ p.name }}
+{% endfor %}
+
+  services:
+{% for p in proxies %}
+    {{ p.name }}:
+      loadBalancer:
+        servers:
+          - url: "{{ p.url }}"
+        passHostHeader: true
+{% endfor %}
+
+  middlewares:
+    https-redirect:
+      redirectScheme:
+        scheme: https
+
+    default-headers:
+      headers:
+        frameDeny: true
+        sslRedirect: true
+        browserXssFilter: true
+        contentTypeNosniff: true
+        forceSTSHeader: true
+        stsPreload: true
+        stsSeconds: 15552000
+        customFrameOptionsValue: SAMEORIGIN
+        customRequestHeaders:
+          X-Forwarded-Proto: https
+
+    default-whitelist:
+      ipWhiteList:
+        sourceRange:
+          - "10.0.0.0/8"
+          - "192.168.0.0/16"
+          - "172.16.0.0/12"
+
+    secured:
+      chain:
+        middlewares:
+          - default-whitelist
+          - default-headers
