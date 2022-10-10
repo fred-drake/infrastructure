@@ -58,6 +58,20 @@
             - /etc/hostname:/etc/hostname:ro
       tags: promtail
 
+    - role: docker/container
+      vars:
+        container:
+          name: homebridge
+          repository: oznu/homebridge
+          tag: latest
+          ip: "{{ secret.services.homebridge.ip }}"
+          network: br0.40
+          env:
+            ENABLE_AVAHI: "0"
+          volumes:
+            - "{{ glusterfs_appdata_dir }}/homebridge/homebridge/config:/homebridge"
+      tags: homebridge
+
     ### Dozzle - NUC9 ###
     # - role: docker/container
     #   vars:

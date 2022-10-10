@@ -409,19 +409,19 @@
             - "/var/run/docker.sock:/var/run/docker.sock"
       tags: diun
 
-    - role: docker/container
-      vars:
-        container:
-          name: homebridge
-          repository: oznu/homebridge
-          tag: latest
-          ip: "{{ secret.services.homebridge.ip }}"
-          network: br0.40
-          env:
-            ENABLE_AVAHI: "0"
-          volumes:
-            - "{{ glusterfs_appdata_dir }}/homebridge/homebridge/config:/homebridge"
-      tags: homebridge
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: homebridge
+    #       repository: oznu/homebridge
+    #       tag: latest
+    #       ip: "{{ secret.services.homebridge.ip }}"
+    #       network: br0.40
+    #       env:
+    #         ENABLE_AVAHI: "0"
+    #       volumes:
+    #         - "{{ glusterfs_appdata_dir }}/homebridge/homebridge/config:/homebridge"
+    #   tags: homebridge
 
     # - role: docker/container
     #   vars:
