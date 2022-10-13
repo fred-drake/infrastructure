@@ -70,3 +70,12 @@ backend mqtt_ws_backend
 {% for h in workers_hostlist_results.hosts %}
   server {{ h.hostname }} {{ h.address }}:44623 check
 {% endfor %}
+
+frontend maas_postgres_frontend
+  bind *:47283
+  default_backend maas_postgres_backend
+
+backend maas_postgres_backend
+{% for h in workers_hostlist_results.hosts %}
+  server {{ h.hostname }} {{ h.address }}:47283 check
+{% endfor %}

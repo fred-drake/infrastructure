@@ -146,7 +146,7 @@ all:
     # Servers containing the MAAS software
     maas:
       hosts:
-        specops:
+        nuc9:
 
     # Server containing the Omada software
     omada:

@@ -47,6 +47,7 @@
     path: /opt/nhl-led-scoreboard
   register: nhl_scoreboard_dir
   tags:
+    - never
     - nhl
 
 - name: Determine if mlb scoreboard is already installed
@@ -54,17 +55,19 @@
     path: /opt/mlb-led-scoreboard
   register: mlb_scoreboard_dir
   tags:
+    - never
     - mlb
 
 - name: Checkout nhl scoreboard
   ansible.builtin.git:
-    repo: "https://github.com/fred-drake/nhl-led-scoreboard"
-    # repo: https://github.com/riffnshred/nhl-led-scoreboard
+    # repo: "https://github.com/fred-drake/nhl-led-scoreboard"
+    repo: https://github.com/riffnshred/nhl-led-scoreboard
     dest: /opt/nhl-led-scoreboard
     depth: "1"
-    version: mqtt
+    version: beta
   when: not nhl_scoreboard_dir.stat.exists
   tags:
+    - never
     - nhl
 
 - name: Checkout mlb scoreboard
@@ -75,6 +78,7 @@
     depth: "1"
   when: not mlb_scoreboard_dir.stat.exists
   tags:
+    - never
     - mlb
 
 - name: Apply nhl scoreboard configuration
@@ -84,6 +88,7 @@
     mode: '0644'
   notify: Restart scoreboard
   tags:
+    - never
     - nhl
 
 - name: Apply mlb scoreboard configuration
@@ -93,6 +98,7 @@
     mode: '0644'
   notify: Restart scoreboard
   tags:
+    - never
     - mlb
 
 - name: Apply mlb scoreboard colors configurations
@@ -102,18 +108,21 @@
     mode: '0755'
   notify: Restart supervisor
   tags:
+    - never
     - mlb
 
 - name: Compile nhl scoreboard
   ansible.builtin.shell: cd /opt/nhl-led-scoreboard; ./scripts/install.sh
   when: not nhl_scoreboard_dir.stat.exists
   tags:
+    - never
     - nhl
 
 - name: Compile mlb scoreboard
   ansible.builtin.shell: cd /opt/mlb-led-scoreboard; ./install.sh config.json
   when: not mlb_scoreboard_dir.stat.exists
   tags:
+    - never
     - mlb
 
 - name: Configure audio config flag
@@ -142,7 +151,9 @@
     dest: /etc/supervisor/conf.d/scoreboard.conf
     mode: '0644'
   notify: Restart supervisor
-  tags: nhl
+  tags: 
+    - never
+    - nhl
 
 - name: Apply mlb scoreboard supervisor configuration
   ansible.builtin.copy:
@@ -150,4 +161,6 @@
     dest: /etc/supervisor/conf.d/scoreboard.conf
     mode: '0644'
   notify: Restart supervisor
-  tags: mlb
+  tags: 
+    - never
+    - mlb

@@ -4,21 +4,21 @@
   become: true
   roles:
     - docker/base
-    - role: docker/container
-      vars:
-        container:
-          name: maas-postgres
-          repository: postgres
-          tag: "14"
-          network: bridge
-          ports:
-            - 0.0.0.0:5432:5432
-          env:
-            POSTGRES_USER: "{{ secret.services.maas.postgres.user }}"
-            POSTGRES_PASSWORD: "{{ secret.services.maas.postgres.password }}"
-            POSTGRES_DB: "{{ secret.services.maas.postgres.database }}"
-          volumes:
-            - "{{ appdata_dir }}/maas/postgres/data:/var/lib/postgresql/data"
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: maas-postgres
+    #       repository: postgres
+    #       tag: "14"
+    #       network: bridge
+    #       ports:
+    #         - 0.0.0.0:5432:5432
+    #       env:
+    #         POSTGRES_USER: "{{ secret.services.maas.postgres.user }}"
+    #         POSTGRES_PASSWORD: "{{ secret.services.maas.postgres.password }}"
+    #         POSTGRES_DB: "{{ secret.services.maas.postgres.database }}"
+    #       volumes:
+    #         - "{{ appdata_dir }}/maas/postgres/data:/var/lib/postgresql/data"
     - role: docker/container
       vars:
         container:

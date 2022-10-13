@@ -11,6 +11,31 @@ http:
       service: {{ p.name }}
 {% endfor %}
 
+#    omada-login:
+#      rule: "Host(`omada.{{ secret.domain }}`) && Path(`/`, `/login`)"
+#      entryPoints:
+#        - https
+#      service: omada
+#      tls: {}
+#    omada-https:
+#      rule: "Host(`omada.{{ secret.domain }}`)"
+#      entryPoints:
+#        - https
+#      middlewares:
+#        - omada-headers
+#      tls: {}
+#      service: omada
+    omada:
+      rule: "Host(`omada.{{ secret.domain }}`)"
+      entryPoints:
+        - https
+      tls:
+        certResolver: cloudflare
+      service: omada-svc
+      middlewares:
+        - omada-redirect
+        - omada-headers
+
   services:
 {% for p in proxies %}
     {{ p.name }}:
@@ -19,6 +44,17 @@ http:
           - url: "{{ p.url }}"
         passHostHeader: true
 {% endfor %}
+
+#    omada:
+#      loadBalancer:
+#        servers:
+#          - url: "https://{{ secret.services.omada.ip }}:8043"
+#        passHostHeader: true
+    omada-svc:
+      loadBalancer:
+        servers:
+          - url: "https://{{ secret.services.omada.ip }}:8043"
+        passHostHeader: true
 
   middlewares:
     https-redirect:
@@ -50,3 +86,20 @@ http:
         middlewares:
           - default-whitelist
           - default-headers
+
+#    omada-headers:
+#      headers:
+#        customRequestHeaders:
+#          Host: omada.{{ secret.domain }}:8043
+#        customResponseHeaders:
+#          Host: omada.{{ secret.domain }}:443
+    omada-redirect:
+      redirectRegex:
+        regex: ^https:\\/\\/([^\\/]+)\\/?$
+        replacement: "https://${1}/login"
+    omada-headers:
+      headers:
+        customRequestHeaders:
+          Host: "{{ secret.services.omada.ip }}:8043"
+        customResponseHeaders:
+          Host: "omada.{{ secret.domain }}"
