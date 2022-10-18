@@ -1,0 +1,11 @@
+- name: Build Rasberry Pi OS Lite image
+  hosts: maas
+  gather_facts: false
+  run_once: true
+  become: true
+  tasks:
+    - name: Build image
+      ansible.builtin.include_role:
+        name: packer
+      vars:
+        image_type: raspios_lite_armhf

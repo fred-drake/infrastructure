@@ -1,0 +1,34 @@
+{
+  "builders": [{
+    "type": "arm-image",
+    "iso_url": "{{ rpi_file }}",
+    "iso_checksum": "sha256:{{ sha_checksum }}",
+    "last_partition_extra_size": 1073741824
+  }],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": ["touch /boot/ssh"]
+    },
+    {
+      "type": "file",
+      "source": "userconf.txt",
+      "destination": "/boot/userconf.txt"
+    },
+    {
+      "type": "file",
+      "source": "wpa_supplicant.conf",
+      "destination": "/boot/wpa_supplicant.conf"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "mkdir /home/pi/.ssh",
+        "chmod 700 /home/pi/.ssh",
+        "curl https://github.com/fred-drake.keys > /home/pi/.ssh/authorized_keys",
+        "chmod 400 /home/pi/.ssh/authorized_keys",
+        "chown -R 1000:1000 /home/pi/.ssh"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+- name: Build image
+  block:
+    - name: Get temp dir
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: .image
+      register: build_dir
+      changed_when: false
+    - name: Pull directory URL contents
+      ansible.builtin.get_url:
+        url: "{{ base_url }}"
+        dest: "{{ build_dir.path }}/dirs.txt"
+        mode: '0644'
+      changed_when: false
+    - name: Slurp URL contents
+      ansible.builtin.slurp:
+        src: "{{ build_dir.path }}/dirs.txt"
+      register: input
+      changed_when: false
+    - name: Set dir variable
+      ansible.builtin.set_fact:
+        rpi_dir: "{{ base_url }}{{ input.content | b64decode | regex_findall(image_type + '\\-\\d+\\-\\d+\\-\\d+') | last }}/"
+      changed_when: false
+    - name: Parse directory contents
+      ansible.builtin.get_url:
+        url: "{{ rpi_dir }}"
+        dest: "{{ build_dir.path }}/files.txt"
+        mode: '0644'
+      changed_when: false
+    - name: Slurp URL contents
+      ansible.builtin.slurp:
+        src: "{{ build_dir.path }}/files.txt"
+      register: input
+      changed_when: false
+    - name: Set file variable
+      ansible.builtin.set_fact:
+        rpi_file: "{{ rpi_dir }}{{ input.content | b64decode | regex_search('\\d+\\-\\d+\\-\\d+-.*?\\.xz') }}"
+      changed_when: false
+    - name: Pull image checksum
+      ansible.builtin.get_url:
+        url: "{{ rpi_file }}.sha256"
+        dest: "{{ build_dir.path }}/{{ image_type }}.sha256"
+        mode: '0644'
+      changed_when: false
+    - name: Slurp SHA contents
+      ansible.builtin.slurp:
+        src: "{{ build_dir.path }}/{{ image_type }}.sha256"
+      register: input
+      changed_when: false
+    - name: Set checksum variable
+      ansible.builtin.set_fact:
+        sha_checksum: "{{ input.content | b64decode | regex_search('^\\w+') }}"
+      changed_when: false
+    - name: Get existing checksum file stat
+      ansible.builtin.stat:
+        path: "{{ image_storage_path }}/{{ image_type }}.orig.sha256"
+      register: existing_checksum_file
+    - name: Get existing image checksum
+      ansible.builtin.slurp:
+        src: "{{ image_storage_path }}/{{ image_type }}.orig.sha256"
+      register: input
+      when: existing_checksum_file.stat.exists
+    - name: Set existing checksum
+      ansible.builtin.set_fact:
+        existing_checksum: "{{ input.content | b64decode }}"
+      when: existing_checksum_file.stat.exists
+    - name: Process
+      ansible.builtin.include_role:
+        name: packer
+        tasks_from: build_raspios
+      when: existing_checksum is not defined or sha_checksum != existing_checksum
+  always:
+    - name: Clean the temp dir
+      ansible.builtin.file:
+        path: "{{ build_dir.path }}"
+        state: absent
+      when: build_dir.path is defined
+      changed_when: false

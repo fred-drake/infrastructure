@@ -1,0 +1,11 @@
+- name: Create config directory
+  ansible.builtin.file:
+    path: "{{ glusterfs_appdata_dir }}/images/images/config/nginx/site-confs"
+    state: directory
+    mode: '0777'
+
+- name: Apply config
+  ansible.builtin.template:
+    src: default.conf.j2
+    dest: "{{ glusterfs_appdata_dir }}/images/images/config/nginx/site-confs/default.conf"
+    mode: '0644'

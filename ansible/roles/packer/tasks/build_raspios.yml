@@ -1,0 +1,53 @@
+- name: Create build directory
+  ansible.builtin.file:
+    path: "{{ build_dir.path }}/packer"
+    state: directory
+    mode: '0755'
+- name: Set pi template
+  ansible.builtin.template:
+    src: pi.json.j2
+    dest: "{{ build_dir.path }}/packer/pi.json"
+    mode: '0644'
+- name: Set userconf
+  ansible.builtin.template:
+    src: userconf.txt.j2
+    dest: "{{ build_dir.path }}/packer/userconf.txt"
+    mode: '0644'
+- name: Set wpa_supplicant
+  ansible.builtin.template:
+    src: wpa_supplicant.conf.j2
+    dest: "{{ build_dir.path }}/packer/wpa_supplicant.conf"
+    mode: '0644'
+- name: Build image
+  vars:
+    packer_dir: "{{ build_dir.path }}/packer"
+  community.docker.docker_container:
+    name: packer
+    image: ghcr.io/solo-io/packer-plugin-arm-image
+    auto_remove: true
+    privileged: true
+    detach: false
+    volumes:
+      - /dev:/dev
+      - "{{ packer_dir }}:/build:ro"
+      - "{{ packer_dir }}/packer_cache:/build/packer_cache"
+      - "{{ packer_dir }}/output-arm-image:/build/output-arm-image"
+    command: build pi.json
+    timeout: "{{ 60 * 30 }}"
+  async: "{{ 60 * 30 }}"
+  poll: 60
+
+- name: Compress image file and send to image storage
+  ansible.builtin.archive:
+    format: xz
+    path: "{{ build_dir.path }}/packer/output-arm-image/image"
+    dest: "{{ image_storage_path }}/{{ image_type }}.xz"
+    mode: '0644'
+  async: "{{ 60 * 30 }}"
+  poll: 60
+
+- name: Write original image SHA to file on image storage
+  ansible.builtin.copy:
+    content: "{{ sha_checksum }}"
+    dest: "{{ image_storage_path }}/{{ image_type }}.orig.sha256"
+    mode: '0644'

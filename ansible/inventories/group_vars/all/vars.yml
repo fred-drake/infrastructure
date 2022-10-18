@@ -104,6 +104,22 @@ swarm_services:
           - published_port: 42843
             target_port: 42843
             mode: host
+  images:
+    name: images
+    init_role: images
+    post_role: images
+    post_role_tasks_from: post_service
+    containers:
+      - repository: lscr.io/linuxserver/nginx
+        tag: latest
+        web_port: 80
+        env:
+          PUID: "1000"
+          PGID: "1000"
+          TZ: "America/New_York"
+        bind_mounts:
+          - source: config
+            target: /config
   loki:
     name: loki
     init_role: loki
@@ -407,7 +423,7 @@ swarm_services:
         bind_mounts:
           - source: config
             target: /config
-          - source: "{{ glusterfs_appdata_dir }}/sabnzbd/downloads"
+          - source: "{{ glusterfs_appdata_dir }}/sabnzbd/sabnzbd/downloads"
             target: /downloads
             literal: true
         nfs_mounts:

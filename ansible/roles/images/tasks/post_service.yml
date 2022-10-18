@@ -1,0 +1,4 @@
+- name: Remove index.html so you can see the dir contents
+  ansible.builtin.file:
+    path: "{{ glusterfs_appdata_dir }}/images/images/config/www/index.html"
+    state: absent

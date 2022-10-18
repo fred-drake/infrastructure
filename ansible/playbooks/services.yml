@@ -112,6 +112,23 @@
         - homeassistant_rebuild
 
 #################################################################################
+# images
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.images }}"
+      tags:
+        - never
+        - images_nuke
+        - images_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.images }}"
+      tags:
+        - images
+        - images_rebuild
+
+#################################################################################
 # loki
 #################################################################################
     - role: swarm_service_nuke
