@@ -6,7 +6,11 @@ WORKDIR /tmp
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        sshpass ansible && \
+        sshpass ansible curl ca-certificates && \
+    curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends kubectl && \
     rm -rf /var/cache/apt/archives
 COPY ansible/dev-requirements.txt .
 RUN pip install -r dev-requirements.txt && rm -f dev-requirements.txt
@@ -39,8 +43,8 @@ WORKDIR /workspaces/infrastructure
 ENV ANSIBLE_CONFIG=/workspaces/infrastructure/ansible/ansible.cfg
 COPY ansible/galaxy-requirements.yml ansible/galaxy-requirements.yml
 RUN ansible-galaxy install -r ansible/galaxy-requirements.yml
-RUN echo "alias ap='cd /workspaces/infrastructure/ansible/playbooks && ansible-playbook'" >> /root/.bashrc
-
+RUN echo "alias ap='cd /workspaces/infrastructure/ansible/playbooks && ansible-playbook'" >> /root/.bashrc \
+    && echo "alias k='kubectl --kubeconfig /workspaces/infrastructure/kubeconfig'" >> /root/.bashrc
 FROM staging
 ENV ANSIBLE_CONFIG=/infrastructure/ansible/ansible.cfg
 WORKDIR /infrastructure

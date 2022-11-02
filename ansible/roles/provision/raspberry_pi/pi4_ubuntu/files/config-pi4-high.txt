@@ -1,3 +1,0 @@
-over_voltage=6
-arm_freq=2147
-gpu_freq=750

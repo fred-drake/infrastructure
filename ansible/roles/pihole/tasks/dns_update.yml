@@ -1,0 +1,17 @@
+- name: Generate pihole hosts from netbox
+  connection: local
+  become: false
+  export_netbox_hostlist:
+    netbox_api_prefix: "https://netbox.{{ secret.domain }}"
+    netbox_token: "{{ secret.services.netbox.api_token }}"
+  register: hostlist_results
+  run_once: true
+
+- name: Transfer pihole hosts
+  ansible.builtin.template:
+    src: hostlist.j2
+    dest: /etc/pihole/custom.list
+    mode: "0644"
+    backup: true
+  notify:
+    - Restart DNS

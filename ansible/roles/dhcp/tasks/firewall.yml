@@ -1,0 +1,24 @@
+- name: Enable ufw
+  community.general.ufw:
+    state: enabled
+    policy: allow
+
+- name: Deny web from unprotected interfaces
+  community.general.ufw:
+    rule: deny
+    port: 80
+    interface: "{{ item }}"
+    direction: in
+    state: enabled
+  loop: "{{ ansible_interfaces }}"
+  when: item != privileged_interface
+
+- name: Deny SSH from unprotected interfaces
+  community.general.ufw:
+    rule: deny
+    port: 22
+    interface: "{{ item }}"
+    direction: in
+    state: enabled
+  loop: "{{ ansible_interfaces }}"
+  when: item != privileged_interface

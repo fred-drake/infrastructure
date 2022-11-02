@@ -180,6 +180,23 @@
         - netbox_rebuild
 
 #################################################################################
+# nexus
+#################################################################################
+    - role: swarm_service_nuke
+      vars:
+        service: "{{ swarm_services.nexus }}"
+      tags:
+        - never
+        - nexus_nuke
+        - nexus_rebuild
+    - role: swarm_service
+      vars:
+        service: "{{ swarm_services.nexus }}"
+      tags:
+        - nexus
+        - nexus_rebuild
+
+#################################################################################
 # nginx-static
 #################################################################################
     - role: swarm_service_nuke

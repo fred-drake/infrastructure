@@ -4,15 +4,12 @@ ansible_python_interpreter: /usr/bin/python3
 # The timezone used on servers and docker containers
 default_timezone: America/New_York
 
-# Root path for netboot assets
-netboot_assets_path: /Volumes/netboot
-
 swarm_services:
   bitwarden:
     name: bitwarden
     backup: true
     containers:
-      - repository: vaultwarden/server
+      - repository: "vaultwarden/server"
         tag: latest
         web_port: 80
         env:
@@ -34,9 +31,9 @@ swarm_services:
           CF_DDNS_TOKEN: "{{ secret.services.ddns.token }}"
           CF_DDNS_DOMAINS: "{{ secret.services.ddns.domains }}"
   git_hash_updater:
-    name: git-hash_updater
+    name: git-hash-updater
     containers:
-      - repository: fdrake/git-hash-updater
+      - repository: "docker-hub.{{ secret.domain }}/fdrake/git-hash-updater"
         tag: latest
         env:
           TZ: "{{ default_timezone }}"
@@ -50,7 +47,7 @@ swarm_services:
     backup: true
     containers:
       - name: gitea
-        repository: gitea/gitea
+        repository: "gitea/gitea"
         web_port: 3000
         tag: 1.16.7
         env:
@@ -63,7 +60,7 @@ swarm_services:
           - source: data
             target: /data
       - name: gitea-db
-        repository: mariadb
+        repository: "mariadb"
         tag: "10"
         env:
           MYSQL_ROOT_PASSWORD: "{{ secret.services.gitea.mariadb.mysql_root_password }}"
@@ -76,7 +73,7 @@ swarm_services:
   grafana:
     name: grafana
     containers:
-      - repository: grafana/grafana-oss
+      - repository: "docker-hub.{{ secret.domain }}/grafana/grafana-oss"
         tag: latest
         web_port: 3000
         env:
@@ -124,7 +121,7 @@ swarm_services:
     name: loki
     init_role: loki
     containers:
-      - repository: grafana/loki
+      - repository: "docker-hub.{{ secret.domain }}/grafana/loki"
         tag: latest
         web_port: 3100
         bind_mounts:
@@ -141,7 +138,7 @@ swarm_services:
   mqtt:
     name: mqtt
     containers:
-      - repository: eclipse-mosquitto
+      - repository: "docker-hub.{{ secret.domain }}/eclipse-mosquitto"
         tag: 2.0.14
         bind_mounts:
           - source: config
@@ -168,7 +165,7 @@ swarm_services:
       PG_BACKUP_FILE: "netbox.sql"
     containers:
       - name: netbox-postgres
-        repository: postgres
+        repository: "postgres"
         tag: "12"
         env:
           POSTGRES_USER: "{{ secret.services.netbox.postgres.user }}"
@@ -178,10 +175,10 @@ swarm_services:
           - source: data
             target: /var/lib/postgresql/data
       - name: netbox-redis
-        repository: redis
+        repository: "redis"
         tag: latest
       - name: netbox
-        repository: linuxserver/netbox
+        repository: "linuxserver/netbox"
         tag: "3.1.11"
         web_port: 8000
         env:
@@ -200,12 +197,27 @@ swarm_services:
         bind_mounts:
           - source: config
             target: /config
+  nexus:
+    name: nexus
+    containers:
+      - web_port: 8081
+        repository: "sonatype/nexus3"
+        tag: latest
+        bind_mounts:
+          - source: data
+            target: /nexus-data
+        labels:
+          traefik.http.routers.registry.rule: "Host(`docker-hub.{{ secret.domain }}`)"
+          traefik.http.routers.registry.tls: "true"
+          traefik.http.routers.registry.service: registry-service
+          traefik.http.services.registry-service.loadbalancer.server.port: "8082"
+          traefik.http.services.registry-service.loadbalancer.passhostheader: "true"
   nginx_static:
     name: nginx-static
     containers:
       - web_port: 80
         web_hostname: external-static
-        repository: linuxserver/nginx
+        repository: "lscr.io/linuxserver/nginx"
         tag: latest
         bind_mounts:
           - source: config
@@ -217,20 +229,20 @@ swarm_services:
     name: node-red
     backup: true
     containers:
-      - name: node-red-postgres
-        repository: postgres
-        tag: latest
-        bind_mounts:
-          - source: postgres
-            target: /var/lib/postgresql/data
-        env:
-          POSTGRES_USER: "{{ secret.services.node_red.postgres.user }}"
-          POSTGRES_PASSWORD: "{{ secret.services.node_red.postgres.password }}"
-          POSTGRES_DB: "{{ secret.services.node_red.postgres.database }}"
+      # - name: node-red-postgres
+      #   repository: "docker-hub.{{ secret.domain }}/postgres"
+      #   tag: latest
+      #   bind_mounts:
+      #     - source: postgres
+      #       target: /var/lib/postgresql/data
+      #   env:
+      #     POSTGRES_USER: "{{ secret.services.node_red.postgres.user }}"
+      #     POSTGRES_PASSWORD: "{{ secret.services.node_red.postgres.password }}"
+      #     POSTGRES_DB: "{{ secret.services.node_red.postgres.database }}"
       - name: node-red
         web_port: 1880
         web_hostname: nodered
-        repository: nodered/node-red
+        repository: "nodered/node-red"
         tag: 2.2.3
         bind_mounts:
           - source: data
@@ -238,9 +250,9 @@ swarm_services:
           - source: /var/log/custom_logs
             target: /log
             literal: true
-        nfs_mounts:
-          - name: camera_videos
-            target: /camera_videos
+        # nfs_mounts:
+        #   - name: camera_videos
+        #     target: /camera_videos
         env:
           TZ: "{{ default_timezone }}"
           NODE_RED_ENABLE_SAFE_MODE: "false"
@@ -256,14 +268,14 @@ swarm_services:
         tag: latest
         web_port: 3000
         bind_mounts:
-          - source: config/runtime-config.js
-            target: /work/build/runtime-config.js
+          - source: config
+            target: /work/build/config
             type: file
   overseerr:
     name: overseerr
     containers:
       - name: overseerr
-        repository: linuxserver/overseerr
+        repository: "lscr.io/linuxserver/overseerr"
         tag: latest
         web_port: 5055
         env:
@@ -284,7 +296,7 @@ swarm_services:
     containers:
       - name: paperless
         web_port: 8000
-        repository: linuxserver/paperless-ngx
+        repository: "lscr.io/linuxserver/paperless-ngx"
         tag: latest
         env:
           PUID: "1000"
@@ -307,13 +319,13 @@ swarm_services:
           - source: backup
             target: /backup
       - name: paperless-redis
-        repository: redis
+        repository: "docker-hub.{{ secret.domain }}/redis"
         tag: 6.2.6          
   pihole_exporter:
     name: pihole-exporter
     containers:
       - name: pihole-exporter-pihole1
-        repository: ekofr/pihole-exporter
+        repository: "docker-hub.{{ secret.domain }}/ekofr/pihole-exporter"
         tag: latest
         web_port: 9617
         env:
@@ -323,7 +335,7 @@ swarm_services:
           INTERVAL: 30s
           PORT: "9617"
       - name: pihole-exporter-pihole2
-        repository: ekofr/pihole-exporter
+        repository: "docker-hub.{{ secret.domain }}/ekofr/pihole-exporter"
         tag: latest
         web_port: 9618
         env:
@@ -338,7 +350,7 @@ swarm_services:
     init_role: prometheus
     containers:
       - web_port: 9090
-        repository: prom/prometheus
+        repository: "docker-hub.{{ secret.domain }}/prom/prometheus"
         tag: latest
         bind_mounts:
           - source: config
@@ -346,7 +358,7 @@ swarm_services:
   prom_node_exporter:
     name: prom-node-exporter
     containers:
-      - repository: prom/node-exporter
+      - repository: "docker-hub.{{ secret.domain }}/prom/node-exporter"
         tag: latest
         mode: global
         constraints:
@@ -379,7 +391,7 @@ swarm_services:
     name: promtail
     init_role: promtail
     containers:
-      - repository: grafana/promtail
+      - repository: "docker-hub.{{ secret.domain }}/grafana/promtail"
         tag: latest
         mode: global
         constraints:
@@ -405,7 +417,7 @@ swarm_services:
     backup: true
     containers:
       - web_port: 9696
-        repository: linuxserver/prowlarr
+        repository: "lscr.io/linuxserver/prowlarr"
         tag: nightly
         env:
           PUID: "99"
@@ -417,38 +429,41 @@ swarm_services:
     name: radarr
     backup: true
     containers:
-      - repository: linuxserver/radarr
+      - repository: "lscr.io/linuxserver/radarr"
         web_port: 7878
         tag: latest
         bind_mounts:
           - source: config
             target: /config
-          - source: "{{ glusterfs_appdata_dir }}/sabnzbd/sabnzbd/downloads"
-            target: /downloads
-            literal: true
+          # - source: "{{ glusterfs_appdata_dir }}/sabnzbd/sabnzbd/downloads"
+          #   target: /downloads
+          #   literal: true
         nfs_mounts:
           - name: videos
             target: /videos
           - name: movies
             device_share: videos
             target: /movies
+          - name: sabnzbd_downloads
+            target: /downloads
         env:
           TZ: America/New_York
           PUID: "99"
           PGID: "100"
   sabnzbd:
     name: sabnzbd
-    backup: true
+    # backup: true
     containers:
-      - repository: linuxserver/sabnzbd
+      - repository: "lscr.io/linuxserver/sabnzbd"
         tag: latest
         web_port: 8080
         bind_mounts:
           - source: config
             target: /config
-          - source: downloads
+        nfs_mounts:
+          - name: sabnzbd_downloads
             target: /downloads
-          - source: incomplete-downloads
+          - name: sabnzbd_downloads_incomplete
             target: /incomplete-downloads
         env:
           PUID: "99"
@@ -457,18 +472,20 @@ swarm_services:
     name: sonarr
     backup: true
     containers:
-      - repository: linuxserver/sonarr
+      - repository: "lscr.io/linuxserver/sonarr"
         tag: latest
         web_port: 8989
         bind_mounts:
           - source: config
             target: /config
-          - source: "{{ glusterfs_appdata_dir }}/sabnzbd/sabnzbd/downloads"
-            target: /downloads
-            literal: true
+          # - source: "{{ glusterfs_appdata_dir }}/sabnzbd/sabnzbd/downloads"
+          #   target: /downloads
+          #   literal: true
         nfs_mounts:
           - name: videos
             target: /videos
+          - name: sabnzbd_downloads
+            target: /downloads
         env:
           TZ: America/New_York
           PUID: "99"
@@ -477,7 +494,7 @@ swarm_services:
     name: teslamate
     containers:
       - name: teslamate-db
-        repository: postgres
+        repository: "docker-hub.{{ secret.domain }}/postgres"
         tag: "12"
         env:
           TZ: "{{ default_timezone }}"
@@ -488,7 +505,7 @@ swarm_services:
           - source: postgres
             target: /var/lib/postgresql/data
       - name: teslamate-app
-        repository: teslamate/teslamate
+        repository: "docker-hub.{{ secret.domain }}/teslamate/teslamate"
         tag: latest
         env:
           TZ: "{{ default_timezone }}"
@@ -500,7 +517,7 @@ swarm_services:
           MQTT_HOST: "{{ secret.services.teslamate.mqtt_host }}"
       - name: teslamate-grafana
         web_port: 3000
-        repository: teslamate/grafana
+        repository: "docker-hub.{{ secret.domain }}/teslamate/grafana"
         tag: latest
         env:
           TZ: "{{ default_timezone }}"
@@ -521,7 +538,7 @@ swarm_services:
         constraints:
           - node.role==manager
         web_hostname: traefik-swarm
-        repository: traefik
+        repository: "docker-hub.{{ secret.domain }}/traefik"
         tag: latest
         publish:
           - published_port: 80
@@ -557,5 +574,5 @@ swarm_services:
     name: whoogle
     containers:
       - web_port: 5000
-        repository: benbusby/whoogle-search
+        repository: "docker-hub.{{ secret.domain }}/benbusby/whoogle-search"
         tag: latest

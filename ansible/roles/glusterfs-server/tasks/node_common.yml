@@ -1,0 +1,27 @@
+- name: Set acting node to first in gluster list
+  ansible.builtin.set_fact:
+    acting_node: "{{ groups['glusterfs_server'][0] }}"
+  when: >
+    groups['glusterfs_server'][0] != inventory_hostname
+    or (gluster_initial is defined and gluster_initial)
+
+- name: Set acting node to second in gluster list
+  ansible.builtin.set_fact:
+    acting_node: "{{ groups['glusterfs_server'][1] }}"
+  when: >
+    groups['glusterfs_server'][0] == inventory_hostname
+    and (gluster_initial is not defined or not gluster_initial)
+
+- name: Get number of bricks
+  delegate_to: "{{ acting_node }}"
+  ansible.builtin.shell:
+    cmd: gluster volume info vol01 | grep "export/brick0/vol01" | wc -l
+  register: num_bricks
+  changed_when: false
+
+- name: Get number of peers in pool
+  delegate_to: "{{ acting_node }}"
+  ansible.builtin.shell:
+    cmd: gluster pool list | grep -v UUID | wc -l
+  changed_when: false
+  register: num_peers

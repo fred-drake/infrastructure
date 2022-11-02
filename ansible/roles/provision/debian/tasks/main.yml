@@ -138,3 +138,8 @@
     state: enabled
   loop: "{{ host_specific_firewall_ports }}"
   when: host_specific_firewall_ports is defined
+
+- name: Reboot if required
+  ansible.builtin.include_role:
+    name: required_reboot
+  when: reboot_ok is defined and reboot_ok

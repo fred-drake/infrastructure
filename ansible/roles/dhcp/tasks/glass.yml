@@ -1,0 +1,66 @@
+- name: Install libraries
+  ansible.builtin.apt:
+    name:
+      - nodejs
+      - npm
+    update_cache: true
+
+- name: Stat glass-isc-dhcp directory
+  ansible.builtin.stat:
+    path: /opt/glass-isc-dhcp
+  register: glass_dir
+
+- name: Install Glass
+  ansible.builtin.git:
+    repo: https://github.com/Akkadius/glass-isc-dhcp.git
+    dest: /opt/glass-isc-dhcp
+    version: master
+    depth: 1
+  when: not glass_dir.stat.exists
+
+- name: Make logs directory
+  ansible.builtin.file:
+    state: directory
+    path: /opt/glass-isc-dhcp/logs
+    mode: '0755'
+
+- name: Make all files in bin executable
+  ansible.builtin.file:
+    path: /opt/glass-isc-dhcp/bin
+    mode: '0755'
+    state: directory
+    recurse: true
+
+- name: Find all .sh files
+  ansible.builtin.find:
+    path:
+      - /opt/glass-isc-dhcp
+    file_type: file
+    patterns:
+      - "*.sh"
+  register: filelist
+
+- name: Make all shell files executable
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: file
+    mode: '0755'
+  with_items: "{{ filelist.files }}"
+  loop_control:
+    label: "{{ item.path }}"
+
+- name: Install NPM packages for Glass
+  community.general.npm:
+    path: /opt/glass-isc-dhcp
+
+- name: Push systemd template
+  ansible.builtin.template:
+    src: glass-isc-dhcp.service.j2
+    dest: /etc/systemd/system/glass-isc-dhcp.service
+    mode: '0644'
+
+- name: Start service
+  ansible.builtin.systemd:
+    name: glass-isc-dhcp
+    state: started
+    enabled: true

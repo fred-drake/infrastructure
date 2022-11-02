@@ -9,5 +9,6 @@ collections:
   - kubernetes.core
   - community.sops
   - community.libvirt
+  - ansible.utils
 
 roles: []

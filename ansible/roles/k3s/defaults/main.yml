@@ -1,0 +1,17 @@
+---
+# Indicates whether the k3s prerequisites for Raspberry Pi should be set up
+# Possible values:
+#   - present
+#   - absent
+state: present
+
+server_init_args: >-
+  {% if groups['k8s_master'] | length > 1 %}
+    {% if ansible_hostname == hostvars[groups['k8s_master'][0]]['ansible_hostname'] %}
+      --cluster-init
+    {% else %}
+      --server https://{{ hostvars[groups['k8s_master'][0]].k3s_node_ip }}:6443
+    {% endif %}
+    --token {{ k3s_token }}
+  {% endif %}
+  {{ extra_server_args | default('') }}

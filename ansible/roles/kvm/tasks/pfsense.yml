@@ -1,0 +1,96 @@
+- name: Check if default storage pool exists
+  ansible.builtin.shell:
+    cmd: virsh pool-list --all | grep default | wc -l
+  register: default_pool
+  changed_when: false
+
+- name: Create images directory
+  ansible.builtin.file:
+    state: directory
+    path: /var/lib/libvirt/images
+    mode: '0755'
+
+- name: Create temp dir
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: .storagepooldef
+  register: temp_dir
+  changed_when: false
+  when: default_pool.stdout | int < 1
+
+- name: Push default storage pool definition
+  ansible.builtin.copy:
+    src: default_storage_pool.xml
+    dest: "{{ temp_dir.path }}/default_storage_pool.xml"
+    mode: '0644'
+  changed_when: false
+  when: default_pool.stdout | int < 1
+
+- name: Create default storage pool
+  ansible.builtin.command:
+    cmd: "virsh pool-define {{ temp_dir.path }}/default_storage_pool.xml"
+  changed_when: true
+  when: default_pool.stdout | int < 1
+
+- name: Create start default storage pool
+  ansible.builtin.command:
+    cmd: virsh pool-start default
+  changed_when: true
+  when: default_pool.stdout | int < 1
+
+- name: Set default pool to auto start
+  ansible.builtin.command:
+    cmd: virsh pool-autostart default
+  changed_when: true
+  when: default_pool.stdout | int < 1
+
+- name: Check if PFSense disk exists
+  ansible.builtin.stat:
+    path: /var/lib/libvirt/images/PFSense.qcow2
+    get_attributes: false
+    get_checksum: false
+    get_mime: false
+  register: pfsense_disk
+- name: Create disk if it doesn't exist
+  ansible.builtin.command:
+    cmd: >
+      virsh vol-create-as
+      --pool default
+      --name PFSense.qcow2
+      --capacity 50G
+      --format qcow2
+  changed_when: true
+  when: not pfsense_disk.stat.exists
+- name: Get list of VMs
+  community.libvirt.virt:
+    command: list_vms
+  register: vm_list
+- name: Debug
+  ansible.builtin.debug:
+    var: vm_list
+- name: Check if PFSense ISO exists
+  ansible.builtin.stat:
+    path: "{{ iso_dir }}/{{ iso_file }}"
+    get_attributes: false
+    get_checksum: false
+    get_mime: false
+  register: pfsense_iso
+- name: Pull PFSense ISO
+  ansible.builtin.get_url:
+    url: "https://atxfiles.netgate.com/mirror/downloads/{{ iso_file }}.gz"
+    dest: "{{ iso_dir }}/{{ iso_file }}.gz"
+    mode: '0644'
+  when: not pfsense_iso.stat.exists
+- name: Unpack ISO
+  ansible.builtin.command:
+    cmd: "gunzip {{ iso_dir }}/{{ iso_file }}.gz"
+  changed_when: true
+  when: not pfsense_iso.stat.exists
+- name: Create and start PFSense VM
+  ansible.builtin.include_role:
+    name: kvm
+    tasks_from: create_vm
+  vars:
+    vm_name: PFSense
+    vm_definition_file: poweredge2-pfsense.xml
+  when: "'PFSense' not in vm_list.list_vms"

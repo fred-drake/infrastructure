@@ -1,10 +1,13 @@
-- name: Update DHCP service
-  hosts: critical_docker_services
+- name: Update DHCP
+  hosts: dhcp
   gather_facts: false
   become: true
-  roles:
-    - docker/base
-    - role: docker/dhcp
-      vars:
-        container_pull: false
+  tasks:
+    - name: Update DHCP
+      throttle: 1
+      block:
+        - name: Update DHCP
+          ansible.builtin.include_role:
+            name: dhcp
+            tasks_from: update_dhcp
   any_errors_fatal: true

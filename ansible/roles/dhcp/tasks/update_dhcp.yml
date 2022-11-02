@@ -1,0 +1,18 @@
+- name: Generate dhcp static reservations from netbox
+  connection: local
+  become: false
+  export_netbox_static_reservations:
+    netbox_api_prefix: "https://netbox.{{ secret.domain }}"
+    netbox_token: "{{ secret.services.netbox.api_token }}"
+    subnet_dict: "{{ secret.dhcp.nets }}"
+  register: reservation_results
+  run_once: true
+
+- name: Set dhcp configurations
+  ansible.builtin.template:
+    src: "dhcp_{{ secret.dhcp.machines[dhcp_id].type }}.j2"
+    dest: "/etc/dhcp/dhcpd.conf"
+    mode: "0644"
+    backup: true
+  notify:
+    - Restart dhcp

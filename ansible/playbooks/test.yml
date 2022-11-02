@@ -1,0 +1,9 @@
+- name: Testing
+  hosts: nuc4
+  gather_facts: false
+  become: false
+  roles:
+    - role: git_version
+      vars:
+        account: alexellis
+        repo: k3sup

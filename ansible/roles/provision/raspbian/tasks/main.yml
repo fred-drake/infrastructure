@@ -33,12 +33,13 @@
   tags:
     - update
 
-- name: Set wifi network
-  ansible.builtin.template:
-    src: wpa_supplicant.conf.j2
-    dest: "/etc/wpa_supplicant/wpa_supplicant.conf"
-    mode: "0600"
-  notify:
-    - Set wifi
-    - Reboot system
-  when: wifi_ssid is defined and wifi_password is defined
+# This is set at image provision stage
+# - name: Set wifi network
+#   ansible.builtin.template:
+#     src: wpa_supplicant.conf.j2
+#     dest: "/etc/wpa_supplicant/wpa_supplicant.conf"
+#     mode: "0600"
+#   notify:
+#     - Set wifi
+#     - Reboot system
+#   when: wifi_ssid is defined and wifi_password is defined

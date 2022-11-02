@@ -7,7 +7,7 @@
     - role: docker/dhcp
       vars:
         dhcp_id: dhcp2
-    - role: docker/pihole
-      vars:
-        pihole_id: pihole2
+    # - role: docker/pihole
+    #   vars:
+    #     pihole_id: pihole2
     - docker/backup_client

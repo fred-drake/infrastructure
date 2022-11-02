@@ -1,0 +1,31 @@
+- name: Build prefix and driver
+  ansible.builtin.set_fact:
+    net_string: " {{ net_string }} --net{{ net_idx }} {{ net.driver }}"
+
+- name: Build optional mac
+  ansible.builtin.set_fact:
+    net_string: " {{ net_string }}={{ net.mac }}"
+  when: net.mac is defined
+
+- name: Build bridge
+  ansible.builtin.set_fact:
+    net_string: "{{ net_string }},bridge={{ net.bridge }}"
+
+- name: Build optional tag
+  ansible.builtin.set_fact:
+    net_string: "{{ net_string }},tag={{ net.tag }}"
+  when: net.tag is defined
+
+- name: Build ipconfig
+  ansible.builtin.set_fact:
+    net_string: "{{ net_string }} --ipconfig{{ net_idx }} ip={{ net.ip }}"
+  when: >
+    proxmox_vm.cloud_init is defined
+    and proxmox_vm.cloud_init
+
+- name: Build gateway if static IP
+  ansible.builtin.set_fact:
+    net_string: "{{ net_string }},gw={{ net.gw }}"
+  when: net.ip != "dhcp"
+    and proxmox_vm.cloud_init is defined
+    and proxmox_vm.cloud_init

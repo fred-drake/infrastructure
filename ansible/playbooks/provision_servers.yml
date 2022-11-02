@@ -1,3 +1,19 @@
+- name: Configure proxmox hypervisors
+  hosts: proxmox
+  gather_facts: true
+  become: false
+  tasks:
+    - name: Proxmox configuration
+      ansible.builtin.include_role:
+        name: proxmox
+
+- name: Configuration of Proxmox virtual machines
+  hosts: proxmox_vm
+  gather_facts: false
+  become: true
+  roles:
+    - proxmox_vm
+
 - name: Configuration of debian-based machines
   hosts: debian
   gather_facts: true
@@ -27,13 +43,6 @@
   become: true
   roles:
     - provision/raspbian
-
-- name: Configuration of Raspbian OS machines running Raspberry Pi 3
-  hosts: raspberry_pi_3:&raspbian
-  gather_facts: true
-  become: true
-  roles:
-    - provision/raspberry_pi/pi3_raspbian
 
 - name: Configuration of Ubuntu machines running Raspberry Pi 4
   hosts: raspberry_pi_4:&ubuntu

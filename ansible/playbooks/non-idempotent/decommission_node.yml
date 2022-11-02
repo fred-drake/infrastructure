@@ -1,0 +1,21 @@
+- name: Decommission one of the gluster nodes
+  hosts: glusterfs_server
+  gather_facts: false
+  run_once: true
+  become: true
+  tasks:
+    - name: Remove node from Gluster
+      ansible.builtin.include_role:
+        name: glusterfs-server
+        tasks_from: remove_node
+
+# - name: Drain node from docker swarm
+#   hosts: swarm_cluster
+#   gather_facts: false
+#   run_once: true
+#   become: true
+#   tasks:
+#     - name: Drain node
+#       community.docker.docker_node:
+#         hostname: "{{ inventory_hostname }}"
+#         availability: drain

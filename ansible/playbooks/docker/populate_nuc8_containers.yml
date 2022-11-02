@@ -7,7 +7,7 @@
       vars:
         container:
           name: dozzle
-          repository: amir20/dozzle
+          repository: "docker-hub.{{ secret.domain }}/amir20/dozzle"
           tag: "{{ special_tags.dozzle.tag | default('latest') }}"
           ip: "{{ secret.services.dozzle.nuc8_ip }}"
           env:
@@ -82,7 +82,7 @@
       vars:
         volume:
           name: pictures
-          container: photoprism
+          container: "docker-hub.{{ secret.domain }}/photoprism"
           driver: cifs
           mount_options: gid=100,uid=99,file_mode=0777,dir_mode=0777
       tags: photoprism
@@ -90,7 +90,7 @@
       vars:
         container:
           name: photoprism-db
-          repository: mariadb
+          repository: "docker-hub.{{ secret.domain }}/mariadb"
           tag: "10"
           ip: "{{ secret.services.photoprism.db.ip }}"
           env:
@@ -113,7 +113,7 @@
       vars:
         container:
           name: photoprism-readonly
-          repository: photoprism/photoprism
+          repository: "docker-hub.{{ secret.domain }}/photoprism/photoprism"
           tag: latest
           ip: "{{ secret.services.photoprism.readonly_ip }}"
           env:
@@ -140,7 +140,7 @@
       vars:
         container:
           name: photoprism
-          repository: photoprism/photoprism
+          repository: "docker-hub.{{ secret.domain }}/photoprism/photoprism"
           tag: latest
           ip: "{{ secret.services.photoprism.ip }}"
           env:
@@ -173,7 +173,7 @@
       vars:
         container:
           name: photoprism-internal-db
-          repository: mariadb
+          repository: "docker-hub.{{ secret.domain }}/mariadb"
           tag: "10"
           ip: "{{ secret.services.photoprism.db.internal_ip }}"
           env:
@@ -188,7 +188,7 @@
       vars:
         container:
           name: photoprism-internal
-          repository: photoprism/photoprism
+          repository: "docker-hub.{{ secret.domain }}/photoprism/photoprism"
           tag: latest
           ip: "{{ secret.services.photoprism.internal_ip }}"
           env:
@@ -234,7 +234,7 @@
       vars:
         container:
           name: node-exporter
-          repository: prom/node-exporter
+          repository: "docker-hub.{{ secret.domain }}/prom/node-exporter"
           tag: latest
           ip: "{{ secret.services.prometheus.node_exporter.nuc8.ip }}"
           volumes:
@@ -255,7 +255,7 @@
       vars:
         container:
           name: promtail
-          repository: grafana/promtail
+          repository: "docker-hub.{{ secret.domain }}/grafana/promtail"
           tag: latest
           entrypoint: >
             /bin/sh -c
@@ -393,7 +393,7 @@
       vars:
         container:
           name: diun-nuc8
-          repository: crazymax/diun
+          repository: "docker-hub.{{ secret.domain }}/crazymax/diun"
           tag: latest
           ip: "{{ secret.services.diun.nuc8_ip }}"
           env:

@@ -1,0 +1,37 @@
+- name: Testing
+  hosts: k3s
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Prereq
+      ansible.builtin.include_role:
+        name: k3s
+        tasks_from: prereq
+    # - name: Download
+    #   ansible.builtin.include_role:
+    #     name: k3s
+    #     tasks_from: download
+    - name: Raspberry Pi
+      ansible.builtin.include_role:
+        name: k3s
+        tasks_from: raspberry
+
+- name: K8s master
+  hosts: k8s_master
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Master
+      ansible.builtin.include_role:
+        name: k3s
+        tasks_from: master
+
+- name: K8s node
+  hosts: k8s_node
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Node
+      ansible.builtin.include_role:
+        name: k3s
+        tasks_from: node

@@ -1,0 +1,26 @@
+- name: Determine if nhl scoreboard is already installed
+  ansible.builtin.stat:
+    path: /opt/nhl-led-scoreboard
+  register: nhl_scoreboard_dir
+
+- name: Checkout nhl scoreboard
+  ansible.builtin.git:
+    # repo: "https://github.com/fred-drake/nhl-led-scoreboard"
+    repo: https://github.com/riffnshred/nhl-led-scoreboard
+    dest: /opt/nhl-led-scoreboard
+    depth: "1"
+    version: beta
+  when: not nhl_scoreboard_dir.stat.exists
+
+- name: Apply nhl scoreboard configuration
+  ansible.builtin.template:
+    src: nhl-config.json.j2
+    dest: /opt/nhl-led-scoreboard/config/config.json
+    mode: '0644'
+  notify: Restart scoreboard
+
+- name: Compile nhl scoreboard
+  ansible.builtin.shell: cd /opt/nhl-led-scoreboard; ./scripts/install.sh
+  when: not nhl_scoreboard_dir.stat.exists
+  async: "{{ 60 * 60 }}"
+  poll: 60

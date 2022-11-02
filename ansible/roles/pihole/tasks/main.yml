@@ -1,0 +1,50 @@
+- name: Create pihole directory
+  ansible.builtin.file:
+    state: directory
+    path: /etc/pihole
+    mode: '0755'
+    owner: '998'
+    group: '998'
+
+- name: Push setupVars.conf
+  ansible.builtin.template:
+    src: setupVars.conf.j2
+    dest: /etc/pihole/setupVars.conf
+    mode: '0644'
+
+- name: Check for existing pihole file
+  ansible.builtin.stat:
+    path: /usr/local/bin/pihole
+  register: pihole_file
+
+- name: Install pihole
+  ansible.builtin.include_role:
+    name: pihole
+    tasks_from: install
+  when: not pihole_file.stat.exists
+
+- name: Enable ufw
+  community.general.ufw:
+    state: enabled
+    policy: allow
+
+- name: Deny port 22 to iot interface
+  community.general.ufw:
+    rule: deny
+    port: 22
+    interface: eth0
+    direction: in
+    state: enabled
+
+- name: Deny port 80 to iot interface
+  community.general.ufw:
+    rule: deny
+    port: 80
+    interface: eth0
+    direction: in
+    state: enabled
+
+- name: Update DNS
+  ansible.builtin.include_role:
+    name: pihole
+    tasks_from: dns_update

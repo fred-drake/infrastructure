@@ -1,0 +1,32 @@
+- name: Determine if mlb scoreboard is already installed
+  ansible.builtin.stat:
+    path: /opt/mlb-led-scoreboard
+  register: mlb_scoreboard_dir
+
+- name: Checkout mlb scoreboard
+  ansible.builtin.git:
+    repo: "https://github.com/MLB-LED-Scoreboard/mlb-led-scoreboard.git"
+    version: master
+    dest: /opt/mlb-led-scoreboard
+    depth: "1"
+  when: not mlb_scoreboard_dir.stat.exists
+
+- name: Apply mlb scoreboard configuration
+  ansible.builtin.template:
+    src: mlb-config.json.j2
+    dest: /opt/mlb-led-scoreboard/config.json
+    mode: '0644'
+  notify: Restart scoreboard
+
+- name: Apply mlb scoreboard colors configurations
+  ansible.builtin.copy:
+    src: colors
+    dest: /opt/mlb-led-scoreboard
+    mode: '0755'
+  notify: Restart supervisor
+
+- name: Compile mlb scoreboard
+  ansible.builtin.shell: cd /opt/mlb-led-scoreboard; ./install.sh config.json
+  when: not mlb_scoreboard_dir.stat.exists
+  async: "{{ 60 * 40 }}"
+  poll: 60

@@ -1,0 +1,20 @@
+- name: Install libraries
+  ansible.builtin.apt:
+    name:
+      - isc-dhcp-server
+    update_cache: true
+
+- name: Set DHCP configuration
+  ansible.builtin.include_role:
+    name: dhcp
+    tasks_from: update_dhcp
+
+- name: Install and configure Glass
+  ansible.builtin.include_role:
+    name: dhcp
+    tasks_from: glass
+
+- name: Configure firewall
+  ansible.builtin.include_role:
+    name: dhcp
+    tasks_from: firewall

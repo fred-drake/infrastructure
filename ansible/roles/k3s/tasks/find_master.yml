@@ -1,0 +1,10 @@
+- name: Stat for file
+  delegate_to: "{{ item }}"
+  ansible.builtin.stat:
+    path: /etc/rancher/k3s/k3s.yaml
+  register: k3s_yaml
+
+- name: Set master
+  ansible.builtin.set_fact:
+    existing_master: "{{ item }}"
+  when: k3s_yaml.stat.exists and existing_master is not defined

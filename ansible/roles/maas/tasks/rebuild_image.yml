@@ -17,7 +17,7 @@
 
 - name: Initialize packer
   ansible.builtin.command:
-    cmd: packer init
+    cmd: packer init vmware-esxi.pkr.hcl
     chdir: "{{ image_workspace_dir }}/packer-maas/vmware-esxi"
   register: packer_init
   failed_when: false

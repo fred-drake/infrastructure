@@ -31,6 +31,7 @@ secret:
             workstation: ENC[AES256_GCM,data:eUnKhTXo,iv:ij+PZ4maBtx/GECA6RtglKu/z1Zt0WFcMheMqCE6lV0=,tag:MNCKPj7r1iO8zUbITI/VSg==,type:str]
     pihole:
         password: ENC[AES256_GCM,data:UTJgglTOCxZ5FeEU1Wk=,iv:e9SYfGnCVIDeO7bTs99U8i8HgNsQOBnsNFrUl74sY3s=,tag:1HPy0Kh6VsR7RF+29fM1Lw==,type:str]
+        password_crypt: ENC[AES256_GCM,data:sM1IotXRuzMpYgH+eQiU3ju1PTKxQVYyYwJwAQDIs/zYbb4P2qvDaKFWb7dQLLhfxSHsjIbG9ctFKhiPvD6MTg==,iv:EZJ914fyZJTiMy5RdfPD0zLmBnqMvPhDljgAGQZDmq0=,tag:Li8GADpReYjCxnku3SSyuQ==,type:str]
         pihole1:
             hostname: ENC[AES256_GCM,data:stE6IsDaGw==,iv:u2x/+WdPvTk1nGUrVqqs9E+RR8DA/09xRvm566e2DQo=,tag:A7ZwNyAtFSIRHjI8c8mQ2g==,type:str]
             address: ENC[AES256_GCM,data:gg4Xk4nKpfrGV9Dr,iv:XQXsOBBJ92DeFqV8uLSmJN5DJP73Fqa9Ey6wO0vB37Q=,tag:jsLMNqkDGvnEg/AcKlueoQ==,type:str]
@@ -208,8 +209,8 @@ secret:
             ip: ENC[AES256_GCM,data:f7Z6qKhqqTjWUHUNUg==,iv:LgLfipOduDZgCcrO40P/GHbtX9mgSFTau8XtI2YaD7A=,tag:/v/oexr59zei5fDtj0BEXQ==,type:str]
             adminuser: ENC[AES256_GCM,data:H7zOXww=,iv:l4FuK/OFmhnTtzRSo1QiQfLP7s0ScEZo6xFnZWh0lY8=,tag:IjvQPjpUWDsBI84Ac1LGdQ==,type:str]
             adminpass: ENC[AES256_GCM,data:08lEYh6Pr+9NWoelWKI=,iv:+OE00K23te+D6kvBS5Ef5mvvDu8ylKlhM4oQ2fL5qGI=,tag:57SMMEmMTqN6a0WRiloW8w==,type:str]
-            apikey: ENC[AES256_GCM,data:LPdoaDYpBPezB5DPhifdgkmXuDu7qHhEC2WfAbEfNckNciMHDEDpDxA7x4PJnmzXKt+g6hMGPm9oAj+gmTGH/IX91kb5Uw==,iv:s+cKAx7zxLjlT5aDCSBzDGdfzTW6Ct+xNyP8zSchOl4=,tag:wT6zXQJfDjmIxFW1uj1l2g==,type:str]
-            url: ENC[AES256_GCM,data:UlAO4U9xTvbYVaGgXUOvAj2NhdOfDVp0ZwuvQdur5Q==,iv:vUQsFZjal8cdqk9WB7InQq/av9EERuxIl2C9HGGM6P8=,tag:3zyI0STG/IwNptDjejXqng==,type:str]
+            apikey: ENC[AES256_GCM,data:gsYGJuWbS+DbyxlDu7ilC3D4WEQblrQzzfqUkr7i6+OXr1/Lub59zodJpVLzEGGCgQNbEdD2WTSHAN8YH8Cswk6msa2+xA==,iv:pup42HEJe5SXFDNCkMknQ5kvURfumEya8ZcXsR4bvgE=,tag:B1LbuJWa+3g+FEwEia9V0g==,type:str]
+            url: ENC[AES256_GCM,data:PlLQNqM6JyB81AFbsO2L10sScjo5D1agl5C7dber,iv:rEpZ1z2elj9srC2THs2m8rcvvk5KEV5jhfh5wcom65w=,tag:IkA1Pf3LwlghC0Vk0uYpLQ==,type:str]
             adminemail: ENC[AES256_GCM,data:ww7SUHhjVrjKjtDhtBMGQIBpoCE=,iv:kcZBGBUrmvKn8iHoyVTlCSI0y2AX8qJvzqHFXqInog4=,tag:Prq7un4kZpxbwtYmWR/ZDw==,type:str]
             adminsshimport: ENC[AES256_GCM,data:I2QAREMyFkqQ/oH29w==,iv:tRcaHOWsU40AEyXjoFIJ0Sw4zRyMzFae4Smg2CzfVhA=,tag:uWFRWMEWDM1q/jc1x49iRA==,type:str]
             postgres:
@@ -223,6 +224,10 @@ secret:
             ip: ENC[AES256_GCM,data:otrnV3UYB4FVnsy1Kg==,iv:wj53CvidOSIvbEapMmdZYAJypaeqrxHjZsVNSAKuMZI=,tag:8fCqa3CbbIYloz3/77PNjA==,type:str]
             username: ENC[AES256_GCM,data:b054/no=,iv:90LGaUSZKzabSQnHtZusFn51f2jMsqkhTL3VbvaMNFE=,tag:BAAP1nXIrZrYkv1QLLDVKQ==,type:str]
             password: ENC[AES256_GCM,data:3zjeeCPdOFfXNKWSmMg=,iv:LWdrFsHvEiDtl8X+3vR3Ny3ZRcSpj8DSwBWYoNLjFjg=,tag:y+o63ZQ1fZaso2v6qO1vgQ==,type:str]
+        minio_nexus:
+            ip: ENC[AES256_GCM,data:TmrYsZzm8miLSgiN,iv:PRIPI6vGDtIg9velYnoXFc6WPjo34buQHHq2hLJWTv8=,tag:OvJBJggRikCy+4MGcMxG1A==,type:str]
+            username: ENC[AES256_GCM,data:N36aDZ82iCirRJR91WfmvMGdt44=,iv:DFdT3GdZnaJ4hegP1O9Zo8hy5wQ6+kFl3SSixVHv0b4=,tag:tO3v8+UVfBpRHGim1lK1rg==,type:str]
+            password: ENC[AES256_GCM,data:MrNHTak0Lc+POAoM5k8YDV5EucY=,iv:ZrL4eXwLDoHAu6x2cTDmKnpRsIwC18TxgDIc1NsK1Zg=,tag:sOH3H6q1mjEO5CkKRibMHQ==,type:str]
         netboot:
             ip_208: ENC[AES256_GCM,data:mQbx58hkK9m69EBNK3A=,iv:umqZvhKQAnYmWvd1IVEsrRA5ocdSo4OKhVe3YV9kpUk=,tag:0e8dfh794SHsjLMXqZAqxQ==,type:str]
             ip_50: ENC[AES256_GCM,data:v+hgPLnAi6/jOU3Euw==,iv:Ed4RIU7hoQ/fdFyXwoFRw2+cLZM9cO145BUY4cX/ED8=,tag:yj6rpiSIbDH64wnkAVEJ9g==,type:str]
@@ -359,8 +364,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-10-18T21:55:08Z"
-    mac: ENC[AES256_GCM,data:kWQ/WbDym8RLDEuZvvMppa2vQNMS//6WkODZXM47lt9QuTqXFG5xvcNzwXVGxuxxsrneXu6IvG17RKecAM5rZCAqleTZYrz1SyMXH+urbKJDPvC3dW4M6LmiXExPa/h++B0k3PZ3+PwB3vMPbUXONTk3q4iIElSWDNNH7wWoXP8=,iv:6Mkbp6xjMuT9/mNtUHgyDFSUiz9ixsramJZj2W2B8F0=,tag:KkP7qotTAMdlmKxB7kZwUg==,type:str]
+    lastmodified: "2022-10-26T05:22:34Z"
+    mac: ENC[AES256_GCM,data:WKx8xXhR8E1az6gMdcQNMNiM2SvtG4JVEeUYVJq/7cYQQxaSvHlbqVDxS0/7rH6goii+HBwfBMyb58iof0m3s/2IW+woPiXsRqo3SBm0Fh5eL9oXJGdzB/XwqghwfrT6CtR4Rj3c+pADj/X1JoY+sreNsE1sQg3eBonko20/EAk=,iv:+o+haMxSzkyrPIeY0Im0hFOYdNV8nT0nJt/5hUD2+LE=,tag:74ptrBJVRCb+YvPz/0idsQ==,type:str]
     pgp:
         - created_at: "2022-10-15T23:19:53Z"
           enc: |

@@ -1,0 +1,24 @@
+# - name: Copy k3s service file
+#   ansible.builtin.template:
+#     src: k3s-node.service.j2
+#     dest: "{{ systemd_dir }}/k3s-node.service"
+#     owner: root
+#     group: root
+#     mode: '0755'
+
+# - name: Enable and check K3s service
+#   ansible.builtin.systemd:
+#     name: k3s-node
+#     daemon_reload: true
+#     state: started
+#     enabled: true
+
+- name: Install this machine as a node
+  delegate_to: localhost
+  ansible.builtin.command:
+    cmd: >
+      k3sup join --ip {{ ansible_default_ipv4.address }}
+      --server-ip {{ apiserver_endpoint }}
+      --user {{ ansible_user }}
+      --ssh-key "{{ playbook_dir }}/../../id_ansible"
+  changed_when: true

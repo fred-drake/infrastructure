@@ -1,0 +1,9 @@
+- name: Nuc6
+  hosts: nuc6
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Homeassistant
+      ansible.builtin.include_role:
+        name: docker_service
+        tasks_from: homeassistant

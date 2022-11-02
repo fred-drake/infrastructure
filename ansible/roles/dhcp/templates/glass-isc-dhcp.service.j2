@@ -1,0 +1,14 @@
+[Unit]
+Description=Glass ISC DHCP Browser
+Documentation=https://github.com/Akkadius/glass-isc-dhcp
+After=network.target
+
+[Service]
+User=root
+Environment=PORT=80
+WorkingDirectory=/opt/glass-isc-dhcp
+ExecStart=npm start
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

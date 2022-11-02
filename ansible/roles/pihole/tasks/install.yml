@@ -1,0 +1,16 @@
+- name: Temp directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: .pihole
+  register: temp_dir
+
+- name: Get pihole install script
+  ansible.builtin.get_url:
+    url: https://install.pi-hole.net
+    dest: "{{ temp_dir.path }}/pihole"
+    mode: '0755'
+
+- name: Execute script
+  ansible.builtin.command:
+    cmd: "{{ temp_dir.path }}/pihole --unattended"
+  changed_when: true

@@ -34,3 +34,18 @@
     mode: '0644'
   notify:
     - Reboot
+
+- name: Check for dhcp file
+  ansible.builtin.stat:
+    path: /etc/config/dhcp
+  register: dhcp_file
+  changed_when: false
+
+- name: Update dhcp file if exists
+  ansible.builtin.template:
+    src: dhcp.j2
+    dest: /etc/config/dhcp
+    mode: '0644'
+  notify:
+    - Reboot
+  when: dhcp_file.stat.exists

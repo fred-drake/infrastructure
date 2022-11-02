@@ -1,0 +1,68 @@
+- name: Parted brick device
+  ansible.builtin.parted:
+    device: "{{ glusterfs_brick_device }}"
+    label: gpt
+    number: 1
+    flags: [lvm]
+    state: present
+
+- name: Create volume on pv brick device partition 1
+  ansible.builtin.lvg:
+    vg: vg_gluster
+    pvs: "{{ glusterfs_brick_partition }}"
+
+- name: Create a logical volume
+  ansible.builtin.lvol:
+    vg: vg_gluster
+    lv: brick0
+    size: 100%FREE
+    shrink: false
+
+- name: Create a xfs filesystem
+  ansible.builtin.filesystem:
+    fstype: xfs
+    dev: /dev/vg_gluster/brick0
+
+- name: Create dir
+  ansible.builtin.file:
+    path: /export
+    state: directory
+    mode: '0755'
+
+- name: Create dir
+  ansible.builtin.file:
+    path: /export/brick0
+    state: directory
+    mode: '0755'
+
+- name: Mount brick
+  ansible.builtin.mount:
+    path: /export/brick0
+    src: /dev/vg_gluster/brick0
+    fstype: xfs
+    dump: "1"
+    passno: "2"
+    state: mounted
+
+- name: Add apt repo
+  ansible.builtin.apt_repository:
+    repo: ppa:gluster/glusterfs-10
+    state: present
+
+- name: Install glusterfs server
+  ansible.builtin.apt:
+    name: glusterfs-server
+    update_cache: true
+
+- name: Open port for glusterfs communication
+  ansible.builtin.ufw:
+    rule: allow
+    port: '5667'
+    proto: any
+
+- name: Ensure glusterfs is started
+  ansible.builtin.systemd:
+    name: glusterd
+    enabled: true
+    state: started
+    masked: false

@@ -4,8 +4,11 @@
 - name: KVM virtual management
   ansible.builtin.import_playbook: kvm.yml
 
-- name: GlusterFS client and server software
-  ansible.builtin.import_playbook: glusterfs.yml
+- name: GlusterFS server software
+  ansible.builtin.import_playbook: glusterfs-server.yml
+
+- name: GlusterfS client software
+  ansible.builtin.import_playbook: glusterfs-client.yml
 
 - name: Docker application (not containers)
   ansible.builtin.import_playbook: docker.yml
@@ -22,15 +25,21 @@
 - ansible.builtin.import_playbook: docker/critical_apps_secondary.yml
 - ansible.builtin.import_playbook: docker/populate_containers.yml
 
+- name: K3s
+  ansible.builtin.import_playbook: k3s.yml
+
 - ansible.builtin.import_playbook: swarm.yml
 
 - ansible.builtin.import_playbook: dedicated_apps.yml
 
-- hosts: netboot-assets-bridge
-  gather_facts: false
-  become: false
-  roles:
-    - netboot_config
-  tags: netboot_config
+# - hosts: netboot-assets-bridge
+#   gather_facts: false
+#   become: false
+#   roles:
+#     - netboot_config
+#   tags: netboot_config
 
 - ansible.builtin.import_playbook: openwrt.yml
+
+- name: DHCP
+  ansible.builtin.import_playbook: dhcp.yml

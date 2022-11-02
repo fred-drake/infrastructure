@@ -1,10 +1,9 @@
-- name: Update DNS service
-  hosts: critical_docker_services
+- name: Update DNS
+  hosts: pihole
   gather_facts: false
   become: true
-  roles:
-    - docker/base
-    - role: docker/pihole
-      vars:
-        container_pull: false
-  any_errors_fatal: true
+  tasks:
+    - name: Update DNS
+      ansible.builtin.include_role:
+        name: pihole
+        tasks_from: dns_update

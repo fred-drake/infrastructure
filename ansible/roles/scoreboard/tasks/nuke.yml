@@ -1,0 +1,20 @@
+- name: Stat supervisorctl
+  ansible.builtin.stat:
+    path: /usr/bin/supervisorctl
+  register: supervisorctl_file
+
+- name: Stop scoreboard
+  community.general.supervisorctl:
+    name: scoreboard
+    state: stopped
+  when: supervisorctl_file.stat.exists
+
+- name: Wipe current implementation of nhl scoreboard for a reinstall
+  ansible.builtin.file:
+    path: /opt/nhl-led-scoreboard
+    state: absent
+
+- name: Wipe current implementation of mlb scoreboard for a reinstall
+  ansible.builtin.file:
+    path: /opt/mlb-led-scoreboard
+    state: absent

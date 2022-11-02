@@ -1,2 +1,0 @@
-over_voltage=2
-arm_freq=1750

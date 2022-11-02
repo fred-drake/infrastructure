@@ -70,6 +70,13 @@
         name: maas
   tags: maas
 
+- name: Pihole
+  hosts: pihole
+  gather_facts: false
+  become: true
+  roles:
+    - pihole
+
 # - name: Omada AP management
 #   hosts: omada
 #   gather_facts: true

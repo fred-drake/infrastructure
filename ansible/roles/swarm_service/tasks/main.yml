@@ -9,13 +9,10 @@
     service: "{{ service }}"
   register: sf
 
-- name: Debug
-  ansible.builtin.debug:
-    var: sf.facts
-
 - name: Call initialization role
   ansible.builtin.include_role:
     name: "{{ service.init_role }}"
+    tasks_from: "{{ service.init_role_tasks_from | default(omit) }}"
   when: service.init_role is defined
 
 - name: Add network
@@ -48,6 +45,12 @@
   loop: "{{ sf.facts.services }}"
   loop_control:
     label: "{{ item.name }}"
+
+- name: Call post-creation role
+  ansible.builtin.include_role:
+    name: "{{ service.post_role }}"
+    tasks_from: "{{ service.post_role_tasks_from | default(omit) }}"
+  when: service.post_role is defined
 
 - name: "Create backup service"
   community.docker.docker_swarm_service:

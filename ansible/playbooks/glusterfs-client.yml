@@ -1,0 +1,6 @@
+- name: Installation and configuration of GlusterFS client nodes
+  hosts: glusterfs_client
+  gather_facts: true
+  become: true
+  roles:
+    - glusterfs-client

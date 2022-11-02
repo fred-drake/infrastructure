@@ -1,0 +1,6 @@
+- name: Install and configure DHCP server
+  hosts: dhcp
+  gather_facts: true
+  become: true
+  roles:
+    - dhcp

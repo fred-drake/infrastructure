@@ -32,6 +32,11 @@
   tags:
     - update
 
+- name: Reboot if required
+  ansible.builtin.include_role:
+    name: required_reboot
+  when: reboot_ok is defined and reboot_ok
+
 # - name: check if reboot required
 #   stat:
 #     path: /var/run/reboot-required

@@ -1,13 +1,12 @@
 all:
   hosts:
-    netboot-assets-bridge:
-
-  #
-  # Host groupings
-  #
   children:
-    # Groups by distribution
-    debian: # all debian-based servers
+
+  #################################
+  # OPERATING SYSTEM-SPECIFIC     #
+  #################################
+    # all debian-based servers (excluding Proxmox)
+    debian:
       children:
         ubuntu:
         raspbian:
@@ -26,7 +25,8 @@ all:
         rp[1:3]:
         nuc[1:9]:
         specops:
-        poweredge2:
+        pihole[1:2]:
+        dhcp[1:2]:
 
     # Ubuntu desktops
     ubuntu_desktop:
@@ -41,24 +41,76 @@ all:
         scannerpi:
         rp[4:7]:
 
-    # All machines that are Pi KVM hosts 
-    # (Keyboard/Video/Mouse, NOT the KVM virtual manager)
-    tinypilot:
-      hosts:
-        rp[4:7]:
-
-    kvm:
+    # Proxmox servers
+    proxmox:
       hosts:
         poweredge2:
+
+    # OpenWRT Machines with enough space for regular ansible commands
+    openwrt:
+      hosts:
+        office_switch:
+        laisa_office_switch:
+
+    # OpenWRT machines without much space - more hacky
+    openwrt_lite:
+      hosts:
+        hallway_switch:
+        tvroom_switch:
 
     # esxi:
     #   hosts:
     #     poweredge2:
 
+    # # Unraid server
+    # unraid:
+    #   hosts:
+    #     larussa:
+
+  #################################
+  # HARDWARE-SPECIFIC             #
+  #################################
+
+    # Proxmox virtual machines
+    proxmox_vm:
+      hosts:
+        pihole1:
+        pihole2:
+        dhcp[1:2]:
+
+    # Raspberry Pi servers
+    raspberry_pi: # all raspberry pi machines
+      children:
+        raspberry_pi_4:
+
+    raspberry_pi_4: # raspberry pi 4 machines
+      hosts:
+        kiosk:
+        scoreboard:
+        rp[1:7]:
+
     # All hosts with Nvidia/CUDA
     cuda:
       hosts:
         brynn-desktop-2:
+
+  ####################################
+  # CONTAINER ORCHESTRATION-SPECIFIC #
+  ####################################
+
+    # k3s servers
+    k3s:
+      children:
+        k8s_master:
+        k8s_node:
+
+    k8s_master:
+      hosts:
+        nuc7:
+
+    k8s_node:
+      hosts:
+        nuc2:
 
     # All docker container servers
     docker:
@@ -70,93 +122,6 @@ all:
         nuc9:
         nuc8:
         specops:
-
-    # All servers that require the non-dockerized promtail installed
-    promtail:
-      hosts:
-        scannerpi:
-        scoreboard:
-        kiosk:
-
-    # All servers that require the non-dockerized Prometheus node exporter installed
-    node_exporter:
-      hosts:
-        scannerpi:
-        scoreboard:
-        kiosk:
-
-    # Docker container servers who run regular services
-    # docker_services:
-    #   hosts:
-    #     nuc9:
-    #     nuc8:
-    #     specops:
-    #     brynn-desktop-2:
-
-    # Docker container servers who run critical services
-    critical_docker_services:
-      children:
-        critical_docker_primary:
-        critical_docker_secondary:
-
-    # Identifies the primary server for critical services
-    critical_docker_primary:
-      hosts:
-        docker5:
-          pihole_id: pihole1
-          dhcp_id: dhcp1
-    # Identifies the secondary server for critical services
-    critical_docker_secondary:
-      hosts:
-        poweredge2:
-          pihole_id: pihole2
-          dhcp_id: dhcp2
-
-    # Hosts that are part of the GlusterFS cluster
-    glusterfs_server:
-      hosts:
-        nuc5:
-        nuc6:
-        nuc4:
-
-    # Machines that use the GlusterFS cluster
-    glusterfs_client:
-      children:
-        swarm_cluster:
-      hosts:
-        nuc8:
-        nuc9:
-
-    # Hosts with CIFS clients
-    cifs:
-      children:
-        swarm_cluster:
-      hosts:
-        scannerpi:
-
-    # Unraid server
-    unraid:
-      hosts:
-        larussa:
-
-    avahi: # Host for avahi daemon
-      hosts:
-        # nuc9:
-
-    # Servers containing the MAAS software
-    maas:
-      hosts:
-        nuc9:
-
-    # Server containing the Omada software
-    omada:
-      hosts:
-        nuc9:
-
-    # Servers whose operating systems can be autoinstalled through netboot
-    netboot_install_servers:
-      hosts:
-        nuc[1:9]:
 
     # Docker Swarm assignments
     swarm_cluster:
@@ -184,52 +149,107 @@ all:
     swarm_workers:
       hosts:
         nuc1:
-        nuc2:
         nuc3:
         nuc4:
         nuc5:
         nuc6:
 
-    # Raspberry Pi servers
-    raspberry_pi: # all raspberry pi machines
+  #################################
+  # CONTAINER-SPECIFIC            #
+  #################################
+
+    # Docker container servers who run regular services
+    # docker_services:
+    #   hosts:
+    #     nuc9:
+    #     nuc8:
+    #     specops:
+    #     brynn-desktop-2:
+
+    # Docker container servers who run critical services
+    critical_docker_services:
       children:
-        raspberry_pi_3:
-        raspberry_pi_4:
+        critical_docker_primary:
+        critical_docker_secondary:
 
-    raspberry_pi_3: # raspberry pi 3 machines
+    # Identifies the primary server for critical services
+    critical_docker_primary:
       hosts:
+        docker5:
+          pihole_id: pihole1
+          dhcp_id: dhcp1
+    # Identifies the secondary server for critical services
+    critical_docker_secondary:
+      hosts:
+        docker2:
+          pihole_id: pihole2
+          dhcp_id: dhcp2
 
-    raspberry_pi_4: # raspberry pi 4 machines
+  #################################
+  # APPLICATION-SPECIFIC          #
+  #################################
+
+    dhcp:
       hosts:
-        kiosk:
+        dhcp[1:2]:
+
+    # All machines that are Pi KVM hosts 
+    # (Keyboard/Video/Mouse, NOT the KVM virtual manager)
+    tinypilot:
+      hosts:
+        rp[4:7]:
+
+    pihole:
+      hosts:
+        pihole1:
+        pihole2:
+
+    # All servers that require the non-dockerized promtail installed
+    promtail:
+      hosts:
+        scannerpi:
         scoreboard:
-        rp[1:7]:
-
-    raspberry_pi_overclock_none: # no overclock profile
-
-    raspberry_pi3_overclock: # pi 3 default overclock profile
-      hosts:
-
-    raspberry_pi4_overclock_2k: # pi 4 overclock 2000Mhz processor
-      hosts:
         kiosk:
 
-    raspberry_pi4_overclock_high: # pi 4 high overclock profile
+    # All servers that require the non-dockerized Prometheus node exporter installed
+    node_exporter:
       hosts:
+        scannerpi:
+        scoreboard:
+        kiosk:
 
-    raspberry_pi4_overclock_medium: # pi 4 medium overclock profile
+    # Hosts that are part of the GlusterFS cluster
+    glusterfs_server:
       hosts:
+        nuc5:
+        nuc6:
+        nuc4:
 
-    raspberry_pi4_overclock_low: # pi 4 low overclock profile
+    # Machines that use the GlusterFS cluster
+    glusterfs_client:
+      children:
+        swarm_cluster:
       hosts:
+        nuc8:
+        nuc9:
 
-    # OpenWRT Machines
-    openwrt:
+    # Hosts with CIFS clients
+    cifs:
+      children:
+        swarm_cluster:
       hosts:
-        office_switch:
-        laisa_office_switch:
+        scannerpi:
 
-    openwrt_lite:
+    avahi: # Host for avahi daemon
       hosts:
-        hallway_switch:
-        tvroom_switch:
+        # nuc9:
+
+    # Servers containing the MAAS software
+    maas:
+      hosts:
+        nuc9:
+
+    # # Server containing the Omada software
+    # omada:
+    #   hosts:
+    #     nuc9:

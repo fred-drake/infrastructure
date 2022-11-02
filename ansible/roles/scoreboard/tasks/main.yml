@@ -5,125 +5,18 @@
       - python3-pip
       - supervisor
     state: present
-  tags:
-    - nhl
-    - mlb
 
-- name: Stat supervisorctl
-  ansible.builtin.stat:
-    path: /usr/bin/supervisorctl
-  register: supervisorctl_file
-  tags:
-    - never
-    - nuke
-
-- name: Stop scoreboard
-  community.general.supervisorctl:
+- name: Install NHL scoreboard
+  ansible.builtin.include_role:
     name: scoreboard
-    state: stopped
-  when: supervisorctl_file.stat.exists
-  tags:
-    - never
-    - nuke
+    tasks_from: nhl_install
+  when: scoreboard_type == 'nhl'
 
-- name: Wipe current implementation of nhl scoreboard for a reinstall
-  ansible.builtin.file:
-    path: /opt/nhl-led-scoreboard
-    state: absent
-  tags:
-    - never
-    - nuke
-
-- name: Wipe current implementation of mlb scoreboard for a reinstall
-  ansible.builtin.file:
-    path: /opt/mlb-led-scoreboard
-    state: absent
-  tags:
-    - never
-    - nuke
-
-- name: Determine if nhl scoreboard is already installed
-  ansible.builtin.stat:
-    path: /opt/nhl-led-scoreboard
-  register: nhl_scoreboard_dir
-  tags:
-    - never
-    - nhl
-
-- name: Determine if mlb scoreboard is already installed
-  ansible.builtin.stat:
-    path: /opt/mlb-led-scoreboard
-  register: mlb_scoreboard_dir
-  tags:
-    - never
-    - mlb
-
-- name: Checkout nhl scoreboard
-  ansible.builtin.git:
-    # repo: "https://github.com/fred-drake/nhl-led-scoreboard"
-    repo: https://github.com/riffnshred/nhl-led-scoreboard
-    dest: /opt/nhl-led-scoreboard
-    depth: "1"
-    version: beta
-  when: not nhl_scoreboard_dir.stat.exists
-  tags:
-    - never
-    - nhl
-
-- name: Checkout mlb scoreboard
-  ansible.builtin.git:
-    repo: "https://github.com/MLB-LED-Scoreboard/mlb-led-scoreboard.git"
-    version: master
-    dest: /opt/mlb-led-scoreboard
-    depth: "1"
-  when: not mlb_scoreboard_dir.stat.exists
-  tags:
-    - never
-    - mlb
-
-- name: Apply nhl scoreboard configuration
-  ansible.builtin.template:
-    src: nhl-config.json.j2
-    dest: /opt/nhl-led-scoreboard/config/config.json
-    mode: '0644'
-  notify: Restart scoreboard
-  tags:
-    - never
-    - nhl
-
-- name: Apply mlb scoreboard configuration
-  ansible.builtin.template:
-    src: mlb-config.json.j2
-    dest: /opt/mlb-led-scoreboard/config.json
-    mode: '0644'
-  notify: Restart scoreboard
-  tags:
-    - never
-    - mlb
-
-- name: Apply mlb scoreboard colors configurations
-  ansible.builtin.copy:
-    src: colors
-    dest: /opt/mlb-led-scoreboard
-    mode: '0755'
-  notify: Restart supervisor
-  tags:
-    - never
-    - mlb
-
-- name: Compile nhl scoreboard
-  ansible.builtin.shell: cd /opt/nhl-led-scoreboard; ./scripts/install.sh
-  when: not nhl_scoreboard_dir.stat.exists
-  tags:
-    - never
-    - nhl
-
-- name: Compile mlb scoreboard
-  ansible.builtin.shell: cd /opt/mlb-led-scoreboard; ./install.sh config.json
-  when: not mlb_scoreboard_dir.stat.exists
-  tags:
-    - never
-    - mlb
+- name: Install MLB scoreboard
+  ansible.builtin.include_role:
+    name: scoreboard
+    tasks_from: mlb_install
+  when: scoreboard_type == 'mlb'
 
 - name: Configure audio config flag
   ansible.builtin.replace:
@@ -131,9 +24,6 @@
     regexp: '^dtparam=audio=on$'
     replace: 'dtparam=audio=off'
   notify: Reboot system
-  tags:
-    - nhl
-    - mlb
 
 - name: Configure supervisor
   ansible.builtin.blockinfile:
@@ -141,9 +31,6 @@
     path: /etc/supervisor/supervisord.conf
     block: "{{ lookup('file', 'supervisord-block.conf') }}"
   notify: Restart supervisor
-  tags:
-    - nhl
-    - mlb
 
 - name: Apply nhl scoreboard supervisor configuration
   ansible.builtin.copy:
@@ -151,9 +38,7 @@
     dest: /etc/supervisor/conf.d/scoreboard.conf
     mode: '0644'
   notify: Restart supervisor
-  tags: 
-    - never
-    - nhl
+  when: scoreboard_type == 'nhl'
 
 - name: Apply mlb scoreboard supervisor configuration
   ansible.builtin.copy:
@@ -161,6 +46,4 @@
     dest: /etc/supervisor/conf.d/scoreboard.conf
     mode: '0644'
   notify: Restart supervisor
-  tags: 
-    - never
-    - mlb
+  when: scoreboard_type == 'mlb'

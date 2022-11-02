@@ -1,0 +1,10 @@
+---
+- name: Restart DNS
+  ansible.builtin.command:
+    cmd: pihole restartdns
+  become: false
+
+- name: Execute pihole-updatelists
+  community.docker.docker_container_exec:
+    container: "{{ pihole_id }}"
+    command: /bin/bash -c /usr/local/sbin/pihole-updatelists

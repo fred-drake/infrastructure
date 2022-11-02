@@ -1,0 +1,36 @@
+- name: Look for an existing master
+  ansible.builtin.include_role:
+    name: k3s
+    tasks_from: find_master
+  when: item != ansible_hostname
+  loop: "{{ groups['k8s_master'] }}"
+
+- name: Stat for existing k3s on this machine
+  ansible.builtin.stat:
+    path: /etc/rancher/k3s/k3s.yaml
+  register: existing_k3s
+
+- name: Install k3s onto machine as initial master
+  ansible.builtin.include_role:
+    name: k3s
+    tasks_from: initial_master
+  when: existing_master is not defined and not existing_k3s.stat.exists
+
+# - name: Install k3s onto machine as additional master
+# TODO
+
+- name: Copy kubeconfig into our environment
+  run_once: true
+  ansible.builtin.fetch:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: "{{ playbook_dir }}/../../kubeconfig"
+    flat: true
+
+- name: Update kubeconfig to correct IPv4 address
+  delegate_to: localhost
+  run_once: true
+  become: false
+  ansible.builtin.replace:
+    path: "{{ playbook_dir }}/../../kubeconfig"
+    regexp: "https://127.0.0.1:6443"
+    replace: "https://{{ apiserver_endpoint }}:6443"

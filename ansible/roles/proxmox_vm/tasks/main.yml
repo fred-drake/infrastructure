@@ -1,0 +1,54 @@
+- name: Check for existing VM {{ proxmox_vm.name }}
+  delegate_to: "{{ proxmox_vm.host }}"
+  become: false
+  ansible.builtin.shell:
+    cmd: "qm list | grep -E '^\\s+{{ proxmox_vm.vmid }}\\s+' | wc -l"
+  register: vm_exists
+  changed_when: false
+
+- name: Create VM {{ proxmox_vm.name }}
+  ansible.builtin.include_role:
+    name: proxmox_vm
+    tasks_from: create_vm
+    apply:
+      delegate_to: "{{ proxmox_vm.host }}"
+      become: false
+  when: vm_exists.stdout | int < 1
+
+- name: Wait for cloud init to complete.
+  ansible.builtin.command:
+    cmd: cloud-init status --wait
+  changed_when: true
+  async: 600
+  poll: 15
+  when: >
+    vm_exists.stdout | int < 1
+    and proxmox_vm.cloud_init is defined
+    and proxmox_vm.cloud_init
+
+- name: Gather facts now that we know there is a VM available
+  ansible.builtin.gather_facts:
+
+- name: Install qemu guest agent via apt
+  ansible.builtin.apt:
+    name:
+      - qemu-guest-agent
+    update_cache: true
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Install qemu guest agent via yum
+  ansible.builtin.yum:
+    name:
+      - qemu-guest-agent
+    state: present
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: Ensure agent is started
+  ansible.builtin.systemd:
+    name: qemu-guest-agent
+    state: started
+  when: >
+    ansible_distribution == 'Debian'
+    or ansible_distribution == 'Ubuntu'
+    or ansible_distribution == 'CentOS'
+    or ansible_distribution == 'Red Hat Enterprise Linux'

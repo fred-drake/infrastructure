@@ -2,20 +2,29 @@
   hosts: swarm_initial_master
   gather_facts: true
   become: true
-  roles:
-    - swarm/initial-manager
+  tasks:
+    - name: Initial manager
+      ansible.builtin.include_role:
+        name: swarm
+        tasks_from: initial_manager
 
 - name: Installation of swarm to additional managers
   hosts: swarm_additional_masters
   gather_facts: true
   become: true
   serial: 1
-  roles:
-    - swarm/add-manager
+  tasks:
+    - name: Additional managers
+      ansible.builtin.include_role:
+        name: swarm
+        tasks_from: add_manager
 
 - name: Installation of swarm to worker nodes
   hosts: swarm_workers
   gather_facts: true
   become: true
-  roles:
-    - swarm/add-worker
+  tasks:
+    - name: Workers
+      ansible.builtin.include_role:
+        name: swarm
+        tasks_from: add_worker

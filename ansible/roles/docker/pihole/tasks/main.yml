@@ -2,8 +2,8 @@
 - name: Create pihole container
   community.docker.docker_container:
     name: "{{ pihole_id }}"
-    image: "jacklul/pihole"
-    # image: "pihole/pihole:2021.11"
+    # image: "jacklul/pihole"
+    image: "pihole/pihole:2021.11"
     pull: "{{ container_pull }}"
     hostname: "{{ secret.pihole[pihole_id].hostname }}"
     env:
@@ -61,7 +61,7 @@
     src: "pihole-updatelists.conf"
     dest: "{{ appdata_dir }}/{{ secret.pihole[pihole_id].hostname }}/etc/pihole-updatelists/pihole-updatelists.conf"
     mode: "0644"
-  notify: Execute pihole-updatelists
+  # notify: Execute pihole-updatelists
   tags:
     - pihole
     - dns_update

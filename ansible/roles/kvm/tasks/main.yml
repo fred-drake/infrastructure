@@ -22,6 +22,14 @@
     append: true
   notify: Reboot
 
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Install PFSense
+  ansible.builtin.include_role:
+    name: kvm
+    tasks_from: pfsense
+
 # - name: Update GRUB to add IOMMU (we assume Intel)
 #   ansible.builtin.lineinfile:
 #     dest: /etc/default/grub
