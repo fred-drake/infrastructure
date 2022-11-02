@@ -84,13 +84,15 @@
   ansible.builtin.set_fact:
     terminal_root_user: false
 
-- import_tasks: terminal.yml
+- name: Import terminal tasks for non-root user
+  import_tasks: terminal.yml
 
 - name: Set terminal setup user to root user
   ansible.builtin.set_fact:
     terminal_root_user: true
 
-- import_tasks: terminal.yml
+- name: Import terminal tasks for root user
+  import_tasks: terminal.yml
 
 - name: Install cifs apt dependencies
   ansible.builtin.apt:

@@ -22,5 +22,7 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_group }}"
 
-- include_tasks: epsonscan2.yml
-- include_tasks: service.yml
+- name: Run epson scanner tasks
+  ansible.builtin.include_tasks: epsonscan2.yml
+- name: Run service tasks
+  ansible.builtin.include_tasks: service.yml

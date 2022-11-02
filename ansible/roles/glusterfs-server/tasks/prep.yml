@@ -1,5 +1,5 @@
 - name: Parted brick device
-  ansible.builtin.parted:
+  community.general.parted:
     device: "{{ glusterfs_brick_device }}"
     label: gpt
     number: 1
@@ -7,19 +7,19 @@
     state: present
 
 - name: Create volume on pv brick device partition 1
-  ansible.builtin.lvg:
+  community.general.lvg:
     vg: vg_gluster
     pvs: "{{ glusterfs_brick_partition }}"
 
 - name: Create a logical volume
-  ansible.builtin.lvol:
+  community.general.lvol:
     vg: vg_gluster
     lv: brick0
     size: 100%FREE
     shrink: false
 
 - name: Create a xfs filesystem
-  ansible.builtin.filesystem:
+  community.general.filesystem:
     fstype: xfs
     dev: /dev/vg_gluster/brick0
 
@@ -36,7 +36,7 @@
     mode: '0755'
 
 - name: Mount brick
-  ansible.builtin.mount:
+  ansible.posix.mount:
     path: /export/brick0
     src: /dev/vg_gluster/brick0
     fstype: xfs
@@ -55,7 +55,7 @@
     update_cache: true
 
 - name: Open port for glusterfs communication
-  ansible.builtin.ufw:
+  community.general.ufw:
     rule: allow
     port: '5667'
     proto: any

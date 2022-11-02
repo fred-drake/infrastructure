@@ -3,8 +3,10 @@
   gather_facts: true
   become: true
   tasks:
-    - ansible.builtin.include_role:
+    - name: Gluster server prep
+      ansible.builtin.include_role:
         name: glusterfs-server
         tasks_from: prep
-    - ansible.builtin.include_role:
+    - name: Gluster server installation
+      ansible.builtin.include_role:
         name: glusterfs-server

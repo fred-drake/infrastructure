@@ -38,10 +38,12 @@
 
 - name: Initialize
   ansible.builtin.command:
-    cmd: >
-      maas init region+rack --database-uri
-      postgres://{{ secret.services.maas.postgres.user }}:{{ secret.services.maas.postgres.password }}@{{ secret.services.maas.postgres.ip }}:{{ secret.services.maas.postgres.port }}/maas
-      --maas-url https://maas.{{ secret.domain }}/MAAS
+    cmd: "maas init region+rack --database-uri \
+          postgres://{{ secret.services.maas.postgres.user }}:\
+          {{ secret.services.maas.postgres.password }}\
+          @{{ secret.services.maas.postgres.ip }}\
+          :{{ secret.services.maas.postgres.port }}/maas \
+          --maas-url https://maas.{{ secret.domain }}/MAAS"
   when: maas_status.stdout == 'MAAS is not configured'
 
 - name: Create admin user

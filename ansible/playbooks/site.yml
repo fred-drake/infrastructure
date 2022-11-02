@@ -21,16 +21,19 @@
     - cuda
     - cuda-docker
 
-- ansible.builtin.import_playbook: docker/critical_apps_primary.yml
-- ansible.builtin.import_playbook: docker/critical_apps_secondary.yml
-- ansible.builtin.import_playbook: docker/populate_containers.yml
+- name: Primary critical applications
+  ansible.builtin.import_playbook: docker/critical_apps_primary.yml
+- name: Non-swarm docker containers
+  ansible.builtin.import_playbook: docker/populate_containers.yml
 
 - name: K3s
   ansible.builtin.import_playbook: k3s.yml
 
-- ansible.builtin.import_playbook: swarm.yml
+- name: Docker Swarm
+  ansible.builtin.import_playbook: swarm.yml
 
-- ansible.builtin.import_playbook: dedicated_apps.yml
+- name: Dedicated apps
+  ansible.builtin.import_playbook: dedicated_apps.yml
 
 # - hosts: netboot-assets-bridge
 #   gather_facts: false
@@ -39,7 +42,8 @@
 #     - netboot_config
 #   tags: netboot_config
 
-- ansible.builtin.import_playbook: openwrt.yml
+- name: OpenWRT
+  ansible.builtin.import_playbook: openwrt.yml
 
 - name: DHCP
   ansible.builtin.import_playbook: dhcp.yml

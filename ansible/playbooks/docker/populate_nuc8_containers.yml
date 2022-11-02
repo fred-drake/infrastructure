@@ -1,4 +1,5 @@
-- hosts: nuc8
+- name: Nuc8 containers
+  hosts: nuc8
   gather_facts: false
   become: true
   roles:
@@ -247,7 +248,7 @@
             - "--path.sysfs=/host/sys"
             - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
       tags: prometheus
-  
+
     #### Promtail ####
     - role: promtail
       tags: promtail
