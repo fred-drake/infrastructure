@@ -1,0 +1,43 @@
+- name: Install libraries
+  ansible.builtin.apt:
+    name:
+      - php-curl
+    update_cache: true
+
+- name: Update hosts
+  ansible.builtin.blockinfile:
+    path: /etc/hosts
+    block: |
+      192.168.50.69 gitea.{{ secret.domain }}
+
+- name: Stat file
+  ansible.builtin.stat:
+    path: /usr/local/sbin/pihole-updatelists
+  register: filestat
+
+- name: Create tempfile
+  ansible.builtin.tempfile:
+    state: file
+    suffix: updatelists
+  register: scriptfile
+  when: not filestat.stat.exists
+
+- name: Download updatelists install script
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/jacklul/pihole-updatelists/master/install.sh
+    dest: "{{ scriptfile.path }}"
+    mode: "0755"
+  when: not filestat.stat.exists
+
+- name: Install updatelists
+  ansible.builtin.command:
+    cmd: "{{ scriptfile.path }}"
+  changed_when: true
+  when: not filestat.stat.exists
+
+- name: Apply configuration template
+  ansible.builtin.template:
+    src: pihole-updatelists.conf.j2
+    dest: /etc/pihole-updatelists.conf
+    mode: "0644"
+  notify: Update lists

@@ -14,7 +14,7 @@
   ansible.builtin.copy:
     src: avahi-daemon.conf
     dest: /etc/avahi/avahi-daemon.conf
-    mode: '0644'
+    mode: "0644"
   notify:
     - Restart avahi
   tags:

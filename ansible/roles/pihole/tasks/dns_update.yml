@@ -8,6 +8,7 @@
   run_once: true
 
 - name: Transfer pihole hosts
+  run_once: true
   ansible.builtin.template:
     src: hostlist.j2
     dest: /etc/pihole/custom.list
@@ -15,3 +16,6 @@
     backup: true
   notify:
     - Restart DNS
+
+- name: Flush handler
+  ansible.builtin.meta: flush_handlers

@@ -1,0 +1,7 @@
+- name: Sync pihole
+  ansible.builtin.command:
+    cmd: echo "Syncing"
+  changed_when: true
+  notify:
+    - Update lists
+    - Sync gravity database

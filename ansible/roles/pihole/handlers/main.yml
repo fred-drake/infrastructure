@@ -1,10 +1,14 @@
----
 - name: Restart DNS
   ansible.builtin.command:
     cmd: pihole restartdns
   become: false
+  notify: Sync gravity database
 
-- name: Execute pihole-updatelists
-  community.docker.docker_container_exec:
-    container: "{{ pihole_id }}"
-    command: /bin/bash -c /usr/local/sbin/pihole-updatelists
+- name: Update lists
+  run_once: true
+  ansible.builtin.command:
+    cmd: pihole-updatelists
+
+- name: Sync gravity database
+  run_once: true
+  ansible.builtin.command: gravity-sync update

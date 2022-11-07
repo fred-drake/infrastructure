@@ -44,7 +44,8 @@
     direction: in
     state: enabled
 
+- name: Install gravity sync
+  ansible.builtin.include_tasks: gravity_sync.yml
+
 - name: Update DNS
-  ansible.builtin.include_role:
-    name: pihole
-    tasks_from: dns_update
+  ansible.builtin.include_tasks: dns_update.yml

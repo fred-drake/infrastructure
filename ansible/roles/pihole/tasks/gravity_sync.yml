@@ -1,0 +1,78 @@
+- name: Apply public key to user account
+  ansible.posix.authorized_key:
+    user: "{{ ansible_user }}"
+    state: present
+    key: "{{ lookup('file', 'gravity_sync_public_key') }}"
+
+- name: Create gravity sync directory
+  ansible.builtin.file:
+    state: directory
+    path: "{{ gravity_sync_dir }}"
+    mode: '0755'
+
+- name: Add public key
+  ansible.builtin.copy:
+    src: gravity_sync_public_key
+    dest: "{{ gravity_sync_dir }}/gravity-sync.rsa.pub"
+    mode: '0644'
+
+- name: Add private key
+  ansible.builtin.copy:
+    content: "{{ gravity_sync_private_key }}\n"
+    dest: "{{ gravity_sync_dir }}/gravity-sync.rsa"
+    mode: '0600'
+
+- name: Apply configuration
+  ansible.builtin.template:
+    src: gravity-sync.conf.j2
+    dest: "{{ gravity_sync_dir }}/gravity-sync.conf"
+    mode: '0644'
+
+- name: Stat install directory
+  ansible.builtin.stat:
+    path: "{{ gravity_sync_dir }}/.gs"
+  register: gs
+
+- name: Ensure ssh directory exists
+  ansible.builtin.file:
+    state: directory
+    path: /root/.ssh
+    mode: '0700'
+
+- name: Ensure ssh config file exists
+  ansible.builtin.file:
+    state: touch
+    path: /root/.ssh/config
+    mode: '0644'
+
+- name: Remove strict host key checking between machines
+  ansible.builtin.blockinfile:
+    path: /root/.ssh/config
+    block: |
+      Host {{ gravity_sync_remote_host }}
+        StrictHostKeyChecking no
+
+- name: Assign temp file for install script
+  ansible.builtin.tempfile:
+    state: file
+    suffix: .gravity-sync-script
+  register: tempfile
+  when: not gs.stat.exists
+
+- name: Download install script
+  ansible.builtin.get_url:
+    url: https://gravity.vmstan.com
+    dest: "{{ tempfile.path }}"
+    mode: '0755'
+  when: not gs.stat.exists
+
+- name: Execute install script
+  ansible.builtin.command:
+    cmd: "{{ tempfile.path }}"
+  changed_when: true
+  when: not gs.stat.exists
+
+- name: Ensure we are running the latest gravity sync
+  ansible.builtin.command:
+    cmd: gravity-sync update
+  when: gs.stat.exists

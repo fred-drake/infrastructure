@@ -8,7 +8,6 @@
       ansible.builtin.include_role:
         name: glusterfs-server
         tasks_from: remove_node
-
 # - name: Drain node from docker swarm
 #   hosts: swarm_cluster
 #   gather_facts: false

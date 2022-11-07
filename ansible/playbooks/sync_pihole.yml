@@ -1,0 +1,8 @@
+- name: Sync pihole
+  hosts: pihole
+  become: true
+  tasks:
+    - name: Sync pihole
+      ansible.builtin.include_role:
+        name: pihole
+        tasks_from: sync_pihole
