@@ -38,7 +38,7 @@
   poll: 60
 
 - name: Compress image file and send to image storage
-  ansible.builtin.archive:
+  community.general.archive:
     format: xz
     path: "{{ build_dir.path }}/packer/output-arm-image/image"
     dest: "{{ image_storage_path }}/{{ image_type }}.xz"

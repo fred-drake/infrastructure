@@ -51,6 +51,11 @@
       ansible.builtin.set_fact:
         sha_checksum: "{{ input.content | b64decode | regex_search('^\\w+') }}"
       changed_when: false
+    - name: Create image storage directory
+      ansible.builtin.file:
+        path: "{{ image_storage_path }}"
+        state: directory
+        mode: '0755'
     - name: Get existing checksum file stat
       ansible.builtin.stat:
         path: "{{ image_storage_path }}/{{ image_type }}.orig.sha256"

@@ -23,11 +23,11 @@
     {
       "type": "shell",
       "inline": [
-        "mkdir /home/pi/.ssh",
-        "chmod 700 /home/pi/.ssh",
-        "curl https://github.com/fred-drake.keys > /home/pi/.ssh/authorized_keys",
-        "chmod 400 /home/pi/.ssh/authorized_keys",
-        "chown -R 1000:1000 /home/pi/.ssh"
+        "mkdir /home/{{ ansible_user }}/.ssh",
+        "chmod 700 /home/{{ ansible_user }}/.ssh",
+        "curl https://github.com/fred-drake.keys > /home/{{ ansible_user }}/.ssh/authorized_keys",
+        "chmod 400 /home/{{ ansible_user }}/.ssh/authorized_keys",
+        "chown -R 1000:1000 /home/{{ ansible_user }}/.ssh"
       ]
     }
   ]
