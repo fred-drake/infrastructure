@@ -22,7 +22,7 @@ all:
       hosts:
         docker2:
         docker5:
-        rp[1:3]:
+        rp[2:3]:
         nuc[1:9]:
         specops:
         pihole[1:2]:
@@ -39,6 +39,7 @@ all:
         kiosk:
         scoreboard:
         scannerpi:
+        rp1:
         rp[4:7]:
 
     # Proxmox servers
@@ -133,13 +134,14 @@ all:
     # Docker Swarm initial master.  Used as focal point when adding other nodes to swarm.
     swarm_initial_master:
       hosts:
-        rp1:
+        rp2:
 
     # Docker Swarm additional master nodes.
     swarm_additional_masters:
       hosts:
-        rp2:
         rp3:
+        rp1:
+        nuc1:
 
     swarm_masters:
       children:
@@ -148,7 +150,6 @@ all:
 
     swarm_workers:
       hosts:
-        nuc1:
         nuc3:
         nuc4:
         nuc5:
