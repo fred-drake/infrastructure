@@ -137,14 +137,16 @@ swarm_services:
             mode: host
   mqtt:
     name: mqtt
+    init_role: mqtt
     containers:
-      - repository: "docker-hub.{{ secret.domain }}/eclipse-mosquitto"
-        tag: 2.0.14
+      - repository: "eclipse-mosquitto"
+        # tag: 2.0.14
+        tag: latest
         bind_mounts:
           - source: config
             target: /mosquitto/config
-          - source: data
-            target: /mosquitto/data
+          # - source: data
+          #   target: /mosquitto/data
         publish:
           - published_port: 44622
             target_port: 1883
@@ -538,7 +540,7 @@ swarm_services:
         constraints:
           - node.role==manager
         web_hostname: traefik-swarm
-        repository: "docker-hub.{{ secret.domain }}/traefik"
+        repository: "traefik"
         tag: latest
         publish:
           - published_port: 80
@@ -574,5 +576,5 @@ swarm_services:
     name: whoogle
     containers:
       - web_port: 5000
-        repository: "docker-hub.{{ secret.domain }}/benbusby/whoogle-search"
+        repository: "benbusby/whoogle-search"
         tag: latest
