@@ -1,3 +1,9 @@
+- name: Create directory
+  ansible.builtin.file:
+    path: "{{ glusterfs_appdata_dir }}/traefik-swarm/traefik/data"
+    state: directory
+    mode: '0755'
+
 - name: Create empty acme.json file if it doesn't already exist
   ansible.builtin.file:
     path: "{{ glusterfs_appdata_dir }}/traefik-swarm/traefik/data/acme.json"
