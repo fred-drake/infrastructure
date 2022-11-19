@@ -1,3 +1,16 @@
+- name: Create directory
+  ansible.builtin.file:
+    path: "{{ appdir | default(glusterfs_appdata_dir) }}/traefik-{{ traefik_type }}"
+    state: directory
+    mode: "0755"
+
+- name: Set traefik route configuration
+  ansible.builtin.template:
+    src: "{{ traefik_type }}/config.yml.j2"
+    dest: "{{ appdir | default(glusterfs_appdata_dir) }}/traefik-{{ traefik_type }}/config.yml"
+    mode: "0644"
+  notify: Restart traefik
+
 - name: Create data directory
   ansible.builtin.file:
     path: "{{ appdir | default(glusterfs_appdata_dir) }}/traefik-{{ traefik_type }}/data"
@@ -17,13 +30,6 @@
   ansible.builtin.template:
     src: "{{ traefik_type }}/traefik.yml.j2"
     dest: "{{ appdir | default(glusterfs_appdata_dir) }}/traefik-{{ traefik_type }}/data/traefik.yml"
-    mode: "0644"
-  notify: Restart traefik
-
-- name: Set traefik route configuration
-  ansible.builtin.template:
-    src: "{{ traefik_type }}/config.yml.j2"
-    dest: "{{ appdir | default(glusterfs_appdata_dir) }}/traefik-{{ traefik_type }}/config.yml"
     mode: "0644"
   notify: Restart traefik
 
