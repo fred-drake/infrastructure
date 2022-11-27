@@ -11,7 +11,7 @@
   ansible.builtin.get_url:
     url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
     dest: /etc/apt/preferences.d/cuda-repository-pin-600
-    mode: '0644'
+    mode: "0644"
 
 - name: Add apt GPG key
   ansible.builtin.apt_key:

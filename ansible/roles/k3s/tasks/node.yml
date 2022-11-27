@@ -4,7 +4,7 @@
 #     dest: "{{ systemd_dir }}/k3s-node.service"
 #     owner: root
 #     group: root
-#     mode: '0755'
+#     mode: "0755"
 
 # - name: Enable and check K3s service
 #   ansible.builtin.systemd:
@@ -12,6 +12,11 @@
 #     daemon_reload: true
 #     state: started
 #     enabled: true
+
+# - name: Stat for existing k3s on this machine
+#   ansible.builtin.stat:
+#     path: /etc/rancher/k3s/k3s.yaml
+#   register: existing_k3s
 
 - name: Install this machine as a node
   delegate_to: localhost

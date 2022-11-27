@@ -35,3 +35,13 @@
       ansible.builtin.include_role:
         name: k3s
         tasks_from: node
+
+- name: Apply bootstrap
+  hosts: localhost
+  become: false
+  gather_facts: false
+  tasks:
+    - name: Apply bootstrap
+      ansible.builtin.include_role:
+        name: k3s
+        tasks_from: bootstrap
