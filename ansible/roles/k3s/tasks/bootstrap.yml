@@ -10,3 +10,9 @@
     namespace: argocd
     state: present
     src: "argocd_install.yml"
+
+- name: Apply ArgoCD Application Layer
+  kubernetes.core.k8s:
+    namespace: argocd
+    state: present
+    src: argocd_app.yml
