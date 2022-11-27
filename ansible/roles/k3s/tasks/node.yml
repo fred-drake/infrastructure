@@ -20,6 +20,7 @@
 
 - name: Install this machine as a node
   delegate_to: localhost
+  become: false
   ansible.builtin.command:
     cmd: >
       k3sup join --ip {{ ansible_default_ipv4.address }}
