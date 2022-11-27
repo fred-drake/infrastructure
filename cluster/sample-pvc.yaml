@@ -1,0 +1,13 @@
+# file: sample-pvc.yaml
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pv1
+spec:
+  storageClassName: kadalu.storage-pool-1
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
