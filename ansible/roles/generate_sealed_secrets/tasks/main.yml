@@ -1,0 +1,73 @@
+- name: Temp file | {{ secr.namespace + '/' + secr.name }}
+  ansible.builtin.tempfile:
+    state: file
+    suffix: .sealedsecret
+  register: secret_file
+  changed_when: false
+
+- name: Create secret | {{ secr.namespace + '/' + secr.name }}
+  ansible.builtin.template:
+    src: secret.json.j2
+    dest: "{{ secret_file.path }}"
+    mode: "0644"
+  changed_when: false
+
+- name: Convert to JSON | {{ secr.namespace + '/' + secr.name }}
+  ansible.builtin.copy:
+    content: "{{ lookup('file', secret_file.path) | from_yaml | to_json }}"
+    dest: "{{ secret_file.path }}"
+    mode: "0644"
+  changed_when: false
+
+- name: Stat JSON file for checksum
+  ansible.builtin.stat:
+    path: "{{ secret_file.path }}"
+    checksum_algorithm: sha256
+  register: secret_file_stat
+
+- name: Set checksum file
+  ansible.builtin.set_fact:
+    checksum_file: "{{ playbook_dir }}/../../cluster/sealed-secrets/sealed_{{ secr.namespace }}_{{ secr.name }}.sha256"
+
+- name: Stat checksum file
+  ansible.builtin.stat:
+    path: "{{ checksum_file }}"
+  register: checksum_file_stat
+
+- name: Initialize changed flag
+  ansible.builtin.set_fact:
+    content_changed: "{{ not checksum_file_stat.stat.exists }}"
+
+- name: Set changed flag
+  ansible.builtin.set_fact:
+    content_changed: true
+  when: >
+    checksum_file_stat.stat.exists and
+    lookup('file', checksum_file) != secret_file_stat.stat.checksum
+
+- name: Process through kubeseal | {{ secr.namespace + '/' + secr.name }}
+  ansible.builtin.shell:
+    cmd: "cat {{ secret_file.path }} | kubeseal -o yaml"
+  changed_when: false
+  register: sealed_yaml
+  when: content_changed
+
+- name: Sealed secret to YAML file | {{ secr.namespace + '/' + secr.name }}
+  ansible.builtin.copy:
+    content: "{{ sealed_yaml.stdout }}"
+    dest: "{{ playbook_dir }}/../../cluster/sealed-secrets/sealed_{{ secr.namespace }}_{{ secr.name }}.yaml"
+    mode: "0644"
+  when: content_changed
+
+- name: Write checksum content
+  ansible.builtin.copy:
+    content: "{{ secret_file_stat.stat.checksum }}"
+    dest: "{{ checksum_file }}"
+    mode: "0644"
+  when: content_changed
+
+- name: Delete temp file | {{ secr.namespace + '/' + secr.name }}
+  ansible.builtin.file:
+    state: absent
+    path: "{{ secret_file.path }}"
+  changed_when: false
