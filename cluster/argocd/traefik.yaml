@@ -9,8 +9,6 @@ spec:
     repoURL: https://github.com/fred-drake/infrastructure.git
     targetRevision: HEAD
     path: cluster/traefik
-    directory:
-      recurse: true
     helm:
       releaseName: traefik
   destination:
