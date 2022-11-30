@@ -1,0 +1,20 @@
+domain: internal.freddrake.com
+issuer: cloudflare
+email: fred.drake@gmail.com
+cert-manager:
+  installCRDs: false
+  webhook:
+      enabled: true
+  extraArgs:
+      - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
+      - --dns01-recursive-nameservers-only
+  replicaCount: 1
+  podDnsPolicy: "None"
+  podDnsConfig:
+      nameservers:
+      - "1.1.1.1"
+      - "9.9.9.9"
+  resource:
+      requests:
+          cpu: 100m
+          memory: 128Mi

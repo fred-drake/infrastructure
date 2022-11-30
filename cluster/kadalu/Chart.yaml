@@ -1,0 +1,4 @@
+apiVersion: v2
+name: kadalu
+version: 0.9.1
+

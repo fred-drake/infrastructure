@@ -1,0 +1,38 @@
+ argo-cd:
+  controller:
+    nodeSelector:
+      kubernetes.io/arch: amd64
+  repoServer:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 1000m
+    nodeSelector:
+        kubernetes.io/arch: amd64
+  dex:
+    nodeSelector:
+      kubernetes.io/arch: amd64
+  server:
+    config:
+      kustomize.buildOptions: "--enable-alpha-plugins"
+    nodeSelector:
+      kubernetes.io/arch: amd64
+    extraArgs:
+      - --insecure
+    ingress:
+      enabled: true
+      hosts:
+        - argocd.internal.freddrake.com
+      tls:
+        - hosts:
+            - argocd.internal.freddrake.com
+          secretName: argocd-tls
+      ingressClassName: "traefik"
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      paths: 
+        - "/" 
