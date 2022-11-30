@@ -28,3 +28,21 @@ traefik:
     requests:
       cpu: 100m
       memory: 128Mi
+  certResolvers:
+    letsencrypt:
+      dnsChallenge:
+        provider: cloudflare
+        delayBeforeCheck: 30
+        resolvers:
+          - 1.1.1.1
+          - 8.8.8.8
+      tlsChallenge: true
+      httpChallenge:
+        entryPoint: "web"
+      storage: /data/acme.json
+  persistence:
+    enabled: true
+    existingClaim: traefik-acme
+  envFrom:
+    - secretRef:
+        name: traefik
