@@ -45,4 +45,4 @@ traefik:
     existingClaim: traefik-acme
   envFrom:
     - secretRef:
-        name: traefik
+        name: traefik-acme
