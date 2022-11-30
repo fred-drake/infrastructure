@@ -31,10 +31,18 @@
     group: root
     mode: 0644
 
-- name: Copy metallb namespace to first master
+- name: Copy metallb crds to first master
   ansible.builtin.template:
     src: "metallb.crds.j2"
     dest: "/var/lib/rancher/k3s/server/manifests/metallb-crds.yaml"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy metallb config to first master
+  ansible.builtin.template:
+    src: "metallb.config.j2"
+    dest: "/var/lib/rancher/k3s/server/manifests/metallb-config.yaml"
     owner: root
     group: root
     mode: 0644

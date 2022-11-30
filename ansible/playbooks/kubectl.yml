@@ -1,0 +1,9 @@
+- name: Acquire remote kubectl
+  hosts: k8s_master
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Master
+      ansible.builtin.include_role:
+        name: k3s
+        tasks_from: kubectl

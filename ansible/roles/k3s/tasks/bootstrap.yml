@@ -1,18 +1,35 @@
-- name: Create ArgoCD namespace
-  kubernetes.core.k8s:
-    api_version: v1
-    kind: Namespace
+# - name: Create ArgoCD namespace
+#   kubernetes.core.k8s:
+#     api_version: v1
+#     kind: Namespace
+#     name: argocd
+#     state: present
+
+- name: ArgoCD helm
+  kubernetes.core.helm:
     name: argocd
-    state: present
+    chart_ref: "{{ playbook_dir }}/../../cluster/argocd"
+    release_namespace: argocd
+    create_namespace: true
+    values:
+      domain: internal.freddrake.com
+      argo-cd:
+        server:
+          ingress:
+            hosts:
+              - argocd.internal.freddrake.com
+            tls:
+              - hosts:
+                  - argocd.internal.freddrake.com
+                secretName: argocd-tls
+# - name: Apply ArgoCD
+#   kubernetes.core.k8s:
+#     namespace: argocd
+#     state: present
+#     src: "argocd_install.yml"
 
-- name: Apply ArgoCD
-  kubernetes.core.k8s:
-    namespace: argocd
-    state: present
-    src: "argocd_install.yml"
-
-- name: Apply ArgoCD Application Layer
-  kubernetes.core.k8s:
-    namespace: argocd
-    state: present
-    src: argocd_app.yml
+# - name: Apply ArgoCD Application Layer
+#   kubernetes.core.k8s:
+#     namespace: argocd
+#     state: present
+#     src: argocd_app.yml

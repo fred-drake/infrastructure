@@ -112,6 +112,7 @@ all:
     k8s_node:
       hosts:
         nuc2:
+        nuc6:
 
     # All docker container servers
     docker:
@@ -153,7 +154,6 @@ all:
         nuc3:
         nuc4:
         nuc5:
-        nuc6:
 
   #################################
   # CONTAINER-SPECIFIC            #
@@ -223,7 +223,6 @@ all:
     glusterfs_server:
       hosts:
         nuc5:
-        nuc6:
         nuc4:
 
     # Machines that use the GlusterFS cluster
@@ -233,6 +232,11 @@ all:
       hosts:
         nuc8:
         nuc9:
+
+    # Kubernetes nodes hosting Kadalu drives
+    kadalu: 
+      hosts:
+        nuc6:
 
     # Hosts with CIFS clients
     cifs:

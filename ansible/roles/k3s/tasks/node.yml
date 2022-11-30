@@ -28,3 +28,9 @@
       --user {{ ansible_user }}
       --ssh-key "{{ playbook_dir }}/../../id_ansible"
   changed_when: true
+
+- name: Wait for k8s node to be ready
+  delegate_to: localhost
+  ansible.builtin.command: kubectl wait --for=condition=Ready nodes {{ ansible_hostname }} --timeout=600s
+  # when: existing_master is not defined and not existing_k3s.stat.exists
+  changed_when: false
