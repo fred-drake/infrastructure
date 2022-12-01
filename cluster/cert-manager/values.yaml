@@ -2,7 +2,6 @@ domain: internal.freddrake.com
 issuer: cloudflare
 email: fred.drake@gmail.com
 cert-manager:
-  namespace: security
   installCRDs: true
   webhook:
       enabled: true
