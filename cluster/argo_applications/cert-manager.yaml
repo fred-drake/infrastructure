@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kadalu
+  name: cert-manager
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/fred-drake/infrastructure.git
     targetRevision: HEAD
-    path: cluster/kadalu
+    path: cluster/cert-manager
     helm:
-      releaseName: kadalu
+      releaseName: cert-manager
   destination:
     server: https://kubernetes.default.svc
-    namespace: kadalu
+    namespace: cert-manager
   syncPolicy:
     automated:
       prune: false
