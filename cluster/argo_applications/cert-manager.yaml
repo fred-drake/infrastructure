@@ -11,7 +11,9 @@ spec:
     path: cluster/cert-manager
     helm:
       releaseName: cert-manager
-      version: v3
+      parameters:
+        - name: installCRDs
+          value: "true"
   destination:
     server: https://kubernetes.default.svc
     namespace: cert-manager
