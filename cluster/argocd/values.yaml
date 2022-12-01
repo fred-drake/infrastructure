@@ -22,17 +22,17 @@
       kubernetes.io/arch: amd64
     # extraArgs:
     #   - --insecure
-    # ingress:
-    #   enabled: true
-    #   hosts:
-    #     - argocd.internal.freddrake.com
-    #   tls:
-    #     - hosts:
-    #         - argocd.internal.freddrake.com
-    #       secretName: argocd-tls
-    #   ingressClassName: "traefik"
-    #   annotations:
-    #     cert-manager.io/cluster-issuer: letsencrypt-production
-    #     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-    #   paths: 
-    #     - "/" 
+    ingress:
+      enabled: true
+      hosts:
+        - argocd.internal.freddrake.com
+      tls:
+        - hosts:
+            - argocd.internal.freddrake.com
+          secretName: argocd-tls
+      ingressClassName: "traefik"
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      paths: 
+        - "/" 
