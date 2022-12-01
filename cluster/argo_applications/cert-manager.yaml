@@ -11,6 +11,7 @@ spec:
     path: cluster/cert-manager
     helm:
       releaseName: cert-manager
+      version: v3
   destination:
     server: https://kubernetes.default.svc
     namespace: cert-manager
