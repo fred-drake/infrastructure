@@ -1,0 +1,14 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: traefik-dashboard-auth
+  namespace: traefik
+spec:
+  encryptedData:
+    users: AgA03+PHTvdcghKMoxfSPRCnltCCjl4JpUgxkzgO5c10BLq7o0TFw6FAllN0BtpFgV1gW+6KAUUyicU/jOzxqRBzlc+n+RcvML1SzmVoLNhAny4cZ4VXpQYTn+9zEs+6uf/g/Qy5UW7OGcl9+UxW9ZNQ5M4rw5MUnmDNiZ3cUqmrQIErfII7Tg8Cqj2dmKPK+wMVlExZRNkwZnKBZV07cHCvWkPP+K4WofULXl30KqZlLXlA5iYO3LF7szjmxdU8hICV/vo3qrIHYI9QJmQ+pLnmKlj6fBn6M2j+Yr7x1TD8ITjgRAfvKYXWwGEMcXBoVVhQrxwaKEHpVM2+eMp09SPqlGo+msBNkmbvhrhf0jdWE1swzr3KYTiwxxcZb4cJMEll7wFppzryZP9lF2cvSMX+EJ6JsM6rO4t/cZsfOQ0yCZSk2noJhrjXYeTrhnVcoRvUd/cLOKpPPq4trv3JuCBuoWYfOXWVn/r38YCUsn4u6OYOU8n63uzNqlAF7BMaAxEeqKWLNbhRsLZ0SKdjYyzeTzoETsVUC0uORu1YQyevAa09ZwkkCYigDCEGLD4grsX2kUwKeZRFUBFp+qGEeJv+N4tdBGZNNqpRClxbrjdFace73PhrSdPdhRdZPWva6rfxMmuBggDfEJykVaG8i2ftyd+ZjVbmdFM591ih8rZWHsXG8wsObHuoTWRhRkrBp7TOua8hSrecY7shw86+Xh6+VI7Q2ftR3N+Cthu0womWHsLzE3oyZPktQIcd
+  template:
+    metadata:
+      creationTimestamp: null
+      name: traefik-dashboard-auth
+      namespace: traefik
