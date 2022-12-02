@@ -33,7 +33,7 @@ traefik:
     kubernetesIngress:
       enabled: true
       publishedService:
-        enabled: true
+        enabled: false
 
   rbac:
     enabled: true
