@@ -24,7 +24,14 @@ traefik:
 
   ingressRoute:
     dashboard:
-      enabled: false
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik-external
+      matchRule: Host(`traefik.internal.freddrake.com`)
+      entryPoints:
+        - websecure
+      middlewares:
+        - traefik-dashboard-basicauth
 
   providers:
     kubernetesCRD:
