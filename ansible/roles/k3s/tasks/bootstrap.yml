@@ -22,6 +22,12 @@
               - hosts:
                   - argocd.internal.freddrake.com
                 secretName: argocd-tls
+
+- name: ArgoCD root application
+  kubernetes.core.k8s:
+    namespace: argocd
+    state: present
+    src: ../../../../cluster/argo_applications/root-application.yaml
 # - name: Apply ArgoCD
 #   kubernetes.core.k8s:
 #     namespace: argocd
