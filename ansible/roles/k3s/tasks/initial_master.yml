@@ -6,47 +6,6 @@
     group: root
     mode: 0644
 
-- name: Copy vip rbac manifest to first master
-  ansible.builtin.template:
-    src: "vip.rbac.yaml.j2"
-    dest: "/var/lib/rancher/k3s/server/manifests/vip-rbac.yaml"
-    owner: root
-    group: root
-    mode: 0644
-
-- name: Copy vip manifest to first master
-  ansible.builtin.template:
-    src: "vip.yaml.j2"
-    dest: "/var/lib/rancher/k3s/server/manifests/vip.yaml"
-    owner: root
-    group: root
-    mode: 0644
-
-# these will be copied and installed now, then tested later and apply config
-- name: Copy metallb namespace to first master
-  ansible.builtin.template:
-    src: "metallb.namespace.j2"
-    dest: "/var/lib/rancher/k3s/server/manifests/metallb-namespace.yaml"
-    owner: root
-    group: root
-    mode: 0644
-
-- name: Copy metallb crds to first master
-  ansible.builtin.template:
-    src: "metallb.crds.j2"
-    dest: "/var/lib/rancher/k3s/server/manifests/metallb-crds.yaml"
-    owner: root
-    group: root
-    mode: 0644
-
-- name: Copy metallb config to first master
-  ansible.builtin.template:
-    src: "metallb.config.j2"
-    dest: "/var/lib/rancher/k3s/server/manifests/metallb-config.yaml"
-    owner: root
-    group: root
-    mode: 0644
-
 - name: Install k3s onto machine as initial master
   delegate_to: localhost
   ansible.builtin.command:
