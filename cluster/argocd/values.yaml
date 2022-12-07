@@ -30,9 +30,9 @@
         - hosts:
             - argocd.internal.freddrake.com
           secretName: argocd-tls
-      ingressClassName: traefik-external
+      # ingressClassName: traefik-external
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-production
-        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        # traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
       paths: 
         - "/" 
