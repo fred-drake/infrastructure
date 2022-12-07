@@ -20,8 +20,8 @@
       kustomize.buildOptions: "--enable-alpha-plugins"
     nodeSelector:
       kubernetes.io/arch: amd64
-    # extraArgs:
-    #   - --insecure
+    extraArgs:
+      - --insecure
     ingress:
       enabled: true
       hosts:
