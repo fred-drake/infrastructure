@@ -16,6 +16,11 @@
     tasks_from: initial_master
   when: existing_master is not defined and not existing_k3s.stat.exists
 
+- name: Pause to let the initial master initialize before checking
+  ansible.builtin.pause:
+    seconds: 30
+  when: existing_master is not defined and not existing_k3s.stat.exists
+
 # - name: Install k3s onto machine as additional master
 # TODO
 

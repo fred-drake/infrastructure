@@ -6,6 +6,7 @@
 #     state: present
 
 - name: ArgoCD helm
+  delegate_to: localhost
   kubernetes.core.helm:
     name: argocd
     chart_ref: "{{ playbook_dir }}/../../cluster/argocd"
@@ -24,6 +25,7 @@
                 secretName: argocd-tls
 
 - name: ArgoCD root application
+  delegate_to: localhost
   kubernetes.core.k8s:
     namespace: argocd
     state: present

@@ -37,7 +37,8 @@
         tasks_from: node
 
 - name: Apply bootstrap
-  hosts: localhost
+  hosts: k8s_master
+  run_once: true
   become: false
   gather_facts: false
   tasks:
