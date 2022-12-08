@@ -3,6 +3,7 @@ ENV SOPS_VERSION=3.7.3
 ENV GITLEAKS_VERSION=8.11.2
 ENV HADOLINT_VERSION=2.10.0
 ENV SEALED_SECRETS_VERSION=0.19.2
+ENV YQ_VERSION=4.30.5
 WORKDIR /tmp
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update && \
@@ -42,6 +43,9 @@ RUN if [ `cat arch` == "amd64" ]; then echo x86_64 > arch; fi
 RUN curl -LO https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-`cat arch` && \
   chmod +x hadolint-Linux-`cat arch` && \
   mv hadolint-Linux-`cat arch` /usr/local/bin/hadolint
+RUN curl -LO https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_`cat arch` && \
+  chmod +x yq_linux_`cat arch` && \
+  mv yq_linux_`cat arch` /usr/local/bin/yq
 
 FROM base as staging
 COPY --from=builder /usr/local/bin/sops /usr/local/bin/sops
@@ -49,6 +53,7 @@ COPY --from=builder /usr/local/bin/gitleaks /usr/local/bin/gitleaks
 COPY --from=builder /usr/local/bin/hadolint /usr/local/bin/hadolint
 COPY --from=builder /usr/local/bin/k3sup /usr/local/bin/k3sup
 COPY --from=builder /usr/local/bin/kubeseal /usr/local/bin/kubeseal
+COPY --from=builder /usr/local/bin/yq /usr/local/bin/yq
 
 FROM staging as development
 WORKDIR /workspaces/infrastructure
