@@ -1,3 +1,4 @@
+postgresClaimSize: 10Gi
 postgresql:
   image:
     tag: "12"
@@ -5,4 +6,3 @@ postgresql:
   secretName: postgresql-credentials
   database: netbox
   existingClaim: netbox-postgresql-data
-  postgresClaimSize: 10Gi
