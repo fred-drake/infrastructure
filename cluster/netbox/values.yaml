@@ -1,0 +1,6 @@
+postgresql:
+  image:
+    tag: "12"
+  username: postgres
+  secretName: postgresql-credentials
+  database: netbox
