@@ -1,0 +1,12 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ required "pvc name required!" .Values.name }}
+spec:
+  storageClassName: kadalu.storage-pool-1
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ required "pvc storage required!" .Values.storage }}
+
