@@ -1,0 +1,5 @@
+name: redis
+image: 
+  repository: redis
+  tag: latest
+
