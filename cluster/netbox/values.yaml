@@ -5,6 +5,4 @@ postgresql:
   secretName: postgresql-credentials
   database: netbox
   existingClaim: netbox-postgresql-data
-postgresql-pvc:
-  name: netbox-postgresql-data
-  storage: 10Gi
+  postgresClaimSize: 10Gi
