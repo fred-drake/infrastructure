@@ -5,5 +5,8 @@ dependencies:
 - name: redis
   repository: file://../redis
   version: 1.0.0
-digest: sha256:4ffa71628d43813c07abb8e5507e459161375f40b202b5c4d361dedfb97d025e
-generated: "2022-12-08T23:08:26.405295-05:00"
+- name: postgresql-pvc
+  repository: file://../pvc
+  version: 1.0.0
+digest: sha256:e4b64d76f57f820f96e9ee3fc6305b3adf3c5d8375299738abc512b7ee1bf639
+generated: "2022-12-08T23:44:10.320218-05:00"
