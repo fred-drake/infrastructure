@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name | quote }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ .Values.name | quote }}
+  {{- if .Values.annotations }}
+  annotations:
+{{ toYaml .Values.annotations | indent 4 }}
+  {{- end }}
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name | quote }}
+    spec:
+      containers:
+      - name: postgres
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        {{- if .Values.resources }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        {{- end }}
+        ports:
+          - name: postgres
+            containerPort: 5432
+        volumeMounts:
+          - name: pg-data
+            mountPath: /var/lib/postgresql
+        env:
+          - name: POSTGRES_USER
+            value: {{ .Values.username }}
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ required "secretName value required!" .Values.secretName }}
+                key: password
+          - name: POSTGRES_DB
+            value: {{ .Values.database }}
+      volumes:
+        - name: pg-data
+          persistentVolumeClaim:
+            claimName: {{ required "existingClaim value required!" .Values.existingClaim }}
+

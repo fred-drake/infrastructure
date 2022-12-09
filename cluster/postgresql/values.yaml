@@ -1,0 +1,6 @@
+name: postgresql
+image: 
+  repository: postgres
+  tag: latest
+username: postgres
+database: postgres
