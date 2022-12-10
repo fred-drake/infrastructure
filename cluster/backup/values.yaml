@@ -1,12 +1,12 @@
 # Each instance of a k8s backup.
 #
 # Example:
-# instances:
-#   - name: myservice
-#     claimName: myservice-pvc
-#   - name: postgres
-#     claimName: pg-data-pvc
-instances: []
+# volumes:
+#   - name: data
+#     claimName: myservice-data-pvc
+#   - name: config
+#     claimName: myservice-config-pvc
+volumes: []
 
 image:
   repository: ghcr.io/fred-drake/k8s-backup
@@ -15,3 +15,11 @@ secretName: backup-credentials
 
 postgresql:
   enabled: false
+# host:
+# database:
+# credentialsSecretName:
+# backupFile:
+mysql:
+  enabled: false
+# host:
+# credentialsSecretName:

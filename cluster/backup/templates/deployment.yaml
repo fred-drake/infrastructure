@@ -1,15 +1,13 @@
-{{- range .Values.instances }}
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backup-{{ required "name value required!" .name }}
-  namespace: {{ $.Release.Namespace | quote }}
+  namespace: {{ .Release.Namespace | quote }}
   labels:
     app: backup-{{ .name }}
-  {{- if $.Values.annotations }}
+  {{- if .Values.annotations }}
   annotations:
-{{ toYaml $.Values.annotations | indent 4 }}
+{{ toYaml .Values.annotations | indent 4 }}
   {{- end }}
 spec:
   selector:
@@ -22,38 +20,73 @@ spec:
     spec:
       containers:
         - name: backup-{{ .name }}
-          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
-          {{- if $.Values.resources }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          {{- if .Values.resources }}
           resources:
-{{ toYaml $.Values.resources | indent 12 }}
+{{ toYaml .Values.resources | indent 12 }}
           {{- end }}
           volumeMounts:
-            - name: backup-vol
+          {{- range .Values.volumes }}
+            - name: {{ required "volumes[].name value required!" .name }}
               mountPath: /backup/{{ $.Release.Namespace }}/{{ .name }}
+          {{- end }}
           env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef: 
-                  name: {{ required "secretName value required!" $.Values.secretName }}
+                  name: {{ required "secretName value required!" .Values.secretName }}
                   key: awsAccessKeyID
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef: 
-                  name: {{ required "secretName value required!" $.Values.secretName }}
+                  name: {{ required "secretName value required!" .Values.secretName }}
                   key: awsSecretAccessKey
             - name: RESTIC_REPOSITORY
               value: s3:http://minio-backup-app.internal.freddrake.com:9000/restic
             - name: RESTIC_PASSWORD
               valueFrom:
                 secretKeyRef: 
-                  name: {{ required "secretName value required!" $.Values.secretName }}
+                  name: {{ required "secretName value required!" .Values.secretName }}
                   key: resticPassword
             - name: NAMESPACE
-              value: {{ $.Release.Namespace }}
-            - name: TESTING
-              value: volume{{ $.Values.postgresql.enabled | ternary ",postgresql" "" }}
+              value: {{ .Release.Namespace }}
+            - name: BACKUP_TYPES
+              value: volume{{ $.Values.postgresql.enabled | ternary ",postgresql" "" }}{{ .Values.mysql.enabled | ternary ",mysql" "" }}
+            {{- if .Values.postgresql.enabled }}
+            - name: PG_HOST
+              value: {{ required "postgresql.host required!" .Values.postgresql.host }}
+            - name: PG_DATABASE
+              value: {{ required "postgresql.database value required!" .Values.postgresql.database }}
+            - name: PG_USER
+              valueFrom:
+                secretKeyRef: 
+                  name: {{ required "postgresql.credentialsSecretName value required!" .Values.postgresql.credentialsSecretName }}
+                  key: username
+            - name: PG_PASSWORD
+              valueFrom:
+                secretKeyRef: 
+                  name: {{ required "postgresql.credentialsSecretName value required!" .Values.postgresql.credentialsSecretName }}
+                  key: password
+            - name: PG_BACKUP_FILE
+              value: {{ required "postgresql.backupFile value required!" .Values.postgresql.backupFile }}
+            {{- end }}
+            {{- if .Values.mysql.enabled }}
+            - name: MYSQL_HOST
+              value: {{ required "mysql.host required!" .Values.mysql.host }}
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef: 
+                  name: {{ required "mysql.credentialsSecretName value required!" .Values.mysql.credentialsSecretName }}
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef: 
+                  name: {{ required "mysql.credentialsSecretName value required!" .Values.mysql.credentialsSecretName }}
+                  key: password
+            {{- end }}
       volumes:
-        - name: backup-vol
+        {{- range .Values.volumes }}
+        - name: {{ required "volumes[].name value required!" .name }}
           persistentVolumeClaim:
-            claimName: {{ required "claimName value required!" .claimName }}
-{{- end }}
+            claimName: {{ required "volumes[].claimName value required!" .claimName }}
+        {{- end }}

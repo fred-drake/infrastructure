@@ -20,7 +20,6 @@ postgresql:
   image:
     repository: postgres
     tag: 12
-  username: postgres
   secretName: postgres-credentials
   database: netbox
   existingClaim: netbox-postgresql-data
@@ -33,8 +32,12 @@ redis:
   port: 6379
 
 backup:
-  instances:
+  volumes:
     - name: config
       claimName: netbox-config
   postgresql:
     enabled: true
+    host: postgresql.netbox.svc.cluster.local
+    database: netbox
+    credentialsSecretName: postgres-credentials
+    backupFile: netbox.sql
