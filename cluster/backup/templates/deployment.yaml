@@ -50,6 +50,8 @@ spec:
                   key: resticPassword
             - name: NAMESPACE
               value: {{ $.Release.Namespace }}
+            - name: TESTING
+              value: volume{{ .Values.postgresql.enabled == true | ternary ",postgresql" "" }}
       volumes:
         - name: backup-vol
           persistentVolumeClaim:

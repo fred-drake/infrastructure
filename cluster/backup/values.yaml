@@ -12,3 +12,6 @@ image:
   repository: ghcr.io/fred-drake/k8s-backup
   tag: latest
 secretName: backup-credentials
+
+postgresql:
+  enabled: false
