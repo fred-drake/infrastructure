@@ -36,3 +36,5 @@ backup:
   instances:
     - name: config
       claimName: netbox-config
+  postgresql:
+    enabled: true
