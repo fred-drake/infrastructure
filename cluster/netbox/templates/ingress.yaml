@@ -10,14 +10,14 @@ spec:
     - host: netbox.internal.freddrake.com
       http:
         paths:
-        - backend:
-            service:
-              name: {{ .Values.name | quote }}
-              port:
-                number: 80
-          path: /
-          pathType: Prefix
+          - backend:
+              service:
+                name: {{ .Values.name | quote }}
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
     tls:
-    - hosts:
-      - netbox.internal.freddrake.com
-      secretName: netbox-tls
+      - hosts:
+          - netbox.internal.freddrake.com
+        secretName: netbox-tls
