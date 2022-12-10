@@ -29,15 +29,25 @@
   ansible.builtin.set_fact:
     secret_dir: "{{ playbook_dir }}/../../cluster/{{ secr.namespace }}/templates/secrets"
 
-- name: Ensure directory exists
+- name: Set checksum directory
+  ansible.builtin.set_fact:
+    checksum_dir: "{{ playbook_dir }}/../../cluster/{{ secr.namespace }}/checksums"
+
+- name: Ensure secret directory exists
   ansible.builtin.file:
     state: directory
     path: "{{ secret_dir }}"
     mode: "0755"
 
+- name: Ensure checksum directory exists
+  ansible.builtin.file:
+    state: directory
+    path: "{{ checksum_dir }}"
+    mode: "0755"
+
 - name: Set checksum file
   ansible.builtin.set_fact:
-    checksum_file: "{{ secret_dir }}/{{ secr.name }}.sha256"
+    checksum_file: "{{ checksum_dir }}/{{ secr.name }}.sha256"
 
 - name: Stat checksum file
   ansible.builtin.stat:

@@ -1,7 +1,9 @@
 - name: Find all directories containing secrets
   ansible.builtin.find:
     paths: "{{ playbook_dir }}/../../cluster"
-    patterns: secrets
+    patterns:
+      - secrets
+      - checksums
     recurse: true
     file_type: directory
   register: secret_directories
