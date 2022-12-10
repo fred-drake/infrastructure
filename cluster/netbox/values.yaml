@@ -2,8 +2,8 @@ name: netbox
 image:
   repository: linuxserver/netbox
   tag: 3.1.11
-puid: 99
-pgid: 100
+puid: "99"
+pgid: "100"
 secretName: credentials
 allowedHost: netbox.internal.freddrake.com
 postgresClaimSize: 10Gi
