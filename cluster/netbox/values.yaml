@@ -9,6 +9,13 @@ allowedHost: netbox.internal.freddrake.com
 postgresClaimSize: 10Gi
 existingClaim: netbox-config
 claimSize: 1Gi
+service:
+  port: 80
+ingress:
+  enabled: true
+  clusterIssuer: letsencrypt-production
+  host: netbox.internal.freddrake.com
+
 postgresql:
   image:
     repository: postgres
@@ -20,6 +27,7 @@ postgresql:
   nodePort: 30177
   host: postgresql.netbox.svc.cluster.local
   port: 5432
+
 redis:
   host: redis.netbox.svc.cluster.local
   port: 6379
