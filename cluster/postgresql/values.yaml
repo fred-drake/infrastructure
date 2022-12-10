@@ -4,3 +4,4 @@ image:
   tag: latest
 username: postgres
 database: postgres
+port: 5432

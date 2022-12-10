@@ -6,8 +6,14 @@ metadata:
 spec:
   selector:
     app: {{ .Values.name | quote }}
+  {{- if .Values.nodePort }}
   type: NodePort
+  {{- else }}
+  type: ClusterIP
+  {{- end }}
   ports:
-    - port: 5432
+    - port: {{ .Values.port }}
       targetPort: postgres
-      nodePort: 30177
+      {{- if .Values.nodePort }}
+      nodePort: {{ .Values.nodePort }}
+      {{- end }}

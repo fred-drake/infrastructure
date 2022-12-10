@@ -30,4 +30,4 @@ spec:
             value: "yes"
           ports:
             - name: redis
-              containerPort: 6379
+              containerPort: {{ .Values.port }}

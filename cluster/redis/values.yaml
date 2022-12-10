@@ -2,4 +2,4 @@ name: redis
 image: 
   repository: redis
   tag: latest
-
+port: 6379

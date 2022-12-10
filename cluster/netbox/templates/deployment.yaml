@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name | quote }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ .Values.name | quote }}
+  {{- if .Values.annotations }}
+  annotations:
+{{ toYaml .Values.annotations | indent 4 }}
+  {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.name | quote }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name | quote }}
+    spec:
+      containers:
+        - name: netbox
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          {{- if .Values.resources }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          {{- end }}
+          ports:
+            - name: web
+              containerPort: 8000
+          volumeMounts:
+            - name: netbox-config
+              mountPath: /config
+          env:
+            - name: PUID
+              value: {{ .Values.puid }}
+            - name: PGID
+              value: {{ .Values.pgid }}
+            - name: SUPERUSER_EMAIL
+              valueFrom:
+                secretKeyRef: 
+                  name: {{ required "secretName value required!" .Values.secretName }}
+                  key: superuserEmail
+            - name: SUPERUSER_PASSWORD
+              valueFrom:
+                secretKeyRef: 
+                  name: {{ required "secretName value required!" .Values.secretName }}
+                  key: superuserPassword
+            - name: ALLOWED_HOST
+              value: {{ .Values.allowedHost }}
+            - name: DB_NAME
+              value: {{ .Values.postgresql.database }}
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ required "postgresql.secretName value required!" .Values.postgresql.secretName }}
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ required "postgresql.secretName value required!" .Values.postgresql.secretName }}
+                  key: password
+            - name: DB_HOST
+              value: {{ .Values.postgresql.host }}
+            - name: DB_PORT
+              value: {{ .Values.postgresql.port }}
+            - name: REDIS_HOST
+              value: {{ .Values.redis.host }}
+            - name: REDIS_PORT
+              value: {{ .Values.redis.port }}
+      volumes:
+        - name: netbox-config
+          persistentVolumeClaim:
+            claimName: {{ required "existingClaim value required!" .Values.existingClaim }}
+
+
