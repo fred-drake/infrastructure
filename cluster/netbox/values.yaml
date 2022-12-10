@@ -3,6 +3,6 @@ postgresql:
   image:
     tag: "12"
   username: postgres
-  secretName: postgresql-credentials
+  secretName: postgres-credentials
   database: netbox
   existingClaim: netbox-postgresql-data
