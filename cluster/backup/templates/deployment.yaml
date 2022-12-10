@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backup-{{ required "name value required!" .name }}
+  name: backup-{{ required "name value required!" .Values.name }}
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    app: backup-{{ .name }}
+    app: backup-{{ .Values.name }}
   {{- if .Values.annotations }}
   annotations:
 {{ toYaml .Values.annotations | indent 4 }}
@@ -12,14 +12,14 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: backup-{{ .name }}
+      app: backup-{{ .Values.name }}
   template:
     metadata:
       labels:
-        app: backup-{{ .name }}
+        app: backup-{{ .Values.name }}
     spec:
       containers:
-        - name: backup-{{ .name }}
+        - name: backup-{{ .Values.name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           {{- if .Values.resources }}
           resources:
