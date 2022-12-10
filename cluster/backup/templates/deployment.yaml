@@ -51,7 +51,7 @@ spec:
             - name: NAMESPACE
               value: {{ $.Release.Namespace }}
             - name: TESTING
-              value: volume{{ .Values.postgresql.enabled | ternary ",postgresql" "" }}
+              value: volume{{ $.Values.postgresql.enabled | ternary ",postgresql" "" }}
       volumes:
         - name: backup-vol
           persistentVolumeClaim:
