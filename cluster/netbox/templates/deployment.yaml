@@ -33,9 +33,9 @@ spec:
               mountPath: /config
           env:
             - name: PUID
-              value: {{ .Values.puid }}
+              value: {{ .Values.puid | quote }}
             - name: PGID
-              value: {{ .Values.pgid }}
+              value: {{ .Values.pgid | quote }}
             - name: SUPERUSER_EMAIL
               valueFrom:
                 secretKeyRef: 
@@ -63,11 +63,11 @@ spec:
             - name: DB_HOST
               value: {{ .Values.postgresql.host }}
             - name: DB_PORT
-              value: {{ .Values.postgresql.port }}
+              value: {{ .Values.postgresql.port | quote }}
             - name: REDIS_HOST
               value: {{ .Values.redis.host }}
             - name: REDIS_PORT
-              value: {{ .Values.redis.port }}
+              value: {{ .Values.redis.port | quote }}
       volumes:
         - name: netbox-config
           persistentVolumeClaim:

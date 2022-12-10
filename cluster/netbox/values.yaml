@@ -2,8 +2,8 @@ name: netbox
 image:
   repository: linuxserver/netbox
   tag: 3.1.11
-puid: "99"
-pgid: "100"
+puid: 99
+pgid: 100
 secretName: credentials
 allowedHost: netbox.internal.freddrake.com
 postgresClaimSize: 10Gi
@@ -12,14 +12,14 @@ claimSize: 1Gi
 postgresql:
   image:
     repository: postgres
-    tag: "12"
+    tag: 12
   username: postgres
   secretName: postgres-credentials
   database: netbox
   existingClaim: netbox-postgresql-data
   nodePort: 30177
   host: postgresql.netbox.svc.cluster.local
-  port: "5432"
+  port: 5432
 redis:
   host: redis.netbox.svc.cluster.local
-  port: "6379"
+  port: 6379
