@@ -25,9 +25,19 @@
     checksum_algorithm: sha256
   register: secret_file_stat
 
+- name: Set secret directory
+  ansible.builtin.set_fact:
+    secret_dir: "{{ playbook_dir }}/../../cluster/{{ secr.namespace }}/templates/secrets"
+
+- name: Ensure directory exists
+  ansible.builtin.file:
+    state: directory
+    path: "{{ secret_dir }}"
+    mode: "0755"
+
 - name: Set checksum file
   ansible.builtin.set_fact:
-    checksum_file: "{{ playbook_dir }}/../../cluster/sealed-secrets/sealed_{{ secr.namespace }}_{{ secr.name }}.sha256"
+    checksum_file: "{{ secret_dir }}/{{ secr.name }}.sha256"
 
 - name: Stat checksum file
   ansible.builtin.stat:
@@ -55,7 +65,7 @@
 - name: Sealed secret to YAML file | {{ secr.namespace + '/' + secr.name }}
   ansible.builtin.copy:
     content: "{{ sealed_yaml.stdout }}"
-    dest: "{{ playbook_dir }}/../../cluster/sealed-secrets/sealed_{{ secr.namespace }}_{{ secr.name }}.yaml"
+    dest: "{{ secret_dir }}/{{ secr.name }}.yaml"
     mode: "0644"
   when: content_changed
 

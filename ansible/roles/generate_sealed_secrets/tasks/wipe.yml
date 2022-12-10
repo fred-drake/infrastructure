@@ -1,0 +1,15 @@
+- name: Find all directories containing secrets
+  ansible.builtin.find:
+    paths: "{{ playbook_dir }}/../../cluster"
+    patterns: secrets
+    recurse: true
+    file_type: directory
+  register: secret_directories
+
+- name: Wipe secret directories
+  ansible.builtin.file:
+    state: absent
+    path: "{{ item.path }}"
+  loop: "{{ secret_directories.files }}"
+  loop_control:
+    label: "{{ item.path }}"
