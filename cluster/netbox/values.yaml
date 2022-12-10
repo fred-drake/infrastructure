@@ -31,3 +31,8 @@ postgresql:
 redis:
   host: redis.netbox.svc.cluster.local
   port: 6379
+
+backup:
+  instances:
+    - name: config
+      claimName: netbox-config

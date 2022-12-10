@@ -1,0 +1,57 @@
+{{- range .Values.instances }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backup-{{ required "name value required!" .name }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: backup-{{ .name }}
+  {{- if .Values.annotations }}
+  annotations:
+{{ toYaml .Values.annotations | indent 4 }}
+  {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: backup-{{ .name }}
+  template:
+    metadata:
+      labels:
+        app: backup-{{ .name }}
+    spec:
+      containers:
+        - name: backup-{{ .name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          {{- if .Values.resources }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: backup-vol
+              mountPath: /backup/{{ .Release.Namespace }}/{{ .name }}
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef: 
+                  name: {{ required "secretName value required!" .Values.secretName }}
+                  key: awsAccessKeyID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef: 
+                  name: {{ required "secretName value required!" .Values.secretName }}
+                  key: awsSecretAccessKey
+            - name: RESTIC_REPOSITORY
+              value: s3:http://minio-backup-app.internal.freddrake.com:9000/restic
+            - name: RESTIC_PASSWORD
+              valueFrom:
+                secretKeyRef: 
+                  name: {{ required "secretName value required!" .Values.secretName }}
+                  key: resticPassword
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+      volumes:
+        - name: backup-vol
+          persistentVolumeClaim:
+            claimName: {{ required "claimName value required!" .claimName }}
+{{- end }}

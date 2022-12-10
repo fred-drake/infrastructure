@@ -67,7 +67,7 @@
 
 - name: Process through kubeseal | {{ secr.namespace + '/' + secr.name }}
   ansible.builtin.shell:
-    cmd: "cat {{ secret_file.path }} | kubeseal -o yaml"
+    cmd: "cat {{ secret_file.path }} | kubeseal --scope {{ secr.scope | default('strict') }} -o yaml"
   changed_when: false
   register: sealed_yaml
   when: content_changed

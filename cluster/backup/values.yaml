@@ -1,0 +1,14 @@
+# Each instance of a k8s backup.
+#
+# Example:
+# instances:
+#   - name: myservice
+#     claimName: myservice-pvc
+#   - name: postgres
+#     claimName: pg-data-pvc
+instances: []
+
+image:
+  repository: ghcr.io/fred-drake/k8s-backup
+  tag: latest
+secretName: backup-credentials

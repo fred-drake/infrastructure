@@ -5,5 +5,8 @@ dependencies:
 - name: redis
   repository: file://../redis
   version: 1.0.0
-digest: sha256:4ffa71628d43813c07abb8e5507e459161375f40b202b5c4d361dedfb97d025e
-generated: "2022-12-08T23:48:16.315434-05:00"
+- name: backup
+  repository: file://../backup
+  version: 1.0.0
+digest: sha256:ca9e2348b401489764c1b5fddd163600f30ed40b710e12c28b6370667d2a3fc9
+generated: "2022-12-10T01:02:15.128152-05:00"
