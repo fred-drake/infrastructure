@@ -17,7 +17,7 @@ spec:
                   number: 80
             path: /
             pathType: Prefix
-    tls:
-      - hosts:
-          - netbox.internal.freddrake.com
-        secretName: netbox-tls
+  tls:
+    - hosts:
+        - netbox.internal.freddrake.com
+      secretName: netbox-tls
