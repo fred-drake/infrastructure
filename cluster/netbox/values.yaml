@@ -19,6 +19,7 @@ postgresql:
   existingClaim: netbox-postgresql-data
   nodePort: 30177
   host: postgresql.netbox.svc.cluster.local
+  port: 5432
 redis:
   host: redis.netbox.svc.cluster.local
   port: 6379
