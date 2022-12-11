@@ -53,7 +53,7 @@ persistence:
     accessMode: ReadWriteMany
     size: 20Ti
     mountPath: /downloads
-    storageClass: ""
+    storageClass: "-"
     volumeName: sonarr-torrent
 
 monitoring:
