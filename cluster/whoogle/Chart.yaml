@@ -1,0 +1,8 @@
+apiVersion: v2
+name: whoogle
+version: 1.0.0
+dependencies:
+  - name: helm-common
+    version: 1.0.0
+    repository: "file://../helm-common"
+
