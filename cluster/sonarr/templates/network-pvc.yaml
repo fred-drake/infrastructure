@@ -51,17 +51,17 @@ spec:
     resources:
         requests:
             storage: 20Ti
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-    name: sonarr-torrent
-    namespace: sonarr
-spec:
-    storageClassName: ""
-    volumeName: sonarr-torrent
-    accessModes:
-        - ReadWriteMany
-    resources:
-        requests:
-            storage: 20Ti
+{{/* --- */}}
+{{/* apiVersion: v1 */}}
+{{/* kind: PersistentVolumeClaim */}}
+{{/* metadata: */}}
+{{/*     name: sonarr-torrent */}}
+{{/*     namespace: sonarr */}}
+{{/* spec: */}}
+{{/*     storageClassName: "" */}}
+{{/*     volumeName: sonarr-torrent */}}
+{{/*     accessModes: */}}
+{{/*         - ReadWriteMany */}}
+{{/*     resources: */}}
+{{/*         requests: */}}
+{{/*             storage: 20Ti */}}
