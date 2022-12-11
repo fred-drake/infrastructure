@@ -58,3 +58,9 @@ persistence:
 
 monitoring:
   enabled: false
+
+backup:
+  name: sonarr
+  volumes:
+    - name: config
+      claimName: sonarr-config
