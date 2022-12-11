@@ -15,7 +15,7 @@ spec:
         - nfsvers=4
         - async
     nfs:
-        path: /nfs/videos
+        path: /videos
         server: 192.168.50.51
 ---
 apiVersion: v1
@@ -35,7 +35,7 @@ spec:
         - nfsvers=4
         - async
     nfs:
-        path: /nfs/torrent
+        path: /torrent
         server: 192.168.50.51
 ---
 apiVersion: v1
