@@ -6,7 +6,7 @@ Main entrypoint for the common library chart. It will render all underlying temp
   {{- include "common.values.setup" . }}
 
   {{- /* Enable code-server add-on if required */ -}}
-  {{- if .Values.addons.codeserver.enabled }}
+  {{- if $.Values.addons.codeserver.enabled }}
     {{- include "common.addon.codeserver" . }}
   {{- end -}}
 
