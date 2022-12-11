@@ -42,13 +42,13 @@ persistence:
     mountPath: /config
   videos:
     enabled: true
-    existingClaim: sonarr-videos
+    # existingClaim: sonarr-videos
     accessMode: ReadWriteMany
     size: 20Ti
     mountPath: /videos
   torrent:
     enabled: true
-    existingClaim: sonarr-torrent
+    # existingClaim: sonarr-torrent
     accessMode: ReadWriteMany
     size: 20Ti
     mountPath: /downloads
