@@ -18,10 +18,10 @@ ingress:
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-production
     hosts:
-      host: whoogle.internal.freddrake.com
-      paths:
-        - path: /
-          pathType: Prefix
+      - host: whoogle.internal.freddrake.com
+        paths:
+          - path: /
+            pathType: Prefix
     tls:
       - hosts:
           - whoogle.internal.freddrake.com
