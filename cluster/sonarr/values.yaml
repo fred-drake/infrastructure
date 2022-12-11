@@ -1,0 +1,57 @@
+image:
+  repository: linuxserver/sonarr
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resource:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+env:
+  TZ: America/New_York
+
+service:
+  main:
+    ports:
+      http:
+        port: 8989
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    hosts:
+      - host: sonarr.internal.freddrake.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - hosts:
+          - sonarr.internal.freddrake.com
+        secretName: sonarr-tls
+
+persistence:
+  config:
+    enabled: true
+    # existingClaim: sonarr-config
+    storageClass: kadalu.storage-pool-1
+    accessMode: ReadWriteMany
+    size: 20Gi
+    mountPath: /config
+  videos:
+    enabled: true
+    existingClaim: sonarr-videos
+    accessMode: ReadWriteMany
+    size: 20Ti
+    mountPath: /videos
+  torrent:
+    enabled: true
+    existingClaim: sonarr-torrent
+    accessMode: ReadWriteMany
+    size: 20Ti
+    mountPath: /downloads
+
+monitoring:
+  enabled: false

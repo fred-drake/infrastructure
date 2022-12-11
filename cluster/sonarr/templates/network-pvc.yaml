@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: sonarr-videos
+    annotations:
+        velero.io/exclude-from-backup: "true"
+spec:
+    storageClassName: ""
+    capacity:
+        storage: 20Ti
+    accessModes:
+        - ReadWriteMany
+    persistentVolumeReclaimPolicy: Retain
+    mountOptions:
+        - nfsvers=4
+        - async
+    nfs:
+        path: /mnt/user/videos
+        server: 192.168.50.51
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: sonarr-torrent
+    annotations:
+        velero.io/exclude-from-backup: "true"
+spec:
+    storageClassName: ""
+    capacity:
+        storage: 20Ti
+    accessModes:
+        - ReadWriteMany
+    persistentVolumeReclaimPolicy: Retain
+    mountOptions:
+        - nfsvers=4
+        - async
+    nfs:
+        path: /mnt/user/torrent
+        server: 192.168.50.51
