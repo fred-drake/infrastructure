@@ -77,7 +77,7 @@ spec:
   {{- range $name, $port := $values.ports }}
   {{- if $port.enabled }}
   - port: {{ $port.port }}
-    targetPort: {{ $port.targetPort | default $name }}
+    targetPort: {{ $port.targetPort | default $port.port }}
     {{- if $port.protocol }}
     {{- if or ( eq $port.protocol "HTTP" ) ( eq $port.protocol "HTTPS" ) ( eq $port.protocol "TCP" ) }}
     protocol: TCP
