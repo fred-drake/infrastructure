@@ -40,20 +40,6 @@ persistence:
     accessMode: ReadWriteMany
     size: 20Gi
     mountPath: /config
-  videos:
-    enabled: true
-    # existingClaim: sonarr-videos
-    accessMode: ReadWriteMany
-    size: 20Ti
-    mountPath: /videos
-    storageClassName: ""
-  torrent:
-    enabled: true
-    # existingClaim: sonarr-torrent
-    accessMode: ReadWriteMany
-    size: 20Ti
-    mountPath: /downloads
-    storageClassName: ""
 
 monitoring:
   enabled: false

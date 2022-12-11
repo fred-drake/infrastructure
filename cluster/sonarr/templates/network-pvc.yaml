@@ -37,3 +37,31 @@ spec:
     nfs:
         path: /mnt/user/torrent
         server: 192.168.50.51
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: sonarr-videos
+    namespace: sonarr
+spec:
+    storageClassName: ""
+    volumeName: sonarr-videos
+    accessModes:
+        - ReadWriteMany
+    resources:
+        requests:
+            storage: 20Ti
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: sonarr-torrent
+    namespace: sonarr
+spec:
+    storageClassName: ""
+    volumeName: sonarr-torrent
+    accessModes:
+        - ReadWriteMany
+    resources:
+        requests:
+            storage: 20Ti
