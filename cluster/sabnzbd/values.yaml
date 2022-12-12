@@ -1,0 +1,57 @@
+image:
+  repository: linuxserver/sabnzbd
+  tag: 3.5.0
+
+resource:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+env:
+  TZ: America/New_York
+  PUID: "99"
+  PGID: "100"
+
+service:
+  main:
+    ports:
+      http:
+        port: 8080
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    hosts:
+      - host: sabnzbd.internal.freddrake.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - hosts:
+          - sabnzbd.internal.freddrake.com
+        secretName: sabnzbd-tls
+
+persistence:
+  config:
+    enabled: true
+    # existingClaim: sabnzbd-config
+    storageClass: kadalu.storage-pool-1
+    accessMode: ReadWriteMany
+    size: 20Gi
+    mountPath: /config
+  downloads:
+    enabled: true
+    existingClaim: sabnzbd-downloads
+    mountPath: /downloads
+    storageClass: "-"
+  incomplete:
+    enabled: true
+    existingClaim: sabnzbd-incomplete
+    mountPath: /incomplete-downloads
+    storageClass: "-"
+
+monitoring:
+  enabled: false
+
