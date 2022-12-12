@@ -1,6 +1,6 @@
 image:
-  repository: linuxserver/sonarr
-  tag: latest
+  repository: lscr.io/linuxserver/prowlarr
+  tag: nightly
   pullPolicy: IfNotPresent
 
 resource:
@@ -15,7 +15,7 @@ service:
   main:
     ports:
       http:
-        port: 8989
+        port: 9696
 
 ingress:
   main:
@@ -23,14 +23,14 @@ ingress:
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-production
     hosts:
-      - host: sonarr.internal.freddrake.com
+      - host: prowlarr.internal.freddrake.com
         paths:
           - path: /
             pathType: Prefix
     tls:
       - hosts:
-          - sonarr.internal.freddrake.com
-        secretName: sonarr-tls
+          - prowlarr.internal.freddrake.com
+        secretName: prowlarr-tls
 
 persistence:
   config:
@@ -40,27 +40,12 @@ persistence:
     accessMode: ReadWriteMany
     size: 20Gi
     mountPath: /config
-  # videos:
-  #   enabled: true
-  #   # existingClaim: sonarr-videos
-  #   accessMode: ReadWriteMany
-  #   size: 20Ti
-  #   mountPath: /videos
-  #   storageClass: kadalu.storage-pool-1
-  torrent:
-    enabled: true
-    # existingClaim: sonarr-torrent
-    accessMode: ReadWriteMany
-    size: 20Ti
-    mountPath: /downloads
-    storageClass: "-"
-    volumeName: sonarr-torrent
 
 monitoring:
   enabled: false
 
 backup:
-  name: sonarr
+  name: prowlarr
   volumes:
     - name: config
-      claimName: sonarr-config
+      claimName: prowlarr-config
