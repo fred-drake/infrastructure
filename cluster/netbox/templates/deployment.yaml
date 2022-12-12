@@ -28,9 +28,6 @@ spec:
           ports:
             - name: web
               containerPort: 8000
-          volumeMounts:
-            - name: netbox-config
-              mountPath: /config
           env:
             - name: PUID
               value: {{ .Values.puid | quote }}
@@ -68,9 +65,5 @@ spec:
               value: {{ .Values.redis.host }}
             - name: REDIS_PORT
               value: {{ .Values.redis.port | quote }}
-      volumes:
-        - name: netbox-config
-          persistentVolumeClaim:
-            claimName: {{ required "existingClaim value required!" .Values.existingClaim }}
 
 
