@@ -1,6 +1,7 @@
 image:
   repository: linuxserver/sabnzbd
   tag: 3.5.0
+  pullPolicy: IfNotPresent
 
 resource:
   requests:
@@ -54,4 +55,10 @@ persistence:
 
 monitoring:
   enabled: false
+
+backup:
+  name: sabnzbd
+  volumes:
+    - name: config
+      claimName: sabnzbd-config
 
