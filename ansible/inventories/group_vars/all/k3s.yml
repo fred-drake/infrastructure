@@ -1,6 +1,6 @@
 k3s_version: v1.24.6+k3s1
 
-apiserver_endpoint: "192.168.50.150"
+apiserver_endpoint: "192.168.50.4"
 
 systemd_dir: /etc/systemd/system
 
