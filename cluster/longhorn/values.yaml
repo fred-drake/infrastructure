@@ -2,17 +2,9 @@ longhorn:
   ingress:
     enabled: true
     host: longhorn.internal.freddrake.com
-    ingressClassName: traefik
     tls: true
     tlsSecret: longhorn-tls
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-production
-  resources:
-    requests:
-      cpu: 100m
-      memory: 128Mi
   defaultSettings:
     createDefaultDiskLabeledNodes: true
-  service:
-    manager:
-      type: NodePort
