@@ -57,3 +57,10 @@
   become: true
   roles:
     - provision/raspberry_pi/pi4_raspbian
+
+- name: Install NFS client
+  hosts: nfs_client
+  gather_facts: false
+  become: true
+  roles:
+    - nfs-client

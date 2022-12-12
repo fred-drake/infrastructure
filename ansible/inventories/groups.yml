@@ -254,6 +254,11 @@ all:
       hosts:
         nuc9:
 
+    # Servers requiring NFS client software
+    nfs_client:
+      children:
+        k3s:
+
     # # Server containing the Omada software
     # omada:
     #   hosts:
