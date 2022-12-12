@@ -7,8 +7,6 @@ pgid: 100
 secretName: credentials
 allowedHost: netbox.internal.freddrake.com
 postgresClaimSize: 10Gi
-existingClaim: netbox-config
-claimSize: 1Gi
 service:
   port: 80
 ingress:
@@ -33,9 +31,9 @@ redis:
 
 backup:
   name: netbox
-  volumes:
-    - name: config
-      claimName: netbox-config
+  # volumes:
+    # - name: config
+      # claimName: netbox-config
   postgresql:
     enabled: true
     host: postgresql.netbox.svc.cluster.local
