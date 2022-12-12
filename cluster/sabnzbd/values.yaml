@@ -44,12 +44,16 @@ persistence:
     mountPath: /config
   downloads:
     enabled: true
+    accessMode: ReadWriteMany
     mountPath: /downloads
     storageClass: "-"
+    volumeName: sabnzbd-downloads
   incomplete:
     enabled: true
+    accessMode: ReadWriteMany
     mountPath: /incomplete-downloads
     storageClass: "-"
+    volumeName: sabnzbd-incomplete
 
 monitoring:
   enabled: false
