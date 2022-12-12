@@ -44,12 +44,10 @@ persistence:
     mountPath: /config
   downloads:
     enabled: true
-    existingClaim: sabnzbd-downloads
     mountPath: /downloads
     storageClass: "-"
   incomplete:
     enabled: true
-    existingClaim: sabnzbd-incomplete
     mountPath: /incomplete-downloads
     storageClass: "-"
 
