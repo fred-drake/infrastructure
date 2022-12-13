@@ -112,6 +112,7 @@ all:
     k8s_node:
       hosts:
         nuc2:
+        nuc4:
         nuc6:
 
     # All docker container servers
@@ -152,7 +153,6 @@ all:
     swarm_workers:
       hosts:
         nuc3:
-        nuc4:
         nuc5:
 
   #################################
@@ -223,7 +223,6 @@ all:
     glusterfs_server:
       hosts:
         nuc5:
-        nuc4:
 
     # Machines that use the GlusterFS cluster
     glusterfs_client:
