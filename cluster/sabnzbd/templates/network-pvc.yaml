@@ -35,5 +35,5 @@ spec:
         - nfsvers=4
         - async
     nfs:
-        path: /sonarr-torrent
+        path: /sabnzbd_downloads_incomplete
         server: 192.168.50.51
