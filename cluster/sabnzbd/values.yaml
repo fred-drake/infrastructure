@@ -47,12 +47,14 @@ persistence:
     accessMode: ReadWriteMany
     mountPath: /downloads
     storageClass: "-"
+    size: 20Ti
     volumeName: sabnzbd-downloads
   incomplete:
     enabled: true
     accessMode: ReadWriteMany
     mountPath: /incomplete-downloads
     storageClass: "-"
+    size: 20Ti
     volumeName: sabnzbd-incomplete
 
 monitoring:
