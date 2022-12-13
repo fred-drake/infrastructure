@@ -40,16 +40,15 @@ persistence:
     accessMode: ReadWriteMany
     size: 20Gi
     mountPath: /config
-  # videos:
-  #   enabled: true
-  #   # existingClaim: sonarr-videos
-  #   accessMode: ReadWriteMany
-  #   size: 20Ti
-  #   mountPath: /videos
-  #   storageClass: kadalu.storage-pool-1
+  videos:
+    enabled: true
+    accessMode: ReadWriteMany
+    size: 20Ti
+    mountPath: /videos
+    storageClass: "-"
+    volumeName: sonarr-videos
   torrent:
     enabled: true
-    # existingClaim: sonarr-torrent
     accessMode: ReadWriteMany
     size: 20Ti
     mountPath: /downloads
