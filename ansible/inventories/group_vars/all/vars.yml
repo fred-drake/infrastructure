@@ -322,7 +322,7 @@ swarm_services:
             target: /backup
       - name: paperless-redis
         repository: "docker-hub.{{ secret.domain }}/redis"
-        tag: 6.2.6          
+        tag: 6.2.6
   pihole_exporter:
     name: pihole-exporter
     containers:
@@ -400,9 +400,9 @@ swarm_services:
           # Force on all nodes, both workers and managers.
           - node.role != foo
         command: >
-            /bin/sh -c
-            "export HOSTNAME=`/bin/cat /etc/hostname` &&
-            /usr/bin/promtail --client.external-labels=host=$HOSTNAME --config.file=/etc/promtail/config.yml"
+          /bin/sh -c
+          "export HOSTNAME=`/bin/cat /etc/hostname` &&
+          /usr/bin/promtail --client.external-labels=host=$HOSTNAME --config.file=/etc/promtail/config.yml"
         bind_mounts:
           - source: config
             target: /etc/promtail
