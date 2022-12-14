@@ -6,7 +6,7 @@ rook-ceph:
     enabled: true
   resources:
     requests:
-      cpu: 10m
+      cpu: 5m
       memory: 128Mi
     limits:
       memory: 256Mi
@@ -88,7 +88,7 @@ rook-ceph-cluster:
           activeStandby: true
           resources:
             requests:
-              cpu: 1000m
+              cpu: 500m
               memory: 2Gi
             limits:
               memory: 2Gi
@@ -124,7 +124,7 @@ rook-ceph-cluster:
           port: 80
           resources:
             requests:
-              cpu: 1000m
+              cpu: 500m
               memory: 512Mi
             limits:
               memory: 1Gi
