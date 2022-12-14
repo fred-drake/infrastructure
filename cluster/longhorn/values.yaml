@@ -1,0 +1,8 @@
+longhorn:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    tls: true
+    tlsSecret: longhorn-tls
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
