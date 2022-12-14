@@ -18,7 +18,7 @@ rook-ceph-cluster:
   ingress:
     dashboard:
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-production
+        cert-manager.io/cluster-issuer: letsencrypt-staging
       host:
         name: &host "rook.internal.freddrake.com"
         path: /

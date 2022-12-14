@@ -21,7 +21,7 @@ ingress:
   main:
     enabled: true
     annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-production
+      cert-manager.io/cluster-issuer: letsencrypt-staging
     hosts:
       - host: prowlarr.internal.freddrake.com
         paths:

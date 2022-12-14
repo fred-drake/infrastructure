@@ -5,7 +5,7 @@ metadata:
   name: {{ .Values.ingress.name | default .Values.name | quote }}
   namespace: {{ .Release.Namespace | quote }}
   annotations:
-    cert-manager.io/cluster-issuer: {{ .Values.ingress.clusterIssuer | default "letsencrypt-production" | quote }}
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.clusterIssuer | default "letsencrypt-staging" | quote }}
 spec:
   rules:
     - host: {{ required "ingress.host not defined!" .Values.ingress.host | quote }}
