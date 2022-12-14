@@ -37,8 +37,8 @@ persistence:
     enabled: true
     # existingClaim: sonarr-config
     # storageClass: kadalu.storage-pool-1
-    storageClass: ceph-block
-    accessMode: ReadWriteMany
+    storageClass: ceph-filesystem
+    accessMode: ReadWriteOnce
     size: 20Gi
     mountPath: /config
   videos:
