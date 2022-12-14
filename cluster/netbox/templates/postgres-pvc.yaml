@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: {{ required "pvc name required!" .Values.postgresql.existingClaim }}
 spec:
-  storageClassName: kadalu.storage-pool-1
+  storageClassName: longhorn
   accessModes:
     - ReadWriteMany
   resources:
