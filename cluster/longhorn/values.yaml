@@ -7,3 +7,5 @@ longhorn:
     tlsSecret: longhorn-tls
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-production
+  defaultSettings:
+    createDefaultDiskLabeledNodes: true
