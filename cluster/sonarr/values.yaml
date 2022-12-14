@@ -37,7 +37,7 @@ persistence:
     enabled: true
     # existingClaim: sonarr-config
     # storageClass: kadalu.storage-pool-1
-    storageClass: ceph-filesystem
+    storageClass: longhorn
     accessMode: ReadWriteOnce
     size: 20Gi
     mountPath: /config
