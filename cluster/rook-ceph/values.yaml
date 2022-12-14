@@ -7,9 +7,9 @@ rook-ceph:
   resources:
     requests:
       cpu: 5m
-      memory: 128Mi
+      memory: 64Mi
     limits:
-      memory: 256Mi
+      memory: 128Mi
 
 rook-ceph-cluster:
   monitoring:
@@ -89,9 +89,9 @@ rook-ceph-cluster:
           resources:
             requests:
               cpu: 500m
-              memory: 2Gi
+              memory: 1Gi
             limits:
-              memory: 2Gi
+              memory: 1Gi
       storageClass:
         enabled: true
         isDefault: false
@@ -125,9 +125,9 @@ rook-ceph-cluster:
           resources:
             requests:
               cpu: 500m
-              memory: 512Mi
+              memory: 256Mi
             limits:
-              memory: 1Gi
+              memory: 512Mi
           instances: 1
         healthCheck:
           bucket:
