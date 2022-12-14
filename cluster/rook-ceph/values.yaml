@@ -17,12 +17,15 @@ rook-ceph-cluster:
     createPrometheusRules: false
   ingress:
     dashboard:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
       host:
         name: &host "rook.internal.freddrake.com"
         path: /
       tls:
         - hosts:
             - *host
+          secretName: rook-ceph-tls
   configOverride: |
     [global]
     bdev_enable_discard = true
