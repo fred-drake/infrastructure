@@ -13,8 +13,8 @@ rook-ceph:
 
 rook-ceph-cluster:
   monitoring:
-    enabled: true
-    createPrometheusRules: true
+    enabled: false
+    createPrometheusRules: false
   ingress:
     dashboard:
       host:
