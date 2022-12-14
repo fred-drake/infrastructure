@@ -61,6 +61,6 @@ monitoring:
 
 backup:
   name: sonarr
-  volumes:
-    - name: config
-      claimName: sonarr-config
+  # volumes:
+    # - name: config
+      # claimName: sonarr-config
