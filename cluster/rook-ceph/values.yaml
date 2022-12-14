@@ -89,9 +89,9 @@ rook-ceph-cluster:
           resources:
             requests:
               cpu: 1000m
-              memory: 4Gi
+              memory: 2Gi
             limits:
-              memory: 4Gi
+              memory: 2Gi
       storageClass:
         enabled: true
         isDefault: false
@@ -125,9 +125,9 @@ rook-ceph-cluster:
           resources:
             requests:
               cpu: 1000m
-              memory: 1Gi
+              memory: 512Mi
             limits:
-              memory: 2Gi
+              memory: 1Gi
           instances: 1
         healthCheck:
           bucket:
