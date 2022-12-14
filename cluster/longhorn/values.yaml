@@ -2,6 +2,7 @@ longhorn:
   ingress:
     enabled: true
     ingressClassName: traefik
+    host: longhorn.internal.freddrake.com
     tls: true
     tlsSecret: longhorn-tls
     annotations:
