@@ -1,0 +1,61 @@
+image:
+  repository: linuxserver/radarr
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resource:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+env:
+  TZ: America/New_York
+
+service:
+  main:
+    ports:
+      http:
+        port: 7878
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+    hosts:
+      - host: radarr.internal.freddrake.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - hosts:
+          - radarr.internal.freddrake.com
+        secretName: radarr-tls
+
+persistence:
+  config:
+    enabled: true
+    storageClass: longhorn
+    accessMode: ReadWriteOnce
+    size: 20Gi
+    mountPath: /config
+  videos:
+    enabled: true
+    accessMode: ReadWriteMany
+    size: 20Ti
+    mountPath: /videos
+    storageClass: "-"
+    volumeName: radarr-videos
+  torrent:
+    enabled: true
+    accessMode: ReadWriteMany
+    size: 20Ti
+    mountPath: /downloads
+    storageClass: "-"
+    volumeName: radarr-torrent
+
+monitoring:
+  enabled: false
+
+backup:
+  name: radarr
