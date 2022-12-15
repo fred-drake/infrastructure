@@ -1,4 +1,4 @@
-- name: Testing
+- name: K3s prerequisites
   hosts: k3s
   gather_facts: true
   become: true
@@ -15,6 +15,16 @@
       ansible.builtin.include_role:
         name: k3s
         tasks_from: raspberry
+
+- name: Longhorn setup
+  hosts: k8s_storage
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Setup longhorn disks
+      ansible.builtin.include_role:
+        name: k3s
+        tasks_from: longhorn
 
 - name: K8s master
   hosts: k8s_master

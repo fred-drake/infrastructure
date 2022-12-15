@@ -105,10 +105,18 @@ all:
         k8s_master:
         k8s_node:
 
+    # Kubernetes masters 
     k8s_master:
       hosts:
         nuc7:
 
+    # Kubernetes storage nodes
+    k8s_storage:
+      hosts:
+        nuc4:
+        nuc6:
+
+    # Kubernetes worker nodes
     k8s_node:
       hosts:
         nuc2:
@@ -235,7 +243,6 @@ all:
     # Kubernetes nodes hosting Kadalu drives
     kadalu: 
       hosts:
-        nuc6:
 
     # Hosts with CIFS clients
     cifs:
