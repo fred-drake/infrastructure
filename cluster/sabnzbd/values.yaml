@@ -39,19 +39,19 @@ persistence:
     enabled: true
     # existingClaim: sabnzbd-config
     storageClass: longhorn
-    accessMode: ReadWriteMany
+    accessMode: ReadWriteOnce
     size: 20Gi
     mountPath: /config
   downloads:
     enabled: true
-    accessMode: ReadWriteMany
+    accessMode: ReadWriteOnce
     mountPath: /downloads
     storageClass: "-"
     size: 20Ti
     volumeName: sabnzbd-downloads
   incomplete:
     enabled: true
-    accessMode: ReadWriteMany
+    accessMode: ReadWriteOnce
     mountPath: /incomplete-downloads
     storageClass: "-"
     size: 20Ti
@@ -62,7 +62,4 @@ monitoring:
 
 backup:
   name: sabnzbd
-  volumes:
-    - name: config
-      claimName: sabnzbd-config
 

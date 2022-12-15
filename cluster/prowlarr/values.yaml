@@ -37,7 +37,7 @@ persistence:
     enabled: true
     # existingClaim: sonarr-config
     storageClass: longhorn
-    accessMode: ReadWriteMany
+    accessMode: ReadWriteOnce
     size: 20Gi
     mountPath: /config
 
@@ -46,6 +46,3 @@ monitoring:
 
 backup:
   name: prowlarr
-  volumes:
-    - name: config
-      claimName: prowlarr-config
