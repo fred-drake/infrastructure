@@ -11,7 +11,7 @@ service:
   port: 80
 ingress:
   enabled: true
-  clusterIssuer: letsencrypt-staging
+  clusterIssuer: letsencrypt-production
   host: netbox.internal.freddrake.com
 
 postgresql:
