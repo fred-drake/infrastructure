@@ -43,7 +43,7 @@ persistence:
     enabled: true
     accessMode: ReadWriteMany
     size: 20Ti
-    mountPath: /videos
+    mountPath: /movies
     storageClass: "-"
     volumeName: radarr-videos
   torrent:
