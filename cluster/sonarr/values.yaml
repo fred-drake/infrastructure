@@ -43,14 +43,14 @@ persistence:
     mountPath: /config
   videos:
     enabled: true
-    accessMode: ReadWriteOnce
+    accessMode: ReadWriteMany
     size: 20Ti
     mountPath: /videos
     storageClass: "-"
     volumeName: sonarr-videos
   torrent:
     enabled: true
-    accessMode: ReadWriteOnce
+    accessMode: ReadWriteMany
     size: 20Ti
     mountPath: /downloads
     storageClass: "-"
