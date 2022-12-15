@@ -1,0 +1,11 @@
+apiVersion: v2
+name: overseerr
+version: 1.0.0
+dependencies:
+  - name: common
+    version: 1.0.0
+    repository: "file://../helm-common"
+  - name: backup
+    version: 1.0.0
+    repository: "file://../backup"
+
