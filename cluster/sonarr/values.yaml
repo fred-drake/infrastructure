@@ -62,5 +62,6 @@ monitoring:
 volsync-app:
   name: sonarr
   pvc: sonarr-config
+  schedule: "30 * * * *"
 # backup:
   # name: sonarr
