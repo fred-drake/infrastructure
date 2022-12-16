@@ -1,0 +1,8 @@
+volsync:
+  manageCRDs: true
+  metrics:
+    disableAuth: true
+snapscheduler:
+  manageCRDs: true
+  metrics:
+    disableAuth: true

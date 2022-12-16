@@ -1,0 +1,10 @@
+apiVersion: v2
+name: volsync
+version: 1.0.0
+dependencies:
+  - name: volsync
+    version: 0.5.0
+    repository: https://backube.github.io/helm-charts/
+  - name: snapscheduler
+    version: 3.2.0
+    repository: https://backube.github.io/helm-charts/
