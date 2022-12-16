@@ -1,0 +1,15 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: {{ required "name value required" .Values.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  sourcePVC: {{ required "pvc value required" .Values.pvc }}
+  trigger:
+    schedule: {{ .Values.schedule }}
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: {{ .Values.pruneIntervalDays }}
+    repository: {{ .Values.pvc }}-restic
+    retain:
+{{ toYaml .Values.retain | indent 6 }}

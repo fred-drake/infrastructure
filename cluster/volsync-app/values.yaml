@@ -1,0 +1,7 @@
+schedule: "0 0 * * *"
+pruneIntervalDays: 14
+retain:
+  hourly: 6
+  daily: 14
+  weekly: 4
+  monthly: 2

@@ -59,5 +59,8 @@ persistence:
 monitoring:
   enabled: false
 
-backup:
+volsync-app:
   name: sonarr
+  pvc: sonarr-config
+# backup:
+  # name: sonarr
