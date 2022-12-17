@@ -8,7 +8,7 @@ spec:
   trigger:
     schedule: {{ .Values.schedule }}
   restic:
-    copyMethod: Clone
+    copyMethod: {{ .Values.copyMethod }}
     pruneIntervalDays: {{ .Values.pruneIntervalDays }}
     repository: {{ .Values.pvc }}-restic
     retain:
