@@ -1,6 +1,7 @@
 schedule: "0 0 * * *"
 pruneIntervalDays: 14
 copyMethod: Snapshot
+volumeSnapshotClassName: longhorn
 retain:
   hourly: 6
   daily: 14

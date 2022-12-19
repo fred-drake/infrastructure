@@ -9,6 +9,9 @@ spec:
     schedule: {{ .Values.schedule }}
   restic:
     copyMethod: {{ .Values.copyMethod }}
+    {{- if .Values.volumeSnapshotClassName }}
+    volumeSnapshotClassName: {{ .Values.volumeSnapshotClassName }}
+    {{- end }}
     pruneIntervalDays: {{ .Values.pruneIntervalDays }}
     repository: {{ .Values.pvc }}-restic
     retain:
