@@ -32,7 +32,6 @@
           secretName: argocd-tls
       # ingressClassName: traefik-external
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-staging
-        # traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        cert-manager.io/cluster-issuer: letsencrypt-production
       paths: 
         - "/" 
