@@ -62,4 +62,6 @@ monitoring:
 volsync-app:
   name: sonarr
   pvc: sonarr-config
-  schedule: "20 * * * *"
+  schedule: "35 * * * *"
+  copyMethod: Clone
+
