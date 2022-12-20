@@ -10,5 +10,6 @@ collections:
   - community.sops
   - community.libvirt
   - ansible.utils
+  - amazon.aws
 
 roles: []

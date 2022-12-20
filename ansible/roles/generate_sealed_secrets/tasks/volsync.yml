@@ -1,0 +1,3 @@
+- name: Generate volsync sealed secrets data list
+  ansible.builtin.set_fact:
+    volsync_secrets_list: "{{ lookup('template', 'sealed_secret_list.yml.j2') | from_yaml }}"

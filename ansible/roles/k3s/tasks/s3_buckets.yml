@@ -1,0 +1,10 @@
+- name: Create S3 backup buckets
+  amazon.aws.s3_bucket:
+    name: "{{ item.namespace }}-{{ item.name }}"
+    state: present
+    endpoint_url: http://minio-backup-app.internal.freddrake.com:9000
+    access_key: "{{ secret.volsync_secrets.awsAccessKeyID }}"
+    secret_key: "{{ secret.volsync_secrets.awsSecretAccessKey }}"
+  loop: "{{ secret.volsync_secrets.volumeClaims }}"
+  loop_control:
+    label: "{{ item.namespace }}-{{ item.name }}"

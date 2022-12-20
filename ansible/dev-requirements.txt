@@ -6,3 +6,5 @@ netaddr
 kubernetes
 passlib
 dnspython
+botocore
+boto3
