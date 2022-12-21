@@ -67,5 +67,5 @@ monitoring:
 volsync-app:
   name: radarr
   pvc: radarr-config
-  schedule: "* 15 * * *"
+  schedule: "0 15 * * *"
   copyMethod: Clone
