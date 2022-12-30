@@ -1,2 +1,2 @@
-{{ include "mysql-common.all" . }}
+{{ include "common.all" . }}
 
