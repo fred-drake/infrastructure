@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name | quote }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ .Values.name | quote }}
+  {{- if .Values.deployment.annotations }}
+  annotations:
+{{ toYaml .Values.deployment.annotations | indent 4 }}
+  {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.name | quote }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name | quote }}
+    spec:
+      containers:
+        - name: mysql
+          image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+          {{- if .Values.deployment.args }}
+          args:
+{{ toYaml .Values.args | indent 12 }}
+          {{- end }}
+          {{- if .Values.deployment.resources }}
+          resources:
+{{ toYaml .Values.deployment.resources | indent 12 }}
+          {{- end }}
+          ports:
+            - name: mysql
+              containerPort: {{ .Values.deployment.port }}
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+          {{- if .Values.deployment.env }}
+          env:
+{{ toYaml .Values.deployment.env | indent 12 }}
+          {{- end }}
+          {{- if .Values.deployment.envFrom }}
+          envFrom:
+{{ toYaml .Values.deployment.envFrom | indent 12 }}
+          {{- end }}
+      {{- if and .Values.persistence .Values.persistence.existingClaim }}
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}
+      {{- end }}
+
