@@ -36,12 +36,6 @@ persistence:
     accessMode: ReadWriteOnce
     size: 10Gi
     mountPath: /opt/onedev
-  mysql:
-    enabled: true
-    storageClass: longhorn
-    accessMode: ReadWriteOnce
-    size: 100Gi
-    mountPath: "-"
 
 mysql:
   deployment:
@@ -59,5 +53,7 @@ mysql:
           name: mysql-credentials
 
   persistence:
-    existingClaim: onedev-mysql
-    
+    claimName: onedev-mysql
+    storageClass: longhorn
+    accessMode: ReadWriteOnce
+    claimSize: 100Gi
