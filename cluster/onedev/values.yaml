@@ -1,3 +1,34 @@
+image:
+  repository: 1dev/server
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+service:
+  main:
+    ports:
+      http:
+        port: 6610
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+    hosts:
+      - host: onedev.internal.freddrake.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - hosts:
+          - onedev.internal.freddrake.com
+        secretName: onedev-tls
+
 mysql:
   image:
     tag: 5.7
