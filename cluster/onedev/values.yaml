@@ -53,7 +53,7 @@ mysql:
           name: mysql-credentials
 
   persistence:
-    claimName: onedev-mysql
+    claimName: onedev-mysql-3
     storageClass: longhorn
     accessMode: ReadWriteOnce
     claimSize: 100Gi
