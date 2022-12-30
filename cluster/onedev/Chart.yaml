@@ -5,6 +5,6 @@ dependencies:
   - name: common
     version: 1.0.0
     repository: https://fred-drake.github.io/helm
-  # - name: mysql
-  #   version: 1.0.0
-  #   repository: "file://../mysql"
+  - name: mysql
+    version: 1.0.0
+    repository: "file://../mysql"
