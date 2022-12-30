@@ -43,10 +43,10 @@ spec:
           envFrom:
 {{ toYaml .Values.deployment.envFrom | indent 12 }}
           {{- end }}
-      {{- if and .Values.persistence .Values.persistence.existingClaim }}
+      {{- if and .Values.persistence .Values.persistence.claimName }}
       volumes:
         - name: mysql-data
           persistentVolumeClaim:
-            claimName: {{ .Values.persistence.existingClaim }}
+            claimName: {{ .Values.persistence.claimName }}
       {{- end }}
 
