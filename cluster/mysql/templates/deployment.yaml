@@ -23,7 +23,7 @@ spec:
           image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
           {{- if .Values.deployment.args }}
           args:
-{{ toYaml .Values.args | indent 12 }}
+{{ toYaml .Values.deployment.args | indent 12 }}
           {{- end }}
           {{- if .Values.deployment.resources }}
           resources:
