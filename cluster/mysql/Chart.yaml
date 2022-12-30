@@ -3,6 +3,7 @@ name: mysql
 version: 1.0.0
 dependencies:
   - name: common
+    alias: mysql-common
     version: 1.0.0
     repository: https://fred-drake.github.io/helm
 
