@@ -8,6 +8,14 @@ resources:
     cpu: 100m
     memory: 128Mi
 
+env:
+  hibernate_dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  hibernate_connection_driver_class: com.mysql.cj.jdbc.Driver
+  hibernate_connection_url: jdbc:mysql://mysql.onedev.svc.cluster.local:3306/onedev?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false&disableMariaDbDriver=true
+envFrom:
+  - secretRef:
+      name: onedev-credentials
+
 service:
   main:
     ports:
