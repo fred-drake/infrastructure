@@ -11,6 +11,10 @@ resources:
 service:
   main:
     ports:
+      http:
+        enabled: false
       mysql:
+        enabled: true
+        primary: true
         port: 3306
 
