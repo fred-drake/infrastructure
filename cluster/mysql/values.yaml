@@ -1,0 +1,16 @@
+image: 
+  repository: mysql
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+       
+service:
+  main:
+    ports:
+      mysql:
+        port: 3306
+

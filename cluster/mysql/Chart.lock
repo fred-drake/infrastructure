@@ -1,0 +1,6 @@
+dependencies:
+- name: common
+  repository: https://fred-drake.github.io/helm
+  version: 1.0.0
+digest: sha256:195c471147d029a5205c1d955e520f7afb0b9fce8905989e99202a207918ef8a
+generated: "2022-12-29T23:10:19.849335-05:00"

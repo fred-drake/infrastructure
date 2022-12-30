@@ -1,0 +1,19 @@
+mysql:
+  image:
+    tag: 5.7
+  args:
+    - "--character-set-server=utf8mb4"
+    - "--collation-server=utf8mb4_unicode_ci"
+    - "--ignore-db-dir=lost+found"
+  env:
+    MYSQL_DATABASE: onedev
+  envFrom:
+    - secretRef:
+        name: mysql-credentials
+  persistence:
+    mysql:
+      enabled: true
+      storageClass: longhorn
+      accessMode: ReadWriteOnce
+      size: 100Gi
+      mountPath: /var/lib/mysql
