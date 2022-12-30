@@ -2,8 +2,5 @@ dependencies:
 - name: common
   repository: https://fred-drake.github.io/helm
   version: 1.0.0
-- name: mysql
-  repository: file://../mysql
-  version: 1.0.0
-digest: sha256:53c4c13125746c6a89dc8545409273536553f1cf99170527bb0f0bb7f39f982d
-generated: "2022-12-30T00:18:03.213997-05:00"
+digest: sha256:195c471147d029a5205c1d955e520f7afb0b9fce8905989e99202a207918ef8a
+generated: "2022-12-30T00:28:10.98657-05:00"
