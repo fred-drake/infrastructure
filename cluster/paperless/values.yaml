@@ -19,8 +19,8 @@ env:
   PAPERLESS_CORS_ALLOWED_HOSTS: "https://paperless.internal.freddrake.com"
   PAPERLESS_URL: "https://paperless.internal.freddrake.com"
 envFrom:
-  secretRef:
-    name: paperless-credentials
+  - secretRef:
+     name: paperless-credentials
 
 service:
   main:
