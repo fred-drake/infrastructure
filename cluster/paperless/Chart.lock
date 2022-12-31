@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: https://fred-drake.github.io/helm
+  version: 1.0.0
+- name: redis
+  repository: file://../redis
+  version: 1.0.0
+digest: sha256:0af5f4d1cc56cb0e11c088330a55c4e91efe8a2ea791d4d44e9048e432d1ff34
+generated: "2022-12-31T18:47:45.970031-05:00"

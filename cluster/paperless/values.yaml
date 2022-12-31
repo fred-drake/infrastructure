@@ -1,0 +1,62 @@
+image:
+  repository: lscr.io/linuxserver/paperless-ngx
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resource:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+env:
+  TZ: America/New_York"
+  PGID: "1000"
+  PAPERLESS_REDIS: "redis://redis.paperless.svc.cluster.local:6379"
+  REDIS_URL: "redis://redis.paperless.svc.cluster.local:6379"
+  PAPERLESS_OCR_LANGUAGE: eng
+  PAPERLESSS_FILE_FORMAT: "{created}-{correspondent}-{title}"
+  PAPERLESS_CONSUMER_POLLING: "30"
+  PAPERLESS_CORS_ALLOWED_HOSTS: "https://paperless.internal.freddrake.com"
+  PAPERLESS_URL: "https://paperless.internal.freddrake.com"
+envFrom:
+  secretRef:
+    name: paperless-credentials
+
+service:
+  main:
+    ports:
+      http:
+        port: 8000
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+    hosts:
+      - host: paperless.internal.freddrake.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - hosts:
+          - paperless.internal.freddrake.com
+        secretName: paperless-tls
+
+persistence:
+  config:
+    enabled: true
+    storageClass: longhorn
+    accessMode: ReadWriteOnce
+    size: 20Gi
+    mountPath: /config
+  data:
+    enabled: true
+    storageClass: longhorn
+    accessMode: ReadWriteOnce
+    size: 100Gi
+    mountPath: /data
+
+monitoring:
+  enabled: false
+
