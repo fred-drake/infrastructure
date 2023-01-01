@@ -50,13 +50,13 @@ persistence:
     storageClass: longhorn
     accessMode: ReadWriteOnce
     size: 20Gi
-    mountPath: /config
+    mountPath: /usr/src/paperless/data
   data:
     enabled: true
     storageClass: longhorn
     accessMode: ReadWriteOnce
     size: 100Gi
-    mountPath: /data
+    mountPath: /usr/src/paperless/media
 
 monitoring:
   enabled: false
