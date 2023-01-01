@@ -66,8 +66,14 @@ mysql:
     accessMode: ReadWriteOnce
     claimSize: 100Gi
 
-volsync-app:
-  name: onedev
+volsync-app-config:
+  name: onedev-config
   pvc: onedev-config
+  schedule: "0 16 * * *"
+  copyMethod: Clone
+
+volsync-app-mysql:
+  name: onedev-mysql
+  pvc: onedev-mysql
   schedule: "0 16 * * *"
   copyMethod: Clone

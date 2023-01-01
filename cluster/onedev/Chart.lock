@@ -8,5 +8,8 @@ dependencies:
 - name: volsync-app
   repository: file://../volsync-app
   version: 1.0.0
-digest: sha256:00ab2b0a7782298a5a6d50dd2dc72b7d0df9b3fa87ab977e03280d5f0c3986cc
-generated: "2022-12-31T21:45:12.744637-05:00"
+- name: volsync-app
+  repository: file://../volsync-app
+  version: 1.0.0
+digest: sha256:33007a776534332113f8cc6632ea9b8cea3d7f5fef53706571f7ff4e5703be0f
+generated: "2022-12-31T22:07:22.748499-05:00"
