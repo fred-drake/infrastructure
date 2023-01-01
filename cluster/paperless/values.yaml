@@ -18,6 +18,7 @@ env:
   PAPERLESS_CONSUMER_POLLING: "30"
   PAPERLESS_CORS_ALLOWED_HOSTS: "https://paperless.internal.freddrake.com"
   PAPERLESS_URL: "https://paperless.internal.freddrake.com"
+  PAPERLESS_PORT: "8000"
 envFrom:
   - secretRef:
      name: paperless-credentials
