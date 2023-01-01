@@ -29,18 +29,6 @@ redis:
   host: redis.netbox.svc.cluster.local
   port: 6379
 
-backup:
-  name: netbox
-  # volumes:
-    # - name: config
-      # claimName: netbox-config
-  postgresql:
-    enabled: true
-    host: postgresql.netbox.svc.cluster.local
-    database: netbox
-    credentialsSecretName: postgres-credentials
-    backupFile: netbox.sql
-
 volsync-app:
   name: netbox
   pvc: netbox-postgresql-data

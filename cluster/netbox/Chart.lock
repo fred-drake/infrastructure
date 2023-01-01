@@ -5,11 +5,8 @@ dependencies:
 - name: redis
   repository: file://../redis
   version: 1.0.0
-- name: backup
-  repository: file://../backup
-  version: 1.0.0
 - name: volsync-app
   repository: file://../volsync-app
   version: 1.0.0
-digest: sha256:fbf19d48bead8a3af43e3ac644b3fb808f04df4e5d1a029c3d0119fb2c55c831
-generated: "2022-12-31T21:41:51.391949-05:00"
+digest: sha256:e2a34d92426d69d7baf7f27f955639efe86a1ec6484e6b6fd90ac3eaa022e878
+generated: "2022-12-31T21:42:45.881895-05:00"

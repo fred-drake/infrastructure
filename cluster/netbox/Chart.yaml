@@ -8,9 +8,6 @@ dependencies:
   - name: redis
     version: 1.0.0
     repository: "file://../redis"
-  - name: backup
-    version: 1.0.0
-    repository: "file://../backup"
   - name: volsync-app
     version: 1.0.0
     repository: "file://../volsync-app"
