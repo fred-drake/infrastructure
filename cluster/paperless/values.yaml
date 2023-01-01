@@ -33,7 +33,7 @@ ingress:
   main:
     enabled: true
     annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-staging
+      cert-manager.io/cluster-issuer: letsencrypt-production
     hosts:
       - host: paperless.internal.freddrake.com
         paths:
