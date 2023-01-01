@@ -40,3 +40,9 @@ backup:
     database: netbox
     credentialsSecretName: postgres-credentials
     backupFile: netbox.sql
+
+volsync-app:
+  name: netbox
+  pvc: netbox-postgresql-data
+  schedule: "0 13 * * *"
+  copyMethod: Clone
