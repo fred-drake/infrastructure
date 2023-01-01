@@ -1,5 +1,5 @@
 image:
-  repository: lscr.io/linuxserver/paperless-ngx
+  repository: paperlessngx/paperless-ngx
   tag: latest
   pullPolicy: IfNotPresent
 
