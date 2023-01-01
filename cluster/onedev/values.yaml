@@ -65,3 +65,9 @@ mysql:
     storageClass: longhorn
     accessMode: ReadWriteOnce
     claimSize: 100Gi
+
+volsync-app:
+  name: onedev
+  pvc: onedev-config
+  schedule: "0 16 * * *"
+  copyMethod: Clone

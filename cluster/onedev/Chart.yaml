@@ -8,3 +8,6 @@ dependencies:
   - name: mysql
     version: 1.0.0
     repository: "file://../mysql"
+  - name: volsync-app
+    version: 1.0.0
+    repository: "file://../volsync-app"
