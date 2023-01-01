@@ -61,3 +61,14 @@ persistence:
 monitoring:
   enabled: false
 
+volsync-app-config:
+  name: paperless
+  pvc: paperless-config
+  schedule: "0 20 * * *"
+  copyMethod: Clone
+
+volsync-app-data:
+  name: paperless
+  pvc: paperless-data
+  schedule: "0 20 * * *"
+  copyMethod: Clone
