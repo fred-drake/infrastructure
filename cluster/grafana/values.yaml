@@ -1,0 +1,10 @@
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+  hosts:
+    - grafana.internal.freddrake.com
+  tls:
+    - hosts:
+        - grafana.internal.freddrake.com
+      secretName: grafana-tls
