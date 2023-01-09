@@ -1,0 +1,12 @@
+prometheus:
+  server:
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+      hosts:
+        - prometheus.internal.freddrake.com
+      tls:
+        - hosts:
+            - prometheus.internal.freddrake.com
+          secretName: prometheus-tls
