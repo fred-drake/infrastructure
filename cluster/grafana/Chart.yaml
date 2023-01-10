@@ -5,4 +5,7 @@ dependencies:
   - name: grafana
     version: 6.49.0
     repository: https://grafana.github.io/helm-charts
+  - name: volsync-app
+    version: 1.0.0
+    repository: "file://../volsync-app"
 

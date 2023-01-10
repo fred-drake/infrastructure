@@ -46,3 +46,9 @@ grafana:
       k8s-views-pods:
         url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
         token: ''
+
+volsync-app:
+  name: grafana
+  pvc: grafana
+  schedule: "0 23 * * *"
+  copyMethod: Clone
