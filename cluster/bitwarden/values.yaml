@@ -1,0 +1,57 @@
+image:
+  repository: vaultwarden/server
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resource:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+env:
+  SIGNUPS_ALLOWED: "false"
+  INVITATIONS_ALLOWED: "true"
+  WEBSOCKET_ENABLED: "true"
+  ROCKET_PORT: "80"
+
+envFrom:
+  - secretRef:
+     name: bitwarden-credentials
+
+service:
+  main:
+    ports:
+      http:
+        port: 80
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    hosts:
+      - host: bitwarden.internal.freddrake.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - hosts:
+          - bitwarden.internal.freddrake.com
+        secretName: bitwarden-tls
+
+persistence:
+  data:
+    enabled: true
+    storageClass: longhorn
+    accessMode: ReadWriteOnce
+    size: 20Gi
+    mountPath: /data
+
+monitoring:
+  enabled: false
+
+volsync-app:
+  name: bitwarden
+  pvc: bitwarden-data
+  schedule: "0 21 * * *"
+  copyMethod: Clone
