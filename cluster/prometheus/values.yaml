@@ -1,5 +1,6 @@
 prometheus:
   server:
+    hostNetwork: true
     ingress:
       enabled: true
       annotations:
