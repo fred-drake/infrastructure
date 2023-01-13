@@ -1,0 +1,40 @@
+image:
+  repository: eclipse-mosquitto
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resource:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+service:
+  main:
+    type: LoadBalancer
+    ports:
+      http:
+        enabled: false
+        primary: false
+      mqtt:
+        primary: true
+        port: 1883
+        protocol: TCP
+        nodePort: 30500
+
+persistence:
+  config:
+    enabled: true
+    storageClass: longhorn
+    accessMode: ReadWriteOnce
+    size: 20Gi
+    mountPath: /mosquitto/config
+
+monitoring:
+  enabled: false
+
+volsync-app:
+  name: mqtt
+  pvc: mqtt-config
+  schedule: "0 1 * * *"
+  copyMethod: Clone
+
