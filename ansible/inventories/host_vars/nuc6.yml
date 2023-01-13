@@ -1,0 +1,6 @@
+ansible_host: nuc6.internal.freddrake.com
+ansible_user: ubuntu
+longhorn_device: /dev/disk/by-id/scsi-SSABRENT__0000000000011
+longhorn_partition: /dev/disk/by-id/scsi-SSABRENT__0000000000011-part1
+gluster_uuid: 99d75f45-09c8-42ea-8faf-6e8ecf0209db
+reboot_ok: true

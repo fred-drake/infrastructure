@@ -1,0 +1,32 @@
+ansible_host: specops.internal.freddrake.com
+ansible_user: ubuntu
+appdata_dir: /mnt/storage/docker/appdata
+glusterfs_appdata_dir: /mnt/storage/docker/appdata
+host_specific_mounts:
+  - path: /mnt/storage
+    src: /dev/oracleoci/oraclevdb1
+    fstype: ext4
+host_specific_apt_sources: |
+  deb http://ports.ubuntu.com/ubuntu-ports jammy main restricted universe multiverse
+  # deb-src http://ports.ubuntu.com/ubuntu-ports jammy main restricted universe multiverse
+
+  deb http://ports.ubuntu.com/ubuntu-ports jammy-updates main restricted universe multiverse
+  # deb-src http://ports.ubuntu.com/ubuntu-ports jammy-updates main restricted universe multiverse
+
+  deb http://ports.ubuntu.com/ubuntu-ports jammy-backports main restricted universe multiverse
+  # deb-src http://ports.ubuntu.com/ubuntu-ports jammy-backports main restricted universe multiverse
+
+  deb http://ports.ubuntu.com/ubuntu-ports jammy-security main restricted universe multiverse
+  # deb-src http://ports.ubuntu.com/ubuntu-ports jammy-security main restricted universe multiverse
+
+  deb http://archive.canonical.com/ubuntu jammy partner
+  # deb-src http://archive.canonical.com/ubuntu jammy partner
+host_specific_firewall_ports:
+  - port: 69/udp
+  - port: 5240/tcp
+  - port: 5248/tcp
+  - port: 5241-5247/tcp
+  - port: 5241-5247/udp
+  - port: 5250-5270/tcp
+  - port: 5250-5270/udp
+  - port: 8099/tcp

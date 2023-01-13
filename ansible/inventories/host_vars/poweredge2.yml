@@ -1,0 +1,84 @@
+ansible_host: 192.168.208.35
+ansible_user: root
+ansible_python_interpreter: /usr/bin/python3
+interface_208: br-eno1
+interface_50: br-eno1.50
+interface_40: br-eno1.40
+interface_30: br-eno1.30
+netplan_config:
+  network:
+    ethernets:
+      eno1:
+        dhcp4: "no"
+      eno2:
+        dhcp4: "no"
+      enp1s0f0:
+        dhcp4: "no"
+      enp1s0f1:
+        dhcp4: "no"
+    bridges:
+      br-eno1:
+        interfaces:
+          - eno1
+        addresses:
+          - 192.168.208.35/24
+        routes:
+          - to: default
+            via: 192.168.208.1
+        mtu: 1500
+        nameservers:
+          addresses:
+            - 8.8.8.8
+            - 8.8.4.4
+        parameters:
+          stp: true
+          forward-delay: 0
+      br-eno2:
+        interfaces:
+          - eno2
+        addresses:
+          - 192.168.207.2/24
+        mtu: 1500
+        parameters:
+          stp: true
+          forward-delay: 0
+      br-enp1s0f0:
+        interfaces:
+          - enp1s0f0
+        dhcp4: "yes"
+        parameters:
+          stp: true
+          forward-delay: 0
+      br-enp1s0f1:
+        interfaces:
+          - enp1s0f1
+        addresses:
+          - 192.168.208.38/24
+        routes:
+          - to: default
+            via: 192.168.208.1
+        mtu: 1500
+        nameservers:
+          addresses:
+            - 8.8.8.8
+            - 8.8.4.4
+        parameters:
+          stp: true
+          forward-delay: 0
+    vlans:
+      br-eno1.50:
+        id: 50
+        link: br-eno1
+        addresses:
+          - 192.168.50.58/24
+      br-eno1.40:
+        id: 40
+        link: br-eno1
+        addresses:
+          - 192.168.40.90/24
+      br-eno1.30:
+        id: 30
+        link: br-eno1
+        addresses:
+          - 192.168.30.18/24
+    version: 2

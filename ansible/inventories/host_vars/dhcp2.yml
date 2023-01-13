@@ -1,0 +1,46 @@
+ansible_host: dhcp2.internal.freddrake.com
+ansible_user: ubuntu
+dhcp_id: dhcp2
+proxmox_vm:
+  host: 192.168.208.35
+  name: dhcp2
+  cloud_init: true
+  vmid: 302
+  cores: 1
+  sockets: 1
+  memory: 1024
+  storage: local-lvm
+  image: ubuntu-22.04
+  disk_size: +50G
+  agent_enabled: true
+  onboot: true
+  ostype: l26
+  nameservers:
+    - 192.168.40.4
+    - 192.168.40.6
+  searchdomain: internal.freddrake.com
+  networks:
+    - driver: virtio
+      mac: 56:CC:26:98:C1:04
+      bridge: vmbr0
+      ip: 192.168.208.13/24
+      gw: 192.168.208.1
+    - driver: virtio
+      mac: B6:44:F9:33:39:DA
+      bridge: vmbr0
+      ip: 192.168.30.4/24
+      gw: 192.168.30.1
+      tag: 30
+    - driver: virtio
+      mac: 72:EE:87:68:0B:9E
+      bridge: vmbr0
+      ip: 192.168.40.63/24
+      gw: 192.168.40.1
+      tag: 40
+    - driver: virtio
+      mac: 96:06:15:C3:26:01
+      bridge: vmbr0
+      ip: 192.168.50.81/24
+      gw: 192.168.50.1
+      tag: 50
+reboot_ok: true

@@ -1,0 +1,7 @@
+# NOTE
+# This is designed to run with Raspbian Lite
+ansible_host: scoreboard.internal.freddrake.com
+ansible_user: pi
+ansible_group: pi
+scoreboard_type: nhl
+# scoreboard_type: mlb

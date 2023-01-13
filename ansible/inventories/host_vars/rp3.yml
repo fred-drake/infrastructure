@@ -1,0 +1,3 @@
+ansible_host: rp3.internal.freddrake.com
+ansible_user: ubuntu
+interface_50: eth0

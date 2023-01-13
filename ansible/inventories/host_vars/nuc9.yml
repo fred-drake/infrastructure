@@ -1,0 +1,10 @@
+ansible_host: nuc9.internal.freddrake.com
+ansible_user: ubuntu
+interface_208: enp0s25
+interface_50: enp0s25.50
+interface_40: enp0s25.40
+interface_30: enp0s25.30
+address_208: 192.168.208.5
+address_50: 192.168.50.79
+address_40: 192.168.40.72
+address_30: 192.168.30.17

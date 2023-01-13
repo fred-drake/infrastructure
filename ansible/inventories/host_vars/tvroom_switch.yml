@@ -1,0 +1,4 @@
+# Either plug into port 1 with IP 192.168.1.X VLAN 100 to connect to 192.168.1.1, or
+# connect through serial and copy the network file into /etc/config/network
+ansible_host: tvroom-switch.internal.freddrake.com
+ansible_user: root

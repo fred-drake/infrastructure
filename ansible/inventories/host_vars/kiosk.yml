@@ -1,0 +1,6 @@
+# Meant to be flashed with the Raspberry Pi OS (Raspbian) full version.
+# Upon flashing, add a blank file in the boot partition named "ssh".
+# Boot up and answer all of the on-screen questions (keyboard, etc).
+ansible_host: kiosk.internal.freddrake.com
+ansible_user: pi
+ansible_group: pi

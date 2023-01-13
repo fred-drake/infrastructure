@@ -1,0 +1,4 @@
+ansible_host: nuc7.internal.freddrake.com
+ansible_user: ubuntu
+flannel_iface: enp0s25
+reboot_ok: true

@@ -1,0 +1,45 @@
+ansible_host: dhcp1.internal.freddrake.com
+ansible_user: ubuntu
+dhcp_id: dhcp1
+proxmox_vm:
+  host: 192.168.208.35
+  name: dhcp1
+  cloud_init: true
+  vmid: 301
+  cores: 1
+  sockets: 1
+  memory: 1024
+  storage: local-lvm
+  image: ubuntu-22.04
+  disk_size: +50G
+  agent_enabled: true
+  onboot: true
+  ostype: l26
+  nameservers:
+    - 192.168.40.4
+    - 192.168.40.6
+  networks:
+    - driver: virtio
+      mac: 16:1D:57:C7:7F:EB
+      bridge: vmbr0
+      ip: 192.168.208.12/24
+      gw: 192.168.208.1
+    - driver: virtio
+      mac: AE:BF:17:C9:A9:54
+      bridge: vmbr0
+      ip: 192.168.30.3/24
+      gw: 192.168.30.1
+      tag: 30
+    - driver: virtio
+      mac: E6:32:B2:D3:58:09
+      bridge: vmbr0
+      ip: 192.168.40.62/24
+      gw: 192.168.40.1
+      tag: 40
+    - driver: virtio
+      mac: 46:E3:A8:5E:65:38
+      bridge: vmbr0
+      ip: 192.168.50.80/24
+      gw: 192.168.50.1
+      tag: 50
+reboot_ok: true

@@ -1,0 +1,6 @@
+# NOTE
+# This is designed to run with Raspbian Lite
+ansible_host: scannerpi.internal.freddrake.com
+ansible_user: pi
+ansible_group: pi
+enable_wireless: true

@@ -1,0 +1,2 @@
+ansible_host: nuc3.internal.freddrake.com
+ansible_user: ubuntu
