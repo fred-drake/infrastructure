@@ -25,17 +25,18 @@ service:
 persistence:
   config:
     enabled: true
-    storageClass: longhorn
-    accessMode: ReadWriteOnce
-    size: 20Gi
+    type: configMap
+    name: config
     mountPath: /mosquitto/config
+
+configmap:
+  config:
+    enabled: true
+    data:
+      mosquitto.conf: |
+        listener 1883
+        allow_anonymous true
 
 monitoring:
   enabled: false
-
-volsync-app:
-  name: mqtt
-  pvc: mqtt-config
-  schedule: "0 1 * * *"
-  copyMethod: Clone
 
