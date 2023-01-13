@@ -10,7 +10,7 @@ resource:
 
 service:
   main:
-    type: LoadBalancer
+    type: NodePort
     ports:
       http:
         enabled: false
