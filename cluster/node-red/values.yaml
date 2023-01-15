@@ -3,7 +3,7 @@ image:
   tag: 2.2.3
   pullPolicy: IfNotPresent
 
-securityContext:
+podSecurityContext:
   fsGroup: "1000"
 
 resource:
