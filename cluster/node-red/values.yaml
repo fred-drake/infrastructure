@@ -3,6 +3,9 @@ image:
   tag: 2.2.3
   pullPolicy: IfNotPresent
 
+securityContext:
+  fsGroup: "1000"
+
 resource:
   requests:
     cpu: 100m
