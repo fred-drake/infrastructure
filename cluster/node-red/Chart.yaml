@@ -5,11 +5,11 @@ dependencies:
   - name: common
     version: 1.0.0
     repository: https://fred-drake.github.io/helm
-  - name: volsync-app
-    alias: volsync-app-data
-    version: 1.0.0
-    repository: "file://../volsync-app"
-  - name: volsync-app
-    alias: volsync-app-log
-    version: 1.0.0
-    repository: "file://../volsync-app"
+  # - name: volsync-app
+  #   alias: volsync-app-data
+  #   version: 1.0.0
+  #   repository: "file://../volsync-app"
+  # - name: volsync-app
+  #   alias: volsync-app-log
+  #   version: 1.0.0
+  #   repository: "file://../volsync-app"
