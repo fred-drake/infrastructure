@@ -10,7 +10,7 @@ resource:
 
 env:
   TZ: America/New_York
-  NODE_RED_ENABLE_SAFE_MODE: "false"
+  NODE_RED_ENABLE_SAFE_MODE: "true"
 
 service:
   main:
