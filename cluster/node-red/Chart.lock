@@ -1,0 +1,12 @@
+dependencies:
+- name: common
+  repository: https://fred-drake.github.io/helm
+  version: 1.0.0
+- name: volsync-app
+  repository: file://../volsync-app
+  version: 1.0.0
+- name: volsync-app
+  repository: file://../volsync-app
+  version: 1.0.0
+digest: sha256:a3bbc6e2aad1802635389f7d34fef2ea7ba248aab0ab98a1f6d270528d4c0342
+generated: "2023-01-14T20:41:01.109305-05:00"

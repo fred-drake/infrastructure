@@ -1,0 +1,62 @@
+image:
+  repository: nodered/node-red
+  tag: 2.2.3
+  pullPolicy: IfNotPresent
+
+resource:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+env:
+  TZ: America/New_York
+
+service:
+  main:
+    ports:
+      http:
+        port: 1880
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    hosts:
+      - host: nodered.internal.freddrake.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - hosts:
+          - nodered.internal.freddrake.com
+        secretName: nodered-tls
+
+persistence:
+  data:
+    enabled: true
+    storageClass: longhorn
+    accessMode: ReadWriteOnce
+    size: 20Gi
+    mountPath: /data
+  logs:
+    enabled: true
+    storageClass: longhorn
+    accessMode: ReadWriteOnce
+    size: 20Gi
+    mountPath: /log
+
+monitoring:
+  enabled: false
+
+volsync-app-data:
+  name: nodered-data
+  pvc: nodered-data
+  schedule: "0 1 * * *"
+  copyMethod: Clone
+
+volsync-app-log:
+  name: nodered-log
+  pvc: nodered-log
+  schedule: "30 1 * * *"
+  copyMethod: Clone
