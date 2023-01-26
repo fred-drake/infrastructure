@@ -1,5 +1,6 @@
 ---
 creation_rules:
   - path_regex: .*\.sops\.ya?ml
-    pgp: >-
-      F92C1A4A2B35F826A1E364EFF5A1747BE18D04FC
+    key_groups:
+      - age:
+         - age1s8nj3apk3htalejdju8476n44fmuvm9az9a6kz7my8f3dxfxc93qqmjw8d
