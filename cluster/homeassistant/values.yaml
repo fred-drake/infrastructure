@@ -25,9 +25,9 @@ service:
     ports:
       hubitat:
         enabled: true
-        port: 42843
+        port: 30600
         protocol: TCP
-        nodePort: 42843
+        nodePort: 30600
 
 ingress:
   main:
