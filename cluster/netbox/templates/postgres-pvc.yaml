@@ -9,3 +9,16 @@ spec:
   resources:
     requests:
       storage: {{ required "pvc storage required!" .Values.postgresClaimSize }}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: netbox-postgresql-data-2
+spec:
+  storageClassName: longhorn
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
