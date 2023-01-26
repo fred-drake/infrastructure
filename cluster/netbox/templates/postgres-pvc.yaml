@@ -1,14 +1,14 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ required "pvc name required!" .Values.postgresql.existingClaim }}
+  name: netbox-postgresql-data
 spec:
   storageClassName: longhorn
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ required "pvc storage required!" .Values.postgresClaimSize }}
+      storage: 10Gi
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
