@@ -57,6 +57,7 @@ COPY --from=builder /usr/local/bin/yq /usr/local/bin/yq
 
 FROM staging as development
 WORKDIR /workspaces/infrastructure
+ENV SOPS_AGE_KEY_FILE=/root/.age/ansible-key.txt
 ENV ANSIBLE_CONFIG=/workspaces/infrastructure/ansible/ansible.cfg
 COPY ansible/galaxy-requirements.yml ansible/galaxy-requirements.yml
 RUN ansible-galaxy install -r ansible/galaxy-requirements.yml
