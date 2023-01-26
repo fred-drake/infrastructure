@@ -1,0 +1,58 @@
+image:
+  repository: ghcr.io/linuxserver/homeassistant
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resource:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+env:
+  TZ: America/New_York
+  PUID: "99"
+  PGID: "100"
+  UMASK: "022"
+
+service:
+  main:
+    ports:
+      http:
+        port: 8123
+      hubitat:
+        enabled: true
+        port: 42843
+        protocol: TCP
+        nodePort: 42843
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    hosts:
+      - host: homeassistant.internal.freddrake.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - hosts:
+          - homeassistant.internal.freddrake.com
+        secretName: homeassistant-tls
+
+persistence:
+  config:
+    enabled: true
+    storageClass: longhorn
+    accessMode: ReadWriteOnce
+    size: 200Gi
+    mountPath: /config
+
+monitoring:
+  enabled: false
+
+volsync-app:
+  name: homeassistant-config
+  pvc: homeassistant-config
+  schedule: "0 2 * * *"
+  copyMethod: Clone
