@@ -20,7 +20,7 @@ postgresql:
     tag: 12
   secretName: postgres-credentials
   database: netbox
-  existingClaim: netbox-postgresql-data-2
+  existingClaim: netbox-postgresql-data
   nodePort: 30177
   host: postgresql.netbox.svc.cluster.local
   port: 5432
