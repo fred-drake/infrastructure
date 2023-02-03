@@ -59,9 +59,9 @@ persistence:
 monitoring:
   enabled: false
 
-volsync-app:
-  name: sonarr
-  pvc: sonarr-config
-  schedule: "0 14 * * *"
-  copyMethod: Clone
+# volsync-app:
+#   name: sonarr
+#   pvc: sonarr-config
+#   schedule: "0 14 * * *"
+#   copyMethod: Clone
 
