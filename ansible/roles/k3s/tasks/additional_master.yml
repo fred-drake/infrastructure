@@ -1,4 +1,4 @@
-- name: Create manifests directory on first master
+- name: Create manifests directory on additional master
   ansible.builtin.file:
     path: /var/lib/rancher/k3s/server/manifests
     state: directory
@@ -6,15 +6,17 @@
     group: root
     mode: 0644
 
-- name: Install k3s onto machine as initial master
+- name: Install k3s onto machine as additional master
   delegate_to: localhost
   become: false
   ansible.builtin.command:
     cmd: >
-      k3sup install --ip
-      {{ ansible_default_ipv4.address }}
-      --cluster
+      k3sup join
+      --server
+      --ip {{ ansible_default_ipv4.address }}
+      --server-ip 192.168.50.4
       --user {{ ansible_user }}
+      --server-user {{ ansible_user }}
       --ssh-key "{{ playbook_dir }}/../../id_ansible"
       --k3s-version "{{ k3s_version }}"
       --k3s-extra-args "{{ extra_server_args | default('') }}"

@@ -21,16 +21,20 @@
     seconds: 30
   when: existing_master is not defined and not existing_k3s.stat.exists
 
-# - name: Install k3s onto machine as additional master
-# TODO
-
 - name: Pull kubeconfig
   ansible.builtin.include_role:
     name: k3s
     tasks_from: kubectl
+  when: existing_k3s.stat.exists
 
 - name: Wait for k8s node to be ready
   delegate_to: localhost
   ansible.builtin.command: kubectl wait --for=condition=Ready nodes {{ ansible_hostname }} --timeout=600s
   when: existing_master is not defined and not existing_k3s.stat.exists
   changed_when: false
+
+- name: Install k3s onto machine as additional master
+  ansible.builtin.include_role:
+    name: k3s
+    tasks_from: additional_master
+  when: existing_master is defined and not existing_k3s.stat.exists
