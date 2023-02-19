@@ -18,7 +18,9 @@ service:
         port: 3000
 
 securityContext:
-  fsGroup: 0
+  fsGroup: 472
+  supplementalGroups:
+    - 0
 
 ingress:
   main:
