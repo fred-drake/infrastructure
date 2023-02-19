@@ -17,7 +17,7 @@ service:
       http:
         port: 3000
 
-securityContext:
+podSecurityContext:
   fsGroup: 472
   supplementalGroups:
     - 0
