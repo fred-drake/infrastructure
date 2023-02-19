@@ -18,7 +18,7 @@ service:
         port: 3000
 
 securityContext:
-  runAsUser: 472
+  fsGroup: 472
 
 ingress:
   main:
