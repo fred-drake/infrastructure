@@ -1,0 +1,5 @@
+ansible_host: nuc5.internal.freddrake.com
+ansible_user: ubuntu
+longhorn_device: /dev/disk/by-id/scsi-1SABRENT_
+longhorn_partition: /dev/disk/by-id/scsi-1SABRENT_-part1
+reboot_ok: true

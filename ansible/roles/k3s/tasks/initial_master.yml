@@ -18,5 +18,6 @@
       --ssh-key "{{ playbook_dir }}/../../id_ansible"
       --k3s-version "{{ k3s_version }}"
       --k3s-extra-args "{{ extra_server_args | default('') }}"
+      --tls-san {{ apiserver_endpoint }}
     chdir: /tmp
   changed_when: true

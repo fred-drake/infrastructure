@@ -21,6 +21,11 @@
     seconds: 30
   when: existing_master is not defined and not existing_k3s.stat.exists
 
+- name: Stat for existing k3s on this machine
+  ansible.builtin.stat:
+    path: /etc/rancher/k3s/k3s.yaml
+  register: existing_k3s
+
 - name: Pull kubeconfig
   ansible.builtin.include_role:
     name: k3s
@@ -28,6 +33,7 @@
   when: existing_k3s.stat.exists
 
 - name: Wait for k8s node to be ready
+  become: false
   delegate_to: localhost
   ansible.builtin.command: kubectl wait --for=condition=Ready nodes {{ ansible_hostname }} --timeout=600s
   when: existing_master is not defined and not existing_k3s.stat.exists

@@ -118,7 +118,6 @@ all:
         nuc4:
         nuc5:
         nuc6:
-        nuc8:
 
     # Kubernetes worker nodes
     k8s_node:
@@ -126,7 +125,6 @@ all:
         nuc4:
         nuc5:
         nuc6:
-        nuc7:
         nuc8:
 
     # All docker container servers

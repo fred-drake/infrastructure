@@ -3,4 +3,3 @@ ansible_user: ubuntu
 reboot_ok: true
 longhorn_device: /dev/disk/by-id/scsi-SSABRENT__0000000000011
 longhorn_partition: /dev/disk/by-id/scsi-SSABRENT__0000000000011-part1
-gluster_uuid: 34b3224f-785a-4924-ac84-e0c49dfd7872
