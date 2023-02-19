@@ -40,7 +40,7 @@ ingress:
         secretName: bitwarden-tls
 
 persistence:
-  data:
+  datatwo:
     enabled: true
     storageClass: longhorn
     accessMode: ReadWriteOnce
