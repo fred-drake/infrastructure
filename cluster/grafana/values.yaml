@@ -17,6 +17,9 @@ service:
       http:
         port: 3000
 
+securityContext:
+  runAsUser: 472
+
 ingress:
   main:
     enabled: true
