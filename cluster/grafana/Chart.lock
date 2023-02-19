@@ -1,9 +1,9 @@
 dependencies:
-- name: grafana
-  repository: https://grafana.github.io/helm-charts
-  version: 6.49.0
+- name: common
+  repository: https://fred-drake.github.io/helm
+  version: 1.0.0
 - name: volsync-app
   repository: file://../volsync-app
   version: 1.0.0
-digest: sha256:554a1e2b7f573b18609f407a18ec5a8ccb2f7644feb0aac540d968b8e1cd915a
-generated: "2023-01-10T17:25:09.430532-05:00"
+digest: sha256:5574b26430b427c3ecd7fbfb5e2c23f1e4c015b082a585a6bff71d0e3f6d87c2
+generated: "2023-02-19T14:25:03.717399-05:00"
