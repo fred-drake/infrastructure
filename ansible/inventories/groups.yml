@@ -22,6 +22,7 @@ all:
       hosts:
         docker2:
         docker5:
+        rp1:
         rp[2:3]:
         nuc[1:9]:
         specops:
@@ -39,7 +40,6 @@ all:
         kiosk:
         scoreboard:
         scannerpi:
-        rp1:
         rp[4:7]:
 
     # Proxmox servers
@@ -108,20 +108,26 @@ all:
     # Kubernetes masters 
     k8s_master:
       hosts:
-        nuc7:
+        nuc1:
+        nuc2:
+        nuc3:
 
     # Kubernetes storage nodes
     k8s_storage:
       hosts:
         nuc4:
+        nuc5:
         nuc6:
+        nuc8:
 
     # Kubernetes worker nodes
     k8s_node:
       hosts:
-        nuc2:
         nuc4:
+        nuc5:
         nuc6:
+        nuc7:
+        nuc8:
 
     # All docker container servers
     docker:
@@ -131,8 +137,8 @@ all:
         swarm_cluster:
       hosts:
         nuc9:
-        nuc8:
         specops:
+        # rp1:
 
     # Docker Swarm assignments
     swarm_cluster:
@@ -150,8 +156,6 @@ all:
     swarm_additional_masters:
       hosts:
         rp3:
-        rp1:
-        nuc1:
 
     swarm_masters:
       children:
@@ -160,8 +164,6 @@ all:
 
     swarm_workers:
       hosts:
-        nuc3:
-        nuc5:
 
   #################################
   # CONTAINER-SPECIFIC            #
@@ -230,15 +232,12 @@ all:
     # Hosts that are part of the GlusterFS cluster
     glusterfs_server:
       hosts:
-        nuc5:
 
     # Machines that use the GlusterFS cluster
     glusterfs_client:
       children:
         swarm_cluster:
       hosts:
-        nuc8:
-        nuc9:
 
     # Kubernetes nodes hosting Kadalu drives
     kadalu: 
@@ -258,7 +257,8 @@ all:
     # Servers containing the MAAS software
     maas:
       hosts:
-        nuc9:
+        # nuc9:
+        rp1:
 
     # Servers requiring NFS client software
     nfs_client:
