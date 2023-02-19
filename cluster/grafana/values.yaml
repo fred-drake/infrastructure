@@ -38,7 +38,7 @@ ingress:
         secretName: grafana-tls
 
 persistence:
-  configtwo:
+  config:
     enabled: true
     storageClass: longhorn
     accessMode: ReadWriteOnce
