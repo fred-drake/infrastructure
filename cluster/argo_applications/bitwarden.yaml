@@ -1,23 +1,23 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: bitwarden
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/fred-drake/infrastructure.git
-    targetRevision: HEAD
-    path: cluster/bitwarden
-    helm:
-      releaseName: bitwarden
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: bitwarden
-  syncPolicy:
-    automated:
-      prune: false
-      selfHeal: false
-    syncOptions:
-      - CreateNamespace=true
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: bitwarden
+#   namespace: argocd
+# spec:
+#   project: default
+#   source:
+#     repoURL: https://github.com/fred-drake/infrastructure.git
+#     targetRevision: HEAD
+#     path: cluster/bitwarden
+#     helm:
+#       releaseName: bitwarden
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: bitwarden
+#   syncPolicy:
+#     automated:
+#       prune: false
+#       selfHeal: false
+#     syncOptions:
+#       - CreateNamespace=true
 
