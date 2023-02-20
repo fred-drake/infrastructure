@@ -33,7 +33,7 @@ ingress:
         secretName: radarr-tls
 
 persistence:
-  configtwo:
+  config:
     enabled: true
     storageClass: longhorn
     accessMode: ReadWriteOnce
