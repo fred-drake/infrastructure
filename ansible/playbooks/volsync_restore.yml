@@ -1,0 +1,58 @@
+- name: Volsync Restore
+  hosts: localhost
+  become: false
+  vars:
+    pvc_name: node-red-data
+    pvc_namespace: node-red
+    pvc_size: 20Gi
+    restic_repo: node-red-data-restic
+    previous: 2
+    restore_as_of: "2023-02-12T06:00:00-04:00"
+  tasks:
+    - name: Create PVC
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          kind: PersistentVolumeClaim
+          apiVersion: v1
+          metadata:
+            name: "{{ pvc_name }}"
+            namespace: "{{ pvc_namespace }}"
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: "{{ pvc_size }}"
+      register: pvc_create
+
+    - name: Fail if not created
+      ansible.builtin.fail:
+        msg: Create the PVC from scratch before restoring
+      when: not pvc_create.changed
+
+    - name: Get timestamp
+      ansible.builtin.command:
+        cmd: date +%Y%m%d-%H%M%S
+      changed_when: false
+      register: date
+
+    - name: Restore to PVC
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: volsync.backube/v1alpha1
+          kind: ReplicationDestination
+          metadata:
+            name: "{{ pvc_name }}-{{ date.stdout }}"
+            namespace: "{{ pvc_namespace }}"
+          spec:
+            trigger:
+              manual: restore-once
+            restic:
+              repository: "{{ restic_repo }}"
+              destinationPVC: "{{ pvc_name }}"
+              copyMethod: Direct
+              storageClassName: longhorn
+              # previous: "{{ previous }}"
+              restoreAsOf: "{{ restore_as_of }}"
