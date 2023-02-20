@@ -1,6 +1,6 @@
 image:
   repository: linuxserver/sabnzbd
-  tag: 3.5.0
+  tag: 3.7.2
   pullPolicy: IfNotPresent
 
 resource:
