@@ -33,7 +33,7 @@ ingress:
         secretName: prowlarr-tls
 
 persistence:
-  config:
+  configtwo:
     enabled: true
     # existingClaim: sonarr-config
     storageClass: longhorn
