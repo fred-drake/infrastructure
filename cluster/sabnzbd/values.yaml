@@ -35,7 +35,7 @@ ingress:
         secretName: sabnzbd-tls
 
 persistence:
-  configtwo:
+  config:
     enabled: true
     # existingClaim: sabnzbd-config
     storageClass: longhorn
