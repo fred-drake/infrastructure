@@ -45,13 +45,13 @@ ingress:
         secretName: paperless-tls
 
 persistence:
-  configtwo:
+  config:
     enabled: true
     storageClass: longhorn
     accessMode: ReadWriteOnce
     size: 20Gi
     mountPath: /usr/src/paperless/data
-  datatwo:
+  data:
     enabled: true
     storageClass: longhorn
     accessMode: ReadWriteOnce
