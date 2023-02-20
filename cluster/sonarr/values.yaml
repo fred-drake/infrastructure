@@ -33,7 +33,7 @@ ingress:
         secretName: sonarr-tls
 
 persistence:
-  configtwo:
+  config:
     enabled: true
     # existingClaim: sonarr-config
     # storageClass: kadalu.storage-pool-1
