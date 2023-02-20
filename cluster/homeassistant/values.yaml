@@ -45,7 +45,7 @@ ingress:
         secretName: homeassistant-tls
 
 persistence:
-  config:
+  configtwo:
     enabled: true
     storageClass: longhorn
     accessMode: ReadWriteOnce
