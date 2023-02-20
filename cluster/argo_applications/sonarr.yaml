@@ -1,23 +1,23 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: sonarr
-#   namespace: argocd
-# spec:
-#   project: default
-#   source:
-#     repoURL: https://github.com/fred-drake/infrastructure.git
-#     targetRevision: HEAD
-#     path: cluster/sonarr
-#     helm:
-#       releaseName: sonarr
-#   destination:
-#     server: https://kubernetes.default.svc
-#     namespace: sonarr
-#   syncPolicy:
-#     automated:
-#       prune: false
-#       selfHeal: false
-#     syncOptions:
-#       - CreateNamespace=true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sonarr
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/fred-drake/infrastructure.git
+    targetRevision: HEAD
+    path: cluster/sonarr
+    helm:
+      releaseName: sonarr
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sonarr
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
 
