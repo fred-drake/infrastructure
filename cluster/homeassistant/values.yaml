@@ -56,7 +56,7 @@ monitoring:
   enabled: false
 
 volsync-app:
-  name: homeassistant-config
-  pvc: homeassistant-config
+  name: homeassistant-data
+  pvc: homeassistant-data
   schedule: "0 2 * * *"
   copyMethod: Clone
