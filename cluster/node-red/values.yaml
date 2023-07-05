@@ -1,7 +1,7 @@
-image:
-  repository: nodered/node-red
-  tag: 2.2.3
-  pullPolicy: IfNotPresent
+#image:
+#  repository: nodered/node-red
+#  tag: 2.2.3
+#  pullPolicy: IfNotPresent
 
 podSecurityContext:
   fsGroup: 1000
