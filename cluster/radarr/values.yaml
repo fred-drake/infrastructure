@@ -1,6 +1,6 @@
 image:
   repository: linuxserver/radarr
-  tag: latest
+  tag: 4.5.2
   pullPolicy: IfNotPresent
 
 resource:
