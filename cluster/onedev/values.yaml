@@ -1,6 +1,6 @@
 image:
   repository: 1dev/server
-  tag: latest
+  tag: 8.5.9
   pullPolicy: IfNotPresent
 
 resources:
