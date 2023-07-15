@@ -1,9 +1,9 @@
 dependencies:
 - name: volsync
   repository: https://backube.github.io/helm-charts/
-  version: 0.5.0
+  version: 0.7.1
 - name: snapscheduler
   repository: https://backube.github.io/helm-charts/
   version: 3.2.0
-digest: sha256:20fccf21eb26679147d816ec7f9d9ca6df6fcb8d4c4504375534dca54c9a2dcc
-generated: "2022-12-15T19:47:36.87563-05:00"
+digest: sha256:65aeeb01602709e993d395d40095967e093aa313c3ac9b464d8032463819511f
+generated: "2023-07-15T02:07:49.18273162Z"
