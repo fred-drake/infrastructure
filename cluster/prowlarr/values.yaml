@@ -1,6 +1,6 @@
 image:
   repository: lscr.io/linuxserver/prowlarr
-  tag: nightly
+  tag: 1.6.3
   pullPolicy: IfNotPresent
 
 resource:
