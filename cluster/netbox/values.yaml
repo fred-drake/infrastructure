@@ -17,7 +17,7 @@ ingress:
 postgresql:
   image:
     repository: postgres
-    tag: 12
+    tag: 15
   secretName: postgres-credentials
   database: netbox
   existingClaim: netbox-postgresql-data
