@@ -1,6 +1,6 @@
 image:
   repository: nodered/node-red
-  tag: 2.2.3
+  tag: 3.0.2
   pullPolicy: IfNotPresent
 
 podSecurityContext:
