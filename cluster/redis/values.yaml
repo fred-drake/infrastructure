@@ -1,5 +1,5 @@
 name: redis
 image: 
   repository: redis
-  tag: latest
+  tag: 7.0.12
 port: 6379
