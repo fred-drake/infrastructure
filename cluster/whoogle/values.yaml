@@ -1,6 +1,6 @@
 image:
   repository: benbusby/whoogle-search
-  tag: latest
+  tag: 0.8.2
   pullPolicy: IfNotPresent
 
 env:
