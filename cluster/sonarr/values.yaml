@@ -1,6 +1,6 @@
 image:
   repository: linuxserver/sonarr
-  tag: 3.0.10
+  tag: version-3.0.10.1566
   pullPolicy: IfNotPresent
 
 resource:
