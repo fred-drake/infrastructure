@@ -2,7 +2,7 @@
 - name: Create postgres container
   community.docker.docker_container:
     name: teslamate-db
-    image: "postgres:12"
+    image: "postgres:15"
     pull: "{{ container_pull }}"
     hostname: teslamate-db
     env:
