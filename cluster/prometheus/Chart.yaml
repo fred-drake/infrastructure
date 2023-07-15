@@ -3,7 +3,7 @@ name: prometheus
 version: 1.0.0
 dependencies:
   - name: prometheus
-    version: 19.3.0
+    version: 19.7.2
     repository: https://prometheus-community.github.io/helm-charts
   - name: volsync-app
     version: 1.0.0
