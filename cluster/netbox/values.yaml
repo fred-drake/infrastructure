@@ -1,7 +1,7 @@
 name: netbox
 image:
   repository: linuxserver/netbox
-  tag: 3.5.6
+  tag: 3.5.7
 puid: 99
 pgid: 100
 secretName: credentials
