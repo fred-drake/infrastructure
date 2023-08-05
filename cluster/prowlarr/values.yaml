@@ -1,6 +1,6 @@
 image:
-  repository: lscr.io/linuxserver/prowlarr
-  tag: 1.6.3
+  repository: linuxserver/prowlarr
+  tag: version-1.6.3.3608
   pullPolicy: IfNotPresent
 
 resource:
