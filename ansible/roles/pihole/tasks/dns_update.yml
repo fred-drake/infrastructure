@@ -1,16 +1,19 @@
-- name: Generate pihole hosts from netbox
-  connection: local
-  become: false
-  export_netbox_hostlist:
-    netbox_api_prefix: "https://netbox.{{ secret.domain }}"
-    netbox_token: "{{ secret.services.netbox.api_token }}"
-  register: hostlist_results
+- name: Check for dns file
   run_once: true
+  ansible.builtin.stat:
+    path: "{{ playbook_dir }}/../roles/pihole/files/dns.txt"
+  register: dns_file
+
+- name: Fail if file doesn't exist
+  run_once: true
+  ansible.builtin.fail:
+    msg: "DNS file not found in {{ playbook_dir }}/../roles/pihole/files/dns.txt. Create and copy contents from Obsidian."
+  when: not dns_file.stat.exists
 
 - name: Transfer pihole hosts
   run_once: true
-  ansible.builtin.template:
-    src: hostlist.j2
+  ansible.builtin.copy:
+    src: dns.txt
     dest: /etc/pihole/custom.list
     mode: "0644"
     backup: true
