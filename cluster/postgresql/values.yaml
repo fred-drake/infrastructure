@@ -1,7 +1,7 @@
 name: postgresql
 image: 
   repository: postgres
-  tag: 15.3
+  tag: 15.4
 username: postgres
 database: postgres
 port: 5432
