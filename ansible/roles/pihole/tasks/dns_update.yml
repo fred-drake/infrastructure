@@ -22,7 +22,7 @@
 - name: Transfer pihole hosts
   run_once: true
   ansible.builtin.copy:
-    src: "{{ gitdir.path }}/ZZExport/pihole-hosts.md"
+    src: "{{ gitdir.path }}/Export/pihole-hosts.md"
     dest: /etc/pihole/custom.list
     mode: "0644"
     backup: true
