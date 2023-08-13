@@ -12,14 +12,4 @@
 - name: Sync gravity database
   run_once: true
   ansible.builtin.command: gravity-sync update
-  notify: Delete dns.txt file
 
-- name: Delete dns.txt file
-  run_once: true
-  connection: local
-  become: false
-  # ansible.builtin.command:
-    # cmd: "rm {{ playbook_dir }}/../roles/pihole/files/dns.txt"
-  ansible.builtin.file:
-    path: "{{ playbook_dir }}/../roles/pihole/files/dns.txt"
-    state: absent

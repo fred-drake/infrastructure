@@ -1,19 +1,28 @@
-- name: Check for dns file
+- name: Acquire temp directory for infrastructure repo
+  connection: local
   run_once: true
-  ansible.builtin.stat:
-    path: "{{ playbook_dir }}/../roles/pihole/files/dns.txt"
-  register: dns_file
+  become: false
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: infragit
+  register: gitdir
+  changed_when: false
 
-- name: Fail if file doesn't exist
+- name: Check out infrastructure PKM
+  connection: local
   run_once: true
-  ansible.builtin.fail:
-    msg: "DNS file not found in {{ playbook_dir }}/../roles/pihole/files/dns.txt. Create and copy contents from Obsidian."
-  when: not dns_file.stat.exists
+  become: false
+  ansible.builtin.git:
+    repo: ssh://git@git.jetbrains.space/fdrake/main/Infrastructure.git
+    dest: "{{ gitdir.path }}"
+    key_file: "{{ ansible_ssh_private_key_file }}"
+    depth: 1
+  changed_when: false
 
 - name: Transfer pihole hosts
   run_once: true
   ansible.builtin.copy:
-    src: dns.txt
+    src: "{{ gitdir.path }}/ZZExport/pihole-hosts.md"
     dest: /etc/pihole/custom.list
     mode: "0644"
     backup: true

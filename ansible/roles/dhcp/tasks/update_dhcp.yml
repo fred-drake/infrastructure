@@ -1,18 +1,32 @@
-- name: Generate dhcp static reservations from netbox
+- name: Acquire temp directory for infrastructure repo
   connection: local
-  become: false
-  export_netbox_static_reservations:
-    netbox_api_prefix: "https://netbox.{{ secret.domain }}"
-    netbox_token: "{{ secret.services.netbox.api_token }}"
-    subnet_dict: "{{ secret.dhcp.nets }}"
-  register: reservation_results
   run_once: true
+  become: false
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: infragit
+  register: gitdir
+  changed_when: false
 
-- name: Set dhcp configurations
-  ansible.builtin.template:
-    src: "dhcp_{{ secret.dhcp.machines[dhcp_id].type }}.j2"
-    dest: "/etc/dhcp/dhcpd.conf"
+- name: Check out infrastructure PKM
+  connection: local
+  run_once: true
+  become: false
+  ansible.builtin.git:
+    repo: ssh://git@git.jetbrains.space/fdrake/main/Infrastructure.git
+    dest: "{{ gitdir.path }}"
+    key_file: "{{ ansible_ssh_private_key_file }}"
+    depth: 1
+  changed_when: false
+
+- name: Transfer dhcp hosts
+  ansible.builtin.copy:
+    src: "{{ gitdir.path }}/ZZExport/dhcp-{{ secret.dhcp.machines[dhcp_id].type }}.md"
+    dest: /etc/dhcp/dhcpcd.conf
     mode: "0644"
     backup: true
   notify:
     - Restart dhcp
+
+- name: Flush handler
+  ansible.builtin.meta: flush_handlers
