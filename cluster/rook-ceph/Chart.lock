@@ -1,9 +1,9 @@
 dependencies:
 - name: rook-ceph
   repository: https://charts.rook.io/release
-  version: v1.12.1
+  version: v1.12.2
 - name: rook-ceph-cluster
   repository: https://charts.rook.io/release
   version: v1.12.2
-digest: sha256:f545df1b241187ef1a49f149eadcd2cb06c5a94f4509cf0e5dd5c081b41e8ef9
-generated: "2023-08-15T21:41:43.968265017Z"
+digest: sha256:e37b4bc1ba177d5be5c82a67892ec26a0c929f1f500f5ceaf92b09cc54db3ce0
+generated: "2023-08-15T22:09:31.593192238Z"
