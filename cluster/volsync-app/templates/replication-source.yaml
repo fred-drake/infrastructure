@@ -8,6 +8,10 @@ spec:
   trigger:
     schedule: {{ .Values.schedule }}
   restic:
+    moverSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
     copyMethod: {{ .Values.copyMethod }}
     {{- if .Values.volumeSnapshotClassName }}
     volumeSnapshotClassName: {{ .Values.volumeSnapshotClassName }}

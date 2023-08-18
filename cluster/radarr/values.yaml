@@ -61,6 +61,12 @@ persistence:
     storageClass: "-"
     volumeName: radarr-torrent
 
+podSecurityContext:
+  runAsUser: 568
+  runAsGroup: 568
+  fsGroup: 568
+  fsGroupChangePolicy: OnRootMismatch
+
 monitoring:
   enabled: false
 
