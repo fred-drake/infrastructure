@@ -17,10 +17,10 @@ service:
       http:
         port: 3000
 
-podSecurityContext:
-  fsGroup: 472
-  supplementalGroups:
-    - 0
+# podSecurityContext:
+#   fsGroup: 472
+#   supplementalGroups:
+#     - 0
 
 ingress:
   main:
@@ -47,6 +47,12 @@ persistence:
 
 monitoring:
   enabled: false
+
+podSecurityContext:
+  runAsUser: 99
+  runAsGroup: 100
+  fsGroup: 100
+  fsGroupChangePolicy: OnRootMismatch
 
 volsync-app:
   name: grafana
