@@ -10,8 +10,10 @@ resource:
 
 env:
   TZ: America/New_York
-  PUID: "1000"
-  PGID: "1000"
+  PUID: 99
+  PGID: 100
+  # PUID: "1000"
+  # PGID: "1000"
 
 service:
   main:
