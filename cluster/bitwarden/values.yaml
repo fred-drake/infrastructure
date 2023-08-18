@@ -50,6 +50,12 @@ persistence:
 monitoring:
   enabled: false
 
+podSecurityContext:
+  runAsUser: 99
+  runAsGroup: 100
+  fsGroup: 100
+  fsGroupChangePolicy: OnRootMismatch
+
 volsync-app:
   name: bitwarden
   pvc: bitwarden-data
