@@ -3,8 +3,8 @@ image:
   tag: 3.0.2
   pullPolicy: IfNotPresent
 
-podSecurityContext:
-  fsGroup: 1000
+# podSecurityContext:
+#   fsGroup: 1000
 
 resource:
   requests:
@@ -52,6 +52,12 @@ persistence:
 
 monitoring:
   enabled: false
+
+podSecurityContext:
+  runAsUser: 99
+  runAsGroup: 100
+  fsGroup: 100
+  fsGroupChangePolicy: OnRootMismatch
 
 volsync-app-data:
   name: node-red-data
