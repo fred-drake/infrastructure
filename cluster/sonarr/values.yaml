@@ -10,6 +10,8 @@ resource:
 
 env:
   TZ: America/New_York
+  PUID: 99
+  PGID: 100
 
 service:
   main:
