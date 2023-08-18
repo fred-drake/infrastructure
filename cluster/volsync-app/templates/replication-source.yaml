@@ -8,10 +8,7 @@ spec:
   trigger:
     schedule: {{ .Values.schedule }}
   restic:
-    moverSecurityContext:
-      runAsUser: 99
-      runAsGroup: 100
-      fsGroup: 100
+{{ toYaml .Values.moverSecurityContext | indent 4 }}
     copyMethod: {{ .Values.copyMethod }}
     {{- if .Values.volumeSnapshotClassName }}
     volumeSnapshotClassName: {{ .Values.volumeSnapshotClassName }}

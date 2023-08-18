@@ -63,12 +63,6 @@ persistence:
     storageClass: "-"
     volumeName: radarr-torrent
 
-# podSecurityContext:
-#   runAsUser: 99
-#   runAsGroup: 100
-#   fsGroup: 100
-#   fsGroupChangePolicy: OnRootMismatch
-
 monitoring:
   enabled: false
 
@@ -77,3 +71,7 @@ volsync-app:
   pvc: radarr-config
   schedule: "0 15 * * *"
   copyMethod: Clone
+  moverSecurityContext:
+    runAsUser: 99
+    runAsGroup: 100
+    fsGroup: 100
