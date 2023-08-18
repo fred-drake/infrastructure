@@ -71,7 +71,3 @@ volsync-app:
   pvc: radarr-config
   schedule: "0 15 * * *"
   copyMethod: Clone
-  moverSecurityContext:
-    runAsUser: 99
-    runAsGroup: 100
-    fsGroup: 100
