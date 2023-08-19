@@ -33,6 +33,10 @@ prometheus:
       # Host name
       - source_labels: [__meta_kubernetes_node_name]
         target_label: instance
+    - job_name: restic-exporter
+      static_configs:
+        - targets:
+          - restic.internal.freddrake.com:8000
 
 volsync-app:
   name: prometheus
