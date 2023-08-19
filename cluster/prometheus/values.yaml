@@ -15,37 +15,37 @@ prometheus:
     runAsGroup: 100
     fsGroup: 100
   extraScrapeConfigs: |
-    - job_name: kubernetes-node-exporter
-      tls_config:
-        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        insecure_skip_verify: true
-      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-      scheme: https
-      kubernetes_sd_configs:
-      - role: node
-      relabel_configs:
-      - source_labels: [__address__]
-        regex: ^(.*):\d+$
-        target_label: __address__
-        replacement: $1:9100
-      - target_label: __scheme__
-        replacement: http
-      # Host name
-      - source_labels: [__meta_kubernetes_node_name]
-        target_label: instance
-    - job_name: restic-exporter
-      static_configs:
-        - targets:
-          - restic.internal.freddrake.com:8000
-    - job_name: unraid-exporter
-      static_configs:
-        - targets:
-          - 192.168.50.2:9100
-    - job_name: gateway-exporter
-      scrape_timeout: 30s
-      static_configs:
-        - targets:
-          - 192.168.50.1:9100
+    # - job_name: kubernetes-node-exporter
+    #   tls_config:
+    #     ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    #     insecure_skip_verify: true
+    #   bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+    #   scheme: https
+    #   kubernetes_sd_configs:
+    #   - role: node
+    #   relabel_configs:
+    #   - source_labels: [__address__]
+    #     regex: ^(.*):\d+$
+    #     target_label: __address__
+    #     replacement: $1:9100
+    #   - target_label: __scheme__
+    #     replacement: http
+    #   # Host name
+    #   - source_labels: [__meta_kubernetes_node_name]
+    #     target_label: instance
+    # - job_name: restic-exporter
+    #   static_configs:
+    #     - targets:
+    #       - restic.internal.freddrake.com:8000
+    # - job_name: unraid-exporter
+    #   static_configs:
+    #     - targets:
+    #       - 192.168.50.2:9100
+    # - job_name: gateway-exporter
+    #   scrape_timeout: 30s
+    #   static_configs:
+    #     - targets:
+    #       - 192.168.50.1:9100
 
 volsync-app:
   name: prometheus
