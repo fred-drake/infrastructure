@@ -40,7 +40,7 @@ prometheus:
     - job_name: unraid-exporter
       static_configs:
         - targets:
-          - larussa.internal.freddrake.com:9100
+          - 192.168.50.2:9100
 
 volsync-app:
   name: prometheus
