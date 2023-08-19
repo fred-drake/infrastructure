@@ -22,7 +22,7 @@
 - name: Transfer dhcp hosts
   ansible.builtin.copy:
     src: "{{ gitdir.path }}/Export/dhcp-{{ secret.dhcp.machines[dhcp_id].type }}.md"
-    dest: /etc/dhcp/dhcpcd.conf
+    dest: /etc/dhcp/dhcpd.conf
     mode: "0644"
     backup: true
   notify:
