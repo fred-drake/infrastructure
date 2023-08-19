@@ -136,7 +136,7 @@ all:
       hosts:
         nuc9:
         specops:
-        # rp1:
+        rp1:
 
     # Docker Swarm assignments
     swarm_cluster:
@@ -255,8 +255,7 @@ all:
     # Servers containing the MAAS software
     maas:
       hosts:
-        # nuc9:
-        rp1:
+        nuc9:
 
     # Servers requiring NFS client software
     nfs_client:

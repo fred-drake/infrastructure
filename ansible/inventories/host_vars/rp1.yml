@@ -1,11 +1,4 @@
 ansible_host: rp1.internal.freddrake.com
-ansible_user: pi
+ansible_user: ubuntu
+interface_50: eth0
 reboot_ok: true
-interface_208: eth0
-interface_50: eth0.50
-interface_40: eth0.40
-interface_30: eth0.30
-address_208: 192.168.208.23
-address_50: 192.168.50.6
-address_40: 192.168.40.88
-address_30: 192.168.30.20
