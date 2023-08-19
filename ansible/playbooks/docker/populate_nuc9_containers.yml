@@ -11,7 +11,7 @@
       vars:
         container:
           name: promtail
-          repository: "docker-hub.{{ secret.domain }}/grafana/promtail"
+          repository: grafana/promtail
           tag: latest
           entrypoint: >
             /bin/sh -c
@@ -25,26 +25,26 @@
       tags: promtail
 
     #### Homebridge ####
-    - role: docker/container
-      vars:
-        container:
-          name: homebridge
-          repository: "docker-hub.{{ secret.domain }}/oznu/homebridge"
-          tag: latest
-          ip: "{{ secret.services.homebridge.ip }}"
-          network: br0.40
-          env:
-            ENABLE_AVAHI: "0"
-          volumes:
-            - "{{ glusterfs_appdata_dir }}/homebridge/homebridge/config:/homebridge"
-      tags: homebridge
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: homebridge
+    #       repository: "oznu/homebridge"
+    #       tag: latest
+    #       ip: "{{ secret.services.homebridge.ip }}"
+    #       network: br0.40
+    #       env:
+    #         ENABLE_AVAHI: "0"
+    #       volumes:
+    #         - "{{ glusterfs_appdata_dir }}/homebridge/homebridge/config:/homebridge"
+    #   tags: homebridge
 
     ### Prometheus Node Exporter ###
     - role: docker/container
       vars:
         container:
           name: node-exporter
-          repository: "docker-hub.{{ secret.domain }}/prom/node-exporter"
+          repository: "prom/node-exporter"
           tag: latest
           ip: "{{ secret.services.prometheus.node_exporter.nuc9.ip }}"
           volumes:
@@ -59,67 +59,67 @@
       tags: prometheus
 
       ### DIUN ###
-    - role: docker/container
-      vars:
-        container:
-          name: diun-nuc9
-          repository: "docker-hub.{{ secret.domain }}/crazymax/diun"
-          tag: latest
-          ip: "{{ secret.services.diun.nuc9_ip }}"
-          env:
-            LOG_LEVEL: info
-            LOG_JSON: "false"
-            DIUN_WATCH_WORKERS: "20"
-            DIUN_WATCH_SCHEDULE: 0 9 * * *
-            DIUN_PROVIDERS_DOCKER: "true"
-            DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT: "true"
-            DIUN_NOTIF_SLACK_WEBHOOKURL: "{{ secret.services.diun.webhook_url }}"
-          volumes:
-            - "{{ appdata_dir }}/diun/data:/data"
-            - "/var/run/docker.sock:/var/run/docker.sock"
-      tags: diun
+    # - role: docker/container
+    #   vars:
+    #     container:
+    #       name: diun-nuc9
+    #       repository: "docker-hub.{{ secret.domain }}/crazymax/diun"
+    #       tag: latest
+    #       ip: "{{ secret.services.diun.nuc9_ip }}"
+    #       env:
+    #         LOG_LEVEL: info
+    #         LOG_JSON: "false"
+    #         DIUN_WATCH_WORKERS: "20"
+    #         DIUN_WATCH_SCHEDULE: 0 9 * * *
+    #         DIUN_PROVIDERS_DOCKER: "true"
+    #         DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT: "true"
+    #         DIUN_NOTIF_SLACK_WEBHOOKURL: "{{ secret.services.diun.webhook_url }}"
+    #       volumes:
+    #         - "{{ appdata_dir }}/diun/data:/data"
+    #         - "/var/run/docker.sock:/var/run/docker.sock"
+    #   tags: diun
     ### Traefik Privileged ###
-    - name: Traefik privileged
-      role: docker/traefik
-      vars:
-        traefik_type: privileged1
-        proxies:
-          - name: maas
-            url: "http://{{ secret.services.maas.ip }}:5240"
-        container:
-          name: traefik-privileged1
-          repository: "docker-hub.{{ secret.domain }}/traefik"
-          tag: latest
-          ip: "{{ secret.services.traefik.privileged1.ip }}"
-          network: br0
-          env:
-            CLOUDFLARE_EMAIL: "{{ secret.services.traefik_internal.cloudflare_email }}"
-            CLOUDFLARE_API_KEY: "{{ secret.services.traefik_internal.cloudflare_key }}"
-          security_opts:
-            - "no-new-privileges:true"
-          labels:
-            traefik.enable: "true"
-            traefik.http.services.justAdummyService-privileged.loadbalancer.server.port: "1337"
-            traefik.http.routers.traefik-privileged.entrypoints: http
-            traefik.http.routers.traefik-privileged.rule: "Host (`traefik-privileged.{{ secret.domain }}`)"
-            traefik.http.middlewares.traefik-privileged-auth.basicauth.users: "{{ secret.services.traefik_internal.credentials }}"
-            traefik.http.middlewares.traefik-privileged-https-redirect.redirectscheme.scheme: https
-            traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto: https
-            traefik.http.routers.traefik-privileged.middlewares: traefik-privileged-https-redirect
-            traefik.http.routers.traefik-privileged-secure.entrypoints: https
-            traefik.http.routers.traefik-privileged-secure.rule: "Host (`traefik-privileged.{{ secret.domain }}`)"
-            traefik.http.routers.traefik-privileged-secure.middlewares: traefik-privileged-auth
-            traefik.http.routers.traefik-privileged-secure.tls: "true"
-            traefik.http.routers.traefik-privileged-secure.tls.certresolver: cloudflare
-            traefik.http.routers.traefik-privileged-secure.tls.domains[0].main: "{{ secret.domain }}"
-            traefik.http.routers.traefik-privileged-secure.tls.domains[0].sans: "*.{{ secret.domain }}"
-            traefik.http.routers.traefik-privileged-secure.service: api@internal
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock:ro"
-            - "{{ glusterfs_appdata_dir }}/traefik-privileged1/data/traefik.yml:/traefik.yml:ro"
-            - "{{ glusterfs_appdata_dir }}/traefik-privileged1/data/acme.json:/acme.json"
-            - "{{ glusterfs_appdata_dir }}/traefik-privileged1/config.yml:/config.yml:ro"
-      tags: traefik_privileged
+    # - name: Traefik privileged
+    #   role: docker/traefik
+    #   vars:
+    #     traefik_type: privileged1
+    #     proxies:
+    #       - name: maas
+    #         url: "http://{{ secret.services.maas.ip }}:5240"
+    #     container:
+    #       name: traefik-privileged1
+    #       repository: "docker-hub.{{ secret.domain }}/traefik"
+    #       tag: latest
+    #       ip: "{{ secret.services.traefik.privileged1.ip }}"
+    #       network: br0
+    #       env:
+    #         CLOUDFLARE_EMAIL: "{{ secret.services.traefik_internal.cloudflare_email }}"
+    #         CLOUDFLARE_API_KEY: "{{ secret.services.traefik_internal.cloudflare_key }}"
+    #       security_opts:
+    #         - "no-new-privileges:true"
+    #       labels:
+    #         traefik.enable: "true"
+    #         traefik.http.services.justAdummyService-privileged.loadbalancer.server.port: "1337"
+    #         traefik.http.routers.traefik-privileged.entrypoints: http
+    #         traefik.http.routers.traefik-privileged.rule: "Host (`traefik-privileged.{{ secret.domain }}`)"
+    #         traefik.http.middlewares.traefik-privileged-auth.basicauth.users: "{{ secret.services.traefik_internal.credentials }}"
+    #         traefik.http.middlewares.traefik-privileged-https-redirect.redirectscheme.scheme: https
+    #         traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto: https
+    #         traefik.http.routers.traefik-privileged.middlewares: traefik-privileged-https-redirect
+    #         traefik.http.routers.traefik-privileged-secure.entrypoints: https
+    #         traefik.http.routers.traefik-privileged-secure.rule: "Host (`traefik-privileged.{{ secret.domain }}`)"
+    #         traefik.http.routers.traefik-privileged-secure.middlewares: traefik-privileged-auth
+    #         traefik.http.routers.traefik-privileged-secure.tls: "true"
+    #         traefik.http.routers.traefik-privileged-secure.tls.certresolver: cloudflare
+    #         traefik.http.routers.traefik-privileged-secure.tls.domains[0].main: "{{ secret.domain }}"
+    #         traefik.http.routers.traefik-privileged-secure.tls.domains[0].sans: "*.{{ secret.domain }}"
+    #         traefik.http.routers.traefik-privileged-secure.service: api@internal
+    #       volumes:
+    #         - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    #         - "{{ glusterfs_appdata_dir }}/traefik-privileged1/data/traefik.yml:/traefik.yml:ro"
+    #         - "{{ glusterfs_appdata_dir }}/traefik-privileged1/data/acme.json:/acme.json"
+    #         - "{{ glusterfs_appdata_dir }}/traefik-privileged1/config.yml:/config.yml:ro"
+    #   tags: traefik_privileged
 
     ### Traefik Internal ###
     - name: traefik internal
@@ -211,9 +211,9 @@
             # traefik.http.middlewares.omada-redirect.redirectregex.replacement: "https://$$1/login"
           volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
-            - "{{ glusterfs_appdata_dir }}/traefik-internal/data/traefik.yml:/traefik.yml:ro"
-            - "{{ glusterfs_appdata_dir }}/traefik-internal/data/acme.json:/acme.json"
-            - "{{ glusterfs_appdata_dir }}/traefik-internal/config.yml:/config.yml:ro"
+            - "{{ appdata_dir }}/traefik-internal/data/traefik.yml:/traefik.yml:ro"
+            - "{{ appdata_dir }}/traefik-internal/data/acme.json:/acme.json"
+            - "{{ appdata_dir }}/traefik-internal/config.yml:/config.yml:ro"
       tags: traefik_internal
 
     ### Omada ###
