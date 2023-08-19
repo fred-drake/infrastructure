@@ -1,23 +1,23 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: prometheus
-#   namespace: argocd
-# spec:
-#   project: default
-#   source:
-#     repoURL: https://github.com/fred-drake/infrastructure.git
-#     targetRevision: HEAD
-#     path: cluster/prometheus
-#     helm:
-#       releaseName: prometheus
-#   destination:
-#     server: https://kubernetes.default.svc
-#     namespace: prometheus
-#   syncPolicy:
-#     automated:
-#       prune: false
-#       selfHeal: false
-#     syncOptions:
-#       - CreateNamespace=true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/fred-drake/infrastructure.git
+    targetRevision: HEAD
+    path: cluster/prometheus
+    helm:
+      releaseName: prometheus
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prometheus
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
 
