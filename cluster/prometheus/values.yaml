@@ -11,6 +11,9 @@ prometheus:
         - hosts:
             - prometheus.internal.freddrake.com
           secretName: prometheus-tls
+    runAsUser: 99
+    runAsGroup: 100
+    fsGroup: 100
   extraScrapeConfigs: |
     - job_name: kubernetes-node-exporter
       tls_config:
