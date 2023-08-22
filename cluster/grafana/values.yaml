@@ -38,7 +38,7 @@ ingress:
         secretName: grafana-tls
 
 persistence:
-  configtwo:
+  config:
     enabled: true
     storageClass: longhorn
     accessMode: ReadWriteOnce
@@ -81,6 +81,6 @@ podSecurityContext:
 
 volsync-app:
   name: grafana
-  pvc: grafana-configtwo
+  pvc: grafana-config
   schedule: "0 23 * * *"
   copyMethod: Clone
