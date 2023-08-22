@@ -56,6 +56,6 @@ podSecurityContext:
 
 volsync-app:
   name: grafana
-  pvc: grafana
+  pvc: grafana-configtwo
   schedule: "0 23 * * *"
   copyMethod: Clone
