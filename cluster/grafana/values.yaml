@@ -45,6 +45,31 @@ persistence:
     size: 20Gi
     mountPath: /var/lib/grafana
 
+  datasource:
+    enabled: true
+    type: configMap
+    name: grafana-datasource
+    mountPath: /etc/grafana/provisioning/datasources
+
+configmap:
+  datasource:
+    enabled: true
+    data:
+      prometheus.yml: |
+        apiVersion: 1
+
+        datasources:
+          - name: Prometheus2
+            type: prometheus
+            access: proxy
+            # Access mode - proxy (server in the UI) or direct (browser in the UI).
+            url: http://prometheus-server.prometheus.svc.cluster.local
+            jsonData:
+              httpMethod: POST
+              manageAlerts: true
+            disableRecordingRules: false
+            incrementalQueryOverlapWindow: 10m
+
 monitoring:
   enabled: false
 
