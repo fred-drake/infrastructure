@@ -15,11 +15,11 @@
     state: present
     update_cache: true
 
-- name: Install pip libraries
-  ansible.builtin.pip:
-    name:
-      - docker
-      - docker-compose
+# - name: Install pip libraries
+#   ansible.builtin.pip:
+#     name:
+#       - docker
+#       - docker-compose
 
 - name: Add GPG key
   ansible.builtin.apt_key:
@@ -37,6 +37,8 @@
       - docker-ce
       - docker-ce-cli
       - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
     state: present
     update_cache: true
 

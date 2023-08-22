@@ -74,11 +74,11 @@
     state: present
     update_cache: true
 
-- name: Install glances
-  ansible.builtin.pip:
-    name: "glances[docker]"
-  tags:
-    - update
+# - name: Install glances
+#   ansible.builtin.pip:
+#     name: "glances[docker]"
+#   tags:
+#     - update
 
 - name: Set terminal setup user to ansible user
   ansible.builtin.set_fact:
