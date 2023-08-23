@@ -55,6 +55,12 @@ persistence:
     name: grafana-datasource
     mountPath: /etc/grafana/provisioning/datasources
 
+  dashboards:
+    enabled: true
+    type: configMap
+    name: grafana-dashboards
+    mountPath: /etc/grafana/provisioning/dashboards
+
 configmap:
   datasource:
     enabled: true
@@ -73,6 +79,18 @@ configmap:
               manageAlerts: true
             disableRecordingRules: false
             incrementalQueryOverlapWindow: 10m
+
+  dashboards:
+    enabled: true
+    data:
+      default.yaml: |
+        apiVersion: 1
+        providers:
+          name: Default
+          folder: Services
+          type: file
+          options:
+          path: /var/lib/grafana/dashboards
 
 monitoring:
   enabled: false
