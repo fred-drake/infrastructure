@@ -11,6 +11,10 @@ resource:
 env:
   TZ: America/New_York
 
+envFrom:
+  - secretRef:
+      name: grafana-secrets
+
 service:
   main:
     ports:
