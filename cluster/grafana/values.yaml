@@ -86,11 +86,11 @@ configmap:
       default.yaml: |
         apiVersion: 1
         providers:
-          name: Default
+        - name: Default
           folder: Services
           type: file
           options:
-          path: /var/lib/grafana/dashboards
+            path: /var/lib/grafana/dashboards
 
 monitoring:
   enabled: false
