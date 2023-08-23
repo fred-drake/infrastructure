@@ -61,6 +61,12 @@ persistence:
     name: grafana-dashboards
     mountPath: /etc/grafana/provisioning/dashboards
 
+  dashboarddefs:
+    enabled: true
+    type: configMap
+    name: grafana-dashboarddefs
+    mountPath: /var/lib/grafana/dashboards
+
 configmap:
   datasource:
     enabled: true
