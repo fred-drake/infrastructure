@@ -124,7 +124,6 @@ all:
         nuc4:
         nuc5:
         nuc6:
-        nuc8:
 
     # All docker container servers
     docker:
@@ -135,6 +134,7 @@ all:
       hosts:
         nuc9:
         specops:
+        rp3:
 
     disconnected_cluster:
       hosts:
