@@ -42,13 +42,13 @@ persistence:
     storageClass: longhorn
     accessMode: ReadWriteOnce
     size: 20Gi
-    mountPath: /dataold
+    mountPath: /data
   datatemp:
     enabled: true
     storageClass: longhorn
     accessMode: ReadWriteOnce
     size: 20Gi
-    mountPath: /data
+    mountPath: /dataold
   logs:
     enabled: true
     storageClass: longhorn
