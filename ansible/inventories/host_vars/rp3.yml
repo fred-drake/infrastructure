@@ -2,3 +2,4 @@ ansible_host: rp3.internal.freddrake.com
 ansible_user: ubuntu
 interface_50: eth0
 interface_40: eth0.40
+reboot_ok: true
