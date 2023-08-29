@@ -1,6 +1,6 @@
 image:
   repository: 1dev/server
-  tag: 9.0.4
+  tag: 9.0.5
   pullPolicy: IfNotPresent
 
 resources:
