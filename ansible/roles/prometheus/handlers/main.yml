@@ -1,2 +1,0 @@
-- name: Restart prometheus
-  ansible.builtin.command: docker service update prometheus --force
