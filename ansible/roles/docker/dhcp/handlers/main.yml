@@ -1,6 +1,0 @@
----
-- name: Restart dhcp
-  community.docker.docker_container:
-    name: "{{ dhcp_id }}"
-    container_default_behavior: "{{ container_default_behavior }}"
-    restart: true
