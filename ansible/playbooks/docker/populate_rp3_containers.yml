@@ -3,21 +3,6 @@
   gather_facts: false
   become: true
   roles:
-    # - role: docker/container
-    #   vars:
-    #     container:
-    #       name: scrypted
-    #       repository: koush/scrypted
-    #       tag: 18-jammy-thin.s6-v0.41.0
-    #       ip: 192.168.40.35
-    #       network: br0.40
-    #       env:
-    #         SCRYPTED_WEBHOOK_UPDATE_AUTHORIZATION: Bearer asdfjasdflawjfwefwefaenc
-    #         SCRYPTED_WEBHOOK_UPDATE: http://192.168.40.35:10444/v1/update
-    #         DOZZLE_TAILSIZE: "300"
-    #       volumes:
-    #         - /appdata/scrypted:/server/volume
-            
     - role: docker/container
       vars:
         container:

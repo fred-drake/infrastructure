@@ -3,21 +3,6 @@
   gather_facts: false
   become: true
   roles:
-    ### Dozzle - NUC8 ###
-    - role: docker/container
-      vars:
-        container:
-          name: dozzle
-          repository: "docker-hub.{{ secret.domain }}/amir20/dozzle"
-          tag: "{{ special_tags.dozzle.tag | default('latest') }}"
-          ip: "{{ secret.services.dozzle.nuc8_ip }}"
-          env:
-            DOZZLE_BASE: /
-            DOZZLE_LEVEL: info
-            DOZZLE_TAILSIZE: "300"
-          volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-      tags: dozzle
 
     ### Photoprism ###
     - role: docker/volume
