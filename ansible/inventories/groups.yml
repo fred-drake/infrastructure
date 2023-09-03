@@ -31,7 +31,6 @@ all:
     # Ubuntu desktops
     ubuntu_desktop:
       hosts:
-        brynn-desktop-2:
 
     # All Raspberry Pi OS distributions
     raspbian:
@@ -92,7 +91,6 @@ all:
     # All hosts with Nvidia/CUDA
     cuda:
       hosts:
-        brynn-desktop-2:
 
   ####################################
   # CONTAINER ORCHESTRATION-SPECIFIC #
@@ -150,7 +148,6 @@ all:
     #     nuc9:
     #     nuc8:
     #     specops:
-    #     brynn-desktop-2:
 
     # Docker container servers who run critical services
     critical_docker_services:
