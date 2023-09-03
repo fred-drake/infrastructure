@@ -3,7 +3,7 @@ name: cert-mgr
 version: 1.0.0
 dependencies:
   - name: cert-manager
-    version: v1.12.3
+    version: v1.12.4
     repository: https://charts.jetstack.io/
     alias: cert-manager
     condition: cert-manager.enabled
