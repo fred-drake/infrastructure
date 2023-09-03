@@ -210,10 +210,6 @@ all:
       hosts:
         scannerpi:
 
-    avahi: # Host for avahi daemon
-      hosts:
-        # nuc9:
-
     # Servers containing the MAAS software
     maas:
       hosts:
