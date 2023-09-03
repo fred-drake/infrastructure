@@ -1,7 +1,6 @@
 ---
 # Docker network names and paths
 appdata_dir: "{{ docker_secret.vault_appdata_dir }}"
-glusterfs_appdata_dir: /mnt/vol01/docker2
 
 # Container settings
 container_pull: true

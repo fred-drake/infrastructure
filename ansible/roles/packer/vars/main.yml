@@ -1,2 +1,2 @@
 base_url: "https://downloads.raspberrypi.org/{{ image_type }}/images/"
-image_storage_path: "{{ glusterfs_appdata_dir }}/images/images/config/www"
+image_storage_path: "{{ appdata_dir }}/images/images/config/www"

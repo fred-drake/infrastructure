@@ -1,6 +1,5 @@
 ---
 collections:
-  - gluster.gluster
   - ansible.posix
   - community.general
   - community.docker

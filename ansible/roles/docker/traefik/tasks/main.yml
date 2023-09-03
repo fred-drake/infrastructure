@@ -1,25 +1,25 @@
 - name: Create directory
   ansible.builtin.file:
-    path: "{{ appdir | default(glusterfs_appdata_dir) }}/traefik-{{ traefik_type }}"
+    path: "{{ appdir | default(appdata_dir) }}/traefik-{{ traefik_type }}"
     state: directory
     mode: "0755"
 
 - name: Set traefik route configuration
   ansible.builtin.template:
     src: "{{ traefik_type }}/config.yml.j2"
-    dest: "{{ appdir | default(glusterfs_appdata_dir) }}/traefik-{{ traefik_type }}/config.yml"
+    dest: "{{ appdir | default(appdata_dir) }}/traefik-{{ traefik_type }}/config.yml"
     mode: "0644"
   notify: Restart traefik
 
 - name: Create data directory
   ansible.builtin.file:
-    path: "{{ appdir | default(glusterfs_appdata_dir) }}/traefik-{{ traefik_type }}/data"
+    path: "{{ appdir | default(appdata_dir) }}/traefik-{{ traefik_type }}/data"
     state: directory
     mode: "0755"
 
 - name: Create empty acme.json file if it doesn't already exist
   ansible.builtin.file:
-    path: "{{ appdir | default(glusterfs_appdata_dir) }}/traefik-{{ traefik_type }}/data/acme.json"
+    path: "{{ appdir | default(appdata_dir) }}/traefik-{{ traefik_type }}/data/acme.json"
     state: touch
     mode: "0600"
     modification_time: preserve
@@ -29,7 +29,7 @@
 - name: Set traefik system configuration
   ansible.builtin.template:
     src: "{{ traefik_type }}/traefik.yml.j2"
-    dest: "{{ appdir | default(glusterfs_appdata_dir) }}/traefik-{{ traefik_type }}/data/traefik.yml"
+    dest: "{{ appdir | default(appdata_dir) }}/traefik-{{ traefik_type }}/data/traefik.yml"
     mode: "0644"
   notify: Restart traefik
 

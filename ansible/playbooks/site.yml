@@ -4,12 +4,6 @@
 - name: KVM virtual management
   ansible.builtin.import_playbook: kvm.yml
 
-- name: GlusterFS server software
-  ansible.builtin.import_playbook: glusterfs-server.yml
-
-- name: GlusterfS client software
-  ansible.builtin.import_playbook: glusterfs-client.yml
-
 - name: Docker application (not containers)
   ansible.builtin.import_playbook: docker.yml
 

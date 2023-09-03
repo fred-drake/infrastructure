@@ -1,7 +1,6 @@
 ansible_host: specops.internal.freddrake.com
 ansible_user: ubuntu
 appdata_dir: /mnt/storage/docker/appdata
-glusterfs_appdata_dir: /mnt/storage/docker/appdata
 host_specific_mounts:
   - path: /mnt/storage
     src: /dev/oracleoci/oraclevdb1

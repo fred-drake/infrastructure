@@ -17,12 +17,12 @@
 
 - name: Create config directory
   ansible.builtin.file:
-    path: "{{ glusterfs_appdata_dir }}/loki/loki/config"
+    path: "{{ appdata_dir }}/loki/loki/config"
     state: directory
     mode: '0777'
 
 - name: Apply loki config
   ansible.builtin.template:
     src: config.yml.j2
-    dest: "{{ glusterfs_appdata_dir }}/loki/loki/config/local-config.yaml"
+    dest: "{{ appdata_dir }}/loki/loki/config/local-config.yaml"
     mode: '0644'

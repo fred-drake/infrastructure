@@ -1,12 +1,12 @@
 - name: Create directory
   ansible.builtin.file:
-    path: "{{ glusterfs_appdata_dir }}/traefik-swarm/traefik/data"
+    path: "{{ appdata_dir }}/traefik-swarm/traefik/data"
     state: directory
     mode: '0755'
 
 - name: Create empty acme.json file if it doesn't already exist
   ansible.builtin.file:
-    path: "{{ glusterfs_appdata_dir }}/traefik-swarm/traefik/data/acme.json"
+    path: "{{ appdata_dir }}/traefik-swarm/traefik/data/acme.json"
     state: touch
     mode: "0600"
     modification_time: preserve
@@ -16,14 +16,14 @@
 - name: Set traefik system configuration
   ansible.builtin.template:
     src: "traefik.yml.j2"
-    dest: "{{ glusterfs_appdata_dir }}/traefik-swarm/traefik/data/traefik.yml"
+    dest: "{{ appdata_dir }}/traefik-swarm/traefik/data/traefik.yml"
     mode: "0644"
   notify: Restart traefik
 
 - name: Set traefik route configuration
   ansible.builtin.template:
     src: "config.yml.j2"
-    dest: "{{ glusterfs_appdata_dir }}/traefik-swarm/traefik/config.yml"
+    dest: "{{ appdata_dir }}/traefik-swarm/traefik/config.yml"
     mode: "0644"
   notify: Restart traefik
 
