@@ -1,5 +1,0 @@
-- name: Prune docker
-  delegate_to: "{{ item }}"
-  ansible.builtin.command:
-    cmd: docker system prune --all -f
-  loop: "{{ groups['swarm_cluster'] }}"

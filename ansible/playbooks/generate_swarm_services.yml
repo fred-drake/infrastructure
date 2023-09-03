@@ -1,7 +1,0 @@
-- name: Generate swarm services
-  hosts: localhost
-  gather_facts: false
-  run_once: true
-  become: false
-  roles:
-    - generate_swarm_service

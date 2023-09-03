@@ -1,6 +1,0 @@
----
-- name: Restart container
-  community.docker.docker_container:
-    name: swarm-lb
-    container_default_behavior: "{{ container_default_behavior }}"
-    restart: true

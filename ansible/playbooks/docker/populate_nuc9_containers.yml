@@ -712,11 +712,6 @@
     #       - "{{ glusterfs_appdata_dir }}/{{ backup_namespace }}:/backup/{{ backup_namespace }}"
     #   tags: uptime_kuma
 
-    ### Swarm Layer 4 Load Balancer ###
-    # - name: swarm layer 4 load balancer
-    #   role: docker/swarm-lb
-    #   tags: swarm_lb
-
     # - role: docker/volume
     #   vars:
     #     volume:
@@ -796,8 +791,8 @@
     #         SUBDOMAINS: "{{ secret.services.swag_internal.subdomains }}"
     #         ONLY_SUBDOMAINS: "{{ secret.services.swag_internal.only_subdomains }}"
     #         VALIDATION: "{{ secret.services.swag_internal.validation }}"
+      #         STAGING: "{{ secret.services.swag_internal.staging }}"
     #         DNSPLUGIN: "{{ secret.services.swag_internal.dnsplugin }}"
-    #         STAGING: "{{ secret.services.swag_internal.staging }}"
     #       volumes:
     #         - "{{ appdata_dir }}/swag-internal:/config"
     #   tags: swag_internal

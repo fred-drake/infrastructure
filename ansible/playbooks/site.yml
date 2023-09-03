@@ -23,14 +23,11 @@
 
 - name: Primary critical applications
   ansible.builtin.import_playbook: docker/critical_apps_primary.yml
-- name: Non-swarm docker containers
+- name: Docker containers
   ansible.builtin.import_playbook: docker/populate_containers.yml
 
 - name: K3s
   ansible.builtin.import_playbook: k3s.yml
-
-- name: Docker Swarm
-  ansible.builtin.import_playbook: swarm.yml
 
 - name: Dedicated apps
   ansible.builtin.import_playbook: dedicated_apps.yml
