@@ -3,15 +3,6 @@
   gather_facts: false
   become: true
   roles:
-    # - docker/base
-    # - role: docker/dhcp
-    #   vars:
-    #     dhcp_id: dhcp1
-    # - role: docker/pihole
-    #   vars:
-    #     pihole_id: pihole1
-    # - docker/backup_client
-
     ### Omada ###
     - role: docker/container
       vars:
