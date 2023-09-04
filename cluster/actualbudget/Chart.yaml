@@ -1,0 +1,10 @@
+apiVersion: v2
+name: actualbudget
+version: 1.0.0
+dependencies:
+  - name: common
+    version: 1.0.0
+    repository: https://fred-drake.github.io/helm
+  - name: volsync-app
+    version: 1.0.0
+    repository: "file://../volsync-app"

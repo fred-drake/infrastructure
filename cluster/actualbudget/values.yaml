@@ -1,0 +1,60 @@
+image:
+  repository: actualbudget/actual-server
+  tag: 23.9.0
+  pullPolicy: IfNotPresent
+
+# podSecurityContext:
+#   fsGroup: 1000
+
+resource:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+env:
+  TZ: America/New_York
+
+service:
+  main:
+    ports:
+      http:
+        port: 5006
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    hosts:
+      - host: actualbudget.internal.freddrake.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - hosts:
+          - actualbudget.internal.freddrake.com
+        secretName: actualbudget-tls
+
+persistence:
+  data:
+    enabled: true
+    storageClass: longhorn
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mountPath: /data
+
+monitoring:
+  enabled: false
+
+podSecurityContext:
+  runAsUser: 99
+  runAsGroup: 100
+  fsGroup: 100
+  fsGroupChangePolicy: OnRootMismatch
+
+volsync-app:
+  name: actualbudget
+  pvc: actualbudget-data
+  schedule: "0 7 * * *"
+  copyMethod: Clone
+

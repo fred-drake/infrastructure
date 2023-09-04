@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: actualbudget
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/fred-drake/infrastructure.git
+    targetRevision: HEAD
+    path: cluster/actualbudget
+    helm:
+      releaseName: actualbudget
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: actualbudget
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+
