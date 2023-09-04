@@ -3,9 +3,6 @@ image:
   tag: 23.9.0
   pullPolicy: IfNotPresent
 
-# podSecurityContext:
-#   fsGroup: 1000
-
 resource:
   requests:
     cpu: 100m
