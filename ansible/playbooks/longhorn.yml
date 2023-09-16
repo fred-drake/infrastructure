@@ -1,0 +1,6 @@
+- name: Longhorn provisioning
+  hosts: longhorn
+  gather_facts: true
+  become: true
+  roles:
+    - longhorn

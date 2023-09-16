@@ -1,0 +1,7 @@
+- name: Apply multipath conf file
+  ansible.builtin.copy:
+    src: multipath.conf
+    dest: /etc/multipath.conf
+    mode: '0644'
+  notify: Restart multipath
+

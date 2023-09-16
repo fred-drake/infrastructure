@@ -1,0 +1,5 @@
+- name: Restart multipath
+  ansible.builtin.systemd:
+    name: multipathd.service
+    state: restarted
+
