@@ -1,9 +1,9 @@
 dependencies:
 - name: prometheus
   repository: https://prometheus-community.github.io/helm-charts
-  version: 25.0.0
+  version: 25.1.0
 - name: volsync-app
   repository: file://../volsync-app
   version: 1.0.0
-digest: sha256:12eba783d08fd43f0c361e219a0590d88aada2dc98b172a1257d5656f5e826a6
-generated: "2023-09-19T04:22:15.257010132Z"
+digest: sha256:59b0a040ae60d72469c3326e6161614c252404fc0c3defc34e582b6be2ce9586
+generated: "2023-10-03T00:43:35.903182108Z"
