@@ -9,7 +9,7 @@
           name: homebridge
           repository: "oznu/homebridge"
           tag: latest
-          ip: 192.168.40.38
+          ip: 192.168.40.73
           network: br0.40
           env:
             ENABLE_AVAHI: "0"
