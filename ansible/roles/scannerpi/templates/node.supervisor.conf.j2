@@ -5,9 +5,3 @@ autostart=true
 autorestart=true
 user={{ ansible_user }}
 
-[program:paperless-broker]
-directory={{ root_scanner_dir }}/node
-command=npm run watch
-autostart=true
-autorestart=true
-user={{ ansible_user }}

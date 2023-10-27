@@ -5,6 +5,7 @@
       - supervisor
       - smbclient
       - cifs-utils
+      - nfs-kernel-server
 
 - name: Check if node repository is already installed
   ansible.builtin.shell: set -o pipefail && grep -rhE ^deb /etc/apt/sources.list* | grep deb.nodesource.com | wc -l
