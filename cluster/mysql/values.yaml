@@ -2,7 +2,7 @@ name: mysql
 deployment:
   image: 
     repository: mysql
-    tag: 8.1.0
+    tag: 8.2.0
 
   port: 3306
          
