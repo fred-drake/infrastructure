@@ -1,6 +1,0 @@
-dependencies:
-- name: multus-cni
-  repository: https://charts.bitnami.com/bitnami
-  version: 1.1.6
-digest: sha256:10b9c5fc46767fc720d426db643aaac9562e51b92182fcae174f920224f163ca
-generated: "2023-11-08T18:19:48.583303-05:00"
