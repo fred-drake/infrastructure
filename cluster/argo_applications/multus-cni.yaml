@@ -1,23 +1,23 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: multus-cni
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/fred-drake/infrastructure.git
-    targetRevision: HEAD
-    path: cluster/multus-cni
-    helm:
-      releaseName: multus-cni
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: multus-cni
-  syncPolicy:
-    automated:
-      prune: false
-      selfHeal: false
-    syncOptions:
-      - CreateNamespace=true
-
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: multus-cni
+#   namespace: argocd
+# spec:
+#   project: default
+#   source:
+#     repoURL: https://github.com/fred-drake/infrastructure.git
+#     targetRevision: HEAD
+#     path: cluster/multus-cni
+#     helm:
+#       releaseName: multus-cni
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: multus-cni
+#   syncPolicy:
+#     automated:
+#       prune: false
+#       selfHeal: false
+#     syncOptions:
+#       - CreateNamespace=true
+#
