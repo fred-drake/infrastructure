@@ -25,7 +25,7 @@ config device
 config bridge-vlan 'workstation_vlan'
     option device 'switch'
     option vlan '30'
-    option ports 'lan2 lan3 lan1:t lan5:t lan6:t lan7:t lan8:t'
+    option ports 'lan3 lan1:t lan2:t lan5:t lan6:t lan7:t lan8:t'
 
 config bridge-vlan 'iot_vlan'
     option device 'switch'
@@ -40,7 +40,7 @@ config bridge-vlan 'guest_vlan'
 config bridge-vlan 'service_vlan'
     option device 'switch'
     option vlan '50'
-    option ports 'lan1:t lan2:t lan3:t lan4:t lan5:t lan6:t lan7:t lan8:t'
+    option ports 'lan2 lan1:t lan3:t lan4:t lan5:t lan6:t lan7:t lan8:t'
 
 config interface 'lan'
     option device 'switch.1'
