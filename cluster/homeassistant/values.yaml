@@ -28,6 +28,15 @@ service:
         port: 30600
         protocol: TCP
         nodePort: 30600
+  sonos:
+    enabled: true
+    type: NodePort
+    ports:
+      sonos:
+        enabled: true
+        port: 30700
+        protocol: TCP
+        nodePort: 30700
 
 ingress:
   main:
