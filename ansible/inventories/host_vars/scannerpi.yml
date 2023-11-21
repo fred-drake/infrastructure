@@ -3,4 +3,4 @@
 ansible_host: scannerpi.internal.freddrake.com
 ansible_user: pi
 ansible_group: pi
-enable_wireless: true
+enable_wireless: false
