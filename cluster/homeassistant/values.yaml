@@ -34,7 +34,7 @@ service:
     ports:
       sonos:
         enabled: true
-        port: 30700
+        port: 1400
         protocol: TCP
         nodePort: 30700
 
