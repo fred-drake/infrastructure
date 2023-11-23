@@ -1,6 +1,6 @@
 image:
   repository: grafana/grafana-oss
-  tag: 10.2.1
+  tag: 10.2.2
   pullPolicy: IfNotPresent
 
 resource:
