@@ -1,6 +1,6 @@
 image:
   repository: linuxserver/prowlarr
-  tag: version-1.9.4.4039
+  tag: version-1.10.5.4116
   pullPolicy: IfNotPresent
 
 resource:
