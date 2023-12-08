@@ -1,7 +1,6 @@
 [program:scanner-service]
-directory={{ root_scanner_dir }}/node
-command=npm run scanner
+directory={{ root_scanner_dir }}
+command={{ root_scanner_dir }}/scanner-api
 autostart=true
 autorestart=true
 user={{ ansible_user }}
-

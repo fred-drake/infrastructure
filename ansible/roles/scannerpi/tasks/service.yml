@@ -3,57 +3,40 @@
     name:
       - curl
       - supervisor
-      - smbclient
-      - cifs-utils
-      - nfs-kernel-server
 
-- name: Check if node repository is already installed
-  ansible.builtin.shell: set -o pipefail && grep -rhE ^deb /etc/apt/sources.list* | grep deb.nodesource.com | wc -l
-  register: nodesource
-  changed_when: false
+- name: Create temp dir for building scanner-api
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: scanner_api
+  register: scanner_api_dir
+  delegate_to: localhost
 
-- name: Install node repository
-  ansible.builtin.shell: set -o pipefail && curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-  when: nodesource.stdout == '0'
-
-- name: Install nodejs apt
-  ansible.builtin.apt:
-    name: nodejs
-
-- name: Pull scanner service git repo
+- name: Pull scanner-api source git
   ansible.builtin.git:
-    repo: https://github.com/fred-drake/scanner-directory-broker.git
-    version: master
-    dest: "{{ root_scanner_dir }}/node"
-  notify: Restart supervisor
-  tags: code
+    repo: https://github.com/fred-drake/scanner-api
+    version: main
+    dest: "{{ scanner_api_dir.path }}"
+  delegate_to: localhost
 
-- name: Copy config file
-  ansible.builtin.template:
-    src: config.yaml.j2
-    dest: "{{ root_scanner_dir }}/node/config.yaml"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_group }}"
-    mode: '0644'
-  notify: Restart supervisor
-  tags: code
-
-- name: Install npm packages
-  community.general.npm:
-    path: "{{ root_scanner_dir }}/node"
-  notify: Restart supervisor
-
-- name: Compile scanner service
+- name: Compile scanner-api
   ansible.builtin.command:
-    cmd: npm run build:release
-    chdir: "{{ root_scanner_dir }}/node"
+    chdir: "{{ scanner_api_dir.path }}"
+    argv:
+      - cargo
+      - build
+      - --release
+      - --target
+      - armv7-unknown-linux-gnueabihf
+  environment:
+    CARGO_TARGET_ARMV7_UNKNOWN_LINUX_GNUEABIHF_LINKER: /usr/bin/arm-linux-gnueabihf-gcc
+  delegate_to: localhost
   changed_when: true
-  notify: Restart supervisor
 
-- name: Install node supervisor globally
-  community.general.npm:
-    name: supervisor
-    global: true
+- name: Copy compiled executable
+  ansible.builtin.copy:
+    src: "{{ scanner_api_dir.path }}/target/armv7-unknown-linux-gnueabihf/release/scanner-api"
+    dest: "/opt/scanner"
+    mode: "0755"
 
 - name: Configure supervisor
   ansible.builtin.blockinfile:
