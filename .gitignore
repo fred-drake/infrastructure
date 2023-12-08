@@ -7,6 +7,7 @@
 .vault_pass
 galaxy_collections/
 id_ansible
+**/*.tmp.yml
 
 # Trash
 .DS_Store
