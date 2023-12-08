@@ -1,15 +1,4 @@
 {
-  "python.linting.flake8Enabled": true,
-  "python.linting.pylintEnabled": false,
-  "python.linting.flake8Path": "flake8",
-  "python.linting.ignorePatterns": [
-    ".vscode/*.py",
-    "**/site-packages/**/*.py",
-    ".venv/**/*.py",
-    ".pytest_cache/**/*.py"
-  ],
-  "python.linting.enabled": true,
-  "python.formatting.provider": "black",
   "python.testing.pytestArgs": [
     "tests"
   ],
@@ -28,4 +17,5 @@
     "**/roles/**/*.{yml,yaml}": "ansible",
     "**/playbooks/**/*.{yml,yaml}": "ansible",
   },
+  "ansible.python.interpreterPath": "/workspaces/infrastructure/.direnv/python-3.10.0/bin/python",
 }
