@@ -1,6 +1,6 @@
 image:
   repository: paperlessngx/paperless-ngx
-  tag: 2.1.0
+  tag: 2.1.2
   pullPolicy: IfNotPresent
 
 resource:
