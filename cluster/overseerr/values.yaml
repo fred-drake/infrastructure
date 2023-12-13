@@ -1,6 +1,6 @@
 image:
   repository: lscr.io/linuxserver/overseerr
-  tag: v1.33.2-ls87
+  tag: v1.33.2-ls88
   pullPolicy: IfNotPresent
 
 resource:
