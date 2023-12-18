@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: ollama-webgui
-  namespace: ollama-webgui
+  namespace: argocd
 spec:
   project: default
   source:
