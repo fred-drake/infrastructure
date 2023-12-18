@@ -23,7 +23,8 @@
 				"redhat.vscode-yaml",
 				"python.black-formatter",
 				"ms-azuretools.vscode-docker",
-				"ms-python.flake8"
+				"ms-python.flake8",
+				"shipitsmarter.sops-edit"
 			]		
 		}
 	},

@@ -1,4 +1,4 @@
-FROM python:3.12.1 as base
+FROM python:3.10 as base
 ENV SOPS_VERSION=3.7.3
 ENV GITLEAKS_VERSION=8.11.2
 ENV HADOLINT_VERSION=2.10.0
@@ -11,7 +11,7 @@ RUN apt-get update && \
   sshpass ansible curl ca-certificates direnv apt-transport-https \
   g++-arm-linux-gnueabihf libc6-dev-armhf-cross docker.io gcc-arm-linux-gnueabihf && \
   curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg && \
-  mkdir /etc/apt/keyrings && \
+  mkdir -p /etc/apt/keyrings && \
   curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
   echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | tee /etc/apt/sources.list.d/kubernetes.list && \
   apt-get update && \
