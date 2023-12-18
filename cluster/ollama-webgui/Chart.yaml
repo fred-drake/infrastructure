@@ -1,0 +1,7 @@
+apiVersion: v2
+name: ollama-webgui
+version: 1.0.0
+dependencies:
+  - name: common
+    version: 1.0.0
+    repository: "file://../helm-common"

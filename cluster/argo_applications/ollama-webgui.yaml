@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ollama-webgui
+  namespace: ollama-webgui
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/fred-drake/infrastructure.git
+    targetRevision: HEAD
+    path: cluster/ollama-webgui
+    helm:
+      releaseName: ollama-webgui
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ollama-webgui
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+
