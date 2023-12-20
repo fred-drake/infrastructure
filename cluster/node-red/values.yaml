@@ -64,9 +64,3 @@ volsync-app-data:
   pvc: node-red-data
   schedule: "0 1 * * *"
   copyMethod: Clone
-
-volsync-app-log:
-  name: node-red-log
-  pvc: node-red-logs
-  schedule: "30 1 * * *"
-  copyMethod: Clone
