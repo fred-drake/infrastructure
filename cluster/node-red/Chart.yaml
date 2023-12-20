@@ -9,7 +9,3 @@ dependencies:
     alias: volsync-app-data
     version: 1.0.0
     repository: "file://../volsync-app"
-  - name: volsync-app
-    alias: volsync-app-log
-    version: 1.0.0
-    repository: "file://../volsync-app"
