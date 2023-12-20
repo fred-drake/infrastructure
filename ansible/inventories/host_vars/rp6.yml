@@ -1,4 +1,5 @@
-# This is designed to run with Raspbian Lite 32 bit
+# This is designed to run with Raspbian Lite 32 bit Bullseye
+# Tinypilot not yet supported for Bookworm -- follow https://github.com/tiny-pilot/tinypilot/issues/1668
 ansible_host: rp6.internal.freddrake.com
 ansible_user: pi
 ansible_group: pi
