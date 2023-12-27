@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/linuxserver/homeassistant
-  tag: 2023.12.3
+  tag: 2023.12.4
   pullPolicy: IfNotPresent
 
 resource:
