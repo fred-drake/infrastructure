@@ -59,8 +59,8 @@ podSecurityContext:
   fsGroup: 100
   fsGroupChangePolicy: OnRootMismatch
 
-volsync-app-data:
-  name: node-red-data
-  pvc: node-red-data
-  schedule: "0 1 * * *"
-  copyMethod: Clone
+# volsync-app-data:
+#   name: node-red-data
+#   pvc: node-red-data
+#   schedule: "0 1 * * *"
+#   copyMethod: Clone
