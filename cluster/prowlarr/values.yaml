@@ -43,10 +43,3 @@ persistence:
 
 monitoring:
   enabled: false
-
-volsync-app:
-  name: prowlarr
-  pvc: prowlarr-config
-  schedule: "0 18 * * *"
-  copyMethod: Clone
-

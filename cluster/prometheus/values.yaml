@@ -46,9 +46,3 @@ prometheus:
       static_configs:
         - targets:
           - 192.168.50.1:9100
-
-volsync-app:
-  name: prometheus
-  pvc: prometheus-server
-  schedule: "0 22 * * *"
-  copyMethod: Clone

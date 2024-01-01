@@ -65,9 +65,3 @@ persistence:
 
 monitoring:
   enabled: false
-
-volsync-app:
-  name: radarr
-  pvc: radarr-config
-  schedule: "0 15 * * *"
-  copyMethod: Clone

@@ -2,8 +2,5 @@ dependencies:
 - name: common
   repository: file://../helm-common
   version: 1.0.0
-- name: volsync-app
-  repository: file://../volsync-app
-  version: 1.0.0
-digest: sha256:974de27ba876459e134098764efef563af2c4aa6bbd7af9550d8e9ff65d72df3
-generated: "2022-12-17T17:06:33.013235-05:00"
+digest: sha256:812320a19b999b52674c710e0146f1e96c5d229293e35f1ce9f148a2a0144b25
+generated: "2023-12-31T23:13:42.9099249-05:00"

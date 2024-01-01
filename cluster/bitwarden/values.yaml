@@ -55,9 +55,3 @@ podSecurityContext:
   runAsGroup: 100
   fsGroup: 100
   fsGroupChangePolicy: OnRootMismatch
-
-volsync-app:
-  name: bitwarden
-  pvc: bitwarden-data
-  schedule: "0 21 * * *"
-  copyMethod: Clone
