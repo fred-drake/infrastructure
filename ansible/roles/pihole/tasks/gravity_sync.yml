@@ -61,7 +61,7 @@
 
 - name: Download install script
   ansible.builtin.get_url:
-    url: https://gravity.vmstan.com
+    url: https://raw.githubusercontent.com/vmstan/gs-install/main/gs-install.sh
     dest: "{{ tempfile.path }}"
     mode: '0755'
   when: not gs.stat.exists
