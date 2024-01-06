@@ -1,8 +1,14 @@
 deploy HOST:
-    ansible-playbook -i ./inventories playbooks/site.yml --limit {{ HOST }}
+    ansible-playbook ansible/playbooks/site.yml --limit {{ HOST }}
 
 deploy-password HOST:
-    ansible-playbook -i./inventories playbooks/site.yml --limit {{ HOST }} --ask-pass --ask-become-pass
+    ansible-playbook ansible/playbooks/site.yml --limit {{ HOST }} --ask-pass --ask-become-pass
+
+dns:
+    ansible-playbook ansible/playbooks/dns_update.yml
+
+dhcp:
+    ansible-playbook ansible/playbooks/dhcp_update.yml
 
 lint:
     yamllint .
