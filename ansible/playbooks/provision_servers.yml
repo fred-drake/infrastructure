@@ -11,6 +11,7 @@
   hosts: proxmox_vm
   gather_facts: false
   become: true
+  remote_user: root
   roles:
     - proxmox_vm
 
