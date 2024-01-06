@@ -1,4 +1,4 @@
-ansible_host: pihole1.internal.freddrake.com
+ansible_host: 192.168.208.7
 ansible_user: ubuntu
 gravity_sync_remote_user: ubuntu
 gravity_sync_remote_host: 192.168.208.9
