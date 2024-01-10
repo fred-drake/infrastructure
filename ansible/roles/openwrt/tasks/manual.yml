@@ -11,6 +11,8 @@
         suffix: openwrt
       register: temp_dir
       changed_when: false
+      tags:
+        - update_network
 
     - name: Build authorized keys locally
       connection: local
@@ -68,6 +70,8 @@
         dest: "{{ temp_dir.path }}/network"
         mode: '0644'
       changed_when: false
+      tags:
+        - update_network
 
     - name: Push network file to device
       connection: local
@@ -78,6 +82,8 @@
           {{ temp_dir.path }}/network
           {{ ansible_user }}@{{ ansible_host }}:/etc/config/network
       changed_when: true
+      tags:
+        - update_network
 
     - name: Reload the network service so any changes are enabled
       connection: local
@@ -88,6 +94,9 @@
           {{ ansible_user }}@{{ ansible_host }}
           service network reload
       changed_when: true
+      tags:
+        - update_network
+
   always:
     - name: Clean up temporary directory
       connection: local

@@ -20,4 +20,4 @@
     - name: OpenWRT manual setup
       ansible.builtin.include_role:
         name: openwrt
-        tasks_from: manual
+        tasks_from: test
