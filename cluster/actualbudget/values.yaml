@@ -1,6 +1,6 @@
 image:
-  repository: ghcr.io/bjw-s/actual-server
-  tag: 23.12.0
+  repository: actualbudget/actual-server
+  tag: 24.1.0
   pullPolicy: IfNotPresent
 
 resource:
