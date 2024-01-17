@@ -12,6 +12,7 @@ metadata:
     gethomepage.dev/icon: homepage.png
     gethomepage.dev/name: Homepage
 spec:
+  ingressClassName: traefik
   tls:
     - hosts:
         - homepage.internal.freddrake.com
