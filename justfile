@@ -18,6 +18,9 @@ deps:
     pip install -r ansible/dev-requirements.txt
     ansible-galaxy install -r ansible/galaxy-requirements.yml --force
 
+secrets:
+    ansible-playbook ansible/playbooks/generate_sealed_secrets.yml
+
 kube-encrypt:
     cp -f kubeconfig kubeconfig.sops.yaml
     sops --encrypt --in-place kubeconfig.sops.yaml
