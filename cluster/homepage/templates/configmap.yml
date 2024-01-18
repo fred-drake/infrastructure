@@ -45,9 +45,9 @@ data:
     - Hardware:
       - Dalaran:
           icon: mikrotik.svg
-          href: "https://{{HOMEPAGE_VAR_DALARAN_HOST}}"
-          ping: "{{HOMEPAGE_VAR_DALARAN_HOST}}"
-          siteMonitor: "http://{{HOMEPAGE_VAR_DALARAN_HOST}}"
+          href: https://{{"{{"}}HOMEPAGE_VAR_DALARAN_HOST{{"}}"}}
+          ping: {{"{{"}}HOMEPAGE_VAR_DALARAN_HOST{{"}}"}}
+          siteMonitor: http://{{"{{"}}HOMEPAGE_VAR_DALARAN_HOST{{"}}"}}
       - Orgrimmar:
           icon: mikrotik.svg
           href: https://{{HOMEPAGE_VAR_ORGRIMMAR_HOST}}
