@@ -8,28 +8,7 @@ metadata:
 data:
   kubernetes.yaml: |
     mode: cluster
-  settings.yaml: |
-    ---
-    title: Homepage
-    
-    background:
-      image: https://preview.redd.it/qfi1cbsuf36c1.jpg?width=3440&format=pjpg&auto=webp&s=18ea10e200e0374f9cf7d7da62b3af15d2b6ccd6
-      blur: sm # sm, "", md, xl... see https://tailwindcss.com/docs/backdrop-blur
-      saturate: 50 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
-      brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
-      opacity: 50 # 0-100
-    
-    theme: dark
-    
-    color: slate # Supported colors are: slate, gray, zinc, neutral, stone, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose, red, white
-    
-    providers:
-      openweathermap: openweathermapapikey
-      weatherapi: weatherapiapikey
-    
-    useEqualHeights: true
-    
-    layout:
+  settings.yaml: ""
   custom.css: ""
   custom.js: ""
   bookmarks.yaml: |
@@ -38,25 +17,21 @@ data:
             - abbr: GH
               href: https://github.com/
   services.yaml: |
-    ---
-    # For configuration options and examples, please see:
-    # https://gethomepage.dev/latest/configs/services
-    
+    - My First Group:
+        - My First Service:
+            href: http://localhost/
+            description: Homepage is awesome
 
+    - My Second Group:
+        - My Second Service:
+            href: http://localhost/
+            description: Homepage is the best
+
+    - My Third Group:
+        - My Third Service:
+            href: http://localhost/
+            description: Homepage is 😎
   widgets.yaml: |
-    ---
-    # For configuration options and examples, please see:
-    # https://gethomepage.dev/latest/configs/service-widgets
-    - resources:
-        cpu: true
-        memory: true
-        disk: /
-    
-    - datetime:
-        text_size: xl
-        format:
-          timeStyle: short
-    
     - kubernetes:
         cluster:
           show: true
@@ -74,4 +49,7 @@ data:
         expanded: true
         cpu: true
         memory: true
+    - search:
+        provider: duckduckgo
+        target: _blank
   docker.yaml: ""
