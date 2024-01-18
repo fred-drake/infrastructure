@@ -37,7 +37,7 @@ spec:
                   /app/config/settings.yaml \
                   /app/config/widgets.yaml)
                   for file in "${files[@]}"; do
-                    sed -i "s/{{${key}}}/${value}/g" $file
+                    sed -i "s/{{"{{"}}${key}{{"}}"}}/${value}/g" $file
                   done
                 fi
               done
