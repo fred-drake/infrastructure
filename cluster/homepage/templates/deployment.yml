@@ -18,6 +18,56 @@ spec:
       labels:
         app.kubernetes.io/name: homepage
     spec:
+      initContainers:
+        - name: init
+          image: alpine
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              for var in $(env); do
+                if [[ $var == HOMEPAGE_VAR_* ]]; then
+                  key=${var%%=*}
+                  value=${var#*=}
+                  files=(/app/config/custom.js \
+                  /app/config/custom.css \
+                  /app/config/bookmarks.yaml \
+                  /app/config/docker.yaml \
+                  /app/config/kubernetes.yaml \
+                  /app/config/services.yaml \
+                  /app/config/settings.yaml \
+                  /app/config/widgets.yaml)
+                  for file in "${files[@]}"; do
+                    sed -i "s/{{${key}}}/${value}/g" $file
+                  done
+                fi
+              done
+          volumeMounts:
+            - mountPath: /app/config/custom.js
+              name: homepage-config
+              subPath: custom.js
+            - mountPath: /app/config/custom.css
+              name: homepage-config
+              subPath: custom.css
+            - mountPath: /app/config/bookmarks.yaml
+              name: homepage-config
+              subPath: bookmarks.yaml
+            - mountPath: /app/config/docker.yaml
+              name: homepage-config
+              subPath: docker.yaml
+            - mountPath: /app/config/kubernetes.yaml
+              name: homepage-config
+              subPath: kubernetes.yaml
+            - mountPath: /app/config/services.yaml
+              name: homepage-config
+              subPath: services.yaml
+            - mountPath: /app/config/settings.yaml
+              name: homepage-config
+              subPath: settings.yaml
+            - mountPath: /app/config/widgets.yaml
+              name: homepage-config
+              subPath: widgets.yaml
+            - mountPath: /app/config/logs
+              name: logs
       serviceAccountName: homepage
       automountServiceAccountToken: true
       dnsPolicy: ClusterFirst
@@ -37,38 +87,29 @@ spec:
             - mountPath: /app/config/custom.js
               name: homepage-config
               subPath: custom.js
-              readOnly: false
             - mountPath: /app/config/custom.css
               name: homepage-config
               subPath: custom.css
-              readOnly: false
             - mountPath: /app/config/bookmarks.yaml
               name: homepage-config
               subPath: bookmarks.yaml
-              readOnly: false
             - mountPath: /app/config/docker.yaml
               name: homepage-config
               subPath: docker.yaml
-              readOnly: false
             - mountPath: /app/config/kubernetes.yaml
               name: homepage-config
               subPath: kubernetes.yaml
-              readOnly: false
             - mountPath: /app/config/services.yaml
               name: homepage-config
               subPath: services.yaml
-              readOnly: false
             - mountPath: /app/config/settings.yaml
               name: homepage-config
               subPath: settings.yaml
-              readOnly: false
             - mountPath: /app/config/widgets.yaml
               name: homepage-config
               subPath: widgets.yaml
-              readOnly: false
             - mountPath: /app/config/logs
               name: logs
-              readOnly: false
       volumes:
         - name: homepage-config
           configMap:
