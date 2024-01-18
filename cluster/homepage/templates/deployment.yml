@@ -37,29 +37,38 @@ spec:
             - mountPath: /app/config/custom.js
               name: homepage-config
               subPath: custom.js
+              readOnly: false
             - mountPath: /app/config/custom.css
               name: homepage-config
               subPath: custom.css
+              readOnly: false
             - mountPath: /app/config/bookmarks.yaml
               name: homepage-config
               subPath: bookmarks.yaml
+              readOnly: false
             - mountPath: /app/config/docker.yaml
               name: homepage-config
               subPath: docker.yaml
+              readOnly: false
             - mountPath: /app/config/kubernetes.yaml
               name: homepage-config
               subPath: kubernetes.yaml
+              readOnly: false
             - mountPath: /app/config/services.yaml
               name: homepage-config
               subPath: services.yaml
+              readOnly: false
             - mountPath: /app/config/settings.yaml
               name: homepage-config
               subPath: settings.yaml
+              readOnly: false
             - mountPath: /app/config/widgets.yaml
               name: homepage-config
               subPath: widgets.yaml
+              readOnly: false
             - mountPath: /app/config/logs
               name: logs
+              readOnly: false
       volumes:
         - name: homepage-config
           configMap:
