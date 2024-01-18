@@ -50,64 +50,64 @@ data:
           siteMonitor: http://{{"{{"}}HOMEPAGE_VAR_DALARAN_HOST{{"}}"}}
       - Orgrimmar:
           icon: mikrotik.svg
-          href: https://{{HOMEPAGE_VAR_ORGRIMMAR_HOST}}
-          siteMonitor: http://{{HOMEPAGE_VAR_ORGRIMMAR_HOST}}
-          ping: {{HOMEPAGE_VAR_ORGRIMMAR_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_ORGRIMMAR_HOST{{"}}"}}
+          siteMonitor: http://{{"{{"}}HOMEPAGE_VAR_ORGRIMMAR_HOST{{"}}"}}
+          ping: {{"{{"}}HOMEPAGE_VAR_ORGRIMMAR_HOST{{"}}"}}
     - DNS:
       - PiHole1:
           icon: https://cdn.jsdelivr.net/gh/loganmarchione/homelab-svg-assets/assets/pihole.svg
-          href: http://{{HOMEPAGE_VAR_PIHOLE1_HOST}}/admin
-          siteMonitor: http://{{HOMEPAGE_VAR_PIHOLE1_HOST}}/admin
-          ping: {{HOMEPAGE_VAR_PIHOLE1_HOST}}
+          href: http://{{"{{"}}HOMEPAGE_VAR_PIHOLE1_HOST{{"}}"}}/admin
+          siteMonitor: http://{{"{{"}}HOMEPAGE_VAR_PIHOLE1_HOST{{"}}"}}/admin
+          ping: {{"{{"}}HOMEPAGE_VAR_PIHOLE1_HOST{{"}}"}}
           widget:
             type: pihole
-            url: http://{{HOMEPAGE_VAR_PIHOLE1_HOST}}
-            key: {{HOMEPAGE_VAR_PIHOLE1_KEY}}
+            url: http://{{"{{"}}HOMEPAGE_VAR_PIHOLE1_HOST{{"}}"}}
+            key: {{"{{"}}HOMEPAGE_VAR_PIHOLE1_KEY{{"}}"}}
       - PiHole2:
           icon: https://cdn.jsdelivr.net/gh/loganmarchione/homelab-svg-assets/assets/pihole.svg
-          href: http://{{HOMEPAGE_VAR_PIHOLE2_HOST}}/admin
-          siteMonitor: http://{{HOMEPAGE_VAR_PIHOLE2_HOST}}/admin
-          ping: {{HOMEPAGE_VAR_PIHOLE2_HOST}}
+          href: http://{{"{{"}}HOMEPAGE_VAR_PIHOLE2_HOST{{"}}"}}/admin
+          siteMonitor: http://{{"{{"}}HOMEPAGE_VAR_PIHOLE2_HOST{{"}}"}}/admin
+          ping: {{"{{"}}HOMEPAGE_VAR_PIHOLE2_HOST{{"}}"}}
           widget:
             type: pihole
-            url: http://{{HOMEPAGE_VAR_PIHOLE2_HOST}}
-            key: {{HOMEPAGE_VAR_PIHOLE2_KEY}}
+            url: http://{{"{{"}}HOMEPAGE_VAR_PIHOLE2_HOST{{"}}"}}
+            key: {{"{{"}}HOMEPAGE_VAR_PIHOLE2_KEY{{"}}"}}
       - DHCP1:
           icon: https://user-images.githubusercontent.com/3319450/31204769-06a0f9da-a933-11e7-87d5-efda1059ccfe.png
-          href: http://{{HOMEPAGE_VAR_DHCP1_HOST}}
-          siteMonitor: http://{{HOMEPAGE_VAR_DHCP1_HOST}}
-          ping: {{HOMEPAGE_VAR_DHCP1_HOST}}
+          href: http://{{"{{"}}HOMEPAGE_VAR_DHCP1_HOST{{"}}"}}
+          siteMonitor: http://{{"{{"}}HOMEPAGE_VAR_DHCP1_HOST{{"}}"}}
+          ping: {{"{{"}}HOMEPAGE_VAR_DHCP1_HOST{{"}}"}}
       - DHCP2:
           icon: https://user-images.githubusercontent.com/3319450/31204769-06a0f9da-a933-11e7-87d5-efda1059ccfe.png
-          href: http://{{HOMEPAGE_VAR_DHCP2_HOST}}
-          siteMonitor: http://{{HOMEPAGE_VAR_DHCP2_HOST}}
-          ping: {{HOMEPAGE_VAR_DHCP2_HOST}}
+          href: http://{{"{{"}}HOMEPAGE_VAR_DHCP2_HOST{{"}}"}}
+          siteMonitor: http://{{"{{"}}HOMEPAGE_VAR_DHCP2_HOST{{"}}"}}
+          ping: {{"{{"}}HOMEPAGE_VAR_DHCP2_HOST{{"}}"}}
     - Servers:
       - Thrall:
           icon: proxmox.svg
-          href: https://{{HOMEPAGE_VAR_THRALL_HOST}}:8006
-          siteMonitor: https://{{HOMEPAGE_VAR_THRALL_HOST}}:8006
-          ping: {{HOMEPAGE_VAR_THRALL_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_THRALL_HOST{{"}}"}}:8006
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_THRALL_HOST{{"}}"}}:8006
+          ping: {{"{{"}}HOMEPAGE_VAR_THRALL_HOST{{"}}"}}
       - Poweredge2:
           icon: proxmox.svg
-          href: https://{{HOMEPAGE_VAR_POWEREDGE2_HOST}}:8006
-          siteMonitor: https://{{HOMEPAGE_VAR_POWEREDGE2_HOST}}:8006
-          ping: {{HOMEPAGE_VAR_POWEREDGE2_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_POWEREDGE2_HOST{{"}}"}}:8006
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_POWEREDGE2_HOST{{"}}"}}:8006
+          ping: {{"{{"}}HOMEPAGE_VAR_POWEREDGE2_HOST{{"}}"}}
           widget:
             type: proxmox
-            url: https://{{HOMEPAGE_VAR_POWEREDGE2_HOST}}:8006
-            username: {{HOMEPAGE_VAR_POWEREDGE2_USERNAME}}
-            password: {{HOMEPAGE_VAR_POWEREDGE2_PASSWORD}}
+            url: https://{{"{{"}}HOMEPAGE_VAR_POWEREDGE2_HOST{{"}}"}}:8006
+            username: {{"{{"}}HOMEPAGE_VAR_POWEREDGE2_USERNAME{{"}}"}}
+            password: {{"{{"}}HOMEPAGE_VAR_POWEREDGE2_PASSWORD{{"}}"}}
       - ESXi1:
           icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/vmware-esxi.png
-          href: https://{{HOMEPAGE_VAR_ESXI1_HOST}}
-          siteMonitor: https://{{HOMEPAGE_VAR_ESXI1_HOST}}
-          ping: {{HOMEPAGE_VAR_ESXI1_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_ESXI1_HOST{{"}}"}}
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_ESXI1_HOST{{"}}"}}
+          ping: {{"{{"}}HOMEPAGE_VAR_ESXI1_HOST{{"}}"}}
       - Unraid:
           icon: unraid.svg
-          href: https://{{HOMEPAGE_VAR_UNRAID_HOST}}
-          siteMonitor: https://{{HOMEPAGE_VAR_UNRAID_HOST}}
-          ping: {{HOMEPAGE_VAR_UNRAID_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_UNRAID_HOST{{"}}"}}
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_UNRAID_HOST{{"}}"}}
+          ping: {{"{{"}}HOMEPAGE_VAR_UNRAID_HOST{{"}}"}}
     - Servers Remote:
       - Thrall Console:
           icon: idrac.svg
@@ -121,59 +121,59 @@ data:
     - Media:
       - Plex:
           icon: plex.svg
-          href: http://{{HOMEPAGE_VAR_PLEX_HOST}}:32400
+          href: http://{{"{{"}}HOMEPAGE_VAR_PLEX_HOST{{"}}"}}:32400
           description: Plex server
-          siteMonitor: http://{{HOMEPAGE_VAR_PLEX_HOST}}:32400
-          ping: {{HOMEPAGE_VAR_PLEX_HOST}}
+          siteMonitor: http://{{"{{"}}HOMEPAGE_VAR_PLEX_HOST{{"}}"}}:32400
+          ping: {{"{{"}}HOMEPAGE_VAR_PLEX_HOST{{"}}"}}
           widget:
             type: plex
-            url: http://{{HOMEPAGE_VAR_PLEX_HOST}}:32400
-            key: {{HOMEPAGE_VAR_PLEX_KEY}}
+            url: http://{{"{{"}}HOMEPAGE_VAR_PLEX_HOST{{"}}"}}:32400
+            key: {{"{{"}}HOMEPAGE_VAR_PLEX_KEY{{"}}"}}
       - Overseerr:
           icon: overseerr.svg
-          href: https://{{HOMEPAGE_VAR_OVERSEERR_HOST}}
-          siteMonitor: https://{{HOMEPAGE_VAR_OVERSEERR_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_OVERSEERR_HOST{{"}}"}}
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_OVERSEERR_HOST{{"}}"}}
           widget:
             type: overseerr
-            url: https://{{HOMEPAGE_VAR_OVERSEERR_HOST}}
-            key: {{HOMEPAGE_VAR_OVERSEERR_KEY}}
+            url: https://{{"{{"}}HOMEPAGE_VAR_OVERSEERR_HOST{{"}}"}}
+            key: {{"{{"}}HOMEPAGE_VAR_OVERSEERR_KEY{{"}}"}}
       - Radarr:
           icon: radarr.svg
-          href: https://{{HOMEPAGE_VAR_RADARR_HOST}}
-          siteMonitor: https://{{HOMEPAGE_VAR_RADARR_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_RADARR_HOST{{"}}"}}
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_RADARR_HOST{{"}}"}}
           widget:
             type: radarr
-            url: https://{{HOMEPAGE_VAR_RADARR_HOST}}
-            key: {{HOMEPAGE_VAR_RADARR_KEY}}
+            url: https://{{"{{"}}HOMEPAGE_VAR_RADARR_HOST{{"}}"}}
+            key: {{"{{"}}HOMEPAGE_VAR_RADARR_KEY{{"}}"}}
       - Sonarr:
           icon: sonarr.svg
-          href: https://{{HOMEPAGE_VAR_SONARR_HOST}}
-          siteMonitor: https://{{HOMEPAGE_VAR_SONARR_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_SONARR_HOST{{"}}"}}
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_SONARR_HOST{{"}}"}}
           widget:
             type: sonarr
-            url: https://{{HOMEPAGE_VAR_SONARR_HOST}}
-            key: {{HOMEPAGE_VAR_SONARR_KEY}}
+            url: https://{{"{{"}}HOMEPAGE_VAR_SONARR_HOST{{"}}"}}
+            key: {{"{{"}}HOMEPAGE_VAR_SONARR_KEY{{"}}"}}
       - SABnzbd:
           icon: sabnzbd.svg
-          href: https://{{HOMEPAGE_VAR_SABNZBD_HOST}}
-          siteMonitor: https://{{HOMEPAGE_VAR_SABNZBD_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_SABNZBD_HOST{{"}}"}}
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_SABNZBD_HOST{{"}}"}}
           widget:
             type: sabnzbd
-            url: https://{{HOMEPAGE_VAR_SABNZBD_HOST}}
-            key: {{HOMEPAGE_VAR_SABNZBD_KEY}}
+            url: https://{{"{{"}}HOMEPAGE_VAR_SABNZBD_HOST{{"}}"}}
+            key: {{"{{"}}HOMEPAGE_VAR_SABNZBD_KEY{{"}}"}}
       - Transmission:
           icon: transmission.svg
-          href: http://{{HOMEPAGE_VAR_TRANSMISSION_HOST}}:9091/transmission/web
-          siteMonitor: http://{{HOMEPAGE_VAR_TRANSMISSION_HOST}}:9091
-          ping: {{HOMEPAGE_VAR_TRANSMISSION_HOST}}
+          href: http://{{"{{"}}HOMEPAGE_VAR_TRANSMISSION_HOST{{"}}"}}:9091/transmission/web
+          siteMonitor: http://{{"{{"}}HOMEPAGE_VAR_TRANSMISSION_HOST{{"}}"}}:9091
+          ping: {{"{{"}}HOMEPAGE_VAR_TRANSMISSION_HOST{{"}}"}}
       - Prowlarr:
           icon: prowlarr.svg
-          href: https://{{HOMEPAGE_VAR_PROWLARR_HOST}}
-          siteMonitor: https://{{HOMEPAGE_VAR_PROWLARR_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_PROWLARR_HOST{{"}}"}}
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_PROWLARR_HOST{{"}}"}}
           widget:
             type: prowlarr
-            url: https://{{HOMEPAGE_VAR_PROWLARR_HOST}}
-            key: {{HOMEPAGE_VAR_PROWLARR_KEY}}
+            url: https://{{"{{"}}HOMEPAGE_VAR_PROWLARR_HOST{{"}}"}}
+            key: {{"{{"}}HOMEPAGE_VAR_PROWLARR_KEY{{"}}"}}
     - Server Utility:
       - Local Dockge:
           icon: https://raw.githubusercontent.com/louislam/dockge/master/frontend/public/icon.svg
@@ -182,14 +182,14 @@ data:
           showStats: true
       - Tinypilot KVM:
           icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/tinypilot.png
-          href: http:/{{HOMEPAGE_VAR_TINYPILOT_HOST}}/
-          siteMonitor: http:/{{HOMEPAGE_VAR_TINYPILOT_HOST}}/
-          ping: {{HOMEPAGE_VAR_TINYPILOT_HOST}}
+          href: http:/{{"{{"}}HOMEPAGE_VAR_TINYPILOT_HOST{{"}}"}}/
+          siteMonitor: http:/{{"{{"}}HOMEPAGE_VAR_TINYPILOT_HOST{{"}}"}}/
+          ping: {{"{{"}}HOMEPAGE_VAR_TINYPILOT_HOST{{"}}"}}
       - MAAS:
           icon: https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_7c9fcf92115827bb20fe036eb42d7daa/canonical-maas.png
-          href: http://{{HOMEPAGE_VAR_MAAS_HOST}}:5240/MAAS/r/machines
-          siteMonitor: http://{{HOMEPAGE_VAR_MAAS_HOST}}:5240/MAAS/r/machines
-          ping: {{HOMEPAGE_VAR_MAAS_HOST}}
+          href: http://{{"{{"}}HOMEPAGE_VAR_MAAS_HOST{{"}}"}}:5240/MAAS/r/machines
+          siteMonitor: http://{{"{{"}}HOMEPAGE_VAR_MAAS_HOST{{"}}"}}:5240/MAAS/r/machines
+          ping: {{"{{"}}HOMEPAGE_VAR_MAAS_HOST{{"}}"}}
       - Calendar:
           widget:
             type: calendar
@@ -213,33 +213,33 @@ data:
     - Applications:
       - Bitwarden:
           icon: bitwarden.svg
-          href: https://{{HOMEPAGE_VAR_BITWARDEN_HOST}}
-          siteMonitor: https://{{HOMEPAGE_VAR_BITWARDEN_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_BITWARDEN_HOST{{"}}"}}
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_BITWARDEN_HOST{{"}}"}}
       - Node-Red:
           icon: node-red.svg
-          href: https://{{HOMEPAGE_VAR_NODERED_HOST}}
-          siteMonitor: https://{{HOMEPAGE_VAR_NODERED_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_NODERED_HOST{{"}}"}}
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_NODERED_HOST{{"}}"}}
       - Grafana:
           icon: grafana.svg
-          href: https://{{HOMEPAGE_VAR_GRAFANA_HOST}}
-          siteMonitor: https://{{HOMEPAGE_VAR_GRAFANA_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_GRAFANA_HOST{{"}}"}}
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_GRAFANA_HOST{{"}}"}}
         widget:
           type: grafana
-          url: http://{{HOMEPAGE_VAR_GRAFANA_HOST}}
-          username: {{HOMEPAGE_VAR_GRAFANA_USERNAME}}
-          password: {{HOMEPAGE_VAR_GRAFANA_PASSWORD}}
+          url: http://{{"{{"}}HOMEPAGE_VAR_GRAFANA_HOST{{"}}"}}
+          username: {{"{{"}}HOMEPAGE_VAR_GRAFANA_USERNAME{{"}}"}}
+          password: {{"{{"}}HOMEPAGE_VAR_GRAFANA_PASSWORD{{"}}"}}
       - Actual Budget:
           icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/actual.png
-          href: https://{{HOMEPAGE_VAR_ACTUALBUDGET_HOST}}
-          siteMonitor: https://{{HOMEPAGE_VAR_ACTUALBUDGET_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_ACTUALBUDGET_HOST{{"}}"}}
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_ACTUALBUDGET_HOST{{"}}"}}
       - Longhorn:
           icon: longhorn.svg
-          href: https://{{HOMEPAGE_VAR_LONGHORN_HOST}}
-          siteMonitor: https://{{HOMEPAGE_VAR_LONGHORN_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_LONGHORN_HOST{{"}}"}}
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_LONGHORN_HOST{{"}}"}}
       - Home Assistant:
           icon: home-assistant.svg
-          href: https://{{HOMEPAGE_VAR_HOMEASSISTANT_HOST}}
-          siteMonitor: https://{{HOMEPAGE_VAR_HOMEASSISTANT_HOST}}
+          href: https://{{"{{"}}HOMEPAGE_VAR_HOMEASSISTANT_HOST{{"}}"}}
+          siteMonitor: https://{{"{{"}}HOMEPAGE_VAR_HOMEASSISTANT_HOST{{"}}"}}
     - Links:
       - YouTube:
           icon: youtube.svg
@@ -262,10 +262,10 @@ data:
     
     - weatherapi:
         label: Tampa
-        latitude: {{HOMEPAGE_VAR_WEATHERAPI_LAT}}
-        longitude: {{HOMEPAGE_VAR_WEATHERAPI_LON}}
+        latitude: {{"{{"}}HOMEPAGE_VAR_WEATHERAPI_LAT{{"}}"}}
+        longitude: {{"{{"}}HOMEPAGE_VAR_WEATHERAPI_LON{{"}}"}}
         units: imperial
-        apiKey: {{HOMEPAGE_VAR_WEATHERAPI_KEY}}
+        apiKey: {{"{{"}}HOMEPAGE_VAR_WEATHERAPI_KEY{{"}}"}}
         cache: 5 # Time in minutes to cache API responses, to stay within limits
     
     - datetime:
