@@ -26,13 +26,6 @@
 - name: Dedicated apps
   ansible.builtin.import_playbook: dedicated_apps.yml
 
-# - hosts: netboot-assets-bridge
-#   gather_facts: false
-#   become: false
-#   roles:
-#     - netboot_config
-#   tags: netboot_config
-
 - name: OpenWRT
   ansible.builtin.import_playbook: openwrt.yml
 
