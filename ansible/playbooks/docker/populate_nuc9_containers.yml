@@ -116,21 +116,6 @@
             traefik.http.routers.traefik-secure.tls.domains[0].main: "{{ secret.domain }}"
             traefik.http.routers.traefik-secure.tls.domains[0].sans: "*.{{ secret.domain }}"
             traefik.http.routers.traefik-secure.service: api@internal
-            # traefik.http.routers.omada.rule: "Host(`omada.{{ secret.domain }}`)"
-            # traefik.http.routers.omada.entrypoints: https
-            # traefik.http.routers.omada.tls: "true"
-            # traefik.http.routers.omada.tls.certresolver: cloudflare
-            # traefik.http.routers.omada.service: omada-svc
-            # traefik.http.routers.omada.middlewares: omada-middlewares
-            # traefik.http.services.omada-svc.loadbalancer.server.scheme: https
-            # traefik.http.services.omada-svc.loadbalancer.server.host: "{{ secret.services.omada.ip }}"
-            # traefik.http.services.omada-svc.loadbalancer.server.port: "8043"
-            # traefik.http.services.omada-svc.loadbalancer.passhostheader: "true"
-            # traefik.http.middlewares.omada-middlewares.chain.middlewares: omada-redirect,omada-headers
-            # traefik.http.middlewares.omada-headers.headers.customrequestheaders.Host: "omada.{{ secret.domain }}:8043"
-            # traefik.http.middlewares.omada-headers.headers.customresponseheaders.Host: "omada.{{ secret.domain }}"
-            # traefik.http.middlewares.omada-redirect.redirectregex.regex: "^https:\\/\\/([^\\/]+)\\/?$$"
-            # traefik.http.middlewares.omada-redirect.redirectregex.replacement: "https://$$1/login"
           volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
             - "{{ appdata_dir }}/traefik-internal/data/traefik.yml:/traefik.yml:ro"

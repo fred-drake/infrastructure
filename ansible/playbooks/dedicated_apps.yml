@@ -77,12 +77,3 @@
   roles:
     - pihole
 
-# - name: Omada AP management
-#   hosts: omada
-#   gather_facts: true
-#   become: true
-#   tasks:
-#     - name: Install Omada
-#       ansible.builtin.include_role:
-#         name: omada
-#   tags: omada

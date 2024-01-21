@@ -222,7 +222,3 @@ all:
       children:
         k8s_storage:
 
-    # # Server containing the Omada software
-    # omada:
-    #   hosts:
-    #     nuc9:
