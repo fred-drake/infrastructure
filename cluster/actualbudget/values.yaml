@@ -1,6 +1,6 @@
 image:
   repository: actualbudget/actual-server
-  tag: 24.1.0
+  tag: 24.3.0
   pullPolicy: IfNotPresent
 
 resource:
