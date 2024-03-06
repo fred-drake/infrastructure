@@ -37,18 +37,12 @@ ingress:
         secretName: nodered-tls
 
 persistence:
-  data-3:
+  data:
     enabled: true
     storageClass: longhorn
     accessMode: ReadWriteOnce
     size: 20Gi
     mountPath: /data
-  logs:
-    enabled: true
-    storageClass: longhorn
-    accessMode: ReadWriteOnce
-    size: 20Gi
-    mountPath: /log
 
 monitoring:
   enabled: false
