@@ -1,6 +1,6 @@
 image:
   repository: vaultwarden/server
-  tag: 1.30.3
+  tag: 1.30.5
   pullPolicy: IfNotPresent
 
 resource:
