@@ -5,11 +5,5 @@ dependencies:
 - name: redis
   repository: file://../redis
   version: 1.0.0
-- name: volsync-app
-  repository: file://../volsync-app
-  version: 1.0.0
-- name: volsync-app
-  repository: file://../volsync-app
-  version: 1.0.0
-digest: sha256:26c4d631f01c4fb93d17246362d4885b4bd4cd36f63ba17afab8b34292db0f8d
-generated: "2022-12-31T21:56:24.89263-05:00"
+digest: sha256:0af5f4d1cc56cb0e11c088330a55c4e91efe8a2ea791d4d44e9048e432d1ff34
+generated: "2024-03-05T22:21:20.108036-05:00"
