@@ -37,7 +37,7 @@ ingress:
         secretName: nodered-tls
 
 persistence:
-  data:
+  data-2:
     enabled: true
     storageClass: longhorn
     accessMode: ReadWriteOnce
