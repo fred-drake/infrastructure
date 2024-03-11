@@ -39,13 +39,17 @@ ingress:
           - bitwarden.internal.freddrake.com
         secretName: bitwarden-tls
 
+nodeSelector:
+  kubernetes.io/hostname: nuc6
+
 persistence:
   data:
     enabled: true
-    storageClass: longhorn
+    storageClass: "-"
     accessMode: ReadWriteOnce
     size: 20Gi
     mountPath: /data
+    volumeName: bitwarden-data
 
 monitoring:
   enabled: false

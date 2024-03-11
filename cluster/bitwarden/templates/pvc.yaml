@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: bitwarden-data
+spec:
+    storageClassName: ""
+    capacity:
+        storage: 20Gi
+    volumeMode: Filesystem
+    accessModes:
+        - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Retain
+    local:
+      path: /appdata/bitwarden-data
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - nuc6
