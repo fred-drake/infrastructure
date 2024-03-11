@@ -43,13 +43,13 @@ nodeSelector:
   kubernetes.io/hostname: nuc6
 
 persistence:
-  data:
+  data-pvc:
     enabled: true
     storageClass: "-"
     accessMode: ReadWriteOnce
     size: 20Gi
     mountPath: /data
-    volumeName: bitwarden-data
+    volumeName: bitwarden-data-pv
 
 monitoring:
   enabled: false
