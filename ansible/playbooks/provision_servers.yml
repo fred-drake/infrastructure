@@ -1,12 +1,3 @@
-- name: Configure proxmox hypervisors
-  hosts: proxmox
-  gather_facts: true
-  become: false
-  tasks:
-    - name: Proxmox configuration
-      ansible.builtin.include_role:
-        name: proxmox
-
 - name: Configuration of Proxmox virtual machines
   hosts: proxmox_vm
   gather_facts: false
@@ -20,7 +11,7 @@
   gather_facts: true
   become: true
   roles:
-    - provision/debian
+    - debian
   tags: debian
 
 - name: Configuration of ubuntu-based machines
@@ -28,7 +19,7 @@
   gather_facts: true
   become: true
   roles:
-    - provision/ubuntu
+    - ubuntu
     - netplan
 
 - name: Configuration of ubuntu desktop machines
@@ -36,28 +27,28 @@
   gather_facts: true
   become: true
   roles:
-    - provision/ubuntu
+    - ubuntu
 
 - name: Configuration of Raspbian OS machines
   hosts: raspbian
   gather_facts: true
   become: true
   roles:
-    - provision/raspbian
+    - raspbian
 
 - name: Configuration of Ubuntu machines running Raspberry Pi 4
   hosts: raspberry_pi_4:&ubuntu
   gather_facts: true
   become: true
   roles:
-    - provision/raspberry_pi/pi4_ubuntu
+    - pi4_ubuntu
 
 - name: Configuration of Raspbian OS machines running Raspberry Pi 4
   hosts: raspberry_pi_4:&raspbian
   gather_facts: true
   become: true
   roles:
-    - provision/raspberry_pi/pi4_raspbian
+    - pi4_raspbian
 
 - name: Install NFS client
   hosts: nfs_client
