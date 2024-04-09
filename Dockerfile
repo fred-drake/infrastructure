@@ -4,11 +4,12 @@ ENV GITLEAKS_VERSION=8.11.2
 ENV HADOLINT_VERSION=2.10.0
 ENV SEALED_SECRETS_VERSION=0.19.2
 ENV YQ_VERSION=4.30.5
+ENV BWS_VERSION=0.4.0
 WORKDIR /tmp
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
-  sshpass ansible curl ca-certificates direnv apt-transport-https \
+  sshpass ansible curl ca-certificates direnv apt-transport-https lsb-release \
   g++-arm-linux-gnueabihf libc6-dev-armhf-cross docker.io gcc-arm-linux-gnueabihf && \
   curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg && \
   mkdir -p /etc/apt/keyrings && \
@@ -19,7 +20,12 @@ RUN apt-get update && \
   curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | tee /usr/share/keyrings/helm.gpg > /dev/null && \
   echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | tee /etc/apt/sources.list.d/helm-stable-debian.list && \
   apt-get update && apt-get install -y --no-install-recommends helm && \
+  wget -qO - 'https://proget.makedeb.org/debian-feeds/prebuilt-mpr.pub' | gpg --dearmor | tee /usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg && \
+  echo "deb [arch=all,$(dpkg --print-architecture) signed-by=/usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg] https://proget.makedeb.org prebuilt-mpr $(lsb_release -cs)" | tee /etc/apt/sources.list.d/prebuilt-mpr.list && \
+  apt-get update && \
+  apt-get install -y --no-install-recommends just && \
   rm -rf /var/cache/apt/archives
+
 COPY ansible/dev-requirements.txt .
 RUN pip install -r dev-requirements.txt && rm -f dev-requirements.txt
 
@@ -48,6 +54,13 @@ RUN curl -LO https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_
 RUN curl -LO https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_`cat arch` && \
   chmod +x yq_linux_`cat arch` && \
   mv yq_linux_`cat arch` /usr/local/bin/yq
+RUN dpkg --print-architecture > arch
+RUN if [ `cat arch` == "amd64" ]; then echo x86_64 > arch; fi
+RUN if [ `cat arch` == "arm64" ]; then echo aarch64 > arch; fi
+RUN curl -LO https://github.com/bitwarden/sdk/releases/download/bws-v${BWS_VERSION}/bws-`cat arch`-unknown-linux-gnu-${BWS_VERSION}.zip && \
+  unzip bws-`cat arch`-unknown-linux-gnu-${BWS_VERSION}.zip && \
+  chmod +x bws && \
+  mv bws /usr/local/bin/bws
 
 
 FROM base as staging
@@ -57,8 +70,7 @@ COPY --from=builder /usr/local/bin/hadolint /usr/local/bin/hadolint
 COPY --from=builder /usr/local/bin/k3sup /usr/local/bin/k3sup
 COPY --from=builder /usr/local/bin/kubeseal /usr/local/bin/kubeseal
 COPY --from=builder /usr/local/bin/yq /usr/local/bin/yq
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
-  /root/.cargo/bin/cargo install cross --git https://github.com/cross-rs/cross
+COPY --from=builder /usr/local/bin/bws /usr/local/bin/bws
 
 FROM staging as development
 WORKDIR /workspaces/infrastructure
@@ -69,7 +81,6 @@ RUN ansible-galaxy install -r ansible/galaxy-requirements.yml
 RUN echo "alias ap='cd /workspaces/infrastructure/ansible/playbooks && ansible-playbook'" >> /root/.bashrc \
   && echo "alias k='kubectl --kubeconfig /workspaces/infrastructure/kubeconfig'" >> /root/.bashrc \
   && echo 'eval "$(direnv hook bash)"' >> /root/.bashrc
-RUN /root/.cargo/bin/rustup target add armv7-unknown-linux-gnueabihf
 
 FROM development
 # ENV ANSIBLE_CONFIG=/infrastructure/ansible/ansible.cfg
