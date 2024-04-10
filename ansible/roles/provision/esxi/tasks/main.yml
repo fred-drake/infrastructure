@@ -15,7 +15,7 @@
 
 - name: Pull authorized keys
   ansible.builtin.get_url:
-    url: https://github.com/fred-drake.keys
+    url: "{{ ssh_keys_url }}"
     dest: "{{ authorized_keys.path }}"
     mode: '0644'
   delegate_to: localhost

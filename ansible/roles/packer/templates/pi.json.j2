@@ -25,7 +25,7 @@
       "inline": [
         "mkdir /home/{{ ansible_user }}/.ssh",
         "chmod 700 /home/{{ ansible_user }}/.ssh",
-        "curl https://github.com/fred-drake.keys > /home/{{ ansible_user }}/.ssh/authorized_keys",
+        "curl {{ ssh_keys_url }} > /home/{{ ansible_user }}/.ssh/authorized_keys",
         "chmod 400 /home/{{ ansible_user }}/.ssh/authorized_keys",
         "chown -R 1000:1000 /home/{{ ansible_user }}/.ssh"
       ]
