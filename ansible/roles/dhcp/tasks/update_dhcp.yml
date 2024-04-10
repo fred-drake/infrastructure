@@ -15,7 +15,7 @@
   ansible.builtin.git:
     repo: ssh://git@git.jetbrains.space/fdrake/main/Infrastructure.git
     dest: "{{ gitdir.path }}"
-    key_file: "{{ ansible_ssh_private_key_file }}"
+    accept_hostkey: true
     depth: 1
   changed_when: false
 

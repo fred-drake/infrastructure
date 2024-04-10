@@ -1,3 +1,10 @@
+- name: Configuration of Proxmox hypervisors
+  hosts: proxmox
+  gather_facts: false
+  become: false
+  roles:
+    - proxmox
+
 - name: Configuration of Proxmox virtual machines
   hosts: proxmox_vm
   gather_facts: false

@@ -1,10 +1,10 @@
 - name: Check for existing VM {{ proxmox_vm.name }}
-  delegate_to: "{{ proxmox_vm.host }}"
-  become: false
   ansible.builtin.shell:
     cmd: "qm list | grep -E '^\\s+{{ proxmox_vm.vmid }}\\s+' | wc -l"
   register: vm_exists
   changed_when: false
+  delegate_to: "{{ proxmox_vm.host }}"
+  become: false
 
 - name: Create VM {{ proxmox_vm.name }}
   ansible.builtin.include_role:

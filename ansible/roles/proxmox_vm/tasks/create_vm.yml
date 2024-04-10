@@ -10,6 +10,18 @@
     and proxmox_vm.cloud_init is defined
     and proxmox_vm.cloud_init
 
+- name: Download Alpine image file
+  ansible.builtin.get_url:
+    url: https://dl-cdn.alpinelinux.org/alpine/v3.19/releases/x86_64/alpine-virt-3.19.1-x86_64.iso
+    checksum: "sha256:https://dl-cdn.alpinelinux.org/alpine/v3.19/releases/x86_64/alpine-virt-3.19.1-x86_64.iso.sha256"
+    dest: /root/alpine-3.19.1.img
+    mode: '0644'
+  when: >
+    proxmox_vm.image is defined
+    and proxmox_vm.image == "alpine-3.19"
+    and proxmox_vm.cloud_init is defined
+    and proxmox_vm.cloud_init
+
 - name: Initialize net string
   ansible.builtin.set_fact:
     net_string: ""
@@ -33,7 +45,7 @@
   changed_when: true
 - name: Create disk out of image {{ proxmox_vm.image }}
   ansible.builtin.command:
-    cmd: qm importdisk {{ proxmox_vm.vmid }} {{ proxmox_vm.image }}.img local-lvm
+    cmd: qm importdisk {{ proxmox_vm.vmid }} {{ proxmox_vm.image }}.img {{ lvm }}
   when: >
     proxmox_vm.image is defined
     and proxmox_vm.cloud_init is defined
@@ -45,11 +57,11 @@
     cmd: >
       qm set {{ proxmox_vm.vmid }}
       --scsihw virtio-scsi-pci
-      --scsi0 local-lvm:vm-{{ proxmox_vm.vmid }}-disk-0
+      --scsi0 {{ lvm }}:vm-{{ proxmox_vm.vmid }}-disk-0
   changed_when: true
 - name: Set cloudinit drive
   ansible.builtin.command:
-    cmd: qm set {{ proxmox_vm.vmid }} --ide2 local-lvm:cloudinit
+    cmd: qm set {{ proxmox_vm.vmid }} --ide2 {{ lvm }}:cloudinit
   changed_when: true
 - name: Set scsi0 as bootdisk
   ansible.builtin.command:
@@ -66,9 +78,25 @@
   changed_when: true
   when: proxmox_vm.disk_size is defined
 
+- name: Create temp dir to store SSH keys
+  ansible.builtin.tempfile:
+    state: file
+    suffix: sshkeys
+  register: sshkeys_file
+  when: >
+    proxmox_vm.cloud_init is defined
+    and proxmox_vm.cloud_init
+
+- name: Pull authorized keys
+  ansible.builtin.get_url:
+    url: "{{ ssh_keys_url }}"
+    dest: "{{ sshkeys_file.path }}"
+    mode: '0644'
+  changed_when: false
+
 - name: Set SSH keys
   ansible.builtin.command:
-    cmd: qm set {{ proxmox_vm.vmid }} --sshkey ~/.ssh/authorized_keys
+    cmd: qm set {{ proxmox_vm.vmid }} --sshkey {{ sshkeys_file.path }}
   changed_when: true
   when: >
     proxmox_vm.cloud_init is defined
@@ -132,4 +160,4 @@
 
 - name: Pause for image to launch for first time
   ansible.builtin.pause:
-    minutes: 2
+    minutes: 4

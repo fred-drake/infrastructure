@@ -3,6 +3,14 @@ all:
   children:
 
   #################################
+  # MULTIPLE GROUPS               #
+  #################################
+    # all docker service VMs 
+    docker_service_vms:
+      hosts:
+        sabnzbd-vm:
+    
+  #################################
   # OPERATING SYSTEM-SPECIFIC     #
   #################################
     # all debian-based servers (excluding Proxmox)
@@ -19,6 +27,8 @@ all:
 
     # Ubuntu servers
     ubuntu_server:
+      children:
+        docker_service_vms:
       hosts:
         docker2:
         docker5:
@@ -43,7 +53,7 @@ all:
     # Proxmox servers
     proxmox:
       hosts:
-        poweredge2:
+        thrall:
 
     # OpenWRT Machines with enough space for regular ansible commands
     openwrt:
@@ -72,9 +82,10 @@ all:
 
     # Proxmox virtual machines
     proxmox_vm:
+      children:
+        docker_service_vms:
       hosts:
-        pihole1:
-        pihole2:
+        pihole[1:2]:
         dhcp[1:2]:
 
     # Raspberry Pi servers
@@ -129,6 +140,7 @@ all:
         # docker_services:
         critical_docker_services:
         disconnected_cluster:
+        docker_service_vms:
       hosts:
         nuc9:
         specops:

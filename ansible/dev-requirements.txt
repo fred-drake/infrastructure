@@ -8,3 +8,4 @@ passlib
 dnspython
 botocore
 boto3
+proxmoxer
