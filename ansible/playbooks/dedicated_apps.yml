@@ -60,16 +60,6 @@
         name: prom_node_exporter
   tags: node_exporter
 
-- name: MAAS - Metal as a Service
-  hosts: maas
-  gather_facts: false
-  become: true
-  tasks:
-    - name: Install and configure MAAS
-      ansible.builtin.include_role:
-        name: maas
-  tags: maas
-
 - name: Pihole
   hosts: pihole
   gather_facts: false

@@ -213,11 +213,6 @@ all:
       hosts:
         scannerpi:
 
-    # Servers containing the MAAS software
-    maas:
-      hosts:
-        nuc9:
-
     # Servers requiring NFS client software
     nfs_client: 
       children:
