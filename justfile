@@ -4,6 +4,12 @@ deploy HOST:
 deploy-password HOST:
     ansible-playbook ansible/playbooks/site.yml --limit {{ HOST }} --ask-pass --ask-become-pass
 
+playbook PLAYBOOK:
+    ansible-playbook ansible/playbooks/{{ PLAYBOOK }}.yml
+
+playbook-host PLAYBOOK HOST:
+    ansible-playbook ansible/playbooks/{{ PLAYBOOK }}.yml --limit {{ HOST }}
+
 dns:
     ansible-playbook ansible/playbooks/dns_update.yml
 
