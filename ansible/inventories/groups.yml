@@ -3,14 +3,6 @@ all:
   children:
 
   #################################
-  # MULTIPLE GROUPS               #
-  #################################
-    # all docker service VMs 
-    docker_service_vms:
-      hosts:
-        sabnzbd-vm:
-    
-  #################################
   # OPERATING SYSTEM-SPECIFIC     #
   #################################
     # all debian-based servers (excluding Proxmox)
