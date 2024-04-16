@@ -31,3 +31,6 @@
 
 - name: DHCP
   ansible.builtin.import_playbook: dhcp.yml
+
+- name: Palworld server
+  ansible.builtin.import_playbook: palworld.yml

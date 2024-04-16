@@ -37,6 +37,7 @@ all:
         specops:
         pihole[1:2]:
         dhcp[1:2]:
+        palworld:
 
     # Ubuntu desktops
     ubuntu_desktop:
@@ -87,6 +88,7 @@ all:
       hosts:
         pihole[1:2]:
         dhcp[1:2]:
+        palworld:
 
     # Raspberry Pi servers
     raspberry_pi: # all raspberry pi machines
@@ -225,12 +227,16 @@ all:
         nuc9:
 
     # Servers requiring NFS client software
-    nfs_client:
+    nfs_client: 
       children:
         k3s:
+
+    # Palworld server
+    palworld:
+      hosts:
+        palworld:
 
     # Servers with lonhorn storage software
     longhorn:
       children:
         k8s_storage:
-

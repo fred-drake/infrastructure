@@ -1,0 +1,56 @@
+- name: Add multiverse repo
+  apt_repository:
+    repo: "{{ item }}"
+    update_cache: true
+  loop:
+    - 'deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}} main universe multiverse'
+    - 'deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}}-updates main universe multiverse'
+
+- name: Set i386 architecture
+  ansible.builtin.command:
+    cmd: dpkg --add-architecture i386
+  changed_when: false
+
+- name: Pre-answer install question 1
+  ansible.builtin.shell:
+    cmd: echo steam steam/question select "I AGREE" | sudo debconf-set-selections
+  changed_when: false
+
+- name: Pre-answer install question 2
+  ansible.builtin.shell:
+    cmd: echo steam steam/license note '' | sudo debconf-set-selections
+  changed_when: false
+
+- name: Install libraries
+  ansible.builtin.apt:
+    name:
+      - steamcmd
+      - supervisor
+    update_cache: true
+
+- name: Install or update Palworld dedicated server
+  become: false
+  ansible.builtin.command:
+    cmd: /usr/games/steamcmd +login anonymous +app_update 2394010 validate +quit
+  changed_when: true
+
+- name: Configure supervisor
+  ansible.builtin.blockinfile:
+    state: present
+    path: /etc/supervisor/supervisord.conf
+    block: "{{ lookup('file', 'supervisord-block.conf') }}"
+  notify: Restart supervisor
+
+- name: Configure palworld inside supervisor
+  ansible.builtin.template:
+    src: supervisor.conf.j2
+    dest: "/etc/supervisor/conf.d/palworld.conf"
+    mode: '0644'
+  notify: Restart supervisor
+
+- name: Set configuration file
+  ansible.builtin.template:
+    src: PalworldSettings.ini.j2
+    dest: "/home/ubuntu/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalworldSettings.ini"
+    mode: '0644'
+  notify: Restart application
