@@ -1,0 +1,10 @@
+# Either plug into port 1 with IP 192.168.1.X VLAN 100 to connect to 192.168.1.1, or
+# connect through serial and copy the network file into /etc/config/network
+# Run the following:
+# - echo "<public key>" > /etc/dropbear/authorized_keys
+# - opkg update
+# - opkg install python3-light openssh-sftp-server python3-logging python3-multiprocessing \
+#                python3-email python3-urllib shadow-usermod
+ansible_host: '{{ lookup("community.general.bitwarden_secrets_manager", "ca483ee1-a866-49ba-983d-b156002488a6").value }}'
+ansible_user: '{{ lookup("community.general.bitwarden_secrets_manager", "bd58f5d9-e902-40e2-9d6d-b15600249681").value }}'
+ssh_password_hash: '{{ lookup("community.general.bitwarden_secrets_manager", "c17a0ffd-af43-40b2-b8ec-b1560024ad88").value }}'

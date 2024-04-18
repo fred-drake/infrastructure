@@ -1,0 +1,9 @@
+# Either plug into port 1 with IP 192.168.1.X VLAN 100 to connect to 192.168.1.1, or
+# connect through serial and copy the network file into /etc/config/network
+# Run the following:
+# - opkg update
+# - opkg install python3-light openssh-sftp-server python3-logging python3-multiprocessing \
+#                python3-email python3-urllib shadow-usermod
+ansible_host: '{{ lookup("community.general.bitwarden_secrets_manager", "5633d5ed-7ea3-4db2-bc4c-b15600257b0c").value }}'
+ansible_user: '{{ lookup("community.general.bitwarden_secrets_manager", "f7217d63-c2f1-49b6-a565-b15600258937").value }}'
+ssh_password_hash: '{{ lookup("community.general.bitwarden_secrets_manager", "8d821b87-bcd1-4686-ab96-b15600259b2e").value }}'

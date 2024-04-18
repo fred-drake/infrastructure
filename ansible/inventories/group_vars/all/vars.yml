@@ -4,3 +4,92 @@ ansible_python_interpreter: /usr/bin/python3
 # The timezone used on servers and docker containers
 default_timezone: America/New_York
 ssh_keys_url: https://github.com/fred-drake.keys
+
+secret:
+  domain: '{{ lookup("community.general.bitwarden_secrets_manager", "1e380fc6-0b63-49c8-8793-b15400f15e82").value }}'
+  crypt:
+    salt: '{{ lookup("community.general.bitwarden_secrets_manager", "b8d5bbe7-ddce-435e-9dd0-b15400f26872").value }}'
+  hosts:
+    default_ssh_password: '{{ lookup("community.general.bitwarden_secrets_manager", "1bf075f5-898b-408e-acb0-b15400f2a19d").value }}'
+  wireless:
+    iot:
+      ssid: '{{ lookup("community.general.bitwarden_secrets_manager", "24d9881c-d971-47c8-a4ab-b15400f34a53").value }}'
+      password: '{{ lookup("community.general.bitwarden_secrets_manager", "6a3505b4-6363-4073-a504-b15400f390e0").value }}'
+  network:
+    admin:
+      gateway: '{{ lookup("community.general.bitwarden_secrets_manager", "96e79196-e632-42b0-acef-b15400f3f6e5").value }}'
+      cidr: '{{ lookup("community.general.bitwarden_secrets_manager", "0ea9c3c3-b12e-4ad5-8515-b15400f440d6").value }}'
+    iot:
+      gateway: '{{ lookup("community.general.bitwarden_secrets_manager", "80e5798e-bf48-43ce-abc0-b15400f5a66f").value }}'
+      cidr: '{{ lookup("community.general.bitwarden_secrets_manager", "ab6ff6ef-6a45-4c45-997b-b15400f5d1e9").value }}'
+    services:
+      gateway: '{{ lookup("community.general.bitwarden_secrets_manager", "984d90b2-d954-4d84-b04b-b15400f61ac7").value }}'
+      cidr: '{{ lookup("community.general.bitwarden_secrets_manager", "87168e2b-04fb-4d63-a3da-b15400f63777").value }}'
+  docker:
+    network:
+      admin: '{{ lookup("community.general.bitwarden_secrets_manager", "76f50839-a14f-4966-8107-b1540115b477").value }}'
+      container: '{{ lookup("community.general.bitwarden_secrets_manager", "53de1ce0-778d-401b-9262-b1540115e8ac").value }}'
+      iot: '{{ lookup("community.general.bitwarden_secrets_manager", "b204cbb4-d035-40a3-b4db-b15401161eff").value }}'
+      workstation: '{{ lookup("community.general.bitwarden_secrets_manager", "2a25f8f7-e221-4e56-9bec-b1540116675f").value }}'
+  pihole:
+    password: '{{ lookup("community.general.bitwarden_secrets_manager", "085677e0-bdb8-4bbb-b9f5-b15401170e2d").value }}'
+    password_crypt: '{{ lookup("community.general.bitwarden_secrets_manager", "971dbfa4-1ed1-438e-8fe9-b15401174a66").value }}'
+    pihole1:
+      hostname: '{{ lookup("community.general.bitwarden_secrets_manager", "79ed0032-58a8-415a-b6c2-b15401179f40").value }}'
+      address: '{{ lookup("community.general.bitwarden_secrets_manager", "a19e717d-a8b6-4ad4-b53e-b1540117e5da").value }}'
+      network: '{{ lookup("community.general.bitwarden_secrets_manager", "25abd2c5-14dd-4df6-80aa-b15401181b93").value }}'
+      api_token: '{{ lookup("community.general.bitwarden_secrets_manager", "40f06f5e-e975-4d83-b79a-b154011866b4").value }}'
+    pihole2:
+      hostname: '{{ lookup("community.general.bitwarden_secrets_manager", "37308941-6cec-4dcc-8368-b154011f6b8c").value }}'
+      address: '{{ lookup("community.general.bitwarden_secrets_manager", "bdb96ff7-5f64-46df-9837-b154011f8701").value }}'
+      network: '{{ lookup("community.general.bitwarden_secrets_manager", "624d1475-fb1d-4e72-ac6e-b154011f9933").value }}'
+      api_token: '{{ lookup("community.general.bitwarden_secrets_manager", "b0358f94-f335-4373-872d-b154011fb0c1").value }}'
+  dhcp:
+    machines:
+      dhcp1:
+        type: '{{ lookup("community.general.bitwarden_secrets_manager", "0b81160e-17ce-4dcb-896b-b15401223fd5").value }}'
+        address: '{{ lookup("community.general.bitwarden_secrets_manager", "e0890c4b-4431-4981-9318-b154012277c8").value }}'
+        peer_address: '{{ lookup("community.general.bitwarden_secrets_manager", "7fb95f7a-4a65-4171-bb78-b154012385b3").value }}'
+        ui_address: '{{ lookup("community.general.bitwarden_secrets_manager", "3770973e-6229-4ccf-9f2e-b1540122ce44").value }}'
+      dhcp2:
+        type: '{{ lookup("community.general.bitwarden_secrets_manager", "134e9fc6-c2cd-455d-862f-b154012366a5").value }}'
+        address: '{{ lookup("community.general.bitwarden_secrets_manager", "7fb95f7a-4a65-4171-bb78-b154012385b3").value }}'
+        peer_address: '{{ lookup("community.general.bitwarden_secrets_manager", "e0890c4b-4431-4981-9318-b154012277c8").value }}'
+        ui_address: '{{ lookup("community.general.bitwarden_secrets_manager", "88059f39-738d-4a1f-be73-b1540123da50").value }}'
+    nets:
+      admin:
+        subnet: '{{ lookup("community.general.bitwarden_secrets_manager", "26faaa1e-67ee-4b5e-8070-b1540125101f").value }}'
+        netmask: '{{ lookup("community.general.bitwarden_secrets_manager", "9ca0a8d6-763b-453d-ab59-b154012598b6").value }}'
+        router: '{{ lookup("community.general.bitwarden_secrets_manager", "96e79196-e632-42b0-acef-b15400f3f6e5").value }}'
+        dns1: '{{ lookup("community.general.bitwarden_secrets_manager", "0185ff97-8faf-4462-8713-b15401261f97").value }}'
+        dns2: '{{ lookup("community.general.bitwarden_secrets_manager", "f57f5d57-8b80-46ce-8945-b15401262bfd").value }}'
+        range_start: '{{ lookup("community.general.bitwarden_secrets_manager", "378fc242-882b-49ad-b6ef-b154012680b4").value }}'
+        range_end: '{{ lookup("community.general.bitwarden_secrets_manager", "6585a0c5-b78d-47fa-92ed-b154012691e5").value }}'
+        boot_addr: '{{ lookup("community.general.bitwarden_secrets_manager", "06cc58b8-c3a9-40db-8717-b1540126eb78").value }}'
+      services:
+        subnet: '{{ lookup("community.general.bitwarden_secrets_manager", "32bcc170-a7f6-4fe1-b572-b15401254937").value }}'
+        netmask: '{{ lookup("community.general.bitwarden_secrets_manager", "4f89a884-3437-4ca4-a861-b1540125c313").value }}'
+        router: '{{ lookup("community.general.bitwarden_secrets_manager", "984d90b2-d954-4d84-b04b-b15400f61ac7").value }}'
+        dns1: '{{ lookup("community.general.bitwarden_secrets_manager", "0185ff97-8faf-4462-8713-b15401261f97").value }}'
+        dns2: '{{ lookup("community.general.bitwarden_secrets_manager", "f57f5d57-8b80-46ce-8945-b15401262bfd").value }}'
+        range_start: '{{ lookup("community.general.bitwarden_secrets_manager", "65d37b0e-fb55-435f-9893-b156001ee9d8").value }}'
+        range_end: '{{ lookup("community.general.bitwarden_secrets_manager", "371e0b7c-d7f3-4271-9a5a-b156001f0294").value }}'
+        boot_addr: '{{ lookup("community.general.bitwarden_secrets_manager", "76f188bb-f472-412c-8299-b156001f1674").value }}'
+      iot:
+        subnet: '{{ lookup("community.general.bitwarden_secrets_manager", "96545230-0b8c-4a3d-83b6-b1540125265c").value }}'
+        netmask: '{{ lookup("community.general.bitwarden_secrets_manager", "59f3051c-a44c-41fb-9d18-b1540125a6fd").value }}'
+        router: '{{ lookup("community.general.bitwarden_secrets_manager", "80e5798e-bf48-43ce-abc0-b15400f5a66f").value }}'
+        dns1: '{{ lookup("community.general.bitwarden_secrets_manager", "0185ff97-8faf-4462-8713-b15401261f97").value }}'
+        dns2: '{{ lookup("community.general.bitwarden_secrets_manager", "f57f5d57-8b80-46ce-8945-b15401262bfd").value }}'
+        range_start: '{{ lookup("community.general.bitwarden_secrets_manager", "b4a7ac9a-8007-4f65-9b5b-b156001e2af3").value }}'
+        range_end: '{{ lookup("community.general.bitwarden_secrets_manager", "7a4b4b07-cbe9-4fb4-a596-b156001e590e").value }}'
+        boot_addr: '{{ lookup("community.general.bitwarden_secrets_manager", "a55d4385-6ded-4d45-b94f-b156001e9b89").value }}'
+      workstation:
+        subnet: '{{ lookup("community.general.bitwarden_secrets_manager", "654ce380-126c-4502-ab8b-b156001f970f").value }}'
+        netmask: '{{ lookup("community.general.bitwarden_secrets_manager", "2d595085-c233-4a5b-b013-b156001fa721").value }}'
+        router: '{{ lookup("community.general.bitwarden_secrets_manager", "776331b5-9c24-4aac-9a7d-b156001fbcfe").value }}'
+        dns1: '{{ lookup("community.general.bitwarden_secrets_manager", "0185ff97-8faf-4462-8713-b15401261f97").value }}'
+        dns2: '{{ lookup("community.general.bitwarden_secrets_manager", "f57f5d57-8b80-46ce-8945-b15401262bfd").value }}'
+        range_start: '{{ lookup("community.general.bitwarden_secrets_manager", "5509bd96-d72f-4203-89eb-b156001fdb58").value }}'
+        range_end: '{{ lookup("community.general.bitwarden_secrets_manager", "89761a2e-1ed4-4fe1-b3a6-b156002002cc").value }}'
+        boot_addr: '{{ lookup("community.general.bitwarden_secrets_manager", "69162d39-dd92-4b5c-b25a-b1560020202c").value }}'
