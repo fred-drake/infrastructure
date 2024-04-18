@@ -1,24 +1,21 @@
-- name: Download Ubuntu image file
-  ansible.builtin.get_url:
-    url: https://cloud-images.ubuntu.com/releases/22.04/release/ubuntu-22.04-server-cloudimg-amd64.img
-    checksum: "sha256:https://cloud-images.ubuntu.com/releases/22.04/release/SHA256SUMS"
-    dest: /root/ubuntu-22.04.img
-    mode: '0644'
+- name: Set image file path to Ubuntu image
+  ansible.builtin.set_fact:
+    proxmox_vm_image_path: /var/lib/vz/template/iso/ubuntu-22.04.img
   when: >
     proxmox_vm.image is defined
     and proxmox_vm.image == "ubuntu-22.04"
     and proxmox_vm.cloud_init is defined
     and proxmox_vm.cloud_init
 
-- name: Download Alpine image file
+- name: Download Ubuntu image file
   ansible.builtin.get_url:
-    url: https://dl-cdn.alpinelinux.org/alpine/v3.19/releases/x86_64/alpine-virt-3.19.1-x86_64.iso
-    checksum: "sha256:https://dl-cdn.alpinelinux.org/alpine/v3.19/releases/x86_64/alpine-virt-3.19.1-x86_64.iso.sha256"
-    dest: /root/alpine-3.19.1.img
+    url: https://cloud-images.ubuntu.com/releases/22.04/release/ubuntu-22.04-server-cloudimg-amd64.img
+    checksum: "sha256:https://cloud-images.ubuntu.com/releases/22.04/release/SHA256SUMS"
+    dest: "{{ proxmox_vm_image_path }}"
     mode: '0644'
   when: >
     proxmox_vm.image is defined
-    and proxmox_vm.image == "alpine-3.19"
+    and proxmox_vm.image == "ubuntu-22.04"
     and proxmox_vm.cloud_init is defined
     and proxmox_vm.cloud_init
 
@@ -45,7 +42,7 @@
   changed_when: true
 - name: Create disk out of image {{ proxmox_vm.image }}
   ansible.builtin.command:
-    cmd: qm importdisk {{ proxmox_vm.vmid }} {{ proxmox_vm.image }}.img {{ lvm }}
+    cmd: qm importdisk {{ proxmox_vm.vmid }} {{ proxmox_vm_image_path }} {{ lvm }} --format qcow2
   when: >
     proxmox_vm.image is defined
     and proxmox_vm.cloud_init is defined
@@ -89,18 +86,30 @@
 
 - name: Pull authorized keys
   ansible.builtin.get_url:
-    url: "{{ ssh_keys_url }}"
-    dest: "{{ sshkeys_file.path }}"
+    url: https://github.com/fred-drake.keys
+    dest: /tmp/fred-drake.keys
     mode: '0644'
   changed_when: false
+  when: >
+    proxmox_vm.cloud_init is defined
+    and proxmox_vm.cloud_init
 
 - name: Set SSH keys
   ansible.builtin.command:
-    cmd: qm set {{ proxmox_vm.vmid }} --sshkey {{ sshkeys_file.path }}
+    cmd: qm set {{ proxmox_vm.vmid }} --sshkey /tmp/fred-drake.keys
   changed_when: true
   when: >
     proxmox_vm.cloud_init is defined
     and proxmox_vm.cloud_init
+
+- name: Set credentials
+  ansible.builtin.command:
+    cmd: qm set {{ proxmox_vm.vmid }} --ciuser={{ ansible_user }} --cipassword="{{ secret.hosts.default_ssh_password }}"
+  changed_when: true
+  when: >
+    proxmox_vm.nameservers is defined and
+    proxmox_vm.cloud_init is defined and
+    proxmox_vm.cloud_init
 
 - name: Set nameservers
   ansible.builtin.command:
