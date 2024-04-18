@@ -1,0 +1,7 @@
+- name: Install Sonarr
+  hosts: sonarr
+  become: true
+  roles:
+    - role: sonarr
+      vars:
+        update_app: "{{ update | default(false) }}"

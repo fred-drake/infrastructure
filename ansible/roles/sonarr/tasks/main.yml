@@ -1,0 +1,63 @@
+- name: Install dependencies
+  ansible.builtin.apt:
+    name:
+      - curl
+      - wget
+      - sqlite3
+      - libicu-dev
+
+- name: Check if Sonarr is already installed
+  ansible.builtin.stat:
+    path: "{{ install_dir }}/Sonarr"
+  register: sonarr_installed
+  changed_when: false
+
+- name: Only calling update if Sonarr is installed
+  ansible.builtin.fail:
+    msg: "Cannot call update if Sonarr is not installed"
+  when: not sonarr_installed.stat.exists and update_app
+
+- name: Stop service before updating
+  ansible.builtin.systemd:
+    name: sonarr
+    state: stopped
+  when: update_app
+
+- name: Get temp directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: sonarr
+  register: temp_dir
+  changed_when: false
+  when: not sonarr_installed.stat.exists or update_app
+
+- name: Download Sonarr
+  ansible.builtin.get_url:
+    url: "https://github.com/Sonarr/Sonarr/releases/download/v{{ version }}/Sonarr.main.{{ version }}.linux-x64.tar.gz"
+    dest: "{{ temp_dir.path }}/sonarr.tar.gz"
+    mode: '0644'
+  changed_when: false
+  when: not sonarr_installed.stat.exists or update_app
+
+- name: Install Sonarr
+  ansible.builtin.unarchive:
+    src: "{{ temp_dir.path }}/sonarr.tar.gz"
+    dest: "{{ install_dir }}"
+    remote_src: true
+    creates: "{{ install_dir }}/Sonarr"
+  when: not sonarr_installed.stat.exists or update_app
+
+- name: Install Sonarr service
+  ansible.builtin.copy:
+    src: sonarr.service
+    dest: /etc/systemd/system/sonarr.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart sonarr
+
+- name: Enable and start Sonarr service
+  ansible.builtin.systemd:
+    name: sonarr
+    enabled: true
+    state: started

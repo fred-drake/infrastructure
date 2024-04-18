@@ -10,6 +10,12 @@ playbook PLAYBOOK:
 playbook-host PLAYBOOK HOST:
     ansible-playbook ansible/playbooks/{{ PLAYBOOK }}.yml --limit {{ HOST }}
 
+app APP:
+    ansible-playbook ansible/playbooks/{{ APP }}.yml
+
+app-update APP:
+    ansible-playbook ansible/playbooks/{{ APP }}.yml -e "update=true"
+
 dns:
     ansible-playbook ansible/playbooks/dns_update.yml
 

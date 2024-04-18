@@ -1,0 +1,28 @@
+ansible_host: 192.168.50.30
+ansible_user: ubuntu
+proxmox_vm:
+  host: 192.168.208.20
+  name: sonarr
+  cloud_init: true
+  vmid: 401
+  cores: 2
+  sockets: 2
+  memory: 4096
+  storage: cephpool1
+  image: ubuntu-22.04
+  disk_size: +50G
+  agent_enabled: true
+  onboot: true
+  ostype: l26
+  nameservers:
+    - 8.8.8.8
+    - 8.8.4.4
+  searchdomain: internal.freddrake.com
+  networks:
+    - driver: virtio
+      mac: F6:51:74:90:41:B5
+      bridge: vmbr3
+      ip: 192.168.50.30/24
+      gw: 192.168.50.1
+      tag: 50
+reboot_ok: true

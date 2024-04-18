@@ -19,8 +19,6 @@ all:
 
     # Ubuntu servers
     ubuntu_server:
-      children:
-        docker_service_vms:
       hosts:
         docker2:
         docker5:
@@ -30,6 +28,7 @@ all:
         pihole[1:2]:
         dhcp[1:2]:
         palworld:
+        sonarr:
 
     # Ubuntu desktops
     ubuntu_desktop:
@@ -75,12 +74,11 @@ all:
 
     # Proxmox virtual machines
     proxmox_vm:
-      children:
-        docker_service_vms:
       hosts:
         pihole[1:2]:
         dhcp[1:2]:
         palworld:
+        sonarr:
 
     # Raspberry Pi servers
     raspberry_pi: # all raspberry pi machines
@@ -134,7 +132,6 @@ all:
         # docker_services:
         critical_docker_services:
         disconnected_cluster:
-        docker_service_vms:
       hosts:
         nuc9:
         specops:
