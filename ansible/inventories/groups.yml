@@ -19,6 +19,8 @@ all:
 
     # Ubuntu servers
     ubuntu_server:
+      children:
+        hosted_apps:
       hosts:
         docker2:
         docker5:
@@ -27,8 +29,6 @@ all:
         specops:
         pihole[1:2]:
         dhcp[1:2]:
-        palworld:
-        sonarr:
 
     # Ubuntu desktops
     ubuntu_desktop:
@@ -74,11 +74,11 @@ all:
 
     # Proxmox virtual machines
     proxmox_vm:
+      children:
+        hosted_apps:
       hosts:
         pihole[1:2]:
         dhcp[1:2]:
-        palworld:
-        sonarr:
 
     # Raspberry Pi servers
     raspberry_pi: # all raspberry pi machines
@@ -215,12 +215,14 @@ all:
       children:
         k3s:
 
-    # Palworld server
-    palworld:
-      hosts:
-        palworld:
-
     # Servers with lonhorn storage software
     longhorn:
       children:
         k8s_storage:
+
+    # Hosted App Servers
+    hosted_apps:
+      hosts:
+        palworld:
+        sonarr:
+        prowlarr:
