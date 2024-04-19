@@ -1,0 +1,63 @@
+- name: Install dependencies
+  ansible.builtin.apt:
+    name:
+      - curl
+      - wget
+      - sqlite3
+      - libicu-dev
+
+- name: Check if Radarr is already installed
+  ansible.builtin.stat:
+    path: "{{ install_dir }}/Radarr"
+  register: app_installed
+  changed_when: false
+
+- name: Only calling update if Radarr is installed
+  ansible.builtin.fail:
+    msg: "Cannot call update if Radarr is not installed"
+  when: not app_installed.stat.exists and update_app
+
+- name: Stop service before updating
+  ansible.builtin.systemd:
+    name: radarr
+    state: stopped
+  when: update_app
+
+- name: Get temp directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: radarr
+  register: temp_dir
+  changed_when: false
+  when: not app_installed.stat.exists or update_app
+
+- name: Download Radarr
+  ansible.builtin.get_url:
+    url: "https://github.com/Radarr/Radarr/releases/download/v{{ version }}/Radarr.master.{{ version }}.linux-core-x64.tar.gz"
+    dest: "{{ temp_dir.path }}/radarr.tar.gz"
+    mode: '0644'
+  changed_when: false
+  when: not app_installed.stat.exists or update_app
+
+- name: Install Radarr
+  ansible.builtin.unarchive:
+    src: "{{ temp_dir.path }}/radarr.tar.gz"
+    dest: "{{ install_dir }}"
+    remote_src: true
+    creates: "{{ install_dir }}/Radarr"
+  when: not app_installed.stat.exists or update_app
+
+- name: Install Radarr service
+  ansible.builtin.copy:
+    src: radarr.service
+    dest: /etc/systemd/system/radarr.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart service
+
+- name: Enable and start Radarr service
+  ansible.builtin.systemd:
+    name: radarr
+    enabled: true
+    state: started

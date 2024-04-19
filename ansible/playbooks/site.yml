@@ -40,3 +40,6 @@
 
 - name: Prowlarr
   ansible.builtin.import_playbook: prowlarr.yml
+
+- name: Radarr
+  ansible.builtin.import_playbook: radarr.yml

@@ -1,0 +1,28 @@
+ansible_host: 192.168.50.32
+ansible_user: ubuntu
+proxmox_vm:
+  host: 192.168.208.29
+  name: radarr
+  cloud_init: true
+  vmid: 403
+  cores: 2
+  sockets: 2
+  memory: 4096
+  storage: cephpool1
+  image: ubuntu-22.04
+  disk_size: +50G
+  agent_enabled: true
+  onboot: true
+  ostype: l26
+  nameservers:
+    - 192.168.40.4
+    - 192.168.40.6
+  searchdomain: internal.freddrake.com
+  networks:
+    - driver: virtio
+      mac: E2:DA:E2:EF:C7:FA
+      bridge: vmbr3
+      ip: 192.168.50.32/24
+      gw: 192.168.50.1
+      tag: 50
+reboot_ok: true

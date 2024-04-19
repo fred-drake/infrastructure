@@ -226,3 +226,4 @@ all:
         palworld:
         sonarr:
         prowlarr:
+        radarr:
