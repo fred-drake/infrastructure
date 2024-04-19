@@ -53,6 +53,7 @@
       --dns-cloudflare-credentials /etc/certbot/cloudflare.ini
       -d "{{ app_name }}.{{ secret.domain }}"
       --non-interactive --agree-tos
+      --dns-cloudflare-propagation-seconds 60
       --email "{{ lookup("community.general.bitwarden_secrets_manager", "0316d490-b445-4b7f-bee5-b1570011bbc6").value }}"
   register: certbot_pull
   changed_when: "'Certificate not yet due for renewal' not in certbot_pull.stdout"
