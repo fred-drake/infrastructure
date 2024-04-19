@@ -15,8 +15,8 @@ proxmox_vm:
   onboot: true
   ostype: l26
   nameservers:
-    - 8.8.8.8
-    - 8.8.4.4
+    - 192.168.40.4
+    - 192.168.40.6
   searchdomain: internal.freddrake.com
   networks:
     - driver: virtio
