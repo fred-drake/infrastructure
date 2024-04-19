@@ -1,0 +1,63 @@
+- name: Install dependencies
+  ansible.builtin.apt:
+    name:
+      - curl
+      - wget
+      - sqlite3
+      - libicu-dev
+
+- name: Check if Prowlarr is already installed
+  ansible.builtin.stat:
+    path: "{{ install_dir }}/Prowlarr"
+  register: app_installed
+  changed_when: false
+
+- name: Only calling update if Prowlarr is installed
+  ansible.builtin.fail:
+    msg: "Cannot call update if Prowlarr is not installed"
+  when: not app_installed.stat.exists and update_app
+
+- name: Stop service before updating
+  ansible.builtin.systemd:
+    name: prowlarr
+    state: stopped
+  when: update_app
+
+- name: Get temp directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: prowlarr
+  register: temp_dir
+  changed_when: false
+  when: not app_installed.stat.exists or update_app
+
+- name: Download Prowlarr
+  ansible.builtin.get_url:
+    url: "https://github.com/Prowlarr/Prowlarr/releases/download/v{{ version }}/Prowlarr.master.{{ version }}.linux-core-x64.tar.gz"
+    dest: "{{ temp_dir.path }}/prowlarr.tar.gz"
+    mode: '0644'
+  changed_when: false
+  when: not app_installed.stat.exists or update_app
+
+- name: Install Prowlarr
+  ansible.builtin.unarchive:
+    src: "{{ temp_dir.path }}/prowlarr.tar.gz"
+    dest: "{{ install_dir }}"
+    remote_src: true
+    creates: "{{ install_dir }}/Prowlarr"
+  when: not app_installed.stat.exists or update_app
+
+- name: Install Prowlarr service
+  ansible.builtin.copy:
+    src: prowlarr.service
+    dest: /etc/systemd/system/prowlarr.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart service
+
+- name: Enable and start Prowlarr service
+  ansible.builtin.systemd:
+    name: prowlarr
+    enabled: true
+    state: started

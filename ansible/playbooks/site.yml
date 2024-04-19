@@ -34,3 +34,9 @@
 
 - name: Palworld server
   ansible.builtin.import_playbook: palworld.yml
+
+- name: Sonarr
+  ansible.builtin.import_playbook: sonarr.yml
+
+- name: Prowlarr
+  ansible.builtin.import_playbook: prowlarr.yml

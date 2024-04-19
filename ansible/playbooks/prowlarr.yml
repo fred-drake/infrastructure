@@ -1,11 +1,11 @@
-- name: Install Sonarr
-  hosts: sonarr
+- name: Install Prowlarr
+  hosts: prowlarr
   become: true
   roles:
     - role: nginx
       vars:
-        app_name: sonarr
-        proxy_url: http://localhost:8989
+        app_name: prowlarr
+        proxy_url: http://localhost:9696
         additional_root_location_params: |
           proxy_set_header X-Forwarded-Host $host;
           proxy_redirect off;
@@ -15,8 +15,8 @@
         additional_server_params: |
           location /api {
               auth_basic off;
-              proxy_pass http://localhost:8989;
+              proxy_pass http://localhost:9696;
           }
-    - role: sonarr
+    - role: prowlarr
       vars:
         update_app: "{{ update | default(false) }}"
