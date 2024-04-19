@@ -227,3 +227,4 @@ all:
         sonarr:
         prowlarr:
         radarr:
+        sabnzbd:

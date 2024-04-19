@@ -1,0 +1,31 @@
+ansible_host: 192.168.50.14
+ansible_user: ubuntu
+proxmox_vm:
+  host: 192.168.208.32
+  name: sabnzbd
+  cloud_init: true
+  vmid: 404
+  cores: 2
+  sockets: 2
+  memory: 4096
+  storage: cephpool1
+  image: ubuntu-22.04
+  disk_size: +50G
+  agent_enabled: true
+  onboot: true
+  ostype: l26
+  nameservers:
+    - 192.168.40.4
+    - 192.168.40.6
+  searchdomain: internal.freddrake.com
+  networks:
+    - driver: virtio
+      mac: E2:DA:E2:EF:C7:FD
+      bridge: vmbr3
+      ip: 192.168.50.14/24
+      gw: 192.168.50.1
+      tag: 50
+reboot_ok: true
+sabnzbd:
+  api_key: '{{ lookup("community.general.bitwarden_secrets_manager", "ba361a41-6f6d-4eda-bfb8-b157016652e5").value }}'
+  nzb_key: '{{ lookup("community.general.bitwarden_secrets_manager", "14ca778c-e90e-4d46-bc39-b1570166a38e").value }}'

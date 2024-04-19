@@ -1,0 +1,32 @@
+- name: Install Sonarr
+  hosts: sabnzbd
+  become: true
+  roles:
+    - role: nginx
+      vars:
+        app_name: sabnzbd
+        proxy_url: http://localhost:8080
+        additional_root_location_params: |
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_redirect off;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection $http_connection;
+          proxy_cache_bypass $cookie_session;
+          proxy_no_cache $cookie_session;
+          proxy_buffers 32 4k;
+        additional_server_params: |
+          location /sickbeard {
+              proxy_set_header X-Forwarded-Host $host;
+              proxy_redirect off;
+              proxy_http_version 1.1;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection $http_connection;
+              proxy_cache_bypass $cookie_session;
+              proxy_no_cache $cookie_session;
+              proxy_buffers 32 4k;
+              proxy_pass http://localhost:8081;
+          }
+    - role: sabnzbd
+      vars:
+        update_app: "{{ update | default(false) }}"

@@ -43,3 +43,6 @@
 
 - name: Radarr
   ansible.builtin.import_playbook: radarr.yml
+
+- name: Sabnzbd
+  ansible.builtin.import_playbook: sabnzbd.yml
