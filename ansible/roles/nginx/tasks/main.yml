@@ -65,6 +65,17 @@
     hour: "{{ range(0, 24) | random(seed=app_name) }}"
     user: root
 
+- name: Apply Lets Encrypt configurations
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/letsencrypt/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+  with_items:
+    - options-ssl-nginx.conf
+    - ssl-dhparams.pem
+
 - name: Apply Nginx Configuration
   ansible.builtin.template:
     src: nginx-server.conf.j2
