@@ -1,0 +1,80 @@
+- name: Add nginx apt nginx_apt_key
+  ansible.builtin.apt_key:
+    url: https://nginx.org/keys/nginx_signing.key
+    state: present
+
+- name: Add nginx repository into sources list
+  ansible.builtin.apt_repository:
+    repo: "deb https://nginx.org/packages/ubuntu/ {{ ansible_facts['lsb']['codename'] }} nginx"
+    validate_certs: false
+    state: present
+
+- name: Install nginx
+  ansible.builtin.apt:
+    name:
+      - nginx
+    update_cache: true
+
+- name: Install certbot
+  community.general.snap:
+    name: certbot
+    classic: true
+    options:
+      - certbot:trust-plugin-with-root=ok
+
+- name: Symlink certbot
+  ansible.builtin.file:
+    src: /snap/bin/certbot
+    dest: /usr/bin/certbot
+    state: link
+
+- name: Install certbot cloudflare plugin
+  community.general.snap:
+    name: certbot-dns-cloudflare
+
+- name: Create certbot etc directory
+  ansible.builtin.file:
+    path: /etc/certbot
+    state: directory
+    mode: '0755'
+
+- name: Push certbot Configuration
+  ansible.builtin.template:
+    src: cloudflare.ini.j2
+    dest: /etc/certbot/cloudflare.ini
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Pull certificate
+  ansible.builtin.command:
+    cmd: >
+      certbot certonly --dns-cloudflare
+      --dns-cloudflare-credentials /etc/certbot/cloudflare.ini
+      -d "{{ app_name }}.{{ secret.domain }}"
+      --non-interactive --agree-tos
+      --email "{{ lookup("community.general.bitwarden_secrets_manager", "0316d490-b445-4b7f-bee5-b1570011bbc6").value }}"
+  register: certbot_pull
+  changed_when: "'Certificate not yet due for renewal' not in certbot_pull.stdout"
+
+- name: Set cron job for certbot
+  ansible.builtin.cron:
+    name: "Renew certbot certificate"
+    job: "certbot renew --nginx --quiet"
+    minute: "{{ range(0, 60) | random(seed=app_name) }}"
+    hour: "{{ range(0, 24) | random(seed=app_name) }}"
+    user: root
+
+- name: Apply Nginx Configuration
+  ansible.builtin.template:
+    src: nginx-server.conf.j2
+    dest: "/etc/nginx/conf.d/{{ app_name }}.conf"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart nginx
+
+- name: Start nginx service
+  ansible.builtin.systemd:
+    name: nginx
+    state: started

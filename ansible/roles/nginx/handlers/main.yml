@@ -1,4 +1,4 @@
-- name: Restart service
+- name: Restart nginx
   ansible.builtin.systemd:
-    name: sonarr
+    name: nginx
     state: restarted

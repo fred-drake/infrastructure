@@ -2,6 +2,10 @@
   hosts: sonarr
   become: true
   roles:
+    - role: nginx
+      vars:
+        app_name: sonarr
+        proxy_url: http://localhost:8989
     - role: sonarr
       vars:
         update_app: "{{ update | default(false) }}"
