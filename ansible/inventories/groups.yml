@@ -228,3 +228,4 @@ all:
         prowlarr:
         radarr:
         sabnzbd:
+        overseerr:

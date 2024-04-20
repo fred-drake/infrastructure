@@ -1,0 +1,4 @@
+- name: Install Overseerr
+  community.general.snap:
+    name: overseerr
+    state: present

@@ -1,0 +1,29 @@
+ansible_host: 192.168.50.17
+ansible_user: ubuntu
+proxmox_vm:
+  host: 192.168.208.32
+  name: overseerr
+  cloud_init: true
+  vmid: 405
+  cores: 2
+  sockets: 2
+  memory: 4096
+  storage: cephpool1
+  image: ubuntu-22.04
+  disk_size: +50G
+  agent_enabled: true
+  onboot: true
+  ostype: l26
+  nameservers:
+    - 192.168.40.4
+    - 192.168.40.6
+  searchdomain: internal.freddrake.com
+  networks:
+    - driver: virtio
+      bridge: vmbr3
+      ip: 192.168.50.17/24
+      gw: 192.168.50.1
+      tag: 50
+  ha:
+    group: Favor_Baine
+reboot_ok: true

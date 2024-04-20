@@ -1,0 +1,11 @@
+- name: Install Overseerr
+  hosts: overseerr
+  become: true
+  roles:
+    - role: nginx
+      vars:
+        app_name: overseerr
+        proxy_url: http://localhost:5055
+    - role: overseerr
+      vars:
+        update_app: "{{ update | default(false) }}"

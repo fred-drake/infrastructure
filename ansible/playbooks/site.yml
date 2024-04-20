@@ -46,3 +46,6 @@
 
 - name: Sabnzbd
   ansible.builtin.import_playbook: sabnzbd.yml
+
+- name: Overseerr
+  ansible.builtin.import_playbook: overseerr.yml
