@@ -1,10 +1,42 @@
-- name: Check for existing VM {{ proxmox_vm.name }}
-  ansible.builtin.shell:
-    cmd: "qm list | grep -E '^\\s+{{ proxmox_vm.vmid }}\\s+' | wc -l"
-  register: vm_exists
+# - name: Check for existing VM {{ proxmox_vm.name }}
+#   ansible.builtin.shell:
+#     cmd: "qm list | grep -E '^\\s+{{ proxmox_vm.vmid }}\\s+' | wc -l"
+#   register: vm_exists
+#   changed_when: false
+#   delegate_to: "{{ proxmox_vm.host }}"
+#   become: false
+
+- name: Fetch cluster resources
+  ansible.builtin.command:
+    cmd: "pvesh get /cluster/resources --type vm --output-format json"
+  register: cluster_content
   changed_when: false
   delegate_to: "{{ proxmox_vm.host }}"
   become: false
+
+# - name: From cluster content, determine if either VM ID or name is already in use
+#   ansible.builtin.set_fact:
+#     vm_exists: "{{ cluster_content.stdout | to_json | json_query('[*].id') }}"
+#   changed_when: false
+
+- name: Install jq on hypervisor
+  ansible.builtin.apt:
+    name:
+      - jq
+    update_cache: true
+  delegate_to: "{{ proxmox_vm.host }}"
+  become: false
+
+- name: From cluster content, determine if either VM ID or name is already in use
+  ansible.builtin.shell:
+    cmd: >
+      set -o pipefail && pvesh get /cluster/resources --type vm --output-format json
+      | jq 'any(.[]; .id == "qemu/{{ proxmox_vm.vmid }}")'
+    executable: /bin/bash
+  register: vm_exists
+  delegate_to: "{{ proxmox_vm.host }}"
+  become: false
+  changed_when: false
 
 - name: Create VM {{ proxmox_vm.name }}
   ansible.builtin.include_role:
@@ -13,7 +45,7 @@
     apply:
       delegate_to: "{{ proxmox_vm.host }}"
       become: false
-  when: vm_exists.stdout | int < 1
+  when: vm_exists.stdout == "false"
 
 - name: Wait for cloud init to complete.
   ansible.builtin.command:
@@ -22,7 +54,7 @@
   async: 600
   poll: 15
   when: >
-    vm_exists.stdout | int < 1
+    vm_exists.stdout == "false"
     and proxmox_vm.cloud_init is defined
     and proxmox_vm.cloud_init
 
@@ -68,3 +100,11 @@
   changed_when: true
   delegate_to: "{{ proxmox_vm.host }}"
   become: false
+
+- name: Add VM to HA
+  ansible.builtin.command:
+    cmd: "ha-manager add vm:{{ proxmox_vm.vmid }} --group {{ proxmox_vm.ha.group }}"
+  when: proxmox_vm.ha is defined and proxmox_vm.ha.group is defined
+  delegate_to: "{{ proxmox_vm.host }}"
+  become: false
+  changed_when: true
