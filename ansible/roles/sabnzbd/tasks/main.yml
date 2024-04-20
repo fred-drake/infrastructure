@@ -1,3 +1,16 @@
+- name: Install dependencies
+  ansible.builtin.apt:
+    name:
+      - nfs-common
+
+- name: Mount downloads NFS share
+  ansible.posix.mount:
+    path: /mnt/downloads
+    src: 192.168.50.51:/downloads
+    opts: nfsvers=4,async
+    fstype: nfs
+    state: mounted
+
 - name: Add apt repository
   ansible.builtin.apt_repository:
     repo: 'ppa:jcfp/nobetas'

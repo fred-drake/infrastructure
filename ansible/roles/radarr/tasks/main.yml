@@ -5,6 +5,23 @@
       - wget
       - sqlite3
       - libicu-dev
+      - nfs-common
+
+- name: Mount downloads NFS share
+  ansible.posix.mount:
+    path: /mnt/downloads
+    src: 192.168.50.51:/downloads
+    opts: nfsvers=4,async
+    fstype: nfs
+    state: mounted
+
+- name: Mount videos NFS share
+  ansible.posix.mount:
+    path: /mnt/videos
+    src: 192.168.50.51:/videos
+    opts: nfsvers=4,async
+    fstype: nfs
+    state: mounted
 
 - name: Check if Radarr is already installed
   ansible.builtin.stat:
