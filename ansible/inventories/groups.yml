@@ -95,82 +95,6 @@ all:
     cuda:
       hosts:
 
-  ####################################
-  # CONTAINER ORCHESTRATION-SPECIFIC #
-  ####################################
-
-    # k3s servers
-    k3s:
-      children:
-        k8s_master:
-        k8s_node:
-
-    # Kubernetes masters 
-    k8s_master:
-      hosts:
-        nuc1:
-        nuc2:
-        nuc3:
-
-    # Kubernetes storage nodes
-    k8s_storage:
-      hosts:
-        nuc4:
-        nuc5:
-        nuc6:
-
-    # Kubernetes worker nodes
-    k8s_node:
-      hosts:
-        nuc4:
-        nuc5:
-        nuc6:
-
-    # All docker container servers
-    docker:
-      children:
-        # docker_services:
-        critical_docker_services:
-        disconnected_cluster:
-      hosts:
-        nuc9:
-        specops:
-        rp3:
-
-    disconnected_cluster:
-      hosts:
-        rp[1:2]:
-
-  #################################
-  # CONTAINER-SPECIFIC            #
-  #################################
-
-    # Docker container servers who run regular services
-    # docker_services:
-    #   hosts:
-    #     nuc9:
-    #     nuc8:
-    #     specops:
-
-    # Docker container servers who run critical services
-    critical_docker_services:
-      children:
-        critical_docker_primary:
-        critical_docker_secondary:
-
-    # Identifies the primary server for critical services
-    critical_docker_primary:
-      hosts:
-        docker5:
-          pihole_id: pihole1
-          dhcp_id: dhcp1
-    # Identifies the secondary server for critical services
-    critical_docker_secondary:
-      hosts:
-        docker2:
-          pihole_id: pihole2
-          dhcp_id: dhcp2
-
   #################################
   # APPLICATION-SPECIFIC          #
   #################################
@@ -229,3 +153,4 @@ all:
         radarr:
         sabnzbd:
         overseerr:
+        docker:

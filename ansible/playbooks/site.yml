@@ -4,9 +4,6 @@
 - name: KVM virtual management
   ansible.builtin.import_playbook: kvm.yml
 
-- name: Docker application (not containers)
-  ansible.builtin.import_playbook: docker.yml
-
 - name: CUDA software
   hosts: cuda
   gather_facts: true
@@ -14,11 +11,6 @@
   roles:
     - cuda
     - cuda-docker
-
-- name: Primary critical applications
-  ansible.builtin.import_playbook: docker/critical_apps_primary.yml
-- name: Docker containers
-  ansible.builtin.import_playbook: docker/populate_containers.yml
 
 - name: K3s
   ansible.builtin.import_playbook: k3s.yml
@@ -49,3 +41,6 @@
 
 - name: Overseerr
   ansible.builtin.import_playbook: overseerr.yml
+
+- name: Docker server (not containers)
+  ansible.builtin.import_playbook: docker.yml

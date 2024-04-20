@@ -1,0 +1,56 @@
+ansible_host: 192.168.50.18
+ansible_user: ubuntu
+interface_208: eth0
+interface_50: eth0.50
+interface_40: eth0.40
+proxmox_vm:
+  host: 192.168.208.20
+  name: docker
+  cloud_init: true
+  vmid: 406
+  cores: 2
+  sockets: 2
+  memory: 4096
+  storage: cephpool1
+  image: ubuntu-22.04
+  disk_size: +50G
+  agent_enabled: true
+  onboot: true
+  ostype: l26
+  nameservers:
+    - 192.168.40.4
+    - 192.168.40.6
+  searchdomain: internal.freddrake.com
+  networks:
+    - driver: virtio
+      bridge: vmbr3
+      ip: 192.168.208.34/24
+      gw: 192.168.208.1
+    - driver: virtio
+      bridge: vmbr3
+      ip: 192.168.50.18/24
+      gw: 192.168.50.1
+      tag: 50
+    - driver: virtio
+      bridge: vmbr3
+      ip: 192.168.40.71/24
+      gw: 192.168.40.1
+      tag: 40
+  ha:
+    group: Favor_Thrall
+reboot_ok: true
+compose_stacks:
+  - name: ipmi-viewer
+    volumes: []
+    compose: |
+      version: "3.8"
+      services:
+        ipmi:
+          image: solarkennedy/ipmi-kvm-docker
+          restart: unless-stopped
+          environment:
+            RES: 1600x900x24
+          ports:
+            - 8080:8080
+      networks: {}
+

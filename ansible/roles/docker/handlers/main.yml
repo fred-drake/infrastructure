@@ -1,0 +1,6 @@
+- name: Restart Dockge
+  community.docker.docker_compose_v2:
+    project_src: /opt/dockge
+    files:
+      - compose.yml
+    state: restarted

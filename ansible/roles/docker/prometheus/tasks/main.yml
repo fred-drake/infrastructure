@@ -1,7 +1,0 @@
-- name: Prometheus config
-  ansible.builtin.template:
-    src: prometheus.yml.j2
-    dest: "{{ appdata_dir }}/prometheus/config/prometheus.yml"
-    mode: "0644"
-  notify:
-    - Restart prometheus

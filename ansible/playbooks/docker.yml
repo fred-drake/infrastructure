@@ -1,17 +1,6 @@
-- name: Provision docker
+- name: Install Docker
   hosts: docker
-  gather_facts: true
   become: true
+  gather_facts: true
   roles:
-    - provision/docker
-
-- name: Add Raspi specific apt 
-  hosts: docker:&raspberry_pi
-  gather_facts: true
-  become: true
-  tasks:
-    - name: Install raspi specific apt for docker
-      ansible.builtin.apt:
-        update_cache: true
-        name:
-          - linux-modules-extra-raspi
+    - docker

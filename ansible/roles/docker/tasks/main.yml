@@ -1,0 +1,86 @@
+- name: Install dependencies
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+    update_cache: true
+
+- name: Add Docker GPG key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repository
+  ansible.builtin.apt_repository:
+    repo: >
+      deb [arch={{ [ansible_facts['architecture']] | map('extract', deb_architecture) | first }}]
+      https://download.docker.com/{{ ansible_facts['system'] | lower }}/{{ ansible_facts['distribution'] | lower }}
+      {{ ansible_facts['distribution_release'] }} stable
+    state: present
+
+- name: Install Docker
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    update_cache: true
+
+- name: Install pip dependencies
+  ansible.builtin.pip:
+    name:
+      - docker==6.1.3
+      - docker-compose
+
+- name: Add user to docker group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true
+  when: ansible_user != 'root'
+
+- name: Start Docker service
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Create stacks directory
+  ansible.builtin.file:
+    path: "/opt/stacks"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+
+- name: Create Dockge directory
+  ansible.builtin.file:
+    path: "/opt/dockge"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+
+- name: Download the Dockge compose file
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/louislam/dockge/master/compose.yaml
+    dest: /opt/dockge/compose.yml
+    mode: '0644'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  notify: Restart Dockge
+
+- name: Start Dockge
+  community.docker.docker_compose_v2:
+    project_src: /opt/dockge
+    files:
+      - compose.yml
+    state: present
+
+- name: Handle stacks
+  ansible.builtin.include_tasks:
+    file: stack.yml
+  when: compose_stacks is defined
+  loop: "{{ compose_stacks }}"
+  loop_control:
+    loop_var: stack

@@ -1,0 +1,36 @@
+- name: Create stack directory
+  ansible.builtin.file:
+    path: "{{ stacks_dir }}/{{ stack.name }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+
+- name: Create volume directories
+  ansible.builtin.file:
+    path: "{{ stacks_dir }}/{{ stack.name }}/{{ vol_name }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+  loop: "{{ stack.volumes }}"
+  loop_control:
+    loop_var: vol_name
+  when: stack.volumes is defined
+
+- name: Push compose content
+  ansible.builtin.copy:
+    content: "{{ stack.compose }}"
+    dest: "{{ stacks_dir }}/{{ stack.name }}/compose.yaml"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0644'
+  register: compose_file
+
+- name: Start stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ stacks_dir }}/{{ stack.name }}"
+    files:
+      - compose.yaml
+    state: present
+    remove_orphans: true
