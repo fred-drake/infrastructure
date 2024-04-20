@@ -35,9 +35,9 @@ api_key = {{ sabnzbd.api_key }}
 nzb_key = {{ sabnzbd.nzb_key }}
 socks5_proxy_url = ""
 permissions = ""
-download_dir = Downloads/incomplete
+download_dir = /mnt/downloads/usenet/incomplete
 download_free = ""
-complete_dir = Downloads/complete
+complete_dir = /mnt/downloads/usenet/complete
 complete_free = ""
 fulldisk_autoresume = 0
 script_dir = ""
@@ -285,3 +285,27 @@ nscript_prio_warning = 0
 nscript_prio_error = 0
 nscript_prio_queue_done = 0
 nscript_prio_other = 1
+[servers]
+{%- for server in sabnzbd.servers %}
+[[{{ server.host }}]]
+name = {{ server.host }}
+displayname = {{ server.name }}
+host = {{ server.host }}
+port = {{ server.port }}
+timeout = 60
+username = {{ server.username }}
+password = {{ server.password }}
+connections = {{ server.connections }}
+ssl = {{ 1 if server.ssl else 0 }}
+ssl_verify = 2
+ssl_ciphers = ""
+enable = {{ 1 if server.enabled else 0 }}
+required = 0
+optional = 0
+retention = 0
+expire_date = ""
+quota = ""
+usage_at_start = 0
+priority = {{ server.priority }}
+notes = ""
+{%- endfor %}

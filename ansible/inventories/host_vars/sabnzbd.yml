@@ -31,3 +31,13 @@ reboot_ok: true
 sabnzbd:
   api_key: '{{ lookup("community.general.bitwarden_secrets_manager", "ba361a41-6f6d-4eda-bfb8-b157016652e5").value }}'
   nzb_key: '{{ lookup("community.general.bitwarden_secrets_manager", "14ca778c-e90e-4d46-bc39-b1570166a38e").value }}'
+  servers:
+    - name: newsdemon
+      host: news.newsdemon.com
+      port: 563
+      username: '{{ lookup("community.general.bitwarden_secrets_manager", "0e12a190-16a7-4849-b14c-b158013b846f").value }}'
+      password: '{{ lookup("community.general.bitwarden_secrets_manager", "c287b5d7-426c-4944-8d25-b158013b54da").value }}'
+      connections: 8
+      ssl: true
+      priority: 0
+      enabled: true
