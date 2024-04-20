@@ -52,3 +52,19 @@
     or ansible_distribution == 'Ubuntu'
     or ansible_distribution == 'CentOS'
     or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: Check if cloud init drive is still attached
+  ansible.builtin.command:
+    cmd: "qm config {{ proxmox_vm.vmid }}"
+  register: qm_config
+  changed_when: false
+  delegate_to: "{{ proxmox_vm.host }}"
+  become: false
+
+- name: Remove cloud init drive if it exists
+  ansible.builtin.command:
+    cmd: "qm disk unlink {{ proxmox_vm.vmid }} --idlist ide2"
+  when: "qm_config.stdout.find('ide2: ') != -1"
+  changed_when: true
+  delegate_to: "{{ proxmox_vm.host }}"
+  become: false
