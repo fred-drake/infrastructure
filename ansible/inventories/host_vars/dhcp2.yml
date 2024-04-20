@@ -43,4 +43,6 @@ proxmox_vm:
       ip: 192.168.50.81/24
       gw: 192.168.50.1
       tag: 50
+  ha:
+    group: Favor_Thrall
 reboot_ok: true

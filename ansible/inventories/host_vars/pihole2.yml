@@ -31,4 +31,6 @@ proxmox_vm:
       bridge: vmbr0
       ip: 192.168.208.9/24
       gw: 192.168.208.1
+  ha:
+    group: Favor_Sylvanas
 reboot_ok: true

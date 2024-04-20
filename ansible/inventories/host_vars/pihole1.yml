@@ -31,4 +31,6 @@ proxmox_vm:
       bridge: vmbr3
       ip: 192.168.208.7/24
       gw: 192.168.208.1
+  ha:
+    group: Favor_Thrall
 reboot_ok: true
