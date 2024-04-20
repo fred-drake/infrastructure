@@ -3,13 +3,15 @@
     cmd: pihole restartdns
   become: false
   notify: Sync gravity database
+  changed_when: true
 
 - name: Update lists
   run_once: true
   ansible.builtin.command:
     cmd: pihole-updatelists
+  changed_when: true
 
 - name: Sync gravity database
   run_once: true
-  ansible.builtin.command: gravity-sync update
-
+  ansible.builtin.command: gravity-sync push
+  changed_when: true
