@@ -10,8 +10,11 @@ playbook PLAYBOOK:
 playbook-host PLAYBOOK HOST:
     ansible-playbook ansible/playbooks/{{ PLAYBOOK }}.yml --limit {{ HOST }}
 
+proxy APP:
+    ansible-playbook ansible/playbooks/{{ APP }}.yml -e "noapp=true"
+
 app APP:
-    ansible-playbook ansible/playbooks/{{ APP }}.yml
+    ansible-playbook ansible/playbooks/{{ APP }}.yml -e "noproxy=true"
 
 app-update APP:
     ansible-playbook ansible/playbooks/{{ APP }}.yml -e "update=true"

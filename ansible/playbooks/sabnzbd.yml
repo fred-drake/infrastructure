@@ -2,6 +2,10 @@
   hosts: sabnzbd
   become: true
   roles:
+    - role: sabnzbd
+      vars:
+        update_app: "{{ update | default(false) }}"
+      when: noapp is not defined or noapp == false
     - role: nginx
       vars:
         app_name: sabnzbd
@@ -15,6 +19,7 @@
           proxy_cache_bypass $cookie_session;
           proxy_no_cache $cookie_session;
           proxy_buffers 32 4k;
+          client_max_body_size 100M;
         additional_server_params: |
           location /sickbeard {
               proxy_set_header X-Forwarded-Host $host;
@@ -26,7 +31,6 @@
               proxy_no_cache $cookie_session;
               proxy_buffers 32 4k;
               proxy_pass http://localhost:8081;
+              client_max_body_size 100M;
           }
-    - role: sabnzbd
-      vars:
-        update_app: "{{ update | default(false) }}"
+      when: noproxy is not defined or noproxy == false
