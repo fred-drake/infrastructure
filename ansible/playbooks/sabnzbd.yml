@@ -1,4 +1,4 @@
-- name: Install Sonarr
+- name: Install Sabnzbd
   hosts: sabnzbd
   become: true
   roles:
