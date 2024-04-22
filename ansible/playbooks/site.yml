@@ -44,3 +44,6 @@
 
 - name: Docker server (not containers)
   ansible.builtin.import_playbook: docker.yml
+
+- name: Actual Budget
+  ansible.builtin.import_playbook: actualbudget.yml

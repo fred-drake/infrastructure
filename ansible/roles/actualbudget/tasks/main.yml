@@ -1,0 +1,58 @@
+- name: Install dependencies
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+
+- name: Add Node apt key
+  ansible.builtin.get_url:
+    url: https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key
+    dest: /usr/share/keyrings/nodesource.gpg
+    mode: '0644'
+
+- name: Add Node apt repository
+  ansible.builtin.apt_repository:
+    repo: >
+      deb [arch={{ [ansible_facts['architecture']] | map('extract', deb_architecture) | first }}]
+      https://deb.nodesource.com/node_18.x nodistro main
+    state: present
+
+- name: Install Node
+  ansible.builtin.apt:
+    name:
+      - nodejs
+    update_cache: true
+
+- name: Install yarn
+  community.general.npm:
+    name: yarn
+    global: true
+
+- name: Check out Actual Budget from Git
+  ansible.builtin.git:
+    repo: https://github.com/actualbudget/actual-server.git
+    dest: /opt/actualbudget
+    version: master
+    update: false
+
+- name: Install Actual Budget dependencies
+  ansible.builtin.command:
+    cmd: yarn install
+    chdir: /opt/actualbudget
+    creates: /opt/actualbudget/node_modules
+
+- name: Install the service
+  ansible.builtin.copy:
+    src: actualbudget.service
+    dest: /etc/systemd/system/actualbudget.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enable and start Sonarr service
+  ansible.builtin.systemd:
+    name: actualbudget
+    enabled: true
+    state: started
