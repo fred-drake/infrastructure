@@ -47,3 +47,6 @@
 
 - name: Actual Budget
   ansible.builtin.import_playbook: actualbudget.yml
+
+- name: MQTT
+  ansible.builtin.import_playbook: mqtt.yml

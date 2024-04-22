@@ -1,0 +1,8 @@
+- name: Install MQTT
+  hosts: mqtt
+  become: true
+  roles:
+    - role: mqtt
+      vars:
+        update_app: "{{ update | default(false) }}"
+      when: noapp is not defined or noapp == false

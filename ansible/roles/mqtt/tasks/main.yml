@@ -1,0 +1,30 @@
+- name: Install dependencies
+  ansible.builtin.apt:
+    name:
+      - curl
+      - gnupg2
+      - wget
+      - git
+      - apt-transport-https
+      - ca-certificates
+    update_cache: true
+
+- name: Add Mosquitto repository
+  ansible.builtin.apt_repository:
+    repo: ppa:mosquitto-dev/mosquitto-ppa
+    state: present
+    update_cache: true
+
+- name: Install Mosquitto
+  ansible.builtin.apt:
+    name:
+      - mosquitto
+      - mosquitto-clients
+    state: present
+    update_cache: true
+
+- name: Start and enable Mosquitto
+  ansible.builtin.systemd:
+    name: mosquitto
+    enabled: true
+    state: started
