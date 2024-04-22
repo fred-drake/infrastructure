@@ -45,6 +45,45 @@
     state: started
     enabled: true
 
+- name: Setup admin network
+  community.docker.docker_network:
+    name: "{{ secret.docker.network.admin }}"
+    driver: "macvlan"
+    internal: false
+    driver_options:
+      parent: "{{ docker.interface_208 }}"
+    ipam_config:
+      - gateway: "{{ secret.network.admin.gateway }}"
+        subnet: "{{ secret.network.admin.cidr }}"
+        iprange: "{{ secret.network.admin.iprange | default(omit) }}"
+  when: docker.interface_208 is defined
+
+- name: Setup container network
+  community.docker.docker_network:
+    name: "{{ secret.docker.network.container }}"
+    driver: "macvlan"
+    internal: false
+    driver_options:
+      parent: "{{ docker.interface_50 }}"
+    ipam_config:
+      - gateway: "{{ secret.network.services.gateway }}"
+        subnet: "{{ secret.network.services.cidr }}"
+        iprange: "{{ secret.network.services.iprange | default(omit) }}"
+  when: docker.interface_50 is defined
+
+- name: Setup iot network
+  community.docker.docker_network:
+    name: "{{ secret.docker.network.iot }}"
+    driver: "macvlan"
+    internal: false
+    driver_options:
+      parent: "{{ docker.interface_40 }}"
+    ipam_config:
+      - gateway: "{{ secret.network.iot.gateway }}"
+        subnet: "{{ secret.network.iot.cidr }}"
+        iprange: "{{ secret.network.iot.iprange | default(omit) }}"
+  when: docker.interface_40 is defined
+
 - name: Create stacks directory
   ansible.builtin.file:
     path: "/opt/stacks"

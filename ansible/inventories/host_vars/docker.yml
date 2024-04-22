@@ -1,8 +1,5 @@
 ansible_host: 192.168.50.18
 ansible_user: ubuntu
-interface_208: eth0
-interface_50: eth0.50
-interface_40: eth0.40
 proxmox_vm:
   host: 192.168.208.20
   name: docker
@@ -39,6 +36,12 @@ proxmox_vm:
   ha:
     group: Favor_Thrall
 reboot_ok: true
+
+docker:
+  interface_208: eth0
+  interface_50: eth1
+  interface_40: eth2
+
 compose_stacks:
   - name: ipmi-viewer
     volumes: []
