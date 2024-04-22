@@ -5,6 +5,12 @@ ansible_python_interpreter: /usr/bin/python3
 default_timezone: America/New_York
 ssh_keys_url: https://github.com/fred-drake.keys
 
+deb_architecture: {
+  "aarch64": "arm64",
+  "armv7l": "armhf",
+  "x86_64": "amd64"
+}
+
 secret:
   domain: '{{ lookup("community.general.bitwarden_secrets_manager", "1e380fc6-0b63-49c8-8793-b15400f15e82").value }}'
   crypt:
