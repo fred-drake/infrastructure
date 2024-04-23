@@ -2,5 +2,49 @@
   hosts: docker
   become: true
   gather_facts: true
-  roles:
-    - docker
+  tasks:
+    - name: Docker role
+      ansible.builtin.import_role:
+        name: docker
+      when: noapp is not defined or not noapp
+    - name: Add traefik config directory
+      ansible.builtin.file:
+        path: /opt/stacks/traefik/config
+        state: directory
+        mode: '0755'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+      when: nostacks is not defined or not nostacks
+    - name: Apply traefik configuration file
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/templates/docker-traefik.yml.j2"
+        dest: /opt/stacks/traefik/config/traefik.yml
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0644'
+      when: nostacks is not defined or not nostacks
+    - name: Touch config file
+      ansible.builtin.file:
+        path: /opt/stacks/traefik/config/config.yml
+        state: touch
+        mode: '0644'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        modification_time: preserve
+        access_time: preserve
+      when: nostacks is not defined or not nostacks
+    - name: Touch acme file
+      ansible.builtin.file:
+        path: /opt/stacks/traefik/config/acme.json
+        state: touch
+        mode: '0600'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        modification_time: preserve
+        access_time: preserve
+      when: nostacks is not defined or not nostacks
+    - name: Docker (stacks) role
+      ansible.builtin.import_role:
+        name: docker
+        tasks_from: stacks
+      when: nostacks is not defined or not nostacks

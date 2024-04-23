@@ -43,6 +43,48 @@ docker:
   interface_40: eth2
 
 compose_stacks:
+  - name: traefik
+    volumes:
+      - traefik
+    compose: |
+      version: "3.8"
+      services:
+        traefik:
+          image: traefik:v2.11
+          container_name: traefik
+          networks:
+            vlan0:
+              ipv4_address: 192.168.50.35
+          ports:
+            - 80:80
+            - 443:443
+          volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./config/traefik.yml:/etc/traefik/traefik.yml
+            - ./config/config.yml:/config.yml
+            - ./config/acme.json:/acme.json
+          labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.traefik.entrypoints=web"
+            - "traefik.http.routers.traefik.rule=Host(`traefik.{{ secret.domain }}`)"
+            - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+            - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
+            - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
+            - "traefik.http.routers.traefik-secure.entrypoints=websecure"
+            - "traefik.http.routers.traefik-secure.rule=Host(`traefik.{{ secret.domain }}`)"
+            - "traefik.http.routers.traefik-secure.tls=true"
+            - "traefik.http.routers.traefik-secure.tls.certresolver=letsencrypt"
+            - "traefik.http.routers.traefik-secure.tls.domains[0].main={{ secret.domain }}"
+            - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.{{ secret.domain }}"
+            - "traefik.http.routers.traefik-secure.service=api@internal"
+            - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+          environment:
+            - TZ={{ default_timezone }}
+            - CF_DNS_API_TOKEN={{ lookup("community.general.bitwarden_secrets_manager", "1f7ca7e6-906f-4dee-b2d1-b15700124f74").value }}
+      networks:
+        vlan0:
+          external: true
+          name: br0.50
   - name: ipmi-viewer
     volumes: []
     compose: |
@@ -56,4 +98,45 @@ compose_stacks:
           ports:
             - 8080:8080
       networks: {}
-
+  - name: homeassistant
+    volumes:
+      - config
+    compose: |
+      services:
+        homeassistant:
+          image: lscr.io/linuxserver/homeassistant:latest
+          container_name: homeassistant
+          networks:
+            vlan0:
+              ipv4_address: 192.168.50.19
+            vlan1:
+              ipv4_address: 192.168.40.71
+          environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=America/New_York
+          volumes:
+            - ./config:/config
+          labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.homeassistant.entrypoints=web"
+            - "traefik.http.routers.homeassistant.rule=Host(`homeassistant.{{ secret.domain }}`)"
+            - "traefik.http.middlewares.homeassistant-https-redirect.redirectscheme.scheme=https"
+            - "traefik.http.routers.traefik.middlewares=homeassistant-https-redirect"
+            - "traefik.http.routers.homeassistant-secure.entrypoints=websecure"
+            - "traefik.http.routers.homeassistant-secure.rule=Host(`homeassistant.{{ secret.domain }}`)"
+            - "traefik.http.routers.homeassistant-secure.tls=true"
+            - "traefik.http.routers.homeassistant-secure.tls.certresolver=letsencrypt"
+            - "traefik.http.routers.homeassistant-secure.service=homeassistant"
+            - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
+            - "traefik.docker.network=br0.50"
+          ports:
+            - 8123:8123
+          restart: unless-stopped
+      networks:
+        vlan0:
+          external: true
+          name: br0.50
+        vlan1:
+          external: true
+          name: br0.40

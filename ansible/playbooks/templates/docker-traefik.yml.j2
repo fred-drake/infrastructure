@@ -1,0 +1,30 @@
+api:
+  dashboard: true
+  debug: true
+
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+
+serversTransport:
+  insecureSkipVerify: true
+
+providers:
+  docker:
+    endpoint: unix:///var/run/docker.sock
+    exposedByDefault: false
+  file:
+    filename: /config.yml
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: "{{ lookup("community.general.bitwarden_secrets_manager", "0316d490-b445-4b7f-bee5-b1570011bbc6").value }}"
+      storage: /acme.json
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "1.0.0.1:53"

@@ -48,7 +48,7 @@
 - name: Setup admin network
   community.docker.docker_network:
     name: "{{ secret.docker.network.admin }}"
-    driver: "macvlan"
+    driver: "ipvlan"
     internal: false
     driver_options:
       parent: "{{ docker.interface_208 }}"
@@ -61,7 +61,7 @@
 - name: Setup container network
   community.docker.docker_network:
     name: "{{ secret.docker.network.container }}"
-    driver: "macvlan"
+    driver: "ipvlan"
     internal: false
     driver_options:
       parent: "{{ docker.interface_50 }}"
@@ -74,7 +74,7 @@
 - name: Setup iot network
   community.docker.docker_network:
     name: "{{ secret.docker.network.iot }}"
-    driver: "macvlan"
+    driver: "ipvlan"
     internal: false
     driver_options:
       parent: "{{ docker.interface_40 }}"
@@ -115,11 +115,3 @@
     files:
       - compose.yml
     state: present
-
-- name: Handle stacks
-  ansible.builtin.include_tasks:
-    file: stack.yml
-  when: compose_stacks is defined
-  loop: "{{ compose_stacks }}"
-  loop_control:
-    loop_var: stack

@@ -1,0 +1,7 @@
+- name: Handle stacks
+  ansible.builtin.include_tasks:
+    file: stack_one.yml
+  when: compose_stacks is defined
+  loop: "{{ compose_stacks }}"
+  loop_control:
+    loop_var: stack
