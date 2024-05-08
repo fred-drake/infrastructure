@@ -11,16 +11,16 @@ playbook-host PLAYBOOK HOST:
     ansible-playbook ansible/playbooks/{{ PLAYBOOK }}.yml --limit {{ HOST }}
 
 proxy APP:
-    ansible-playbook ansible/playbooks/{{ APP }}.yml -e "noapp=true" -e "nostacks=true"
+    ansible-playbook ansible/playbooks/{{ APP }}.yml -e "justmode=proxy"
 
 app APP:
-    ansible-playbook ansible/playbooks/{{ APP }}.yml -e "noproxy=true" -e "nostacks=true"
+    ansible-playbook ansible/playbooks/{{ APP }}.yml -e "justmode=app"
 
-app-update APP:
-    ansible-playbook ansible/playbooks/{{ APP }}.yml -e "update=true" -e "nostacks=true"
+update APP:
+    ansible-playbook ansible/playbooks/{{ APP }}.yml -e "justmode=update"
 
-stacks APP:
-    ansible-playbook ansible/playbooks/{{ APP }}.yml -e "noapp=true" -e "noproxy=true"
+config APP:
+    ansible-playbook ansible/playbooks/{{ APP }}.yml -e "justmode=config"
 
 dns:
     ansible-playbook ansible/playbooks/dns_update.yml

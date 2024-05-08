@@ -1,13 +1,13 @@
-- name: Install Overseerr
-  hosts: overseerr
+- name: Install Homebridge
+  hosts: homebridge
   become: true
   roles:
     - role: nginx
       vars:
-        app_name: overseerr
-        proxy_url: http://localhost:5055
+        app_name: homebridge
+        proxy_url: http://localhost:8581
       when: justmode is not defined or justmode == "proxy"
-    - role: overseerr
+    - role: homebridge
       vars:
         update_app: "{{ update | default(false) }}"
       when: justmode is not defined or justmode == "app"

@@ -17,8 +17,8 @@
               auth_basic off;
               proxy_pass http://localhost:9696;
           }
-      when: noproxy is not defined or noproxy == false
+      when: justmode is not defined or justmode == "proxy"
     - role: prowlarr
       vars:
         update_app: "{{ update | default(false) }}"
-      when: noapp is not defined or noapp == false
+      when: justmode is not defined or justmode == "app"

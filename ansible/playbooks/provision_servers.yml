@@ -27,7 +27,7 @@
   become: true
   roles:
     - ubuntu
-    - netplan
+    # - netplan
 
 - name: Configuration of ubuntu desktop machines
   hosts: ubuntu_desktop

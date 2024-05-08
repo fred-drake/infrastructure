@@ -156,3 +156,4 @@ all:
         docker:
         actualbudget:
         mqtt:
+        homebridge:

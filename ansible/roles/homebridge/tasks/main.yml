@@ -1,0 +1,26 @@
+- name: Apt dependencies
+  ansible.builtin.apt:
+    name:
+      - curl
+      - gnupg
+    update_cache: true
+
+- name: Get repo node key
+  ansible.builtin.shell:
+    cmd: >
+      set -o pipefail && curl -sSfL https://repo.homebridge.io/KEY.gpg
+      | sudo gpg --dearmor
+      | sudo tee /usr/share/keyrings/homebridge.gpg > /dev/null
+    executable: /bin/bash
+    creates: /usr/share/keyrings/homebridge.gpg
+
+- name: Add Homebridge apt repository
+  ansible.builtin.apt_repository:
+    repo: deb [signed-by=/usr/share/keyrings/homebridge.gpg] https://repo.homebridge.io stable main
+    state: present
+
+- name: Install Homebridge
+  ansible.builtin.apt:
+    name:
+      - homebridge
+    update_cache: true

@@ -50,3 +50,6 @@
 
 - name: MQTT
   ansible.builtin.import_playbook: mqtt.yml
+
+- name: Homebridge
+  ansible.builtin.import_playbook: homebridge.yml

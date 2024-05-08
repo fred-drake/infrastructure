@@ -1,0 +1,35 @@
+- name: Testing
+  hosts: sonarr
+  become: false
+  gather_facts: true
+  tasks:
+    - name: Testing
+      ansible.builtin.debug:
+        msg: "{{ range(0, 60) | random(seed='foo') }}"
+    # - name: Testing
+    #   ansible.builtin.debug:
+    #     msg:
+    #      - '{{ lookup("community.general.bitwarden_secrets_manager", "4e163797-ad22-4298-9ba4-b14b016b600c").value }}'
+
+    # - name: Testing
+    #   community.general.proxmox:
+    #     vmid: '510'
+    #     api_user: root@pam
+    #     api_password: "S&yb3ach"
+    #     api_host: 192.168.208.20
+    #     api_token_id: root@pam!ansible
+    #     api_token_secret: 9ff82b53-bbc0-4a87-bcd6-ce64d27b7791
+    #     password: testing
+    #     hostname: testing
+    #     node: thrall
+    #     cores: '2'
+    #     cpus: '2'
+    #     cpuunits: '1000'
+    #     ostemplate: local:vztmpl/ubuntu-22.04-standard_22.04-1_amd64.tar.zst
+    #     storage: local-lvm
+    #     disk: '8'
+    #     #mounts: '{"mp0":"local-lvm:vm-510-disk-1,mp=/mnt/test,backup=1,size=8G"}'
+    #     memory: '2048'
+    #     nameserver: '192.168.40.4 192.168.40.6'
+    #     netif: '{"net0": "name=eth0,bridge=vmbr3,firewall=1,hwaddr=BC:24:11:45:A7:6E,ip=dhcp,ip6=dhcp,tag=50,type=veth"}'
+    #     state: present
