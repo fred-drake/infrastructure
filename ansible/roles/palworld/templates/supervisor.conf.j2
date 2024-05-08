@@ -1,7 +1,7 @@
 [program:palworld]
 user = {{ ansible_user }}
-directory = /home/ubuntu/Steam/steamapps/common/PalServer
-command = /home/ubuntu/Steam/steamapps/common/PalServer/PalServer.sh
+directory = {{ steam_path }}/{{ app_folder_name }}
+command = {{ steam_path }}/{{ app_folder_name }}/PalServer.sh
 autostart = true
 autorestart = true
 stderr_logfile = /var/log/palworld.err.log
