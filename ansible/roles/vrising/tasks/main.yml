@@ -1,0 +1,145 @@
+- name: Add multiverse repo
+  ansible.builtin.apt_repository:
+    repo: "{{ item }}"
+    update_cache: true
+  loop:
+    - 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} main universe multiverse'
+    - 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }}-updates main universe multiverse'
+  when: justmode is not defined or justmode == "app"
+
+- name: Set i386 architecture
+  ansible.builtin.command:
+    cmd: dpkg --add-architecture i386
+  changed_when: false
+  when: justmode is not defined or justmode == "app"
+
+- name: Pre-answer install question 1
+  ansible.builtin.shell:
+    executable: /bin/bash
+    cmd: |
+      set -o pipefail
+      echo steam steam/question select "I AGREE" | sudo debconf-set-selections
+  changed_when: false
+  when: justmode is not defined or justmode == "app"
+
+- name: Pre-answer install question 2
+  ansible.builtin.shell:
+    executable: /bin/bash
+    cmd: |
+      set -o pipefail
+      echo steam steam/license note '' | sudo debconf-set-selections
+  changed_when: false
+  when: justmode is not defined or justmode == "app"
+
+- name: Install libraries
+  ansible.builtin.apt:
+    name:
+      - steamcmd
+      - wine-stable
+      - xvfb
+      - gosu
+      - wine32
+      - wine64
+    update_cache: true
+    state: "{{ (justmode is defined and justmode == 'update') | ternary('latest', 'present') }}"
+  when: justmode is not defined or justmode == "app" or justmode == "update"
+
+- name: Create steam folder
+  ansible.builtin.file:
+    path: "{{ steam_path }}"
+    state: directory
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  when: justmode is not defined or justmode == "app"
+
+- name: Install or update V-Rising dedicated server
+  become: false
+  ansible.builtin.command:
+    cmd: /usr/games/steamcmd +@sSteamCmdForcePlatformType windows +force_install_dir "{{ steam_path }}/{{ app_folder_name }}" +login anonymous +app_update {{ steam_app_id }} validate +quit
+    creates: "{{ steam_path }}/{{ app_folder_name }}"
+  when: justmode is not defined or justmode == "app"
+
+# - name: Create temp dir for save files
+#   ansible.builtin.tempfile:
+#     state: directory
+#     suffix: palworldsaves
+#   register: temp_dir
+#   when: justmode is defined and justmode == "update"
+
+# - name: Backup save files
+#   ansible.builtin.copy:
+#     src: "{{ steam_path }}/{{ app_folder_name }}/Pal/Saved/SaveGames"
+#     dest: "{{ temp_dir.path }}"
+#     remote_src: true
+#     mode: '0755'
+#     owner: "{{ ansible_user }}"
+#     group: "{{ ansible_user }}"
+#   when: justmode is defined and justmode == "update"
+
+# - name: Destroy app folder
+#   ansible.builtin.file:
+#     path: "{{ steam_path }}/{{ app_folder_name }}"
+#     state: absent
+#   when: justmode is defined and justmode == "update"
+
+# - name: Install Palworld server fresh
+#   become: false
+#   ansible.builtin.command:
+#     cmd: /usr/games/steamcmd +force_install_dir "{{ steam_path }}/{{ app_folder_name }}" +login anonymous +app_update 2394010 validate +quit
+#   when: justmode is not defined or justmode == "update"
+#   changed_when: true
+
+# - name: Create Saved dir
+#   ansible.builtin.file:
+#     path: "{{ steam_path }}/{{ app_folder_name }}/Pal/Saved"
+#     state: directory
+#     mode: '0755'
+#     owner: "{{ ansible_user }}"
+#     group: "{{ ansible_user }}"
+#   when: justmode is not defined or justmode == "app" or justmode == "update"
+
+# - name: Restore save files
+#   ansible.builtin.copy:
+#     src: "{{ temp_dir.path }}/SaveGames"
+#     dest: "{{ steam_path }}/{{ app_folder_name }}/Pal/Saved/SaveGames"
+#     remote_src: true
+#     mode: '0755'
+#     owner: "{{ ansible_user }}"
+#     group: "{{ ansible_user }}"
+#   when: justmode is defined and justmode == "update"
+
+# - name: Configure supervisor
+#   ansible.builtin.blockinfile:
+#     state: present
+#     path: /etc/supervisor/supervisord.conf
+#     block: "{{ lookup('file', 'supervisord-block.conf') }}"
+#   notify: Restart supervisor
+#   when: justmode is not defined or justmode == "config"
+
+# - name: Configure palworld inside supervisor
+#   ansible.builtin.template:
+#     src: supervisor.conf.j2
+#     dest: "/etc/supervisor/conf.d/palworld.conf"
+#     mode: '0644'
+#   notify: Restart supervisor
+#   when: justmode is not defined or justmode == "config"
+
+# - name: Create configuration directory
+#   ansible.builtin.file:
+#     path: "{{ steam_path }}/{{ app_folder_name }}/Pal/Saved/Config/LinuxServer"
+#     state: directory
+#     mode: '0755'
+#     owner: "{{ ansible_user }}"
+#     group: "{{ ansible_user }}"
+#   when: justmode is not defined or justmode == "app" or justmode == "update" or justmode == "config"
+
+# - name: Set configuration file
+#   ansible.builtin.template:
+#     src: PalworldSettings.ini.j2
+#     dest: "{{ steam_path }}/{{ app_folder_name }}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini"
+#     mode: '0644'
+#     owner: "{{ ansible_user }}"
+#     group: "{{ ansible_user }}"
+#   notify: Restart application
+#   when: justmode is not defined or justmode == "app" or justmode == "update" or justmode == "config"

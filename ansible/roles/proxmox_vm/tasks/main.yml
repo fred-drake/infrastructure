@@ -101,10 +101,19 @@
   delegate_to: "{{ proxmox_vm.host }}"
   become: false
 
+- name: Check if VM is in HA group
+  ansible.builtin.shell:
+    cmd: ha-manager status | grep -E '\s+vm:{{ proxmox_vm.vmid }}\s+' | wc -l
+    executable: /bin/bash
+  register: ha_status
+  changed_when: false
+  delegate_to: "{{ proxmox_vm.host }}"
+  become: false
+
 - name: Add VM to HA
   ansible.builtin.command:
     cmd: "ha-manager add vm:{{ proxmox_vm.vmid }} --group {{ proxmox_vm.ha.group }}"
-  when: proxmox_vm.ha is defined and proxmox_vm.ha.group is defined
+  when: proxmox_vm.ha is defined and proxmox_vm.ha.group is defined and ha_status.stdout == "0"
   delegate_to: "{{ proxmox_vm.host }}"
   become: false
   changed_when: true

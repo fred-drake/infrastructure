@@ -1,0 +1,9 @@
+- name: Restart supervisor
+  ansible.builtin.systemd:
+    name: supervisor
+    state: restarted
+
+- name: Restart application
+  community.general.supervisorctl:
+    name: palworld
+    state: restarted

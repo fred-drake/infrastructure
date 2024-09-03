@@ -1,0 +1,12 @@
+- name: Install NFS server
+  ansible.builtin.apt:
+    name: nfs-kernel-server
+    state: present
+    update_cache: true
+- name: Apply NFS server exports
+  ansible.builtin.copy:
+    content: "{{ nfs_exports }}"
+    dest: /etc/exports
+    mode: '0644'
+  when: nfs_exports is defined
+  notify: Restart NFS server

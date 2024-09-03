@@ -5,9 +5,9 @@ proxmox_vm:
   name: sabnzbd
   cloud_init: true
   vmid: 404
-  cores: 2
+  cores: 8
   sockets: 2
-  memory: 4096
+  memory: 16384
   storage: cephpool1
   image: ubuntu-22.04
   disk_size: +50G
@@ -20,7 +20,6 @@ proxmox_vm:
   searchdomain: internal.freddrake.com
   networks:
     - driver: virtio
-      mac: E2:DA:E2:EF:C7:FD
       bridge: vmbr3
       ip: 192.168.50.14/24
       gw: 192.168.50.1

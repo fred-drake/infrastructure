@@ -1,0 +1,4 @@
+app_folder_name: vrising
+steam_app_id: 1829350
+steam_path: /opt/Steam
+api_password: '{{ lookup("community.general.bitwarden_secrets_manager", "84ecdb44-8e91-434e-bf0a-b15e00de4beb").value }}'

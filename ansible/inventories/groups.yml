@@ -157,3 +157,5 @@ all:
         actualbudget:
         mqtt:
         homebridge:
+        vrising:
+        storage1:

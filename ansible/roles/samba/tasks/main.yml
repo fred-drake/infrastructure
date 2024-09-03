@@ -1,0 +1,5 @@
+- name: Install Samba server
+  ansible.builtin.apt:
+    name: samba
+    state: present
+    update_cache: true

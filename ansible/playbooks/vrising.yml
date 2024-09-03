@@ -1,0 +1,6 @@
+- name: Install Vrising server
+  hosts: vrising
+  gather_facts: true
+  become: true
+  roles:
+    - vrising

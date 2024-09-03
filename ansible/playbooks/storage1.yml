@@ -1,0 +1,23 @@
+- name: Install NFS and mounts
+  hosts: storage1
+  become: true
+  tasks:
+    - name: Mount storage
+      ansible.posix.mount:
+        path: /mnt/storage
+        src: /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi2-part1
+        fstype: ext4
+        state: present
+      when: justmode is not defined or justmode == "app"
+    - name: Install NFS server
+      ansible.builtin.import_role:
+        name: nfs-server
+      when: justmode is not defined or justmode == "app"
+    - name: Install Samba server
+      ansible.builtin.import_role:
+        name: samba
+      when: justmode is not defined or justmode == "app"
+    - name: Install plex
+      ansible.builtin.import_role:
+        name: plex
+      when: justmode is not defined or justmode == "app"

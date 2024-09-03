@@ -6,14 +6,18 @@
 - name: Mount downloads NFS share
   ansible.posix.mount:
     path: /mnt/downloads
-    src: 192.168.50.51:/downloads
+    src: 192.168.50.22:/downloads
     opts: nfsvers=4,async
     fstype: nfs
     state: mounted
 
-- name: Add apt repository
+- name: Add sabnzbd apt repository
   ansible.builtin.apt_repository:
     repo: 'ppa:jcfp/nobetas'
+
+- name: Add sabnzbd addons apt repository
+  ansible.builtin.apt_repository:
+    repo: 'ppa:jcfp/sab-addons'
 
 - name: Set sabnzbdplus file
   ansible.builtin.template:
@@ -24,6 +28,22 @@
     mode: '0644'
   notify: Restart service
 
+- name: Crate sabnzbd directory
+  ansible.builtin.file:
+    path: /home/{{ ansible_user }}/.sabnzbd
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    state: directory
+
+- name: Create sabnzbd logs directory
+  ansible.builtin.file:
+    path: /home/{{ ansible_user }}/.sabnzbd/logs
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    state: directory
+
 - name: Set sabnzbd config file
   ansible.builtin.template:
     src: sabnzbd.ini.j2
@@ -32,6 +52,12 @@
     group: "{{ ansible_user }}"
     mode: '0600'
   notify: Restart service
+
+- name: Install par2-turbo
+  ansible.builtin.apt:
+    name: par2-turbo
+    state: present
+    update_cache: true
 
 - name: Install sabnzbd
   ansible.builtin.apt:

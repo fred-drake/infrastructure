@@ -7,9 +7,9 @@ proxmox_vm:
   name: pihole2
   cloud_init: true
   vmid: 101
-  cores: 1
-  sockets: 1
-  memory: 1024
+  cores: 2
+  sockets: 2
+  memory: 2048
   storage: local-lvm
   image: ubuntu-22.04
   disk_size: +50G

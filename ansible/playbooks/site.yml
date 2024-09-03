@@ -27,6 +27,9 @@
 - name: Palworld server
   ansible.builtin.import_playbook: palworld.yml
 
+- name: Vrising server
+  ansible.builtin.import_playbook: vrising.yml
+
 - name: Sonarr
   ansible.builtin.import_playbook: sonarr.yml
 
@@ -53,3 +56,6 @@
 
 - name: Homebridge
   ansible.builtin.import_playbook: homebridge.yml
+
+- name: Storage1
+  ansible.builtin.import_playbook: storage1.yml

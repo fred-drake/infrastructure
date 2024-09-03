@@ -17,7 +17,7 @@ check_new_rel = 1
 auto_browser = 0
 language = en
 enable_https_verification = 1
-host = 127.0.0.1
+host = 192.168.50.14
 port = 8080
 https_port = ""
 username = ""
@@ -285,8 +285,9 @@ nscript_prio_warning = 0
 nscript_prio_error = 0
 nscript_prio_queue_done = 0
 nscript_prio_other = 1
+
 [servers]
-{%- for server in sabnzbd.servers %}
+{% for server in sabnzbd.servers %}
 [[{{ server.host }}]]
 name = {{ server.host }}
 displayname = {{ server.name }}
