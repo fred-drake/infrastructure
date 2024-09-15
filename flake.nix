@@ -34,9 +34,15 @@
           ];
 
           shellHook = ''
-            echo "-----------------------------------------------"
+            echo "------------------------------------------------------------"
+            echo ""
             echo "Welcome to the Ansible development environment!"
-            echo "-----------------------------------------------"
+            echo ""
+            echo "To enable this for the first time, run the following:"
+            echo " - pip install -r ansible/dev-requirements.txt"
+            echo " - ansible-galaxy install -r ansible/galaxy-requirements.yml"
+            echo ""
+            echo "------------------------------------------------------------"
           '';
         };
       }
