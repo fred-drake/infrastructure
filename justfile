@@ -1,3 +1,5 @@
+import? '~/nix/justfile'
+
 deploy HOST:
     ansible-playbook ansible/playbooks/site.yml --limit {{ HOST }}
 

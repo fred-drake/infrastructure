@@ -1,0 +1,8 @@
+extends: default
+
+ignore:
+  - ansible/galaxy_roles/
+  - ansible/galaxy_collections/
+  - cluster/
+  - .direnv/
+  - "**/*.sops.{yml,yaml}"
