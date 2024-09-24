@@ -32,6 +32,7 @@
             pkgs-bws.bws # BWS breaks when using bleeding edge
             just
             aider-chat
+            opentofu
           ];
 
           shellHook = ''
