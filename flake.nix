@@ -7,9 +7,16 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs-bws, nixpkgs-unstable, flake-utils, home-manager, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
+  outputs = {
+    self,
+    nixpkgs-bws,
+    nixpkgs-unstable,
+    flake-utils,
+    home-manager,
+    ...
+  }:
+    flake-utils.lib.eachDefaultSystem (
+      system: let
         pkgs = import nixpkgs-unstable {
           inherit system;
           config.allowUnfree = true;
@@ -18,20 +25,17 @@
           inherit system;
           config.allowUnfree = true;
         };
-      in
-      {
+      in {
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
-            python312
             git
             ansible
-            ansible-lint
             kubectl
             kubeseal
             yq-go
             pkgs-bws.bws # BWS breaks when using bleeding edge
             just
-            aider-chat
+            # aider-chat
             opentofu
           ];
 
