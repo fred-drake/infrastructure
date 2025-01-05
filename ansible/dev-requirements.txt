@@ -1,5 +1,4 @@
 pre-commit
-ansible-lint
 black
 flake8
 netaddr
