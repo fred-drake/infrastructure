@@ -20,8 +20,8 @@ resource "proxmox_vm_qemu" "foobar" {
   }
 
   network {
-    model  = "virtio"
-    bridge = "vmbr0"
+    model   = "virtio"
+    bridge  = "vmbr0"
     macaddr = "9a:42:47:f5:7e:e1"
   }
 }

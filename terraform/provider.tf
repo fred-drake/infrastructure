@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     proxmox = {
-      source = "telmate/proxmox"
+      source  = "telmate/proxmox"
       version = "3.0.1-rc4"
     }
 
     bitwarden-secrets = {
-      source = "sebastiaan-dev/bitwarden-secrets"
+      source  = "sebastiaan-dev/bitwarden-secrets"
       version = ">=0.1.2"
     }
   }
@@ -26,12 +26,12 @@ variable "BWS_TOKEN" {
 }
 
 provider "proxmox" {
-  pm_api_url = "https://medivh.internal.freddrake.com:8006/api2/json"
-  pm_api_token_secret = "${data.bitwarden-secrets_secret.proxmox_api_token_secret.value}"
-  pm_api_token_id = "${data.bitwarden-secrets_secret.proxmox_api_token_id.value}"
-  pm_tls_insecure = false
+  pm_api_url          = "https://medivh.internal.freddrake.com:8006/api2/json"
+  pm_api_token_secret = data.bitwarden-secrets_secret.proxmox_api_token_secret.value
+  pm_api_token_id     = data.bitwarden-secrets_secret.proxmox_api_token_id.value
+  pm_tls_insecure     = false
 }
 
 provider "bitwarden-secrets" {
-  access_token = "${var.BWS_TOKEN}"
+  access_token = var.BWS_TOKEN
 }
