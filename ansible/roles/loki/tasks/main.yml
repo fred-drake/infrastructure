@@ -20,7 +20,6 @@
     path: "{{ appdata_dir }}/loki/loki/config"
     state: directory
     mode: '0777'
-
 - name: Apply loki config
   ansible.builtin.template:
     src: config.yml.j2
