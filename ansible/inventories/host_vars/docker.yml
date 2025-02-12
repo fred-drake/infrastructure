@@ -1,3 +1,4 @@
+---
 ansible_host: 192.168.50.18
 ansible_user: ubuntu
 proxmox_vm:
@@ -36,12 +37,10 @@ proxmox_vm:
   ha:
     group: Favor_Thrall
 reboot_ok: true
-
 docker:
   interface_208: eth0
   interface_50: eth1
   interface_40: eth2
-
 compose_stacks:
   - name: traefik
     volumes:
@@ -140,3 +139,41 @@ compose_stacks:
         vlan1:
           external: true
           name: br0.40
+  - name: gitea
+    volumes:
+      - data
+      - config
+    compose: |
+      services:
+        gitea:
+          image: gitea/gitea:latest-rootless
+          container_name: gitea
+          networks:
+            vlan0:
+              ipv4_address: 192.168.50.23
+          restart: unless-stopped
+          volumes:
+            - ./data:/var/lib/gitea
+            - ./config:/etc/gitea
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+          ports:
+            - 3000:3000
+            - 22:2222
+          labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.gitea.entrypoints=web"
+            - "traefik.http.routers.gitea.rule=Host(`gitea.{{ secret.domain }}`)"
+            - "traefik.http.middlewares.gitea-https-redirect.redirectscheme.scheme=https"
+            - "traefik.http.routers.traefik.middlewares=gitea-https-redirect"
+            - "traefik.http.routers.gitea-secure.entrypoints=websecure"
+            - "traefik.http.routers.gitea-secure.rule=Host(`gitea.{{ secret.domain }}`)"
+            - "traefik.http.routers.gitea-secure.tls=true"
+            - "traefik.http.routers.gitea-secure.tls.certresolver=letsencrypt"
+            - "traefik.http.routers.gitea-secure.service=gitea"
+            - "traefik.http.services.gitea.loadbalancer.server.port=3000"
+            - "traefik.docker.network=br0.50"
+      networks:
+        vlan0:
+          external: true
+          name: br0.50
