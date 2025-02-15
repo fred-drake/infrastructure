@@ -9,6 +9,11 @@ terraform {
       source  = "sebastiaan-dev/bitwarden-secrets"
       version = ">=0.1.2"
     }
+
+    hyperv = {
+      source  = "taliesins/hyperv"
+      version = "1.2.1"
+    }
   }
 }
 
@@ -18,6 +23,14 @@ data "bitwarden-secrets_secret" "proxmox_api_token_id" {
 
 data "bitwarden-secrets_secret" "proxmox_api_token_secret" {
   id = "f388ec7a-06ee-4ef9-a626-b1f5017eecab"
+}
+
+data "bitwarden-secrets_secret" "hyperv_password" {
+  id = "87fd6ad5-ff36-4fcb-acd6-b27a0144e8e1"
+}
+
+data "bitwarden-secrets_secret" "hyperv_username" {
+  id = "a281493a-4f2a-4974-9930-b27a0144b5b2"
 }
 
 # Value is stored in environment variable $TF_VAR_BWS_TOKEN
@@ -34,4 +47,12 @@ provider "proxmox" {
 
 provider "bitwarden-secrets" {
   access_token = var.BWS_TOKEN
+}
+
+provider "hyperv" {
+  user     = data.bitwarden-secrets_secret.hyperv_username.value
+  password = data.bitwarden-secrets_secret.hyperv_password.value
+  host     = "192.168.30.58"
+  https    = false
+  insecure = true
 }
