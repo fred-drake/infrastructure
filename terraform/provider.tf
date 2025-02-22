@@ -39,7 +39,7 @@ variable "BWS_TOKEN" {
 }
 
 provider "proxmox" {
-  pm_api_url          = "https://medivh.internal.freddrake.com:8006/api2/json"
+  pm_api_url          = "https://anduin.internal.freddrake.com:8006/api2/json"
   pm_api_token_secret = data.bitwarden-secrets_secret.proxmox_api_token_secret.value
   pm_api_token_id     = data.bitwarden-secrets_secret.proxmox_api_token_id.value
   pm_tls_insecure     = false
@@ -50,9 +50,15 @@ provider "bitwarden-secrets" {
 }
 
 provider "hyperv" {
-  user     = data.bitwarden-secrets_secret.hyperv_username.value
-  password = data.bitwarden-secrets_secret.hyperv_password.value
-  host     = "192.168.30.58"
-  https    = false
-  insecure = true
+  user            = "tofu"
+  password        = "tofu"
+  host            = "192.168.30.58"
+  port            = 5986
+  https           = true
+  insecure        = true
+  tls_server_name = ""
+  cacert_path     = ""
+  key_path        = ""
+  script_path     = "C:/Temp/terraform_%RAND%.cmd"
+  timeout         = "30s"
 }
