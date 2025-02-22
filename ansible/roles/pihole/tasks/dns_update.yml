@@ -7,18 +7,16 @@
     suffix: infragit
   register: gitdir
   changed_when: false
-
 - name: Check out infrastructure PKM
   connection: local
   run_once: true
   become: false
   ansible.builtin.git:
-    repo: ssh://git@git.jetbrains.space/fdrake/main/Infrastructure.git
+    repo: "git@gitlab.com:fred.drake/infrastructure.git"
     dest: "{{ gitdir.path }}"
     accept_hostkey: true
     depth: 1
   changed_when: false
-
 - name: Transfer pihole hosts
   run_once: true
   ansible.builtin.copy:
@@ -28,6 +26,5 @@
     backup: true
   notify:
     - Restart DNS
-
 - name: Flush handler
   ansible.builtin.meta: flush_handlers
