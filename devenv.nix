@@ -6,7 +6,6 @@
   ...
 }: {
   # https://devenv.sh/basics/
-  env.GREET = "devenv";
 
   # https://devenv.sh/packages/
   packages = with pkgs; [
@@ -34,11 +33,26 @@
   cachix.enable = false;
 
   # https://devenv.sh/scripts/
-  scripts.hello.exec = ''
-    echo hello from $GREET
+  scripts.nixinit.exec = ''
+    cd nix
+    nixos-anywhere --flake ".#$1" --build-on-remote nixos@$1
+  '';
+
+  scripts.nixupdate.exec = ''
+    cd nix
+    colmena apply --on $1 --impure
   '';
 
   enterShell = ''
+    source_env "~/.bws.env"
+    source_env "~/.llm_api_keys.env"
+    source_env "~/.config/aider/aider_default.env"
+
+    export SOPS_AGE_KEY_FILE=~/.age/ansible-key.txt
+    export KUBECONFIG=$(expand_path ./kubeconfig)
+    export ANSIBLE_CONFIG=$(expand_path ./ansible/ansible.cfg)
+    export TF_VAR_BWS_TOKEN=$BWS_ACCESS_TOKEN
+
     echo "------------------------------------------------------------"
     echo ""
     echo "Welcome to the Ansible development environment!"
