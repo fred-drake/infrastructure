@@ -1,4 +1,3 @@
-
 deploy HOST:
     ansible-playbook ansible/playbooks/site.yml --limit {{ HOST }}
 
@@ -49,6 +48,12 @@ kube-decrypt:
 
 kube-delete-snapshots-of-pvc PVC:
     kubectl get snapshots.longhorn.io -n longhorn -l longhornvolume=pvc-a70959c0-a038-4e11-9514-bfb9837093bd -o json | jq -r '.items |= sort_by(.metadata.creationTimestamp) | .items[].metadata.name' | xargs -I {} kubectl delete snapshots.longhorn.io -n longhorn {}
+
+nixinit HOST:
+    nixinit {{ HOST }}
+
+nix HOST:
+    nixupdate {{ HOST }}
 
 tf-plan:
     tofu -chdir=terraform plan
